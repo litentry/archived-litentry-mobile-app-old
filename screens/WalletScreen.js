@@ -1,14 +1,19 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View, Button} from 'react-native';
+import {connect} from 'react-redux'
+import {walletAction} from "../actions/wallet";
 
-export default class HomeScreen extends React.Component {
+class WalletScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
   render() {
+    const {wallet} = this.props
     return (
       <View style={styles.container}>
+        <Text>{'wallet value  ' + wallet.eth}</Text>
+        <Button title='Plus one' onPress={this.props.testAddEth}/>
       </View>
     )
   }
@@ -17,6 +22,18 @@ export default class HomeScreen extends React.Component {
 
 const styles = {
   container: {
-    flex:1
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 }
+
+const mapStateToProps = state => ({
+  wallet: state.wallet
+})
+
+const mapDispatchToProps = dispatch => ({
+  testAddEth: () => dispatch(walletAction.testAddEth())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletScreen)
