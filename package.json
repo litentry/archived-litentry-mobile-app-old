@@ -8,18 +8,16 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "lint": "./node_modules/.bin/eslint ."
+    "lint": "./node_modules/.bin/eslint . --fix"
   },
   "jest": {
     "preset": "jest-expo"
-  },
-  "eslintConfig": {
-    "extends": "universe"
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
     "expo": "^31.0.2",
     "lodash": "^4.17.11",
+    "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-navigation": "^2.18.2",
@@ -30,7 +28,8 @@
     "babel-preset-expo": "^5.0.0",
     "eslint": "^5.9.0",
     "eslint-config-universe": "^1.0.7",
+    "eslint-plugin-react": "^7.11.1",
     "jest-expo": "^31.0.0",
-    "prettier": "^1.15.2"
+    "prettier": "1.15.2"
   }
 }
