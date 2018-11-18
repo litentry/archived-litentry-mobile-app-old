@@ -7,10 +7,14 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "eslintConfig": {
+    "extends": "universe"
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
@@ -24,6 +28,9 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
-    "jest-expo": "^31.0.0"
+    "eslint": "^5.9.0",
+    "eslint-config-universe": "^1.0.7",
+    "jest-expo": "^31.0.0",
+    "prettier": "^1.15.2"
   }
 }
