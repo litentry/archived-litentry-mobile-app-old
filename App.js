@@ -1,9 +1,10 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
 import AppNavigator from './navigation/AppNavigator';
-import {Provider} from 'react-redux';
-import {store} from "./reducers/store";
+import { store } from './reducers/store';
 
 export default class App extends React.Component {
   state = {
@@ -57,6 +58,10 @@ export default class App extends React.Component {
     this.setState({ isLoadingComplete: true });
   };
 }
+
+App.propTypes = {
+  skipLoadingScreen: PropTypes.bool,
+};
 
 const styles = StyleSheet.create({
   container: {
