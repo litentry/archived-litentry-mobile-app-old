@@ -1,7 +1,8 @@
 import React from 'react';
-import {Text, View, Button} from 'react-native';
-import {connect} from 'react-redux'
-import {walletAction} from "../actions/wallet";
+import { Text, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { walletAction } from '../actions/wallet';
 
 class WalletScreen extends React.Component {
   static navigationOptions = {
@@ -9,31 +10,38 @@ class WalletScreen extends React.Component {
   };
 
   render() {
-    const {wallet} = this.props
+    const { wallet } = this.props;
     return (
       <View style={styles.container}>
         <Text>{'wallet value  ' + wallet.eth}</Text>
-        <Button title='Plus one' onPress={this.props.testAddEth}/>
+        <Button title="Plus one" onPress={this.props.testAddEth} />
       </View>
-    )
+    );
   }
-
 }
+
+WalletScreen.propTypes = {
+  wallet: PropTypes.object.isRequired,
+  testAddEth: PropTypes.func.isRequired,
+};
 
 const styles = {
   container: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-}
+    alignItems: 'center',
+  },
+};
 
 const mapStateToProps = state => ({
-  wallet: state.wallet
-})
+  wallet: state.wallet,
+});
 
 const mapDispatchToProps = dispatch => ({
-  testAddEth: () => dispatch(walletAction.testAddEth())
-})
+  testAddEth: () => dispatch(walletAction.testAddEth()),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(WalletScreen)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WalletScreen);
