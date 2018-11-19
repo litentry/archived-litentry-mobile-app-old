@@ -1,5 +1,5 @@
-import backgroundBlue from './../assets/images/background_blue.png'
-import iconQRCode from './../assets/images/icon_QRCode.png'
+import backgroundBlue from './../assets/images/background_blue.png';
+import iconQRCode from './../assets/images/icon_QRCode.png';
 
 export default {
   backgroundBlue,
@@ -88,5 +88,5 @@ export default {
   iconShare: require('../assets/images/ic_share.png'),
   logoBTC: require('../assets/images/logo_bitcoin.png'),
   logoETH: require('../assets/images/logo_eth.png'),
-  imgAnalytics: require('../assets/images/img_analytics.png')
-}
+  imgAnalytics: require('../assets/images/img_analytics.png'),
+};
