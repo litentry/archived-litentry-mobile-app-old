@@ -3,10 +3,17 @@ import { Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { walletAction } from '../actions/wallet';
+import { navigationText } from '../constants/Text';
 
 class WalletScreen extends React.Component {
   static navigationOptions = {
     header: null,
+  };
+
+  static propTypes = {
+    wallet: PropTypes.object.isRequired,
+    testAddEth: PropTypes.func.isRequired,
+    navigation: PropTypes.object,
   };
 
   render() {
@@ -15,15 +22,14 @@ class WalletScreen extends React.Component {
       <View style={styles.container}>
         <Text>{'wallet value  ' + wallet.eth}</Text>
         <Button title="Plus one" onPress={this.props.testAddEth} />
+        <Button
+          title="create Wallet"
+          onPress={() => this.props.navigation.navigate(navigationText.CreateWallet.label)}
+        />
       </View>
     );
   }
 }
-
-WalletScreen.propTypes = {
-  wallet: PropTypes.object.isRequired,
-  testAddEth: PropTypes.func.isRequired,
-};
 
 const styles = {
   container: {
