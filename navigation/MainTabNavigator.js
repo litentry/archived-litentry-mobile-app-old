@@ -7,6 +7,8 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import WalletScreen from '../screens/WalletScreen';
+import { navigationText } from '../constants/Text';
+import CreateWalletScreen from '../screens/CreateWalletScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -27,12 +29,13 @@ const HomeStackIcon = ({ focused }) => (
 HomeStackIcon.propTypes = iconPropTypes;
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: navigationText.Home.label,
   tabBarIcon: HomeStackIcon,
 };
 
 const WalletStack = createStackNavigator({
   Wallet: WalletScreen,
+  CreateWallet: CreateWalletScreen,
 });
 
 const WalletStackIcon = ({ focused }) => (
@@ -41,7 +44,7 @@ const WalletStackIcon = ({ focused }) => (
 WalletStackIcon.propTypes = iconPropTypes;
 
 WalletStack.navigationOptions = {
-  tabBarLabel: 'Wallet',
+  tabBarLabel: navigationText.Wallet.title,
   tabBarIcon: WalletStackIcon,
 };
 
@@ -55,7 +58,7 @@ const LinksStackIcon = ({ focused }) => (
 LinksStackIcon.propTypes = iconPropTypes;
 
 LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+  tabBarLabel: navigationText.Links.label,
   tabBarIcon: LinksStackIcon,
 };
 
@@ -69,7 +72,7 @@ const SettingsStackIcon = ({ focused }) => (
 SettingsStackIcon.propTypes = iconPropTypes;
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: navigationText.Settings.label,
   tabBarIcon: SettingsStackIcon,
 };
 

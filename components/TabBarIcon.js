@@ -3,7 +3,7 @@ import { Icon } from 'expo';
 import PropTypes from 'prop-types';
 import Colors from '../constants/Colors';
 
-export const TabBarIcon = props => (
+const TabBarIcon = props => (
   <Icon.Ionicons
     name={props.name}
     size={26}
@@ -16,3 +16,5 @@ TabBarIcon.propTypes = {
   name: PropTypes.string,
   focused: PropTypes.bool,
 };
+
+export default TabBarIcon;
