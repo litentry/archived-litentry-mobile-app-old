@@ -33,8 +33,8 @@ export default class CreateWalletScreen extends Component {
       <View style={styles.container}>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <SmallCard
-            title="Create"
-            subtitle="a new wallet"
+            title={t.createTitle}
+            subtitle={t.createSubtitle}
             imageCard={Images.imgCardCreate}
             onPress={this.gotoEnterName}
             imageBackground="backgroundCard"
@@ -44,8 +44,8 @@ export default class CreateWalletScreen extends Component {
 
           <SmallCard
             style={{ marginTop: 40 }}
-            title="Import"
-            subtitle="existing wallet"
+            title={t.importTitle}
+            subtitle={t.importSubtitle}
             imageCard={Images.imgCardImport}
             onPress={this.gotoImport}
             imgBackground="backgroundCard"
@@ -64,3 +64,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const t = {
+  createTitle: 'Create',
+  createSubtitle: 'a new wallet',
+  importTitle: 'Import',
+  importSubtitle: 'existing wallet',
+};

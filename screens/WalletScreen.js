@@ -23,21 +23,13 @@ class WalletScreen extends React.Component {
         <Text>{'wallet value  ' + wallet.eth}</Text>
         <Button title="Plus one" onPress={this.props.testAddEth} />
         <Button
-          title="create Wallet"
+          title={t.createButtonLabel}
           onPress={() => this.props.navigation.navigate(navigationText.CreateWallet.label)}
         />
       </View>
     );
   }
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-};
 
 const mapStateToProps = state => ({
   wallet: state.wallet,
@@ -51,3 +43,15 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WalletScreen);
+
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
+
+const t = {
+  createButtonLabel: 'create Wallet',
+};
