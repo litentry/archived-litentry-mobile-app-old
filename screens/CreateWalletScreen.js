@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
-import { navigationText } from '../constants/Text';
 import Images from '../commons/Images';
 import SmallCard from '../components/SmallCard';
 import AppStyle from '../commons/AppStyle';
+import {screensList} from "../navigation/screensList";
 const { width } = Dimensions.get('window');
 
 export default class CreateWalletScreen extends Component {
@@ -13,7 +13,7 @@ export default class CreateWalletScreen extends Component {
   };
 
   static navigationOptions = {
-    title: navigationText.CreateWallet.title,
+    title: screensList.CreateWallet.title
   };
 
   goBack = () => {
@@ -25,7 +25,7 @@ export default class CreateWalletScreen extends Component {
   };
 
   gotoImport = () => {
-    this.props.navigation.navigate('WalletTypeImportScreen');
+    this.props.navigation.navigate(screensList.ImportWallet.label);
   };
 
   render() {

@@ -3,11 +3,15 @@ import { Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { walletAction } from '../actions/wallet';
-import { navigationText } from '../constants/Text';
+import {screensList} from "../navigation/screensList";
+
+const t = {
+  createButtonLabel: 'create Wallet',
+};
 
 class WalletScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: screensList.Wallet.title
   };
 
   static propTypes = {
@@ -24,7 +28,7 @@ class WalletScreen extends React.Component {
         <Button title="Plus one" onPress={this.props.testAddEth} />
         <Button
           title={t.createButtonLabel}
-          onPress={() => this.props.navigation.navigate(navigationText.CreateWallet.label)}
+          onPress={() => this.props.navigation.navigate(screensList.CreateWallet.label)}
         />
       </View>
     );
@@ -50,8 +54,4 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-};
-
-const t = {
-  createButtonLabel: 'create Wallet',
 };

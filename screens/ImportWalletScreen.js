@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import SmallCard from '../components/SmallCard';
-import LayoutUtils from '../commons/LayoutUtils';
-import images from '../commons/images';
+import Images from '../commons/Images';
 import AppStyle from '../commons/AppStyle';
+import {screensList} from "../navigation/screensList";
 
 export default class ImportWalletScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
   };
 
-  static defaultProps = {
-    navigation: {},
+  static navigationOptions = {
+    title: screensList.ImportWallet.title
   };
 
   gotoImportAddress = () => this.props.navigation.navigate('ImportViaAddressScreen');
@@ -37,7 +37,7 @@ export default class ImportWalletScreen extends Component {
               style={{ height: 174, marginTop: 20 }}
               title={t.titlePrivateKey}
               subtitle={t.contentPrivateKey}
-              imageCard={images.iconPrivateKey}
+              imageCard={Images.iconPrivateKey}
               onPress={this.gotoImportPrivateKey}
               imageBackground="backgroundCard"
               imageBackgroundStyle={{ height: 174 }}
@@ -52,7 +52,7 @@ export default class ImportWalletScreen extends Component {
               style={{ height: 174, marginTop: 20 }}
               title={t.titleMnemonicPhrase}
               subtitle={t.contentMnemonicPhrase}
-              imageCard={images.iconMnemonic}
+              imageCard={Images.iconMnemonic}
               onPress={this.gotoImportMnemonic}
               titleTextStyle={{ color: AppStyle.mainTextColor }}
               subtitleTextStyle={{
@@ -65,7 +65,7 @@ export default class ImportWalletScreen extends Component {
               style={{ marginTop: 20, marginBottom: 20, height: 174 }}
               title={t.titleAddressOnly}
               subtitle={t.contentAddressOnly}
-              imageCard={images.iconAddress}
+              imageCard={Images.iconAddress}
               onPress={this.gotoImportAddress}
               titleTextStyle={{ color: AppStyle.mainTextColor }}
               subtitleTextStyle={{
