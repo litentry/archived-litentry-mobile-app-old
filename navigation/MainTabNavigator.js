@@ -7,13 +7,13 @@ import { screensList } from './screensList';
 import CreateWalletScreen from '../screens/CreateWalletScreen';
 import WalletScreen from '../screens/WalletScreen';
 import HomeScreen from '../screens/HomeScreen';
-import ImportWalletScreen from "../screens/ImportWalletScreen";
+import ImportWalletScreen from '../screens/ImportWalletScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
-})
+  Home: HomeScreen,
+});
 
 const HomeStackIcon = ({ focused }) => (
   <TabBarIcon
@@ -33,11 +33,11 @@ HomeStack.navigationOptions = {
 };
 
 const WalletStack = createStackNavigator({
-  Wallet: WalletScreen ,
-    CreateWallet: CreateWalletScreen ,
-    ImportWallet: ImportWalletScreen,
+  Wallet: WalletScreen,
+  CreateWallet: CreateWalletScreen,
+  ImportWallet: ImportWalletScreen,
   // ImportViaAddress: {label: 'ImportViaAddress', screen: ImportViaAddressScreen},
-})
+});
 
 const WalletStackIcon = ({ focused }) => (
   <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />

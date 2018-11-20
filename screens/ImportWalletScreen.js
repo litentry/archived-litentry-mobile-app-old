@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SmallCard from '../components/SmallCard';
 import Images from '../commons/Images';
 import AppStyle from '../commons/AppStyle';
-import {screensList} from "../navigation/screensList";
+import { screensList } from '../navigation/screensList';
 
 export default class ImportWalletScreen extends Component {
   static propTypes = {
@@ -12,7 +12,7 @@ export default class ImportWalletScreen extends Component {
   };
 
   static navigationOptions = {
-    title: screensList.ImportWallet.title
+    title: screensList.ImportWallet.title,
   };
 
   gotoImportAddress = () => this.props.navigation.navigate('ImportViaAddressScreen');

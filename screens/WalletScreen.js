@@ -3,7 +3,7 @@ import { Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { walletAction } from '../actions/wallet';
-import {screensList} from "../navigation/screensList";
+import { screensList } from '../navigation/screensList';
 
 const t = {
   createButtonLabel: 'create Wallet',
@@ -11,7 +11,7 @@ const t = {
 
 class WalletScreen extends React.Component {
   static navigationOptions = {
-    title: screensList.Wallet.title
+    title: screensList.Wallet.title,
   };
 
   static propTypes = {

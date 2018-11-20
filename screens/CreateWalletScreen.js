@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Images from '../commons/Images';
 import SmallCard from '../components/SmallCard';
 import AppStyle from '../commons/AppStyle';
-import {screensList} from "../navigation/screensList";
+import { screensList } from '../navigation/screensList';
 const { width } = Dimensions.get('window');
 
 export default class CreateWalletScreen extends Component {
@@ -13,7 +13,7 @@ export default class CreateWalletScreen extends Component {
   };
 
   static navigationOptions = {
-    title: screensList.CreateWallet.title
+    title: screensList.CreateWallet.title,
   };
 
   goBack = () => {
