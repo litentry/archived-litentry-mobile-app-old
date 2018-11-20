@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  Animated,
   SafeAreaView,
   Platform,
   TextInput,
@@ -32,7 +31,6 @@ import { screensList } from '../../../navigation/screensList';
 const { width } = Dimensions.get('window');
 const marginTop = LayoutUtils.getExtraTop();
 
-@observer
 export default class ImportViaAddressScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
