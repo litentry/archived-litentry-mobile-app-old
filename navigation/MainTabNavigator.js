@@ -4,10 +4,11 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
-import CreateWalletScreen from '../screens/CreateWalletScreen';
+import WalletCreateScreen from '../screens/WalletCreateScreen';
 import WalletScreen from '../screens/WalletScreen';
 import HomeScreen from '../screens/HomeScreen';
-import ImportWalletScreen from '../screens/ImportWalletScreen';
+import WalletImportScreen from '../screens/WalletImportScreen';
+import ImportViaAddressScreen from "../modules/WalletImport/screens/ImportViaAddressScreen";
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -34,9 +35,9 @@ HomeStack.navigationOptions = {
 
 const WalletStack = createStackNavigator({
   Wallet: WalletScreen,
-  CreateWallet: CreateWalletScreen,
-  ImportWallet: ImportWalletScreen,
-  // ImportViaAddress: {label: 'ImportViaAddress', screen: ImportViaAddressScreen},
+  WalletCreate: WalletCreateScreen,
+  WalletImport: WalletImportScreen,
+  ImportViaAddress: ImportViaAddressScreen,
 });
 
 const WalletStackIcon = ({ focused }) => (

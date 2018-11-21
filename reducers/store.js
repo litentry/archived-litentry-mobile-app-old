@@ -1,8 +1,10 @@
 import { createStore, combineReducers } from 'redux';
-import wallet from './wallet';
+import { walletReducer } from './wallet';
+import { walletImportReducer } from '../modules/WalletImport/walletImportReducer';
 
 const reducers = combineReducers({
-  wallet,
+  wallet: walletReducer,
+  walletImport: walletImportReducer,
 });
 
 export const store = createStore(reducers, {});

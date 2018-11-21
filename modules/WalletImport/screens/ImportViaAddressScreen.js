@@ -12,7 +12,7 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import NavigationHeader from '../../../components/elements/NavigationHeader';
+import connect from 'react-redux/es/connect/connect';
 import ActionButton from '../../../components/elements/ActionButton';
 import Spinner from '../../../components/elements/Spinner';
 import BottomButton from '../../../components/elements/BottomButton';
@@ -28,24 +28,22 @@ import TouchOutSideDismissKeyboard from '../../../components/elements/TouchOutSi
 import MainStore from '../../../AppStores/MainStore';
 import { screensList } from '../../../navigation/screensList';
 
+import { walletImportAction } from '../walletImportAction';
+
 const { width } = Dimensions.get('window');
 const marginTop = LayoutUtils.getExtraTop();
 
-export default class ImportViaAddressScreen extends Component {
+class ImportViaAddressScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
   };
 
   static navigationOptions = {
-    title: screensList.ImportWallet.title,
+    title: screensList.ImportViaAddress.title,
   };
 
   constructor(props) {
     super();
-    MainStore.importAddressStore = new ImportAddressStore();
-    this.importAddressStore = MainStore.importAddressStore;
-    const { coin } = props.navigation.state.params;
-    this.importAddressStore.setCoin(coin);
   }
 
   onPaste = async () => {
@@ -60,7 +58,7 @@ export default class ImportViaAddressScreen extends Component {
       <View style={{ position: 'absolute', right: 0 }}>
         <TouchableOpacity onPress={this.onPaste}>
           <View style={{ padding: 15 }}>
-            <Text style={styles.pasteText}>Paste</Text>
+            <Text style={styles.pasteText}>{t.paste}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -82,25 +80,25 @@ export default class ImportViaAddressScreen extends Component {
   }
 
   onChangeName = text => {
-    this.importAddressStore.setTitle(text);
+    this.props.setTitle(text);
   };
 
   onChangeAddress = text => {
-    this.importAddressStore.setAddress(text);
+    this.props.setAddress(text);
   };
 
-  onFocusName = () => this.importAddressStore.setFocusField('name');
-  onFocusAddress = () => this.importAddressStore.setFocusField('address');
-  onBlurTextField = () => this.importAddressStore.setFocusField('');
+  onFocusName = () => this.props.setFocusField('name');
+  onFocusAddress = () => this.props.setFocusField('address');
+  onBlurTextField = () => this.props.setFocusField('');
 
   gotoScan = () => {
     setTimeout(() => {
-      NavStore.pushToScreen('ScanQRCodeScreen', {
+      this.props.navigation.navigate('ScanQRCodeScreen', {
         title: 'Scan Address',
         marginTop,
         returnData: this.returnData.bind(this),
       });
-    }, 300);
+    });
   };
 
   goBack = () => {
@@ -118,31 +116,20 @@ export default class ImportViaAddressScreen extends Component {
     if (resChecker && resChecker.length > 0) {
       [address] = resChecker;
     }
-    this.importAddressStore.setAddress(address);
+    this.props.setAddress(address);
   }
 
   goToEnterName = () => {
-    const { navigation } = this.props;
-    const { coin } = navigation.state.params;
-    NavStore.pushToScreen('EnterNameViaAddress', { coin });
+    this.props.navigation.navigate('EnterNameViaAddress');
   };
 
   render() {
-    const { address, loading, errorAddress, isValidAddress } = this.importAddressStore;
+    const { address, loading, errorAddress, isValidAddress } = this.props;
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <TouchOutSideDismissKeyboard>
           <View style={styles.container}>
             <KeyboardView style={styles.container}>
-              <NavigationHeader
-                style={{ marginTop: marginTop + 20, width }}
-                headerItem={{
-                  title: 'Add Address',
-                  icon: null,
-                  button: images.backButton,
-                }}
-                action={this.goBack}
-              />
               <View style={{ marginTop: 25 }}>
                 <TextInput
                   underlineColorAndroid="transparent"
@@ -177,6 +164,34 @@ export default class ImportViaAddressScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  walletImport: state.walletImport,
+});
+
+const mapDispatchToProps = dispatch => ({
+  setAddress: _.flow(
+    walletImportAction.setAddress,
+    dispatch
+  ),
+  setTitle: _.flow(
+    walletImportAction.setTitle,
+    dispatch
+  ),
+  setFocusField: _.flow(
+    walletImportAction.setFocusField,
+    dispatch
+  ),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ImportViaAddressScreen);
+
+const t = {
+  paste: 'Paste',
+};
 
 const styles = StyleSheet.create({
   container: {
