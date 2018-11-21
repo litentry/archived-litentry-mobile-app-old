@@ -13,21 +13,17 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
-import ActionButton from '../../../components/elements/ActionButton';
-import Spinner from '../../../components/elements/Spinner';
-import BottomButton from '../../../components/elements/BottomButton';
+import ActionButton from '../../../components/ActionButton';
+import Spinner from '../../../components/Spinner';
+import BottomButton from '../../../components/BottomButton';
 import LayoutUtils from '../../../commons/LayoutUtils';
-import NavStore from '../../../AppStores/NavStore';
-import Checker from '../../../Handler/Checker';
-import images from '../../../commons/images';
+import Checker from '../../../utils/Checker';
+import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
-import constant from '../../../commons/constant';
-import ImportAddressStore from '../stores/ImportAddressStore';
-import KeyboardView from '../../../components/elements/KeyboardView';
-import TouchOutSideDismissKeyboard from '../../../components/elements/TouchOutSideDismissKeyboard';
-import MainStore from '../../../AppStores/MainStore';
+import KeyboardView from '../../../components/KeyboardView';
+import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
 import { screensList } from '../../../navigation/screensList';
-
+import _ from 'lodash'
 import { walletImportAction } from '../walletImportAction';
 
 const { width } = Dimensions.get('window');
@@ -36,6 +32,10 @@ const marginTop = LayoutUtils.getExtraTop();
 class ImportViaAddressScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
+    address: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+    errorAddress: PropTypes.string.isRequired,
   };
 
   static navigationOptions = {
@@ -58,7 +58,7 @@ class ImportViaAddressScreen extends Component {
       <View style={{ position: 'absolute', right: 0 }}>
         <TouchableOpacity onPress={this.onPaste}>
           <View style={{ padding: 15 }}>
-            <Text style={styles.pasteText}>{t.paste}</Text>
+            <Text style={styles.pasteText}>{t.PASTE}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -73,7 +73,7 @@ class ImportViaAddressScreen extends Component {
     return (
       <View style={{ position: 'absolute', right: 15, top: 15 }}>
         <TouchableOpacity onPress={this.clearText}>
-          <Image source={images.iconCloseSearch} />
+          <Image source={Images.iconCloseSearch} />
         </TouchableOpacity>
       </View>
     );
@@ -102,17 +102,15 @@ class ImportViaAddressScreen extends Component {
   };
 
   goBack = () => {
-    NavStore.goBack();
+    this.props.navigation.goBack();
   };
 
   returnData(codeScanned) {
     let address = codeScanned;
-    const { navigation } = this.props;
-    const { coin } = navigation.state.params;
     // if (this.importAddressStore.title === '') {
     //   setTimeout(() => this.nameField.focus(), 250)
     // }
-    const resChecker = Checker.checkAddressQR(codeScanned, coin);
+    const resChecker = Checker.checkAddressQR(codeScanned);
     if (resChecker && resChecker.length > 0) {
       [address] = resChecker;
     }
@@ -124,7 +122,8 @@ class ImportViaAddressScreen extends Component {
   };
 
   render() {
-    const { address, loading, errorAddress, isValidAddress } = this.props;
+    const { address, loading, errorAddress} = this.props;
+    const isValidAddress = this.address !== '' && this.errorAddress === ''
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <TouchOutSideDismissKeyboard>
@@ -140,15 +139,14 @@ class ImportViaAddressScreen extends Component {
                   onChangeText={this.onChangeAddress}
                   value={address}
                 />
-                {address === '' && this._renderPasteButton()}
-                {address !== '' && this._renderClearButton()}
+                {address === '' ? this._renderPasteButton(): this._renderClearButton()}
               </View>
               {errorAddress !== '' && <Text style={styles.errorText}>{errorAddress}</Text>}
               <ActionButton
                 style={{ height: 40, marginTop: 25 }}
                 buttonItem={{
-                  name: constant.SCAN_QR_CODE,
-                  icon: images.iconQrCode,
+                  name: t.SCAN_QR_CODE,
+                  icon: Images.iconQrCode,
                   background: '#121734',
                 }}
                 styleText={{ color: AppStyle.mainTextColor }}
@@ -165,8 +163,22 @@ class ImportViaAddressScreen extends Component {
   }
 }
 
+const getErrorAddress = (address, finished) => {
+  if (address !== '' && !finished && !Checker.checkAddress(address)) {
+    return t.INVALID_ADDRESS
+  }
+  //TODO
+  // if (!finished && this.addressMap[address.toLowerCase()]) {
+  //   return t.EXISTED_WALLET
+  // }
+  return ''
+}
+
 const mapStateToProps = state => ({
-  walletImport: state.walletImport,
+  address: state.walletImport.address,
+  loading: state.walletImport.loading,
+  title: state.walletImport.title,
+  errorAddress: getErrorAddress(state.walletImport.address, state.walletImport.finished),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -190,7 +202,10 @@ export default connect(
 )(ImportViaAddressScreen);
 
 const t = {
-  paste: 'Paste',
+  PASTE: 'Paste',
+  SCAN_QR_CODE: 'Scan QR Code',
+  EXISTED_WALLET: 'Wallet already exists.',
+  INVALID_ADDRESS: 'Invalid Address.',
 };
 
 const styles = StyleSheet.create({
@@ -200,7 +215,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 16,
-    fontFamily: 'OpenSans-Semibold',
+    fontFamily: 'OpenSans-SemiBold',
     color: 'white',
     alignSelf: 'flex-start',
     marginLeft: 20,
@@ -220,7 +235,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 14,
-    fontFamily: 'OpenSans-Semibold',
+    fontFamily: 'OpenSans-SemiBold',
     color: AppStyle.errorColor,
     alignSelf: 'flex-start',
     marginTop: 10,
@@ -228,7 +243,7 @@ const styles = StyleSheet.create({
   },
   pasteText: {
     color: AppStyle.mainColor,
-    fontFamily: 'OpenSans-Semibold',
+    fontFamily: 'OpenSans-SemiBold',
     fontSize: 16,
   },
 });

@@ -34,7 +34,7 @@ HomeStack.navigationOptions = {
 };
 
 const WalletStack = createStackNavigator({
-  Wallet: WalletScreen,
+  // Wallet: WalletScreen,
   WalletCreate: WalletCreateScreen,
   WalletImport: WalletImportScreen,
   ImportViaAddress: ImportViaAddressScreen,
@@ -46,7 +46,7 @@ const WalletStackIcon = ({ focused }) => (
 WalletStackIcon.propTypes = iconPropTypes;
 
 WalletStack.navigationOptions = {
-  tabBarLabel: screensList.Wallet.label,
+  tabBarLabel: screensList.WalletCreate.label,
   tabBarIcon: WalletStackIcon,
 };
 

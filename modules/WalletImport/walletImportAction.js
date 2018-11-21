@@ -7,5 +7,5 @@ export const walletImportActionType = {
 export const walletImportAction = {
   setTitle: title => ({ type: walletImportActionType.SET_TITLE, title }),
   setAddress: address => ({ type: walletImportActionType.SET_ADDRESS, address }),
-  setFocusField: fieldName => ({ type: walletImportActionType.SET_FOCUS_FIELD, fieldName }),
+  setFocusField: focusField => ({ type: walletImportActionType.SET_FOCUS_FIELD, focusField }),
 };
