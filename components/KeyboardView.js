@@ -23,14 +23,12 @@ export default class KeyboardView extends Component {
     this.extraHeight = new Animated.Value(0);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const show = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
     const hide = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
     this.keyboardDidShowListener = Keyboard.addListener(show, e => this._keyboardDidShow(e));
     this.keyboardDidHideListener = Keyboard.addListener(hide, e => this._keyboardDidHide(e));
   }
-
-  componentDidMount() {}
 
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();

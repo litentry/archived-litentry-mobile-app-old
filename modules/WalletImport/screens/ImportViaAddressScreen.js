@@ -36,6 +36,9 @@ class ImportViaAddressScreen extends Component {
     loading: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     errorAddress: PropTypes.string.isRequired,
+    setTitle: PropTypes.func.isRequired,
+    setAddress: PropTypes.func.isRequired,
+    setFocusField: PropTypes.func.isRequired
   };
 
   static navigationOptions = {
