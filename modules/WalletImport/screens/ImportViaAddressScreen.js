@@ -23,11 +23,10 @@ import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
-import { screensList} from '../../../navigation/screensList';
+import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 
 const { width } = Dimensions.get('window');
-const marginTop = LayoutUtils.getExtraTop();
 
 class ImportViaAddressScreen extends Component {
   static propTypes = {

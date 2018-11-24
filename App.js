@@ -5,8 +5,7 @@ import { Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import AppNavigator from './navigation/AppNavigator';
 import { store } from './reducers/store';
-import PopupCustom from './components/PopupCustom';
-import PopupWrapper from "./components/PopupWrapper";
+import PopupWrapper from './components/PopupWrapper';
 
 export default class App extends React.Component {
   state = {

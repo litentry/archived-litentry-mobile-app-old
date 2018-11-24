@@ -1,5 +1,3 @@
-import set from 'lodash/fp/set';
-import _ from 'lodash';
 import { popupActionType } from '../actions/popupAction';
 
 const INIT_STATE = {

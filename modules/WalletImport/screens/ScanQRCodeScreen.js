@@ -4,11 +4,10 @@ import PropsType from 'prop-types';
 import { Permissions, BarCodeScanner } from 'expo';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import HapticFeedback from '../../../utils/HapticFeedback';
 import { screenAction } from '../../../actions/screenAction';
 import { popupAction } from '../../../actions/popupAction';
-import Checker from "../../../utils/Checker";
-import {walletImportAction} from "../walletImportAction";
+import Checker from '../../../utils/Checker';
+import { walletImportAction } from '../walletImportAction';
 
 class ScanQRCodeScreen extends Component {
   static propTypes = {
@@ -42,18 +41,18 @@ class ScanQRCodeScreen extends Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
-    const {navigation, setAddress, showPopup} = this.props
+    const { navigation, setAddress, showPopup } = this.props;
     console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
-      // if (this.importAddressStore.title === '') {
-      //   setTimeout(() => this.nameField.focus(), 250)
-      // }
-      const resChecker = Checker.checkAddressQR(data.toString());
-      if (resChecker && resChecker.length > 0) {
-        setAddress(data);
-        navigation.goBack()
-      } else{
-        showPopup('Not a valid address')
-      }
+    // if (this.importAddressStore.title === '') {
+    //   setTimeout(() => this.nameField.focus(), 250)
+    // }
+    const resChecker = Checker.checkAddressQR(data.toString());
+    if (resChecker && resChecker.length > 0) {
+      setAddress(data);
+      navigation.goBack();
+    } else {
+      showPopup('Not a valid address');
+    }
 
     // HapticFeedback.NotificationSuccess();
     // this.props.navigation.state.params.returnData(result);

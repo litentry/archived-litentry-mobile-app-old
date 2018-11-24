@@ -130,7 +130,7 @@ class PopupCustom extends Component {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            height:300,
+            height: 300,
             width: 300,
           }}>
           {lineBetween}
@@ -138,9 +138,11 @@ class PopupCustom extends Component {
             disabled={disable}
             style={[styles.buttonView]}
             onPress={() => {
-              btn.onClick ?
-              btn.onClick(valueInput) :
-              hidePopup();
+              if (btn.onClick) {
+                btn.onClick(valueInput);
+              } else {
+                hidePopup();
+              }
             }}>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
               <Text style={[styles.textButton, styleTextDisable]}>{btn.text}</Text>

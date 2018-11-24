@@ -13,7 +13,7 @@ export const popupAction = {
   showPopup: (
     title = 'Alert',
     buttons = defaultButtons,
-    content='',
+    content = '',
     popupType = 'normal',
     isAddress = false,
     image = null

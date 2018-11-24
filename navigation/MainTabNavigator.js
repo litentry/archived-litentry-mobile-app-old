@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
 import WalletCreateScreen from '../screens/WalletCreateScreen';
-import WalletScreen from '../screens/WalletScreen';
 import HomeScreen from '../screens/HomeScreen';
 import WalletImportScreen from '../screens/WalletImportScreen';
 import ImportViaAddressScreen from '../modules/WalletImport/screens/ImportViaAddressScreen';
-import ScanQRCodeScreen from "../modules/WalletImport/screens/ScanQRCodeScreen";
+import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
