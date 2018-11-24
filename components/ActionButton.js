@@ -1,18 +1,11 @@
-import React, { Component } from 'react'
-import {
-  TouchableOpacity,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Dimensions
-} from 'react-native'
-import PropTypes from 'prop-types'
-import Images from '../commons/Images'
-import AppStyle from "../commons/AppStyle";
+import React, { Component } from 'react';
+import { TouchableOpacity, View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import PropTypes from 'prop-types';
+import Images from '../commons/Images';
+import AppStyle from '../commons/AppStyle';
 
-const { height } = Dimensions.get('window')
-const isSmallScreen = height < 569
+const { height } = Dimensions.get('window');
+const isSmallScreen = height < 569;
 
 export default class ActionButton extends Component {
   static propTypes = {
@@ -22,16 +15,16 @@ export default class ActionButton extends Component {
     styleIcon: PropTypes.object,
     action: PropTypes.func.isRequired,
     haveShadow: PropTypes.bool,
-    enable: PropTypes.bool
-  }
+    enable: PropTypes.bool,
+  };
 
   static defaultProps = {
     style: {},
     styleIcon: {},
     styleText: {},
     haveShadow: true,
-    enable: true
-  }
+    enable: true,
+  };
   render() {
     const {
       buttonItem = {
@@ -44,53 +37,34 @@ export default class ActionButton extends Component {
       styleIcon,
       action,
       haveShadow,
-      enable
-    } = this.props
-    const {
-      background,
-      icon,
-      name,
-      imgBackground
-    } = buttonItem
-    const shadow = haveShadow ? {
-      shadowColor: 'black',
-      shadowOpacity: 0.2,
-      shadowOffset: { width: 0, height: 10 },
-      shadowRadius: 20
-    } : {}
-    const backgroundColor = imgBackground
-      ? {}
-      : { backgroundColor: background }
+      enable,
+    } = this.props;
+    const { background, icon, name, imgBackground } = buttonItem;
+    const shadow = haveShadow
+      ? {
+          shadowColor: 'black',
+          shadowOpacity: 0.2,
+          shadowOffset: { width: 0, height: 10 },
+          shadowRadius: 20,
+        }
+      : {};
+    const backgroundColor = imgBackground ? {} : { backgroundColor: background };
     return (
-      <TouchableOpacity
-        disabled={!enable}
-        onPress={() => action()}
-      >
-        <View
-          style={[
-            styles.container,
-            backgroundColor,
-            shadow,
-            style
-          ]}
-        >
+      <TouchableOpacity disabled={!enable} onPress={() => action()}>
+        <View style={[styles.container, backgroundColor, shadow, style]}>
           <Text style={[styles.buttonText, styleText]}>{name}</Text>
-          {icon &&
-          <Image
-            resizeMode="contain"
-            style={[styles.buttonIcon, styleIcon]}
-            source={icon}
-          />
-          }
+          {icon && (
+            <Image resizeMode="contain" style={[styles.buttonIcon, styleIcon]} source={icon} />
+          )}
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 
 const t = {
-  RECEIVE: 'Receive'
-}
+  RECEIVE: 'Receive',
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -98,16 +72,16 @@ const styles = StyleSheet.create({
     borderRadius: isSmallScreen ? 15 : 25,
     alignItems: 'center',
     paddingHorizontal: isSmallScreen ? 15 : 25,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   buttonText: {
     fontSize: isSmallScreen ? 10 : 14,
     fontFamily: 'OpenSans-Bold',
-    color: 'white'
+    color: 'white',
   },
   buttonIcon: {
     tintColor: 'white',
     marginLeft: 10,
-    height: isSmallScreen ? 15 : 20
-  }
-})
+    height: isSmallScreen ? 15 : 20,
+  },
+});

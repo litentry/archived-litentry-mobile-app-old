@@ -1,10 +1,6 @@
-import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator
-} from 'react-native'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,52 +11,52 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: 'transparent',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+});
 
 export default class Spinner extends Component {
   static propTypes = {
     style: PropTypes.array,
-    visible: PropTypes.bool
-  }
+    visible: PropTypes.bool,
+  };
 
   static defaultProps = {
     style: [],
-    visible: true
-  }
+    visible: true,
+  };
 
   constructor(props) {
-    super()
+    super();
     this.state = {
-      visible: props.visible
-    }
+      visible: props.visible,
+    };
   }
 
   _show = () => {
     this.setState({
-      visible: true
-    })
-  }
+      visible: true,
+    });
+  };
 
   _hide = () => {
     this.setState({
-      visible: false
-    })
-  }
+      visible: false,
+    });
+  };
 
   render() {
-    const {
-      style
-    } = this.props
-    const { visible } = this.state
+    const { style } = this.props;
+    const { visible } = this.state;
     if (!visible) {
-      return <View key="invisible" />
+      return <View key="invisible" />;
     }
     return (
-      <View key="visible" style={[styles.container, { backgroundColor: 'rgba(10,15,36,0.8)' }, style]}>
+      <View
+        key="visible"
+        style={[styles.container, { backgroundColor: 'rgba(10,15,36,0.8)' }, style]}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
-    )
+    );
   }
 }

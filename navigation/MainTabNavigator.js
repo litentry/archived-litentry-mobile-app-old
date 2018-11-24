@@ -8,7 +8,7 @@ import WalletCreateScreen from '../screens/WalletCreateScreen';
 import WalletScreen from '../screens/WalletScreen';
 import HomeScreen from '../screens/HomeScreen';
 import WalletImportScreen from '../screens/WalletImportScreen';
-import ImportViaAddressScreen from "../modules/WalletImport/screens/ImportViaAddressScreen";
+import ImportViaAddressScreen from '../modules/WalletImport/screens/ImportViaAddressScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 

@@ -1,27 +1,22 @@
-import React, { Component } from 'react'
-import {
-  TouchableWithoutFeedback,
-  Keyboard
-} from 'react-native'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import PropTypes from 'prop-types';
 
 export default class TouchOutSideDismissKeyboard extends Component {
   static propTypes = {
-    children: PropTypes.object
-  }
+    children: PropTypes.object,
+  };
 
   static defaultProps = {
-    children: {}
-  }
+    children: {},
+  };
 
-  onOutSidePress = () => Keyboard.dismiss()
+  onOutSidePress = () => Keyboard.dismiss();
 
   render() {
-    const { children } = this.props
+    const { children } = this.props;
     return (
-      <TouchableWithoutFeedback onPress={this.onOutSidePress}>
-        {children}
-      </TouchableWithoutFeedback>
-    )
+      <TouchableWithoutFeedback onPress={this.onOutSidePress}>{children}</TouchableWithoutFeedback>
+    );
   }
 }

@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
+import _ from 'lodash';
 import ActionButton from '../../../components/ActionButton';
 import Spinner from '../../../components/Spinner';
 import BottomButton from '../../../components/BottomButton';
@@ -23,7 +24,6 @@ import AppStyle from '../../../commons/AppStyle';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
 import { screensList } from '../../../navigation/screensList';
-import _ from 'lodash'
 import { walletImportAction } from '../walletImportAction';
 
 const { width } = Dimensions.get('window');
@@ -122,8 +122,8 @@ class ImportViaAddressScreen extends Component {
   };
 
   render() {
-    const { address, loading, errorAddress} = this.props;
-    const isValidAddress = this.address !== '' && this.errorAddress === ''
+    const { address, loading, errorAddress } = this.props;
+    const isValidAddress = this.address !== '' && this.errorAddress === '';
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <TouchOutSideDismissKeyboard>
@@ -139,7 +139,7 @@ class ImportViaAddressScreen extends Component {
                   onChangeText={this.onChangeAddress}
                   value={address}
                 />
-                {address === '' ? this._renderPasteButton(): this._renderClearButton()}
+                {address === '' ? this._renderPasteButton() : this._renderClearButton()}
               </View>
               {errorAddress !== '' && <Text style={styles.errorText}>{errorAddress}</Text>}
               <ActionButton
@@ -165,14 +165,14 @@ class ImportViaAddressScreen extends Component {
 
 const getErrorAddress = (address, finished) => {
   if (address !== '' && !finished && !Checker.checkAddress(address)) {
-    return t.INVALID_ADDRESS
+    return t.INVALID_ADDRESS;
   }
   //TODO
   // if (!finished && this.addressMap[address.toLowerCase()]) {
   //   return t.EXISTED_WALLET
   // }
-  return ''
-}
+  return '';
+};
 
 const mapStateToProps = state => ({
   address: state.walletImport.address,

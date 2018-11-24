@@ -1,6 +1,6 @@
 import set from 'lodash/fp/set';
+import _ from 'lodash';
 import { walletImportActionType } from './walletImportAction';
-import _ from 'lodash'
 
 const INITIAL_STATE = {
   title: ``,
@@ -18,7 +18,7 @@ export const walletImportReducer = (state = INITIAL_STATE, action) => {
     case walletImportActionType.SET_TITLE:
       return set('title', action.title, state);
     case walletImportActionType.SET_FOCUS_FIELD:
-      return set('focusField', action.focusField, state)
+      return set('focusField', action.focusField, state);
     default:
       return state;
   }
