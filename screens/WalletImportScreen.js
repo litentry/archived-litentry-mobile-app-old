@@ -6,16 +6,16 @@ import Images from '../commons/Images';
 import AppStyle from '../commons/AppStyle';
 import { screensList } from '../navigation/screensList';
 
-export default class ImportWalletScreen extends Component {
+export default class WalletImportScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
   };
 
   static navigationOptions = {
-    title: screensList.ImportWallet.title,
+    title: screensList.WalletImport.title,
   };
 
-  gotoImportAddress = () => this.props.navigation.navigate('ImportViaAddressScreen');
+  gotoImportAddress = () => this.props.navigation.navigate(screensList.ImportViaAddress.label);
 
   gotoImportPrivateKey = () => this.props.navigation.navigate('ImportViaPrivateKeyScreen');
 

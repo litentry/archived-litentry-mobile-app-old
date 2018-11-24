@@ -1,5 +1,5 @@
 import update from 'lodash/fp/update';
-import { walletActionType } from '../actions/wallet';
+import { walletActionType } from '../actions/walletAction';
 
 //we use lodash fp function to create immutable state, refer here
 //https://github.com/lodash/lodash/wiki/FP-Guide
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   swtc: 0,
 };
 
-const reducer = (state = INITIAL_STATE, action) => {
+export const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case walletActionType.TEST_ADD_ETH:
       // return state
@@ -19,5 +19,3 @@ const reducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-export default reducer;

@@ -7,13 +7,13 @@ import AppStyle from '../commons/AppStyle';
 import { screensList } from '../navigation/screensList';
 const { width } = Dimensions.get('window');
 
-export default class CreateWalletScreen extends Component {
+export default class WalletCreateScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
   };
 
   static navigationOptions = {
-    title: screensList.CreateWallet.title,
+    title: screensList.WalletCreate.title,
   };
 
   goBack = () => {
@@ -25,7 +25,7 @@ export default class CreateWalletScreen extends Component {
   };
 
   gotoImport = () => {
-    this.props.navigation.navigate(screensList.ImportWallet.label);
+    this.props.navigation.navigate(screensList.WalletImport.label);
   };
 
   render() {

@@ -12,40 +12,41 @@ import {
   Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import NavigationHeader from '../../../components/elements/NavigationHeader';
-import ActionButton from '../../../components/elements/ActionButton';
-import Spinner from '../../../components/elements/Spinner';
-import BottomButton from '../../../components/elements/BottomButton';
+import connect from 'react-redux/es/connect/connect';
+import _ from 'lodash';
+import ActionButton from '../../../components/ActionButton';
+import Spinner from '../../../components/Spinner';
+import BottomButton from '../../../components/BottomButton';
 import LayoutUtils from '../../../commons/LayoutUtils';
-import NavStore from '../../../AppStores/NavStore';
-import Checker from '../../../Handler/Checker';
-import images from '../../../commons/images';
+import Checker from '../../../utils/Checker';
+import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
-import constant from '../../../commons/constant';
-import ImportAddressStore from '../stores/ImportAddressStore';
-import KeyboardView from '../../../components/elements/KeyboardView';
-import TouchOutSideDismissKeyboard from '../../../components/elements/TouchOutSideDismissKeyboard';
-import MainStore from '../../../AppStores/MainStore';
+import KeyboardView from '../../../components/KeyboardView';
+import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
 import { screensList } from '../../../navigation/screensList';
+import { walletImportAction } from '../walletImportAction';
 
 const { width } = Dimensions.get('window');
 const marginTop = LayoutUtils.getExtraTop();
 
-export default class ImportViaAddressScreen extends Component {
+class ImportViaAddressScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
+    address: PropTypes.string.isRequired,
+    loading: PropTypes.bool.isRequired,
+    title: PropTypes.string.isRequired,
+    errorAddress: PropTypes.string.isRequired,
+    setTitle: PropTypes.func.isRequired,
+    setAddress: PropTypes.func.isRequired,
+    setFocusField: PropTypes.func.isRequired
   };
 
   static navigationOptions = {
-    title: screensList.ImportWallet.title,
+    title: screensList.ImportViaAddress.title,
   };
 
   constructor(props) {
     super();
-    MainStore.importAddressStore = new ImportAddressStore();
-    this.importAddressStore = MainStore.importAddressStore;
-    const { coin } = props.navigation.state.params;
-    this.importAddressStore.setCoin(coin);
   }
 
   onPaste = async () => {
@@ -60,7 +61,7 @@ export default class ImportViaAddressScreen extends Component {
       <View style={{ position: 'absolute', right: 0 }}>
         <TouchableOpacity onPress={this.onPaste}>
           <View style={{ padding: 15 }}>
-            <Text style={styles.pasteText}>Paste</Text>
+            <Text style={styles.pasteText}>{t.PASTE}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -75,74 +76,62 @@ export default class ImportViaAddressScreen extends Component {
     return (
       <View style={{ position: 'absolute', right: 15, top: 15 }}>
         <TouchableOpacity onPress={this.clearText}>
-          <Image source={images.iconCloseSearch} />
+          <Image source={Images.iconCloseSearch} />
         </TouchableOpacity>
       </View>
     );
   }
 
   onChangeName = text => {
-    this.importAddressStore.setTitle(text);
+    this.props.setTitle(text);
   };
 
   onChangeAddress = text => {
-    this.importAddressStore.setAddress(text);
+    this.props.setAddress(text);
   };
 
-  onFocusName = () => this.importAddressStore.setFocusField('name');
-  onFocusAddress = () => this.importAddressStore.setFocusField('address');
-  onBlurTextField = () => this.importAddressStore.setFocusField('');
+  onFocusName = () => this.props.setFocusField('name');
+  onFocusAddress = () => this.props.setFocusField('address');
+  onBlurTextField = () => this.props.setFocusField('');
 
   gotoScan = () => {
     setTimeout(() => {
-      NavStore.pushToScreen('ScanQRCodeScreen', {
+      this.props.navigation.navigate('ScanQRCodeScreen', {
         title: 'Scan Address',
         marginTop,
         returnData: this.returnData.bind(this),
       });
-    }, 300);
+    });
   };
 
   goBack = () => {
-    NavStore.goBack();
+    this.props.navigation.goBack();
   };
 
   returnData(codeScanned) {
     let address = codeScanned;
-    const { navigation } = this.props;
-    const { coin } = navigation.state.params;
     // if (this.importAddressStore.title === '') {
     //   setTimeout(() => this.nameField.focus(), 250)
     // }
-    const resChecker = Checker.checkAddressQR(codeScanned, coin);
+    const resChecker = Checker.checkAddressQR(codeScanned);
     if (resChecker && resChecker.length > 0) {
       [address] = resChecker;
     }
-    this.importAddressStore.setAddress(address);
+    this.props.setAddress(address);
   }
 
   goToEnterName = () => {
-    const { navigation } = this.props;
-    const { coin } = navigation.state.params;
-    NavStore.pushToScreen('EnterNameViaAddress', { coin });
+    this.props.navigation.navigate('EnterNameViaAddress');
   };
 
   render() {
-    const { address, loading, errorAddress, isValidAddress } = this.importAddressStore;
+    const { address, loading, errorAddress } = this.props;
+    const isValidAddress = this.address !== '' && this.errorAddress === '';
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <TouchOutSideDismissKeyboard>
           <View style={styles.container}>
             <KeyboardView style={styles.container}>
-              <NavigationHeader
-                style={{ marginTop: marginTop + 20, width }}
-                headerItem={{
-                  title: 'Add Address',
-                  icon: null,
-                  button: images.backButton,
-                }}
-                action={this.goBack}
-              />
               <View style={{ marginTop: 25 }}>
                 <TextInput
                   underlineColorAndroid="transparent"
@@ -153,15 +142,14 @@ export default class ImportViaAddressScreen extends Component {
                   onChangeText={this.onChangeAddress}
                   value={address}
                 />
-                {address === '' && this._renderPasteButton()}
-                {address !== '' && this._renderClearButton()}
+                {address === '' ? this._renderPasteButton() : this._renderClearButton()}
               </View>
               {errorAddress !== '' && <Text style={styles.errorText}>{errorAddress}</Text>}
               <ActionButton
                 style={{ height: 40, marginTop: 25 }}
                 buttonItem={{
-                  name: constant.SCAN_QR_CODE,
-                  icon: images.iconQrCode,
+                  name: t.SCAN_QR_CODE,
+                  icon: Images.iconQrCode,
                   background: '#121734',
                 }}
                 styleText={{ color: AppStyle.mainTextColor }}
@@ -178,6 +166,51 @@ export default class ImportViaAddressScreen extends Component {
   }
 }
 
+const getErrorAddress = (address, finished) => {
+  if (address !== '' && !finished && !Checker.checkAddress(address)) {
+    return t.INVALID_ADDRESS;
+  }
+  //TODO
+  // if (!finished && this.addressMap[address.toLowerCase()]) {
+  //   return t.EXISTED_WALLET
+  // }
+  return '';
+};
+
+const mapStateToProps = state => ({
+  address: state.walletImport.address,
+  loading: state.walletImport.loading,
+  title: state.walletImport.title,
+  errorAddress: getErrorAddress(state.walletImport.address, state.walletImport.finished),
+});
+
+const mapDispatchToProps = dispatch => ({
+  setAddress: _.flow(
+    walletImportAction.setAddress,
+    dispatch
+  ),
+  setTitle: _.flow(
+    walletImportAction.setTitle,
+    dispatch
+  ),
+  setFocusField: _.flow(
+    walletImportAction.setFocusField,
+    dispatch
+  ),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ImportViaAddressScreen);
+
+const t = {
+  PASTE: 'Paste',
+  SCAN_QR_CODE: 'Scan QR Code',
+  EXISTED_WALLET: 'Wallet already exists.',
+  INVALID_ADDRESS: 'Invalid Address.',
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -185,7 +218,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 16,
-    fontFamily: 'OpenSans-Semibold',
+    fontFamily: 'OpenSans-SemiBold',
     color: 'white',
     alignSelf: 'flex-start',
     marginLeft: 20,
@@ -205,7 +238,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 14,
-    fontFamily: 'OpenSans-Semibold',
+    fontFamily: 'OpenSans-SemiBold',
     color: AppStyle.errorColor,
     alignSelf: 'flex-start',
     marginTop: 10,
@@ -213,7 +246,7 @@ const styles = StyleSheet.create({
   },
   pasteText: {
     color: AppStyle.mainColor,
-    fontFamily: 'OpenSans-Semibold',
+    fontFamily: 'OpenSans-SemiBold',
     fontSize: 16,
   },
 });

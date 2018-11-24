@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { walletAction } from '../actions/wallet';
+import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 
 const t = {
@@ -28,7 +28,7 @@ class WalletScreen extends React.Component {
         <Button title="Plus one" onPress={this.props.testAddEth} />
         <Button
           title={t.createButtonLabel}
-          onPress={() => this.props.navigation.navigate(screensList.CreateWallet.label)}
+          onPress={() => this.props.navigation.navigate(screensList.WalletCreate.label)}
         />
       </View>
     );
