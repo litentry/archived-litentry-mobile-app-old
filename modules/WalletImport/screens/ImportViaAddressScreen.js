@@ -23,7 +23,7 @@ import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
-import { screensList } from '../../../navigation/screensList';
+import { screensList} from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 
 const { width } = Dimensions.get('window');
@@ -38,7 +38,7 @@ class ImportViaAddressScreen extends Component {
     errorAddress: PropTypes.string.isRequired,
     setTitle: PropTypes.func.isRequired,
     setAddress: PropTypes.func.isRequired,
-    setFocusField: PropTypes.func.isRequired
+    setFocusField: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
@@ -95,30 +95,12 @@ class ImportViaAddressScreen extends Component {
   onBlurTextField = () => this.props.setFocusField('');
 
   gotoScan = () => {
-    setTimeout(() => {
-      this.props.navigation.navigate('ScanQRCodeScreen', {
-        title: 'Scan Address',
-        marginTop,
-        returnData: this.returnData.bind(this),
-      });
-    });
+    this.props.navigation.navigate(screensList.ScanQRCode.label);
   };
 
   goBack = () => {
     this.props.navigation.goBack();
   };
-
-  returnData(codeScanned) {
-    let address = codeScanned;
-    // if (this.importAddressStore.title === '') {
-    //   setTimeout(() => this.nameField.focus(), 250)
-    // }
-    const resChecker = Checker.checkAddressQR(codeScanned);
-    if (resChecker && resChecker.length > 0) {
-      [address] = resChecker;
-    }
-    this.props.setAddress(address);
-  }
 
   goToEnterName = () => {
     this.props.navigation.navigate('EnterNameViaAddress');

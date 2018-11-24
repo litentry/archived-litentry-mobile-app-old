@@ -4,4 +4,5 @@ export const screensList = {
   WalletCreate: { label: 'WalletCreate', title: 'Create Wallet' },
   WalletImport: { label: 'WalletImport', title: 'Import Wallet' },
   ImportViaAddress: { label: 'ImportViaAddress', title: 'Import Wallet via Address' },
+  ScanQRCode: {label: 'ScanQRCode', title: 'Scan QR Code'}
 };

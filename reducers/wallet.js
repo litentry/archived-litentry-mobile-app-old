@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   nes: 0,
   eth: 0,
   swtc: 0,
+  address: '',
 };
 
 export const walletReducer = (state = INITIAL_STATE, action) => {

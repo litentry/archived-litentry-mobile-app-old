@@ -9,6 +9,7 @@ import WalletScreen from '../screens/WalletScreen';
 import HomeScreen from '../screens/HomeScreen';
 import WalletImportScreen from '../screens/WalletImportScreen';
 import ImportViaAddressScreen from '../modules/WalletImport/screens/ImportViaAddressScreen';
+import ScanQRCodeScreen from "../modules/WalletImport/screens/ScanQRCodeScreen";
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -38,6 +39,7 @@ const WalletStack = createStackNavigator({
   WalletCreate: WalletCreateScreen,
   WalletImport: WalletImportScreen,
   ImportViaAddress: ImportViaAddressScreen,
+  ScanQRCode: ScanQRCodeScreen,
 });
 
 const WalletStackIcon = ({ focused }) => (

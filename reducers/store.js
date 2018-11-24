@@ -1,6 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { walletReducer } from './wallet';
 import { walletImportReducer } from '../modules/WalletImport/walletImportReducer';
+import { screenReducer } from './screen';
+import { popupReducer } from './popup';
 
 const logger = store => next => action => {
   console.group(action.type);
@@ -12,8 +14,10 @@ const logger = store => next => action => {
 };
 
 const reducers = combineReducers({
-  wallet: walletReducer,
+  walletAddress: walletReducer,
   walletImport: walletImportReducer,
+  screen: screenReducer,
+  popup: popupReducer,
 });
 
 export const store = createStore(reducers, applyMiddleware(logger));

@@ -1,6 +1,7 @@
 import { createSwitchNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import PopupCustom from "../components/PopupCustom";
 
 export default createSwitchNavigator({
   // You could add another route here for authentication.
