@@ -1,5 +1,4 @@
 import set from 'lodash/fp/set';
-import _ from 'lodash';
 import { walletImportActionType } from './walletImportAction';
 
 const INITIAL_STATE = {

@@ -36,7 +36,7 @@ class WalletScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  wallet: state.wallet,
+  walletAddress: state.walletAddress,
 });
 
 const mapDispatchToProps = dispatch => ({
