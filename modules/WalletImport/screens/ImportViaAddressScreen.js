@@ -14,6 +14,7 @@ import {
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
+import { bindActionCreators } from 'redux';
 import ActionButton from '../../../components/ActionButton';
 import Spinner from '../../../components/Spinner';
 import BottomButton from '../../../components/BottomButton';
@@ -25,6 +26,7 @@ import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
 import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
+import WalletImportScreen from '../../../screens/WalletImportScreen';
 
 const { width } = Dimensions.get('window');
 
@@ -165,20 +167,7 @@ const mapStateToProps = state => ({
   errorAddress: getErrorAddress(state.walletImport.address, state.walletImport.finished),
 });
 
-const mapDispatchToProps = dispatch => ({
-  setAddress: _.flow(
-    walletImportAction.setAddress,
-    dispatch
-  ),
-  setTitle: _.flow(
-    walletImportAction.setTitle,
-    dispatch
-  ),
-  setFocusField: _.flow(
-    walletImportAction.setFocusField,
-    dispatch
-  ),
-});
+const mapDispatchToProps = _.curry(bindActionCreators)(walletImportAction);
 
 export default connect(
   mapStateToProps,

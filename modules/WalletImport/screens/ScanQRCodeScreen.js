@@ -4,6 +4,7 @@ import PropsType from 'prop-types';
 import { Permissions, BarCodeScanner } from 'expo';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { bindActionCreators } from 'redux';
 import { screenAction } from '../../../actions/screenAction';
 import { popupAction } from '../../../actions/popupAction';
 import Checker from '../../../utils/Checker';
@@ -79,19 +80,10 @@ class ScanQRCodeScreen extends Component {
 
 const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => ({
-  lockScreen: _.flow(
-    screenAction.lockScreen,
-    dispatch
-  ),
-  showPopup: _.flow(
-    popupAction.showPopup,
-    dispatch
-  ),
-  setAddress: _.flow(
-    walletImportAction.setAddress,
-    dispatch
-  ),
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  setAddress: walletImportAction.setAddress,
+  showPopup: popupAction.showPopup,
+  lockScreen: screenAction.lockScreen,
 });
 
 export default connect(
