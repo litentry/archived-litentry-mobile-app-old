@@ -18,7 +18,6 @@ import { bindActionCreators } from 'redux';
 import ActionButton from '../../../components/ActionButton';
 import Spinner from '../../../components/Spinner';
 import BottomButton from '../../../components/BottomButton';
-import LayoutUtils from '../../../commons/LayoutUtils';
 import Checker from '../../../utils/Checker';
 import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
@@ -26,24 +25,23 @@ import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
 import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
-import WalletImportScreen from '../../../screens/WalletImportScreen';
 
 const { width } = Dimensions.get('window');
 
-class ImportViaAddressScreen extends Component {
+class ImportViaPrivateScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
-    address: PropTypes.string.isRequired,
+    privateKey: PropTypes.string.isRequired,
     loading: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
-    errorAddress: PropTypes.string.isRequired,
+    isValidPrivateKey: PropTypes.bool.isRequired,
     setTitle: PropTypes.func.isRequired,
-    setAddress: PropTypes.func.isRequired,
+    setPrivateKey: PropTypes.func.isRequired,
     setFocusField: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
-    title: screensList.ImportViaAddress.title,
+    title: screensList.ImportViaPrivate.title,
   };
 
   constructor(props) {
@@ -53,7 +51,7 @@ class ImportViaAddressScreen extends Component {
   onPaste = async () => {
     const content = await Clipboard.getString();
     if (content) {
-      this.onChangeAddress(content);
+      this.onChangePrivateKey(content);
     }
   };
 
@@ -70,7 +68,7 @@ class ImportViaAddressScreen extends Component {
   }
 
   clearText = () => {
-    this.onChangeAddress('');
+    this.onChangePrivateKey('');
   };
 
   _renderClearButton() {
@@ -87,12 +85,13 @@ class ImportViaAddressScreen extends Component {
     this.props.setTitle(text);
   };
 
-  onChangeAddress = text => {
-    this.props.setAddress(text);
+  onChangePrivateKey = text => {
+    this.props.setPrivateKey(text);
   };
 
+
   onFocusName = () => this.props.setFocusField('name');
-  onFocusAddress = () => this.props.setFocusField('address');
+  onFocusPrivateKey = () => this.props.setFocusField('privateKey');
   onBlurTextField = () => this.props.setFocusField('');
 
   gotoScan = () => {
@@ -108,8 +107,7 @@ class ImportViaAddressScreen extends Component {
   };
 
   render() {
-    const { address, loading, errorAddress } = this.props;
-    const isValidAddress = this.address !== '' && this.errorAddress === '';
+    const { privateKey, loading, isValidPrivateKey } = this.props;
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <TouchOutSideDismissKeyboard>
@@ -122,12 +120,12 @@ class ImportViaAddressScreen extends Component {
                   autoCorrect={false}
                   multiline
                   style={[styles.textInput]}
-                  onChangeText={this.onChangeAddress}
-                  value={address}
+                  onChangeText={this.onChangePrivateKey}
+                  value={privateKey}
                 />
-                {address === '' ? this._renderPasteButton() : this._renderClearButton()}
+                {privateKey === '' ? this._renderPasteButton() : this._renderClearButton()}
               </View>
-              {errorAddress !== '' && <Text style={styles.errorText}>{errorAddress}</Text>}
+              {(!isValidPrivateKey && privateKey !== '') && <Text style={styles.errorText}>{t.INVALID_PRIVATE_KEY}</Text>}
               <ActionButton
                 style={{ height: 40, marginTop: 25 }}
                 buttonItem={{
@@ -140,7 +138,7 @@ class ImportViaAddressScreen extends Component {
                 action={this.gotoScan}
               />
             </KeyboardView>
-            <BottomButton onPress={this.goToEnterName} disable={!isValidAddress} />
+            <BottomButton onPress={this.goToEnterName} disable={!isValidPrivateKey} />
             {loading && <Spinner />}
           </View>
         </TouchOutSideDismissKeyboard>
@@ -149,22 +147,13 @@ class ImportViaAddressScreen extends Component {
   }
 }
 
-const getErrorAddress = (address, finished) => {
-  if (address !== '' && !finished && !Checker.checkAddress(address)) {
-    return t.INVALID_ADDRESS;
-  }
-  //TODO
-  // if (!finished && this.addressMap[address.toLowerCase()]) {
-  //   return t.EXISTED_WALLET
-  // }
-  return '';
-};
+const validPrivateKey = (privateKey) => privateKey !== ''  && Checker.checkPrivateKey(privateKey)
 
 const mapStateToProps = state => ({
-  address: state.walletImport.address,
+  privateKey: state.walletImport.privateKey,
   loading: state.walletImport.loading,
   title: state.walletImport.title,
-  errorAddress: getErrorAddress(state.walletImport.address, state.walletImport.finished),
+  isValidPrivateKey: validPrivateKey(state.walletImport.privateKey),
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)(walletImportAction);
@@ -172,13 +161,13 @@ const mapDispatchToProps = _.curry(bindActionCreators)(walletImportAction);
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ImportViaAddressScreen);
+)(ImportViaPrivateScreen);
 
 const t = {
   PASTE: 'Paste',
   SCAN_QR_CODE: 'Scan QR Code',
   EXISTED_WALLET: 'Wallet already exists.',
-  INVALID_ADDRESS: 'Invalid Address.',
+  INVALID_PRIVATE_KEY: 'Invalid Private Key.',
 };
 
 const styles = StyleSheet.create({

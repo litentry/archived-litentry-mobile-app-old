@@ -22,8 +22,8 @@ class Checker {
   }
   static checkWalletIsExist(wallets, address) {
     return wallets.find(w => {
-      if (w.type === 'ethereum') return w.address.toLowerCase() === address.toLowerCase();
-      return w.address === address;
+      if (w.type === 'ethereum') return w.privateKey.toLowerCase() === address.toLowerCase();
+      return w.privateKey === address;
     });
   }
   static checkNameIsExist(wallets, name) {

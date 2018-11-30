@@ -3,7 +3,7 @@ import { walletImportActionType } from './walletImportAction';
 
 const INITIAL_STATE = {
   title: ``,
-  address: '',
+  privateKey: '',
   loading: false,
   finished: false,
   focusField: '',
@@ -11,9 +11,9 @@ const INITIAL_STATE = {
 
 export const walletImportReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case walletImportActionType.SET_ADDRESS:
+    case walletImportActionType.SET_PRIVATE_KEY:
       // return state
-      return set('address', action.address, state);
+      return set('privateKey', action.privateKey, state);
     case walletImportActionType.SET_TITLE:
       return set('title', action.title, state);
     case walletImportActionType.SET_FOCUS_FIELD:

@@ -15,7 +15,7 @@ class ScanQRCodeScreen extends Component {
     navigation: PropsType.object,
     lockScreen: PropsType.func.isRequired,
     showPopup: PropsType.func.isRequired,
-    setAddress: PropsType.func.isRequired,
+    setPrivateKey: PropsType.func.isRequired,
   };
 
   state = {
@@ -42,17 +42,17 @@ class ScanQRCodeScreen extends Component {
   }
 
   handleBarCodeScanned = ({ type, data }) => {
-    const { navigation, setAddress, showPopup } = this.props;
+    const { navigation, setPrivateKey, showPopup } = this.props;
     console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
     // if (this.importAddressStore.title === '') {
     //   setTimeout(() => this.nameField.focus(), 250)
     // }
-    const resChecker = Checker.checkAddressQR(data.toString());
+    const resChecker = Checker.checkPrivateKey(data.toString());
     if (resChecker && resChecker.length > 0) {
-      setAddress(data);
+      setPrivateKey(data);
       navigation.goBack();
     } else {
-      showPopup('Not a valid address');
+      showPopup('Not a valid private Key');
     }
 
     // HapticFeedback.NotificationSuccess();
@@ -81,7 +81,7 @@ class ScanQRCodeScreen extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
-  setAddress: walletImportAction.setAddress,
+  setPrivateKey: walletImportAction.setPrivateKey,
   showPopup: popupAction.showPopup,
   lockScreen: screenAction.lockScreen,
 });
