@@ -10,6 +10,7 @@ export const dataEntry = {
   disableTime: {label: `DISABLED_TIME`, stateName: 'disableTime', initValue: 0},
   hasPassword: {label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false},
   wrongPincodeCount: {label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0},
+  pinConfirm: {label: 'PIN_CONFIRM', stateName: 'pinConfirm', intiValue: null},
   // pincode: {label: 'PINCODE', stateName: 'pincode', initValue: null},
 }
 
