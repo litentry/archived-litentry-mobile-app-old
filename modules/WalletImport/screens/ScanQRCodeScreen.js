@@ -31,22 +31,9 @@ class ScanQRCodeScreen extends Component {
     this.setState({ showCamera: status === 'granted' });
   }
 
-  componentDidUpdate() {
-    // this.resetCamera();
-  }
-
-  resetCamera() {
-    this.setState({ showCamera: false }, () => {
-      this.setState({ showCamera: true });
-    });
-  }
-
   handleBarCodeScanned = ({ type, data }) => {
     const { navigation, setPrivateKey, showPopup } = this.props;
     console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
-    // if (this.importAddressStore.title === '') {
-    //   setTimeout(() => this.nameField.focus(), 250)
-    // }
     const resChecker = Checker.checkPrivateKey(data.toString());
     if (resChecker && resChecker.length > 0) {
       setPrivateKey(data);

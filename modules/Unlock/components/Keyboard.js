@@ -37,6 +37,7 @@ class Keyboard extends Component {
     setPincodeToBeConfirm: PropTypes.func.isRequired,
     deleteOnePincode: PropTypes.func.isRequired,
     addErrorCount: PropTypes.func.isRequired,
+    addOnePincode: PropTypes.func.isRequired,
   };
 
   _confirmPassword(pincode) {
@@ -58,20 +59,27 @@ class Keyboard extends Component {
   }
 
   _handlePress(number) {
-    const { pincode, hasPassword, pincodeToBeConfirm, setPincodeToBeConfirm } = this.props;
+    const {
+      pincode,
+      hasPassword,
+      pincodeToBeConfirm,
+      setPincodeToBeConfirm,
+      addOnePincode,
+    } = this.props;
 
     if (pincode.length === 6) {
       return null;
     }
     HapticHandler.ImpactLight();
-    const pinData = pincode + number;
+    addOnePincode(number);
+    const newPinCode = pincode + number;
 
-    if (pinData.length === 6) {
+    if (newPinCode.length === 6) {
       if (hasPassword) {
         if (pincodeToBeConfirm) {
-          this._confirmPassword(pincode);
+          this._confirmPassword(newPinCode);
         } else {
-          this._onCheckPassword(pincode);
+          this._onCheckPassword(newPinCode);
         }
       } else {
         setPincodeToBeConfirm();
@@ -139,6 +147,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
+  addOnePincode: unlockAction.addOnePincode,
   resetPincode: unlockAction.resetPincode,
   setPincodeToBeConfirm: unlockAction.setPincodeToBeConfirm,
   deleteOnePincode: unlockAction.deleteOnePincode,
