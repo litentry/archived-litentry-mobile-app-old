@@ -15,6 +15,17 @@ const logger = store => next => action => {
   return result;
 };
 
+const enableBatching = reducer => {
+  return function batchingReducer(state, action) {
+    switch (action.type) {
+      case 'BATCH_ACTIONS':
+        return action.actions.reduce(batchingReducer, state);
+      default:
+        return reducer(state, action);
+    }
+  }
+}
+
 const reducers = combineReducers({
   walletAddress: walletReducer,
   walletImport: walletImportReducer,
@@ -24,4 +35,7 @@ const reducers = combineReducers({
   unlock: unlockReducer,
 });
 
-export const store = createStore(reducers, applyMiddleware(logger));
+export const store = createStore(
+  enableBatching(reducers),
+  applyMiddleware(logger)
+);
