@@ -15,7 +15,7 @@ export default class WalletImportScreen extends Component {
     title: screensList.WalletImport.title,
   };
 
-  gotoImportAddress = () => this.props.navigation.navigate(screensList.ImportViaAddress.label);
+  gotoImportPrivate = () => this.props.navigation.navigate(screensList.ImportViaPrivate.label);
 
   gotoImportPrivateKey = () => this.props.navigation.navigate('ImportViaPrivateKeyScreen');
 
@@ -38,7 +38,7 @@ export default class WalletImportScreen extends Component {
               title={t.titlePrivateKey}
               subtitle={t.contentPrivateKey}
               imageCard={Images.iconPrivateKey}
-              onPress={this.gotoImportPrivateKey}
+              onPress={this.gotoImportPrivate}
               imageBackground="backgroundCard"
               imageBackgroundStyle={{ height: 174 }}
               titleTextStyle={{ color: AppStyle.mainColor }}
@@ -54,19 +54,6 @@ export default class WalletImportScreen extends Component {
               subtitle={t.contentMnemonicPhrase}
               imageCard={Images.iconMnemonic}
               onPress={this.gotoImportMnemonic}
-              titleTextStyle={{ color: AppStyle.mainTextColor }}
-              subtitleTextStyle={{
-                color: AppStyle.secondaryTextColor,
-                marginTop: 10,
-              }}
-            />
-
-            <SmallCard
-              style={{ marginTop: 20, marginBottom: 20, height: 174 }}
-              title={t.titleAddressOnly}
-              subtitle={t.contentAddressOnly}
-              imageCard={Images.iconAddress}
-              onPress={this.gotoImportAddress}
               titleTextStyle={{ color: AppStyle.mainTextColor }}
               subtitleTextStyle={{
                 color: AppStyle.secondaryTextColor,

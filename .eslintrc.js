@@ -17,6 +17,7 @@ module.exports = {
     "react/prefer-stateless-function": [
       0, // disable
       // { "ignorePureComponents": true }
-    ]
+    ],
+    "handle-callback-err": 0
   }
 };

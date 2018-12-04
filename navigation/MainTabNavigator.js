@@ -7,13 +7,19 @@ import { screensList } from './screensList';
 import WalletCreateScreen from '../screens/WalletCreateScreen';
 import HomeScreen from '../screens/HomeScreen';
 import WalletImportScreen from '../screens/WalletImportScreen';
-import ImportViaAddressScreen from '../modules/WalletImport/screens/ImportViaAddressScreen';
+import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
+import UnlockScreen from '../modules/Unlock/screens/UnlockScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
+const commonScreens = {
+  Unlock: UnlockScreen,
+};
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  ...commonScreens,
 });
 
 const HomeStackIcon = ({ focused }) => (
@@ -37,8 +43,9 @@ const WalletStack = createStackNavigator({
   // Wallet: WalletScreen,
   WalletCreate: WalletCreateScreen,
   WalletImport: WalletImportScreen,
-  ImportViaAddress: ImportViaAddressScreen,
+  ImportViaPrivate: ImportViaPrivateScreen,
   ScanQRCode: ScanQRCodeScreen,
+  ...commonScreens,
 });
 
 const WalletStackIcon = ({ focused }) => (

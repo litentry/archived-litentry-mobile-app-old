@@ -3,6 +3,7 @@ export const screensList = {
   Wallet: { label: 'Wallet', title: 'Wallet' },
   WalletCreate: { label: 'WalletCreate', title: 'Create Wallet' },
   WalletImport: { label: 'WalletImport', title: 'Import Wallet' },
-  ImportViaAddress: { label: 'ImportViaAddress', title: 'Import Wallet via Address' },
+  ImportViaPrivate: { label: 'ImportViaPrivate', title: 'Import Wallet via Address' },
   ScanQRCode: { label: 'ScanQRCode', title: 'Scan QR Code' },
+  Unlock: { label: 'Unlock', title: 'Unlock Screen' },
 };
