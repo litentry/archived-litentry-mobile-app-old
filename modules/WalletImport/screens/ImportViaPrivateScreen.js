@@ -89,7 +89,6 @@ class ImportViaPrivateScreen extends Component {
     this.props.setPrivateKey(text);
   };
 
-
   onFocusName = () => this.props.setFocusField('name');
   onFocusPrivateKey = () => this.props.setFocusField('privateKey');
   onBlurTextField = () => this.props.setFocusField('');
@@ -125,7 +124,9 @@ class ImportViaPrivateScreen extends Component {
                 />
                 {privateKey === '' ? this._renderPasteButton() : this._renderClearButton()}
               </View>
-              {(!isValidPrivateKey && privateKey !== '') && <Text style={styles.errorText}>{t.INVALID_PRIVATE_KEY}</Text>}
+              {!isValidPrivateKey && privateKey !== '' && (
+                <Text style={styles.errorText}>{t.INVALID_PRIVATE_KEY}</Text>
+              )}
               <ActionButton
                 style={{ height: 40, marginTop: 25 }}
                 buttonItem={{
@@ -147,7 +148,7 @@ class ImportViaPrivateScreen extends Component {
   }
 }
 
-const validPrivateKey = (privateKey) => privateKey !== ''  && Checker.checkPrivateKey(privateKey)
+const validPrivateKey = privateKey => privateKey !== '' && Checker.checkPrivateKey(privateKey);
 
 const mapStateToProps = state => ({
   privateKey: state.walletImport.privateKey,

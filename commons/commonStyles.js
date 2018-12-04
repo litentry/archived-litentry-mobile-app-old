@@ -1,27 +1,23 @@
-import {
-  StyleSheet,
-  Dimensions,
-  Platform
-} from 'react-native'
-import AppStyle from './AppStyle'
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+import AppStyle from './AppStyle';
 
-const { width } = Dimensions.get('window')
+const { width } = Dimensions.get('window');
 
-const fontWeight = Platform.OS === 'ios' ? { fontWeight: 'bold' } : {}
+const fontWeight = Platform.OS === 'ios' ? { fontWeight: 'bold' } : {};
 
-export const openSansRegular = Platform.OS === 'ios' ? 'OpenSans' : 'OpenSans-Regular'
+export const openSansRegular = Platform.OS === 'ios' ? 'OpenSans' : 'OpenSans-Regular';
 
 const styles = StyleSheet.create({
   line: {
     height: 1,
     width: width - 40,
     marginHorizontal: 20,
-    backgroundColor: AppStyle.borderLinesSetting
+    backgroundColor: AppStyle.borderLinesSetting,
   },
   fontAddress: {
     fontFamily: Platform.OS === 'ios' ? 'Courier New' : 'CourierNewBold',
-    ...fontWeight
-  }
-})
+    ...fontWeight,
+  },
+});
 
-export default styles
+export default styles;

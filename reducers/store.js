@@ -3,8 +3,8 @@ import { walletReducer } from './wallet';
 import { walletImportReducer } from '../modules/WalletImport/reducers/walletImportReducer';
 import { screenReducer } from './screen';
 import { popupReducer } from './popup';
-import {loaderReducer} from "./loader";
-import {unlockReducer} from "../modules/Unlock/reducer/unlockReducer";
+import { loaderReducer } from './loader';
+import { unlockReducer } from '../modules/Unlock/reducer/unlockReducer';
 
 const logger = store => next => action => {
   console.group(action.type);

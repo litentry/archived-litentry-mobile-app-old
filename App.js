@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import AppNavigator from './navigation/AppNavigator';
 import { store } from './reducers/store';
 import PopupWrapper from './components/PopupWrapper';
-import Loader from "./modules/Loader/components/Loader";
+import Loader from './modules/Loader/components/Loader';
 
 export default class App extends React.Component {
   state = {
@@ -26,7 +26,7 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
-            <Loader/>
+            <Loader />
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
             <PopupWrapper />

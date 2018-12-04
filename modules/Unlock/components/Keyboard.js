@@ -1,139 +1,123 @@
-import React, { Component } from 'react'
-import {
-  View,
-  StyleSheet,
-  Text,
-  Dimensions,
-  Image,
-  TouchableOpacity
-} from 'react-native'
-import PropTypes from 'prop-types'
-import images from '../../../commons/images'
-import NavStore from '../../../AppStores/NavStore'
-import HapticHandler from "../../../utils/HapticFeedback";
+import React, { Component } from 'react';
+import { View, StyleSheet, Text, Dimensions, Image, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import { withNavigation } from 'react-navigation';
+import images from '../../../commons/images';
+import HapticHandler from '../../../utils/HapticFeedback';
+import { comparePasswordAsync, savePasswordAsync } from '../../../utils/secureStoreUtils';
+import { loaderAction } from '../../../actions/loaderAction';
+import { unlockAction } from '../unlockAction';
 
-const { height } = Dimensions.get('window')
-const isSmallScreen = height < 569
-const dataNumber1 = [
-  { number: '1' },
-  { number: '2' },
-  { number: '3' }
-]
-const dataNumber2 = [
-  { number: '4' },
-  { number: '5' },
-  { number: '6' }
-]
-const dataNumber3 = [
-  { number: '7' },
-  { number: '8' },
-  { number: '9' }
-]
+const { height } = Dimensions.get('window');
+const isSmallScreen = height < 569;
+const dataNumber1 = [{ number: '1' }, { number: '2' }, { number: '3' }];
+const dataNumber2 = [{ number: '4' }, { number: '5' }, { number: '6' }];
+const dataNumber3 = [{ number: '7' }, { number: '8' }, { number: '9' }];
 const dataNumber4 = [
   {
-    actions: 'cancel'
+    actions: 'cancel',
   },
   { number: '0' },
   {
     icon: images.imgDeletePin,
-    actions: 'delete'
-  }
-]
+    actions: 'delete',
+  },
+];
 
-export default class Keyboard extends Component {
+class Keyboard extends Component {
   static propTypes = {
-    params: PropTypes.object.isRequired
+    navigation: PropTypes.object.isRequired,
+    hasPassword: Keyboard.bool.isRequired,
+    pincode: PropTypes.string.isRequired,
+    pincodeToBeConfirm: PropTypes.string.isRequired,
+    resetPincode: PropTypes.func.isRequired,
+    setPincodeToBeConfirm: PropTypes.func.isRequired,
+    deleteOnePincode: PropTypes.func.isRequired,
+    addErrorCount: PropTypes.func.isRequired,
+  };
+
+  _confirmPassword(pincode) {
+    if (this.props.pincodeToBeConfirm !== pincode) {
+      this.props.resetPincode();
+    } else {
+      savePasswordAsync(pincode);
+    }
   }
 
-  async handlePress(number) {
-    const { pincode, pinConfirm } = this.props
+  _onCheckPassword(pincode) {
+    const { addErrorCount, navigation, resetPincode } = this.props;
+    const resolve = navigation.getParam('resolve', () => {});
+    const resolveFunction = () => {
+      resetPincode();
+      resolve();
+    };
+    comparePasswordAsync(pincode, resolveFunction, addErrorCount);
+  }
+
+  _handlePress(number) {
+    const { pincode, hasPassword, pincodeToBeConfirm, setPincodeToBeConfirm } = this.props;
 
     if (pincode.length === 6) {
-      return null
+      return null;
     }
-    HapticHandler.ImpactLight()
-    const pinData = pincode + number
-    return new Promise((resolve, reject) => {
-      if (pinData.length === 6) {
-        // handle check pincode
-        this.setData({
-          // pinTyped: pinTyped + 1,
-          pincode: pinData
-        })
-        MigrateData.getItem('USER_WALLET_ENCRYPTED')
-          .then((oldData) => {
-            if (oldData) {
-              this._handelMigrateData().then(res => resolve(res))
-            } else if (MainStore.appState.hasPassword) {
-              this._handleCheckPincode().then(res => resolve(res))
-            } else if (pinConfirm === '') {
-              this._handleCreatePin()
-            } else if (this.data.pincode === this.data.pinConfirm) {
-              this._handleConfirmPin().then(res => resolve(res))
-            } else {
-              this._handleErrorPin()
-            }
-          })
+    HapticHandler.ImpactLight();
+    const pinData = pincode + number;
+
+    if (pinData.length === 6) {
+      if (hasPassword) {
+        if (pincodeToBeConfirm) {
+          this._confirmPassword(pincode);
+        } else {
+          this._onCheckPassword(pincode);
+        }
       } else {
-        this.setData({
-          // pinTyped: pinTyped + 1,
-          pincode: pinData
-        })
+        setPincodeToBeConfirm();
       }
-    })
+    }
   }
 
   renderNumber(arrayNumber) {
-    const { onUnlock = () => {}, shouldShowCancel } = this.props.params
-    const nums = arrayNumber.map((num, i) => {
-      if (num.number) {
+    const { deleteOnePincode, navigation, resetPincode } = this.props;
+    const shouldShowCancel = navigation.getParam('shouldShowCancel', true);
+
+    const numbers = arrayNumber.map(numberData => {
+      if (numberData.number) {
         return (
           <TouchableOpacity
             onPress={() => {
-              this.onKeyPress(num.number).then((res) => {
-                if (!res) return
-                onUnlock(res)
-              })
+              this._handlePress(numberData.number);
             }}
-            key={num.number}
-          >
+            key={numberData.number}>
             <View style={styles.numberField}>
-              <Text style={styles.numberText}>{num.number}</Text>
+              <Text style={styles.numberText}>{numberData.number}</Text>
             </View>
           </TouchableOpacity>
-        )
+        );
       }
 
       return (
         <TouchableOpacity
-          key={num.actions}
+          key={numberData.actions}
           onPress={() => {
-            if (num.actions === 'delete') {
-              UnlockStore.handleDeletePin()
-            } else if (num.actions === 'cancel' && shouldShowCancel) {
-              NavStore.goBack()
+            if (numberData.actions === 'delete') {
+              deleteOnePincode();
+            } else if (numberData.actions === 'cancel' && shouldShowCancel) {
+              resetPincode();
+              navigation.goBack();
             }
-          }}
-        >
+          }}>
           <View style={styles.numberField}>
-            {num.actions !== 'cancel' &&
-            <Image
-              source={num.icon}
-            />
-            }
-            {num.actions === 'cancel' &&
-            <Text style={styles.cancelText}>Cancel</Text>
-            }
+            {numberData.actions !== 'cancel' && <Image source={numberData.icon} />}
+            {numberData.actions === 'cancel' && <Text style={styles.cancelText}>Cancel</Text>}
           </View>
         </TouchableOpacity>
-      )
-    })
+      );
+    });
 
-    return (
-      <View style={styles.arrayNumber}>
-        {nums}
-      </View>
-    )
+    return <View style={styles.arrayNumber}>{numbers}</View>;
   }
 
   render() {
@@ -144,15 +128,33 @@ export default class Keyboard extends Component {
         {this.renderNumber(dataNumber3)}
         {this.renderNumber(dataNumber4)}
       </View>
-    )
+    );
   }
 }
+
+const mapStateToProps = state => ({
+  hasPassword: state.appState.hasPassword,
+  pincode: state.unlock.pincode,
+  pincodeToBeConfirm: state.unlock.pincodeToBeConfirm,
+});
+
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  resetPincode: unlockAction.resetPincode,
+  setPincodeToBeConfirm: unlockAction.setPincodeToBeConfirm,
+  deleteOnePincode: unlockAction.deleteOnePincode,
+  addErrorCount: loaderAction.addErrorCount,
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(Keyboard));
 
 const styles = StyleSheet.create({
   arrayNumber: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: height * 0.02
+    marginTop: height * 0.02,
   },
   numberField: {
     width: isSmallScreen ? 60 : 75,
@@ -160,16 +162,16 @@ const styles = StyleSheet.create({
     borderRadius: 37.5,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 13
+    marginHorizontal: 13,
   },
   numberText: {
     fontFamily: 'OpenSans-SemiBold',
     fontSize: 36,
-    color: 'white'
+    color: 'white',
   },
   cancelText: {
     fontFamily: 'OpenSans-SemiBold',
     fontSize: isSmallScreen ? 18 : 20,
-    color: 'white'
-  }
-})
+    color: 'white',
+  },
+});

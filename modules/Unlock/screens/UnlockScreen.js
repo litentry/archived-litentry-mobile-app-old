@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,67 +7,71 @@ import {
   Text,
   Animated,
   BackHandler,
-  Platform
-} from 'react-native'
-import PropTypes from 'prop-types'
-import DisableView from '../components/DisableView'
-import AppStyle from '../../../commons/AppStyle'
-import Keyboard from '../components/Keyboard'
-import Spinner from "../../../components/Spinner";
-import _ from "lodash";
-import {bindActionCreators} from "redux";
-import {loaderAction} from "../../../actions/loaderAction";
-import connect from "react-redux/es/connect/connect";
+  Platform,
+} from 'react-native';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import DisableView from '../components/DisableView';
+import AppStyle from '../../../commons/AppStyle';
+import Keyboard from '../components/Keyboard';
+import Spinner from '../../../components/Spinner';
 
-const { height } = Dimensions.get('window')
-const isSmallScreen = height < 569
+const { height } = Dimensions.get('window');
+const isSmallScreen = height < 569;
 
 const t = {
   UNLOCK_SCREEN: 'Unlock to continue',
-  CREATE_PINCODE: 'Create your pin code'
-}
+  CREATE_PINCODE: 'Create your pincode',
+  REPEAT_PINCODE: 'Please repeat the pincode',
+};
 
-export default class UnlockScreen extends Component {
+class UnlockScreen extends Component {
   static propTypes = {
-    navigation: PropTypes.object
-  }
+    navigation: PropTypes.object.isRequired,
+    pincode: PropTypes.string.isRequired,
+    pincodeToBeConfirm: PropTypes.string.isRequired,
+    wrongPincodeCount: PropTypes.number.isRequired,
+    hasPassword: PropTypes.bool.isRequired,
+    unlockDescription: PropTypes.string.isRequired,
+  };
 
   static defaultProps = {
-    navigation: {}
-  }
+    navigation: {},
+  };
 
   constructor(props) {
-    super()
-    this.state.animatedValue = new Animated.Value(0)
+    super();
+    this.state.animatedValue = new Animated.Value(0);
   }
 
   componentDidMount() {
-    this.setup()
     if (Platform.OS === 'android') {
-      BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+      BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     }
   }
 
   componentWillUnmount() {
     if (Platform.OS === 'android') {
-      BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress)
+      BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }
   }
 
   get shouldDisableApp() {
-    const { wrongPincodeCount } = this.props
-    return wrongPincodeCount > 5
+    const { wrongPincodeCount } = this.props;
+    return wrongPincodeCount > 5;
   }
 
   handleBackPress = () => {
-    BackHandler.exitApp()
-    return true
-  }
+    BackHandler.exitApp();
+    return true;
+  };
 
   renderDots(numberOfDots) {
-    const { pincode } = this.props
-    const dots = []
-    const pinTyped = pincode.length
+    const { pincode } = this.props;
+    const dots = [];
+    const pinTyped = pincode.length;
 
     const styleDot = {
       width: 13,
@@ -75,88 +79,89 @@ export default class UnlockScreen extends Component {
       borderRadius: 6.5,
       borderWidth: 1,
       borderColor: 'white',
-      marginHorizontal: 12
-    }
+      marginHorizontal: 12,
+    };
     for (let i = 0; i < numberOfDots; i++) {
-      const backgroundColor = i < pinTyped ? { backgroundColor: 'white' } : {}
-      const dot = <View style={[styleDot, backgroundColor]} key={i} />
-      dots.push(dot)
+      const backgroundColor = i < pinTyped ? { backgroundColor: 'white' } : {};
+      const dot = <View style={[styleDot, backgroundColor]} key={i} />;
+      dots.push(dot);
     }
-    return dots
+    return dots;
   }
 
   renderContent = () => {
-    const { wrongPincodeCount, unlockDescription } = this.props
+    const { wrongPincodeCount, unlockDescription } = this.props;
     const { animatedValue } = this.state;
     if (this.shouldDisableApp) {
-      return <DisableView />
+      return <DisableView />;
     }
 
     const renderWrongPincodeWarning = () => {
-      if(wrongPincodeCount > 0  && wrongPincodeCount < 5) {
-        return <Text style={styles.warningField}>{`${5 - wrongPincodeCount} attempts left!`}</Text>
+      if (wrongPincodeCount > 0 && wrongPincodeCount < 5) {
+        return <Text style={styles.warningField}>{`${5 - wrongPincodeCount} attempts left!`}</Text>;
       }
-      return null
-    }
+      return null;
+    };
 
     const animationShake = animatedValue.interpolate({
       inputRange: [0, 0.3, 0.7, 1],
       outputRange: [0, -20, 20, 0],
-      useNativeDriver: true
-    })
+      useNativeDriver: true,
+    });
     return (
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text style={styles.desText}>{unlockDescription}</Text>
         {renderWrongPincodeWarning()}
         <Animated.View
-          style={[styles.pinField, {
-            transform: [
-              {
-                translateX: animationShake
-              }
-            ]
-          }]}
-        >
+          style={[
+            styles.pinField,
+            {
+              transform: [
+                {
+                  translateX: animationShake,
+                },
+              ],
+            },
+          ]}>
           {this.renderDots(6)}
         </Animated.View>
-        <Keyboard
-          params={this.props.navigation.state.params}
-        />
+        <Keyboard />
       </View>
-    )
-  }
+    );
+  };
 
   render() {
-    const { shouldDisableApp } = this
-    const container = shouldDisableApp ? {} : { justifyContent: 'center' }
+    const { shouldDisableApp } = this;
+    const container = shouldDisableApp ? {} : { justifyContent: 'center' };
     return (
       <View style={[styles.container, container]}>
-        <StatusBar
-          hidden
-        />
-        <Spinner
-          style={{ marginTop: shouldDisableApp ? 80 : 0 }}
-          isSpin={false}
-        />
+        <StatusBar hidden />
+        <Spinner style={{ marginTop: shouldDisableApp ? 80 : 0 }} isSpin={false} />
         {this.renderContent()}
       </View>
-    )
+    );
   }
 }
 
+const createDescription = (hasPassword, pincodeToBeConfirm) => {
+  if (hasPassword) {
+    return t.UNLOCK_SCREEN;
+  } else if (pincodeToBeConfirm) {
+    return t.REPEAT_PINCODE;
+  }
+  return t.CREATE_PINCODE;
+};
+
 const mapStateToProps = state => ({
   hasPassword: state.appState.hasPassword,
-  disableTime: state.appState.disableTime,
   wrongPincodeCount: state.appState.wrongPincodeCount,
-  pinConfirm: state.appState.pinConfirm,
   pincode: state.unlock.pincode,
+  pincodeToBeConfirm: state.unlock.pincodeToBeConfirm,
   animatedValue: state.unlock.animatedValue,
-  unlockDescription : state.appState.hasPassword ? t.UNLOCK_SCREEN : t.CREATE_PINCODE
+  unlockDescription: createDescription(state.appState.hasPassword, state.unlock.pincodeToBeConfirm),
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({
-  readAppData: loaderAction.readAppData,
-});
+const mapDispatchToProps = _.curry(bindActionCreators)({});
 
 export default connect(
   mapStateToProps,
@@ -166,23 +171,23 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    flex: 1
+    flex: 1,
   },
   desText: {
     color: 'white',
     fontSize: isSmallScreen ? 14 : 22,
     fontFamily: 'OpenSans-Bold',
     marginTop: isSmallScreen ? 10 : height * 0.03,
-    marginBottom: isSmallScreen ? 8 : height * 0.015
+    marginBottom: isSmallScreen ? 8 : height * 0.015,
   },
   pinField: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: isSmallScreen ? 13 : height * 0.025
+    marginTop: isSmallScreen ? 13 : height * 0.025,
   },
   warningField: {
     color: AppStyle.errorColor,
     fontFamily: 'OpenSans-SemiBold',
-    fontSize: 16
-  }
-})
+    fontSize: 16,
+  },
+});
