@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import { withNavigation } from 'react-navigation';
-import images from '../../../commons/images';
+import images from '../../../commons/Images';
 import HapticHandler from '../../../utils/HapticFeedback';
 import { comparePasswordAsync, savePasswordAsync } from '../../../utils/secureStoreUtils';
 import { loaderAction } from '../../../actions/loaderAction';
@@ -30,7 +30,7 @@ const dataNumber4 = [
 class Keyboard extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
-    hasPassword: Keyboard.bool.isRequired,
+    hasPassword: PropTypes.bool.isRequired,
     pincode: PropTypes.string.isRequired,
     pincodeToBeConfirm: PropTypes.string.isRequired,
     resetPincode: PropTypes.func.isRequired,

@@ -13,14 +13,16 @@ export const loaderReducer = async (state = INIT_STATE, action) => {
   switch (action.type) {
     case loaderActionType.READ_APP_DATA: {
       const requestList = _.map(dataEntry, v => v.label);
-      const resultListRaw = await AsyncStorage.multiGet(requestList);
-      const resultList = JSON.parse(resultListRaw);
+      const resultList = await AsyncStorage.multiGet(requestList);
       return _.reduce(
         resultList,
-        (resultState, value, key) => {
-          if (value !== undefined) {
-            const stateName = _.find(dataEntry, { label: requestList[key] });
-            return set(resultState, stateName, value);
+        (resultState, singleResult) => {
+          const resultValue = singleResult[1]
+          const resultKey = singleResult[0]
+          if (resultValue !== undefined) {
+            const stateDataEntry = _.find(dataEntry, { label: resultKey });
+            const stateName = stateDataEntry.stateName;
+            return set(stateName, resultValue, resultState)
           }
           return resultState;
         },
