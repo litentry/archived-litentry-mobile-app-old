@@ -16,6 +16,7 @@ export const comparePasswordAsync = (pincode, resolve, reject) => {
     });
 };
 
-export const savePasswordAsync = password => {
-  SecureStore.setItemAsync(secureDataEntry.password, password);
+export const savePasswordAsync = (password, resolve, reject) => {
+  SecureStore.setItemAsync(secureDataEntry.password, password)
+    .then(resolve).catch(reject)
 };

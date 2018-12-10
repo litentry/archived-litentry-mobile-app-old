@@ -25,6 +25,7 @@ import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
 import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
+import { lockScreen } from '../../Unlock/lockScreenUtils';
 
 const { width } = Dimensions.get('window');
 
@@ -102,7 +103,10 @@ class ImportViaPrivateScreen extends Component {
   };
 
   goToEnterName = () => {
-    this.props.navigation.navigate('EnterNameViaAddress');
+    // this.props.navigation.navigate('EnterNameViaAddress');
+    lockScreen(this.props.navigation).then(()=>
+      console.log('success unlock screen!')
+    )
   };
 
   render() {
@@ -148,7 +152,7 @@ class ImportViaPrivateScreen extends Component {
   }
 }
 
-const validPrivateKey = privateKey => privateKey !== '' && Checker.checkPrivateKey(privateKey);
+const validPrivateKey = privateKey => privateKey !== '' && !_.isEmpty(Checker.checkPrivateKey(privateKey));
 
 const mapStateToProps = state => ({
   privateKey: state.walletImport.privateKey,

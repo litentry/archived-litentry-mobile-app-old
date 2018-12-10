@@ -40,17 +40,16 @@ class Keyboard extends Component {
     addOnePincode: PropTypes.func.isRequired,
   };
 
-  _confirmPassword(pincode) {
+  _confirmPassword(pincode, resolve) {
     if (this.props.pincodeToBeConfirm !== pincode) {
       this.props.resetPincode();
     } else {
-      savePasswordAsync(pincode);
+      savePasswordAsync(pincode, resolve, this.props.resetPincode);
     }
   }
 
-  _onCheckPassword(pincode) {
-    const { addErrorCount, navigation, resetPincode } = this.props;
-    const resolve = navigation.getParam('resolve', () => {});
+  _onCheckPassword(pincode, resolve) {
+    const { addErrorCount, resetPincode } = this.props;
     const resolveFunction = () => {
       resetPincode();
       resolve();
@@ -59,6 +58,9 @@ class Keyboard extends Component {
   }
 
   _handlePress(number) {
+    const {navigation} = this.props
+    const resolve = navigation.getParam('resolve');
+
     const {
       pincode,
       hasPassword,
@@ -70,19 +72,19 @@ class Keyboard extends Component {
     if (pincode.length === 6) {
       return null;
     }
-    HapticHandler.ImpactLight();
+    // HapticHandler.ImpactLight();
     addOnePincode(number);
     const newPinCode = pincode + number;
 
     if (newPinCode.length === 6) {
-      if (hasPassword) {
+      if (!hasPassword) {
         if (pincodeToBeConfirm) {
-          this._confirmPassword(newPinCode);
+          this._confirmPassword(newPinCode, resolve);
         } else {
-          this._onCheckPassword(newPinCode);
+          setPincodeToBeConfirm(newPinCode);
         }
       } else {
-        setPincodeToBeConfirm();
+        this._onCheckPassword(newPinCode, resolve);
       }
     }
   }
