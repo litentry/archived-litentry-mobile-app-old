@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import PropTypes from 'prop-types';
 import { loaderAction } from '../../../actions/loaderAction';
-import {dataEntry} from '../../../reducers/loader';
+import { dataEntry } from '../../../reducers/loader';
 
 class Loader extends Component {
   static propTypes = {

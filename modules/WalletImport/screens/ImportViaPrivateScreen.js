@@ -104,9 +104,7 @@ class ImportViaPrivateScreen extends Component {
 
   goToEnterName = () => {
     // this.props.navigation.navigate('EnterNameViaAddress');
-    lockScreen(this.props.navigation).then(()=>
-      console.log('success unlock screen!')
-    )
+    lockScreen(this.props.navigation).then(() => console.log('success unlock screen!'));
   };
 
   render() {
@@ -152,7 +150,8 @@ class ImportViaPrivateScreen extends Component {
   }
 }
 
-const validPrivateKey = privateKey => privateKey !== '' && !_.isEmpty(Checker.checkPrivateKey(privateKey));
+const validPrivateKey = privateKey =>
+  privateKey !== '' && !_.isEmpty(Checker.checkPrivateKey(privateKey));
 
 const mapStateToProps = state => ({
   privateKey: state.walletImport.privateKey,

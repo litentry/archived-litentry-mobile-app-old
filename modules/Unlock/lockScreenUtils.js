@@ -1,7 +1,8 @@
 import { NavigationActions } from 'react-navigation';
-import {screensList} from '../../navigation/screensList';
+import { screensList } from '../../navigation/screensList';
 
-export const lockScreen = (navigation, shouldShowCancel = false) => new Promise((resolve, reject) => {
+export const lockScreen = (navigation, shouldShowCancel = false) =>
+  new Promise((resolve, reject) => {
     navigation.navigate(screensList.Unlock.label, { resolve, reject, shouldShowCancel });
   });
 

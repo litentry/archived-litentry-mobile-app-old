@@ -13,16 +13,16 @@ const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);
 export const loaderReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case loaderActionType.READ_APP_DATA: {
-      const { resultList } = action
+      const { resultList } = action;
       return _.reduce(
         resultList,
         (resultState, singleResult) => {
-          const resultValue = singleResult[1]
-          const resultKey = singleResult[0]
+          const resultValue = singleResult[1];
+          const resultKey = singleResult[0];
           const stateDataEntry = _.find(dataEntry, { label: resultKey });
           const stateName = stateDataEntry.stateName;
           if (resultValue != null) {
-            return set(stateName, resultValue, resultState)
+            return set(stateName, resultValue, resultState);
           }
           return set(stateName, stateDataEntry.initValue, resultState);
         },

@@ -58,7 +58,7 @@ class Keyboard extends Component {
   }
 
   _handlePress(number) {
-    const {navigation} = this.props
+    const { navigation } = this.props;
     const resolve = navigation.getParam('resolve');
 
     const {
