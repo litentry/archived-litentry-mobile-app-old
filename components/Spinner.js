@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
 
 export default class Spinner extends Component {
   static propTypes = {
-    style: PropTypes.array,
+    style: PropTypes.object,
     visible: PropTypes.bool,
   };
 
   static defaultProps = {
     style: [],
-    visible: true,
+    visible: false,
   };
 
   constructor(props) {

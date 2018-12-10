@@ -5,7 +5,7 @@ export const loaderActionType = {
 };
 
 export const loaderAction = {
-  readAppData: () => ({ type: loaderActionType.READ_APP_DATA }),
+  readAppData: (resultList) => ({ type: loaderActionType.READ_APP_DATA, resultList }),
   saveAppData: data => ({ type: loaderActionType.SAVE_APP_DATA, data }),
   addErrorCount: () => ({ type: loaderActionType.ADD_ERROR_COUNT }),
 };
