@@ -30,7 +30,6 @@ class WalletScreen extends React.Component {
   });
 
   static propTypes = {
-    testAddEth: PropTypes.func.isRequired,
     navigation: PropTypes.object,
   };
 
@@ -63,13 +62,9 @@ class WalletScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
-});
+const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => ({
-  testAddEth: () => dispatch(walletAction.testAddEth()),
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
   mapStateToProps,
