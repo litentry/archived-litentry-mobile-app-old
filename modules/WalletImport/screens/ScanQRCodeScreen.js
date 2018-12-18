@@ -9,6 +9,8 @@ import { screenAction } from '../../../actions/screenAction';
 import { popupAction } from '../../../actions/popupAction';
 import Checker from '../../../utils/Checker';
 import { walletImportAction } from '../walletImportAction';
+import { secret } from '../../../constants/testAddress';
+import { environment } from '../../../config';
 
 class ScanQRCodeScreen extends Component {
   static propTypes = {
@@ -29,6 +31,12 @@ class ScanQRCodeScreen extends Component {
       alert('Hey! You might want to enable notifications for my app, they are good.');
     }
     this.setState({ showCamera: status === 'granted' });
+    if (environment.disableQRScan) {
+      this.handleBarCodeScanned({
+        type: 'string',
+        data: secret,
+      });
+    }
   }
 
   handleBarCodeScanned = ({ type, data }) => {

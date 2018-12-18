@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Header } from 'react-navigation';
 import Images from './../commons/Images';
 import AppStyle from '../commons/AppStyle';
 
@@ -15,78 +16,20 @@ import AppStyle from '../commons/AppStyle';
 
 export default class NavigationHeader extends Component {
   static propTypes = {
-    style: PropTypes.object,
-    containerStyle: PropTypes.object,
-    headerItem: PropTypes.object,
-    titleStyle: PropTypes.object,
-    rightView: PropTypes.object,
+    title: PropTypes.string.isRequired,
     action: PropTypes.func,
   };
 
   static defaultProps = {
-    style: {},
-    containerStyle: {},
-    headerItem: {
-      title: '',
-      icon: null,
-      button: Images.backButton,
-    },
-    rightView: {
-      rightViewIcon: null,
-      rightViewAction: () => {},
-      rightViewTitle: null,
-      styleTitle: {},
-    },
-    titleStyle: {},
     action: () => {},
+    backgroundColor: AppStyle.backgroundColor,
   };
 
   render() {
-    const { style, containerStyle, titleStyle, headerItem, rightView, action } = this.props;
-    const { title, icon, button } = headerItem;
-    const {
-      rightViewIcon,
-      rightViewAction,
-      rightViewTitle,
-      styleTitle,
-      styleContainer,
-    } = rightView;
+    const { title, action } = this.props;
     return (
-      <View style={{}}>
-        <TouchableOpacity
-          style={containerStyle}
-          onPress={() => {
-            action();
-          }}>
-          <View style={[styles.container, style]}>
-            <Image source={button} />
-            {icon && (
-              <Image
-                style={{
-                  width: 40,
-                  height: 40,
-                  marginLeft: 18,
-                }}
-                source={icon}
-              />
-            )}
-            {title && (
-              <Text style={[styles.titleStyle, { marginLeft: icon ? 10 : 20 }, titleStyle]}>
-                {title}
-              </Text>
-            )}
-          </View>
-        </TouchableOpacity>
-        {rightViewIcon && (
-          <TouchableWithoutFeedback onPress={rightViewAction}>
-            <View style={[styles.rightView, styleContainer]}>
-              <Image source={rightViewIcon} />
-              {rightViewTitle && (
-                <Text style={[styles.rightTitle, styleTitle]}>{rightViewTitle}</Text>
-              )}
-            </View>
-          </TouchableWithoutFeedback>
-        )}
+      <View style={styles.container}>
+        <Text style={styles.centerTitle}>{title}</Text>
       </View>
     );
   }
@@ -94,27 +37,15 @@ export default class NavigationHeader extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 15,
+    flex: 1,
+    justifyContent: 'center',
+
+    fontFamily: AppStyle.mainFont,
   },
-  titleStyle: {
-    fontSize: 20,
-    color: AppStyle.mainTextColor,
-    fontFamily: 'OpenSans-Bold',
+  backButton: {},
+  centerTitle: {
+    alignSelf: 'center',
+    fontSize: AppStyle.fontMiddle,
   },
-  rightView: {
-    position: 'absolute',
-    right: 20,
-    bottom: 15,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  rightTitle: {
-    fontFamily: 'OpenSans-SemiBold',
-    fontSize: 18,
-    color: AppStyle.mainColor,
-    marginLeft: 4,
-  },
+  actionButton: {},
 });

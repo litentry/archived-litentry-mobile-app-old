@@ -4,7 +4,8 @@ export default {
   greenColor: '#2ED573',
   colorBlack: '#0F140D',
   placeholderColor: '#6A6A77',
-  backgroundColor: '#0A0F24',
+  backgroundColor: '#EFEFF4',
+  walletBackgroundColor: '#8C9DAA',
   secondaryColor: '#4B53FF',
   colorRed: '#FF1B43',
   backgroundCard: '#0F142E',
@@ -55,4 +56,16 @@ export default {
   borderLinesSetting: '#1D2137',
   errorColor: '#D0021B',
   blueActionColor: '#4A90E2',
+
+  variantConfirm: '#27B24A',
+  variantDisable: '#929292',
+  lightGrey: '#929292',
+  variantCancel: '#DF4F52',
+  superLightGrey: '#D9D9D9',
+
+  fontTitle: 80,
+  fontSubtitle: 50,
+  fontSmall: 12,
+  fontMiddle: 20,
+  fontBig: 35,
 };

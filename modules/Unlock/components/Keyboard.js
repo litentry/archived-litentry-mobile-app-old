@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import { withNavigation } from 'react-navigation';
-import images from '../../../commons/images';
+import images from '../../../commons/Images';
 import HapticHandler from '../../../utils/HapticFeedback';
 import { comparePasswordAsync, savePasswordAsync } from '../../../utils/secureStoreUtils';
 import { loaderAction } from '../../../actions/loaderAction';
@@ -30,7 +30,7 @@ const dataNumber4 = [
 class Keyboard extends Component {
   static propTypes = {
     navigation: PropTypes.object.isRequired,
-    hasPassword: Keyboard.bool.isRequired,
+    hasPassword: PropTypes.bool.isRequired,
     pincode: PropTypes.string.isRequired,
     pincodeToBeConfirm: PropTypes.string.isRequired,
     resetPincode: PropTypes.func.isRequired,
@@ -40,17 +40,16 @@ class Keyboard extends Component {
     addOnePincode: PropTypes.func.isRequired,
   };
 
-  _confirmPassword(pincode) {
+  _confirmPassword(pincode, resolve) {
     if (this.props.pincodeToBeConfirm !== pincode) {
       this.props.resetPincode();
     } else {
-      savePasswordAsync(pincode);
+      savePasswordAsync(pincode, resolve, this.props.resetPincode);
     }
   }
 
-  _onCheckPassword(pincode) {
-    const { addErrorCount, navigation, resetPincode } = this.props;
-    const resolve = navigation.getParam('resolve', () => {});
+  _onCheckPassword(pincode, resolve) {
+    const { addErrorCount, resetPincode } = this.props;
     const resolveFunction = () => {
       resetPincode();
       resolve();
@@ -59,6 +58,9 @@ class Keyboard extends Component {
   }
 
   _handlePress(number) {
+    const { navigation } = this.props;
+    const resolve = navigation.getParam('resolve');
+
     const {
       pincode,
       hasPassword,
@@ -70,19 +72,19 @@ class Keyboard extends Component {
     if (pincode.length === 6) {
       return null;
     }
-    HapticHandler.ImpactLight();
+    // HapticHandler.ImpactLight();
     addOnePincode(number);
     const newPinCode = pincode + number;
 
     if (newPinCode.length === 6) {
-      if (hasPassword) {
+      if (!hasPassword) {
         if (pincodeToBeConfirm) {
-          this._confirmPassword(newPinCode);
+          this._confirmPassword(newPinCode, resolve);
         } else {
-          this._onCheckPassword(newPinCode);
+          setPincodeToBeConfirm(newPinCode);
         }
       } else {
-        setPincodeToBeConfirm();
+        this._onCheckPassword(newPinCode, resolve);
       }
     }
   }

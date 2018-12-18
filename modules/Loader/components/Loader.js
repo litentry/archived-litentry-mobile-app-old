@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import PropTypes from 'prop-types';
 import { loaderAction } from '../../../actions/loaderAction';
+import { dataEntry } from '../../../reducers/loader';
 
 class Loader extends Component {
   static propTypes = {
     readAppData: PropTypes.func.isRequired,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { readAppData } = this.props;
     console.log('loader did mount!');
-    readAppData();
+    const requestList = _.map(dataEntry, v => v.label);
+    const resultList = await AsyncStorage.multiGet(requestList);
+    readAppData(resultList);
   }
 
   render() {

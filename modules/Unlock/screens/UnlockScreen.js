@@ -43,7 +43,7 @@ class UnlockScreen extends Component {
 
   constructor(props) {
     super();
-    this.state.animatedValue = new Animated.Value(0);
+    this.state = { animatedValue: new Animated.Value(0) };
   }
 
   componentDidMount() {
