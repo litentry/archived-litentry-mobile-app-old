@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../commons/AppStyle';
 import { screensList } from '../navigation/screensList';
 import NavigationHeader from '../components/NavigationHeader';
-import { walletImportAction } from '../modules/WalletImport/walletImportAction';
 
 class TemplateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -38,9 +37,7 @@ const mapStateToProps = state => ({
   walletAddress: state.walletAddress,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({
-  setPrivateKey: walletImportAction.setPrivateKey,
-});
+const mapDispatchToProps = _.curry(bindActionCreators)({});
 
 export default connect(
   mapStateToProps,

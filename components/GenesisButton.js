@@ -9,21 +9,19 @@ const isSmallScreen = height < 569;
 const VariantList = {
   CONFIRM: 'confirm',
   CANCEL: 'cancel',
-}
+};
 
 const getBackgroundColor = (variant, disabled) => {
-  if(disabled)
-    return AppStyle.variantDisable
+  if (disabled) return AppStyle.variantDisable;
   switch (variant) {
     case VariantList.CONFIRM:
-      return AppStyle.variantConfirm
+      return AppStyle.variantConfirm;
     case VariantList.CANCEL:
-      return AppStyle.variantCancel
+      return AppStyle.variantCancel;
     default:
-      return AppStyle.variantConfirm
+      return AppStyle.variantConfirm;
   }
-}
-
+};
 
 export default class GenesisButton extends Component {
   static propTypes = {
@@ -36,13 +34,15 @@ export default class GenesisButton extends Component {
   };
 
   render() {
-    const {disabled, variant, action, style, styleText, text} = this.props
+    const { disabled, variant, action, style, styleText, text } = this.props;
     return (
       <TouchableOpacity disabled={disabled} onPress={() => action()} style={styles.canvas}>
-        <View style={[styles.container,
-          {backgroundColor: getBackgroundColor(variant, disabled)},
-          style
-        ]}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: getBackgroundColor(variant, disabled) },
+            style,
+          ]}>
           <Text style={[styles.buttonText, styleText]}>{text}</Text>
         </View>
       </TouchableOpacity>
@@ -51,11 +51,10 @@ export default class GenesisButton extends Component {
 }
 
 const styles = StyleSheet.create({
-  canvas: {
-  },
+  canvas: {},
   container: {
     borderRadius: 5,
-    flexDirection:'row',
+    flexDirection: 'row',
     height: isSmallScreen ? 30 : 50,
     alignItems: 'center',
     justifyContent: 'center',

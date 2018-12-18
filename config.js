@@ -1,3 +1,3 @@
 export const environment = {
-  disableQRScan: true
-}
+  disableQRScan: true,
+};
