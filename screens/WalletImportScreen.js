@@ -13,11 +13,10 @@ export default class WalletImportScreen extends Component {
 
   static navigationOptions = {
     title: screensList.WalletImport.title,
+    headerBackTitle: null,
   };
 
   gotoImportPrivate = () => this.props.navigation.navigate(screensList.ImportViaPrivate.label);
-
-  gotoImportPrivateKey = () => this.props.navigation.navigate('ImportViaPrivateKeyScreen');
 
   gotoImportMnemonic = () => this.props.navigation.navigate('ImportViaMnemonicScreen');
 

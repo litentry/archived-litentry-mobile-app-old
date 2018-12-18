@@ -14,6 +14,7 @@ export default class WalletCreateScreen extends Component {
 
   static navigationOptions = {
     title: screensList.WalletCreate.title,
+    headerBackTitle: null,
   };
 
   goBack = () => {

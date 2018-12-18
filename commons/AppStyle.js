@@ -66,4 +66,4 @@ export default {
   fontSmall: 12,
   fontMiddle: 20,
   fontBig: 35,
-}
+};

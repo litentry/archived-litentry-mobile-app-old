@@ -6,4 +6,5 @@ export const screensList = {
   ImportViaPrivate: { label: 'ImportViaPrivate', title: 'Import Wallet via Address' },
   ScanQRCode: { label: 'ScanQRCode', title: 'Scan QR Code' },
   Unlock: { label: 'Unlock', title: 'Unlock Screen' },
+  Transactions: { label: 'Transactions', title: 'Transactions' },
 };
