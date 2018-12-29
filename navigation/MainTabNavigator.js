@@ -14,6 +14,7 @@ import TransactionsScreen from '../modules/Transactions/screens/TransactionsScre
 import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingScreen';
 import AccountSettingScreen from '../modules/Settings/screens/AccountSettingScreen';
 import SettingsScreen from '../modules/Settings/screens/SettingsScreen';
+import AboutScreen from '../modules/Settings/screens/AboutScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -22,7 +23,8 @@ const commonScreens = {
 };
 
 const HomeStack = createStackNavigator({
-  SettingsScreen,
+  About: AboutScreen,
+  Settings: SettingsScreen,
   AccountSetting: AccountSettingScreen,
   PasswordSetting: PasswordSettingScreen,
   Transactions: TransactionsScreen,

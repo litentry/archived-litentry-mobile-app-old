@@ -20,13 +20,13 @@ export default class SingleLineDisplay extends React.Component {
   render() {
     const { title, value, onClick, style } = this.props;
 
-    if(!onClick){
+    if (!onClick) {
       return (
         <View style={[styles.container, style]}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.value}>{value}</Text>
         </View>
-      )
+      );
     }
 
     return (
@@ -42,7 +42,7 @@ export default class SingleLineDisplay extends React.Component {
           />
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 }
 

@@ -10,4 +10,5 @@ export const screensList = {
   PasswordSetting: { label: 'PasswordSetting', title: 'Setting Password' },
   AccountSetting: { label: 'AccountSetting', title: 'Account Settings' },
   Settings: { label: 'Settings', title: 'Settings' },
+  About: { label: 'About', title: 'About' },
 };
