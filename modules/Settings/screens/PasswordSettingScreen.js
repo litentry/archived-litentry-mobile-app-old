@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import SingleLineInput from '../components/SingleLineInput';
+import SingleLineDisplay from "../components/SingleLineDisplay";
 
 const mock = {
   mockEmptyValue: '',
@@ -41,10 +42,7 @@ class PasswordSettingScreen extends React.Component {
       <View>
         <Text style={styles.intro}>{t.INTRO}</Text>
 
-        <View style={styles.idContainer}>
-          <Text style={styles.idTitle}>{t.ID_TITLE}</Text>
-          <Text style={styles.idValue}>{mock.mockId}</Text>
-        </View>
+        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId}/>
 
         <SingleLineInput
           isPassword
@@ -101,24 +99,5 @@ const styles = StyleSheet.create({
     padding: 30,
     paddingBottom: 0,
     fontSize: AppStyle.fontMiddleSmall,
-  },
-  idContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 20,
-    marginVertical: 40,
-  },
-  idTitle: {
-    flex: 2,
-    fontSize: AppStyle.fontMiddle,
-    color: 'black',
-  },
-  idValue: {
-    textAlign: 'right',
-    flex: 3,
-    fontSize: AppStyle.fontMiddle,
-    color: AppStyle.lightGrey,
   },
 });
