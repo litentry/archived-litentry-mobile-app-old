@@ -13,9 +13,9 @@ const mock = {
   mockId: 'davidFan01',
 }
 
-class SettingScreen extends React.Component {
+class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Setting.title} />,
+    headerTitle: <NavigationHeader title={screensList.AccountSetting.title} />,
     headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
@@ -44,7 +44,7 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SettingScreen);
+)(AccountSettingScreen);
 
 const styles = StyleSheet.create({});
 

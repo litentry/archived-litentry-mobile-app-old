@@ -12,7 +12,7 @@ import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
 import UnlockScreen from '../modules/Unlock/screens/UnlockScreen';
 import TransactionsScreen from '../modules/Transactions/screens/TransactionsScreen';
 import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingScreen';
-import SettingScreen from '../modules/Settings/screens/SettingScreen'
+import SettingScreen from '../modules/Settings/screens/AccountSettingScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 

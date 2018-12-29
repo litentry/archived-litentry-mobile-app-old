@@ -8,5 +8,6 @@ export const screensList = {
   Unlock: { label: 'Unlock', title: 'Unlock Screen' },
   Transactions: { label: 'Transactions', title: 'Transactions' },
   PasswordSetting: { label: 'PasswordSetting', title: 'Setting Password' },
-  Setting: {label: 'Setting', title: 'Settings'},
+  AccountSetting: {label: 'AccountSetting', title: 'Account Settings'},
+  Settings: {label: 'Settings', title: 'Settings'},
 };
