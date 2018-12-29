@@ -10,10 +10,12 @@ export default class SingleLineDisplay extends React.Component {
     onClick: PropTypes.func,
     title: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    style: PropTypes.object,
   }
 
   static defaultProps = {
-    onClick: null
+    onClick: null,
+    object: {},
   };
 
   renderTouchable = (value, onClick) =>  (
@@ -32,10 +34,10 @@ export default class SingleLineDisplay extends React.Component {
     )
 
   render() {
-    const {title, value, onClick} = this.props
+    const {title, value, onClick, style} = this.props
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         <Text style={styles.title}>{title}</Text>
         {onClick ?
           this.renderTouchable(value, onClick) :
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 20,
-    marginVertical: 40,
+    marginTop: 20,
   },
   title: {
     flex: 2,

@@ -42,7 +42,7 @@ class PasswordSettingScreen extends React.Component {
       <View>
         <Text style={styles.intro}>{t.INTRO}</Text>
 
-        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId}/>
+        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId} style={styles.idContainer}/>
 
         <SingleLineInput
           isPassword
@@ -100,4 +100,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
     fontSize: AppStyle.fontMiddleSmall,
   },
+  idContainer: {
+    marginVertical: 40,
+  }
 });
