@@ -17,27 +17,32 @@ export default class SingleLineDisplay extends React.Component {
     object: {},
   };
 
-  renderTouchable = (value, onClick) => (
-    <TouchableOpacity onPress={onClick} style={styles.touchable}>
-      <Text style={styles.touchableText}>{value}</Text>
-      <AntDesign
-        name="right"
-        size={AppStyle.fontMiddle}
-        style={styles.touchableIcon}
-        color={AppStyle.lightGrey}
-      />
-    </TouchableOpacity>
-  );
-
   render() {
     const { title, value, onClick, style } = this.props;
 
+    if(!onClick){
+      return (
+        <View style={[styles.container, style]}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.value}>{value}</Text>
+        </View>
+      )
+    }
+
     return (
-      <View style={[styles.container, style]}>
+      <TouchableOpacity onPress={onClick} style={[styles.container, style]}>
         <Text style={styles.title}>{title}</Text>
-        {onClick ? this.renderTouchable(value, onClick) : <Text style={styles.value}>{value}</Text>}
-      </View>
-    );
+        <View style={styles.valueContainer}>
+          <Text style={styles.value}>{value}</Text>
+          <AntDesign
+            name="right"
+            size={AppStyle.fontMiddle}
+            style={styles.valueIcon}
+            color={AppStyle.lightGrey}
+          />
+        </View>
+      </TouchableOpacity>
+    )
   }
 }
 
@@ -61,18 +66,18 @@ const styles = StyleSheet.create({
     fontSize: AppStyle.fontMiddle,
     color: AppStyle.lightGrey,
   },
-  touchable: {
+  valueContainer: {
     flex: 3,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  touchableText: {
+  valueText: {
     textAlign: 'right',
     fontSize: AppStyle.fontMiddle,
     color: AppStyle.lightGrey,
   },
-  touchableIcon: {
+  valueIcon: {
     paddingLeft: 10,
   },
 });
