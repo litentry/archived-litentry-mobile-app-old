@@ -7,4 +7,5 @@ export const screensList = {
   ScanQRCode: { label: 'ScanQRCode', title: 'Scan QR Code' },
   Unlock: { label: 'Unlock', title: 'Unlock Screen' },
   Transactions: { label: 'Transactions', title: 'Transactions' },
+  PasswordSetting: { label: 'PasswordSetting', title: 'Setting Password' },
 };
