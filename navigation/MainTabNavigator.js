@@ -12,6 +12,7 @@ import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
 import UnlockScreen from '../modules/Unlock/screens/UnlockScreen';
 import TransactionsScreen from '../modules/Transactions/screens/TransactionsScreen';
 import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingScreen';
+import SettingScreen from '../modules/Settings/screens/SettingScreen'
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -20,6 +21,7 @@ const commonScreens = {
 };
 
 const HomeStack = createStackNavigator({
+  SettingScreen: SettingScreen,
   PasswordSetting: PasswordSettingScreen,
   Transactions: TransactionsScreen,
   Home: HomeScreen,
