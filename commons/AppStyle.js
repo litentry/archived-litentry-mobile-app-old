@@ -62,10 +62,12 @@ export default {
   lightGrey: '#929292',
   variantCancel: '#DF4F52',
   superLightGrey: '#D9D9D9',
+  headerBlack: '#2D2C33',
 
   fontTitle: 80,
   fontSubtitle: 50,
   fontSmall: 12,
+  fontMiddleSmall: 16,
   fontMiddle: 20,
   fontBig: 35,
 };

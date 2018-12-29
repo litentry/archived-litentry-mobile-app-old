@@ -10,6 +10,11 @@ import WalletImportScreen from '../screens/WalletImportScreen';
 import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
 import UnlockScreen from '../modules/Unlock/screens/UnlockScreen';
+import TransactionsScreen from '../modules/Transactions/screens/TransactionsScreen';
+import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingScreen';
+import AccountSettingScreen from '../modules/Settings/screens/AccountSettingScreen';
+import SettingsScreen from '../modules/Settings/screens/SettingsScreen';
+import AboutScreen from '../modules/Settings/screens/AboutScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -18,6 +23,11 @@ const commonScreens = {
 };
 
 const HomeStack = createStackNavigator({
+  About: AboutScreen,
+  Settings: SettingsScreen,
+  AccountSetting: AccountSettingScreen,
+  PasswordSetting: PasswordSettingScreen,
+  Transactions: TransactionsScreen,
   Home: HomeScreen,
   ...commonScreens,
 });
@@ -40,7 +50,6 @@ HomeStack.navigationOptions = {
 };
 
 const WalletStack = createStackNavigator({
-  // Wallet: WalletScreen,
   WalletCreate: WalletCreateScreen,
   WalletImport: WalletImportScreen,
   ImportViaPrivate: ImportViaPrivateScreen,
