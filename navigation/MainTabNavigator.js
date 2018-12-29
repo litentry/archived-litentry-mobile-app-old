@@ -15,6 +15,7 @@ import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingSc
 import AccountSettingScreen from '../modules/Settings/screens/AccountSettingScreen';
 import SettingsScreen from '../modules/Settings/screens/SettingsScreen';
 import AboutScreen from '../modules/Settings/screens/AboutScreen';
+import ChatListScreen from "../modules/Chat/screens/ChatListScreen";
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -23,6 +24,7 @@ const commonScreens = {
 };
 
 const HomeStack = createStackNavigator({
+  ChatList: ChatListScreen,
   About: AboutScreen,
   Settings: SettingsScreen,
   AccountSetting: AccountSettingScreen,
