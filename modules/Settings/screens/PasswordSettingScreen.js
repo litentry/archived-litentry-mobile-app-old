@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import SingleInput from '../components/SingleInput';
+import SingleLineInput from '../components/SingleLineInput';
 
 const mock = {
   mockEmptyValue: '',
@@ -46,21 +46,21 @@ class PasswordSettingScreen extends React.Component {
           <Text style={styles.idValue}>{mock.mockId}</Text>
         </View>
 
-        <SingleInput
+        <SingleLineInput
           isPassword
           title={t.ORIGINAL_PASSWORD}
           onChangeText={() => {}}
           placeholder={t.ORIGINAL_PASSWORD_PLACEHOLDER}
           value={mock.mockEmptyValue}
         />
-        <SingleInput
+        <SingleLineInput
           isPassword
           title={t.NEW_PASSWORD}
           onChangeText={() => {}}
           placeholder={t.NEW_PASSWORD_PLACEHOLDER}
           value={mock.mockEmptyValue}
         />
-        <SingleInput
+        <SingleLineInput
           isPassword
           title={t.CONFIRM_PASSWORD}
           onChangeText={() => {}}

@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import AppStyle from '../../../commons/AppStyle';
 
-export default class SingleInput extends React.Component {
+export default class SingleLineInput extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     onChangeText: PropTypes.func.isRequired,
