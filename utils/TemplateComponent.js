@@ -1,30 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View} from "react-native";
-import AppStyle from "../../../commons/AppStyle";
+import { StyleSheet, View } from 'react-native';
+import AppStyle from '../../../commons/AppStyle';
 
 export default class TemplateComponent extends React.Component {
+  static propTypes = {};
 
-  static propTypes = {
-
-  }
-
-  static defaultProps = {
-
-  };
+  static defaultProps = {};
 
   render() {
-    return (
-      <View>
-
-      </View>
-    )
+    return <View />;
   }
-
 }
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {},
 });

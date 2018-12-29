@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View, Text, TextInput } from 'react-native';
+import { Button, StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import SingleLineInput from '../components/SingleLineInput';
-import SingleLineDisplay from "../components/SingleLineDisplay";
+import SingleLineDisplay from '../components/SingleLineDisplay';
 
 const mock = {
   mockEmptyValue: '',
@@ -42,7 +42,7 @@ class PasswordSettingScreen extends React.Component {
       <View>
         <Text style={styles.intro}>{t.INTRO}</Text>
 
-        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId} style={styles.idContainer}/>
+        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId} style={styles.idContainer} />
 
         <SingleLineInput
           isPassword
@@ -102,5 +102,5 @@ const styles = StyleSheet.create({
   },
   idContainer: {
     marginVertical: 40,
-  }
+  },
 });
