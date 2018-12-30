@@ -1,24 +1,18 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
+import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import NavigationHeader from '../../../components/NavigationHeader';
+import GenesisButton from '../../../components/GenesisButton';
 
 class StartScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Start.title} />,
-    headerBackTitle: '',
-    headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.CreateAccount.label)}
-        title={screensList.CreateAccount.title}
-        color="black"
-      />
-    ),
+    headerBackTitle: 'Cancel',
+    headerTransparent: true,
     headerStyle: {
       backgroundColor: AppStyle.userHeaderBackgroundColor,
     },
@@ -29,7 +23,27 @@ class StartScreen extends React.Component {
   };
 
   render() {
-    return <View />;
+    const { navigation } = this.props;
+    return (
+      <View style={styles.container}>
+        <Text style={styles.intro} key="intro">
+          {t.INTRO}
+        </Text>
+        <View style={styles.nameContainer}>
+          <View style={styles.nameBorder}>
+            <Text style={styles.name} key="name">
+              {t.NAME}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <GenesisButton
+            action={() => navigation.navigate(screensList.CreateAccount.label)}
+            text={t.BUTTON_TEXT}
+          />
+        </View>
+      </View>
+    );
   }
 }
 
@@ -44,4 +58,47 @@ export default connect(
   mapDispatchToProps
 )(StartScreen);
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Header.HEIGHT,
+    flex: 1,
+    backgroundColor: AppStyle.userBackgroundColor,
+    flexDirection: 'column',
+  },
+  intro: {
+    padding: 50,
+    textAlign: 'center',
+    flex: 2,
+    color: AppStyle.coverTextBlack,
+    fontSize: AppStyle.fontMiddleBig,
+    fontFamily: AppStyle.coverFont,
+  },
+  nameContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nameBorder: {
+    margin: 30,
+    borderBottomWidth: 2,
+    borderBottomColor: AppStyle.lightGrey,
+  },
+  name: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    textAlign: 'center',
+    fontFamily: AppStyle.coverFont,
+    color: AppStyle.coverTextBlack,
+    fontSize: AppStyle.fontMiddleBig,
+  },
+  buttonContainer: {
+    flex: 1,
+  },
+});
+
+const t = {
+  INTRO:
+    'We are creating a world where anyone, anywhere may express his or her beliefs, no matter how singular, without fear of being coerced into silence or conformity.',
+  NAME: 'John Perry Barlow',
+  BUTTON_TEXT: 'Get Started',
+};
