@@ -8,19 +8,15 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 
-class TemplateScreen extends React.Component {
+class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
-    headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
-        color="black"
-      />
-    ),
-    headerBackTitle: '',
+    // headerTitle: <NavigationHeader title={''} />,
+    headerTransparent: true,
+    headerTintColor: 'black',
+    headerBackImage: null,
+    headerBackTitle: 'Back Back Back ',
     headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
+      backgroundColor: AppStyle.userHeaderBackgroundColor,
     },
   });
 
@@ -42,10 +38,11 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TemplateScreen);
+)(CreateAccountScreen);
 
 const styles = StyleSheet.create({
   container: {
-
+    flex: 1,
+    backgroundColor: 'white',
   }
 });

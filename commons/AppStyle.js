@@ -70,4 +70,6 @@ export default {
   fontMiddleSmall: 16,
   fontMiddle: 20,
   fontBig: 35,
+
+  userHeaderBackgroundColor: 'white',
 };
