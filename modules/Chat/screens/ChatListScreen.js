@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { Ionicons } from '@expo/vector-icons';
+import Connector from "../components/Connector";
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -34,7 +35,9 @@ class ChatListScreen extends React.Component {
   };
 
   render() {
-    return <View />;
+    return <View>
+      <Connector/>
+    </View>;
   }
 }
 
