@@ -55,7 +55,7 @@ class CreateAccountScreen extends React.Component {
         </View>
         <Text style={styles.hint}>{t.HINT_TEXT}</Text>
         <View style={styles.button}>
-          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} disabled={!this.isAllValidated} />
+          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} />
         </View>
       </View>
     );

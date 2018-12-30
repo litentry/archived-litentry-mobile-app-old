@@ -38,11 +38,13 @@ class VerifyCredentialScreen extends React.Component {
           <InputWithValidation
             onChangeText={() => {}}
             value={mock.email}
+            validator={validator}
             placeholder={t.PLACEHOLDER}
+            errorMessage={t.ERROR_MESSAGE}
           />
         </View>
         <View style={styles.button}>
-          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} disabled={!validator()} />
+          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} />
         </View>
         <Text style={styles.resend}>{t.RESEND}</Text>
       </View>
@@ -102,4 +104,5 @@ const t = {
   PLACEHOLDER: 'Verification Code',
   BUTTON_TEXT: 'Next',
   RESEND: 'Didn’t receive email?',
+  ERROR_MESSAGE: 'Invalid Verification Code',
 };

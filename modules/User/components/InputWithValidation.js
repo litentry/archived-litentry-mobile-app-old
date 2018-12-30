@@ -18,28 +18,42 @@ export default class InputWithValidation extends React.Component {
     validator: () => true,
     placeholder: 'please input',
     isPassword: false,
-    errorMessage: 'Input Error'
+    errorMessage: 'Input Error',
   };
 
-  renderIcon(isValidated){
-    const { errorMessage, value} = this.props
-    // if (value !== '')
-    //   return null;
-    if(isValidated){
-      return <View style={styles.iconContainer}>
-        <Ionicons name="ios-checkmark-circle-outline" size={32} color={AppStyle.userCorrect} />
-      </View>
+  constructor(props) {
+    super(props);
+    this.state = { shouldValidate: false };
+  }
+
+  renderIcon(isValidated) {
+    const { errorMessage, value } = this.props;
+    if (!this.state.shouldValidate) return null;
+    if (isValidated) {
+      return (
+        <View style={styles.iconContainer}>
+          <Ionicons name="ios-checkmark-circle-outline" size={32} color={AppStyle.userCorrect} />
+        </View>
+      );
     } else {
-      return <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{errorMessage}</Text>
-      </View>
+      return (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        </View>
+      );
     }
   }
+
+  get fontColor() {}
 
   render() {
     const { onChangeText, value, placeholder, validator, isPassword, errorMessage } = this.props;
     const isValidated = validator();
-    const fontColor = isValidated ? AppStyle.userCorrect : AppStyle.lightGrey;
+    let fontColor;
+    if (this.state.shouldValidate) {
+      fontColor = isValidated ? AppStyle.userCorrect : AppStyle.userIncorrect;
+    }
+    fontColor = AppStyle.lightGrey;
 
     return (
       <View style={styles.container}>
@@ -48,7 +62,12 @@ export default class InputWithValidation extends React.Component {
           secureTextEntry={isPassword}
           onChangeText={onChangeText}
           placeholderTextColor={AppStyle.inputPlaceholder}
-          onBlur={validator}
+          onBlur={() => {
+            console.log('changed shouldValidate');
+            this.setState({
+              shouldValidate: true,
+            });
+          }}
           value={value}
           placeholder={placeholder}
         />
@@ -93,5 +112,5 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: AppStyle.fontMiddleSmall,
     color: AppStyle.userIncorrect,
-  }
+  },
 });
