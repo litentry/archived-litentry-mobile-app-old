@@ -15,4 +15,5 @@ export const screensList = {
   Start: { label: 'Start', title: 'Start' },
   CreateAccount: { label: 'CreateAccount', title: 'Create Account' },
   VerifyCredential: { label: 'VerifyCredential', title: 'Verify Phone' },
+  SetPassword: { label: 'SetPassword', title: 'Set Password' },
 };
