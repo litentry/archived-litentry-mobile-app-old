@@ -29,7 +29,7 @@ class TemplateScreen extends React.Component {
   };
 
   render() {
-    return <View style={styles.container}/>;
+    return <View style={styles.container} />;
   }
 }
 
@@ -45,7 +45,5 @@ export default connect(
 )(TemplateScreen);
 
 const styles = StyleSheet.create({
-  container: {
-
-  }
+  container: {},
 });

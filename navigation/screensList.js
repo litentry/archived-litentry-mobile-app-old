@@ -11,7 +11,7 @@ export const screensList = {
   AccountSetting: { label: 'AccountSetting', title: 'Account Settings' },
   Settings: { label: 'Settings', title: 'Settings' },
   About: { label: 'About', title: 'About' },
-  ChatList: {label: 'ChatList', title: 'Genesis Space'},
-  Start: {label: 'Start', title: 'Start'},
-  CreateAccount: {label: 'CreateAccount', title: 'CreateAccount'},
+  ChatList: { label: 'ChatList', title: 'Genesis Space' },
+  Start: { label: 'Start', title: 'Start' },
+  CreateAccount: { label: 'CreateAccount', title: 'CreateAccount' },
 };

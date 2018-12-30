@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
+import { Ionicons } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import { Ionicons } from '@expo/vector-icons';
-import Connector from "../components/Connector";
+import Connector from '../components/Connector';
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -17,11 +17,7 @@ class ChatListScreen extends React.Component {
       <TouchableOpacity
         style={styles.addIcon}
         onPress={() => navigation.navigate(screensList.Transactions.label)}>
-        <Ionicons
-          name='md-add'
-          size={AppStyle.fontMiddle}
-          color="black"
-        />
+        <Ionicons name="md-add" size={AppStyle.fontMiddle} color="black" />
       </TouchableOpacity>
     ),
     headerBackTitle: '',
@@ -35,9 +31,11 @@ class ChatListScreen extends React.Component {
   };
 
   render() {
-    return <View>
-      <Connector/>
-    </View>;
+    return (
+      <View>
+        <Connector />
+      </View>
+    );
   }
 }
 
@@ -55,8 +53,8 @@ export default connect(
 const styles = StyleSheet.create({
   addIcon: {
     padding: 10,
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
