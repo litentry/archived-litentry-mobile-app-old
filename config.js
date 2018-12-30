@@ -19,5 +19,5 @@ export const wsInfo = {
   // Network transport to use, either `ws`/`wss` for websocket or `lp` for long polling.
   transport: null,
   // one of 'web'/'ios'/'android'
-  platform: 'web'
-}
+  platform: 'web',
+};
