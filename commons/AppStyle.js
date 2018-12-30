@@ -51,6 +51,7 @@ export default {
   mainFontBold: 'OpenSans-Bold',
   mainFont: 'OpenSans-Regular',
   mainFontSemiBold: 'OpenSans-Semibold',
+  coverFont: 'IowanOld',
 
   swipeButtonBackground: '#1F2437',
   borderLinesSetting: '#1D2137',
@@ -69,5 +70,14 @@ export default {
   fontSmall: 12,
   fontMiddleSmall: 16,
   fontMiddle: 20,
+  fontMiddleBig: 27,
   fontBig: 35,
+
+  userHeaderBackgroundColor: 'white',
+  userBackgroundColor: 'white',
+  coverTextBlack: '#4B4B4B',
+  userCancelGreen: '#30D126',
+  userCorrect: '#4A90E2',
+  userIncorrect: '#DF4F52',
+  inputPlaceholder: '#A1A1A1',
 };

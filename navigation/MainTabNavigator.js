@@ -15,22 +15,15 @@ import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingSc
 import AccountSettingScreen from '../modules/Settings/screens/AccountSettingScreen';
 import SettingsScreen from '../modules/Settings/screens/SettingsScreen';
 import AboutScreen from '../modules/Settings/screens/AboutScreen';
+import ChatListScreen from '../modules/Chat/screens/ChatListScreen';
+import StartScreen from '../modules/User/screens/StartScreen';
+import CreateAccountScreen from '../modules/User/screens/CreateAccountScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
 const commonScreens = {
   Unlock: UnlockScreen,
 };
-
-const HomeStack = createStackNavigator({
-  About: AboutScreen,
-  Settings: SettingsScreen,
-  AccountSetting: AccountSettingScreen,
-  PasswordSetting: PasswordSettingScreen,
-  Transactions: TransactionsScreen,
-  Home: HomeScreen,
-  ...commonScreens,
-});
 
 const HomeStackIcon = ({ focused }) => (
   <TabBarIcon
@@ -44,28 +37,47 @@ const HomeStackIcon = ({ focused }) => (
 );
 HomeStackIcon.propTypes = iconPropTypes;
 
-HomeStack.navigationOptions = {
-  tabBarLabel: screensList.Home.label,
-  tabBarIcon: HomeStackIcon,
-};
-
-const WalletStack = createStackNavigator({
-  WalletCreate: WalletCreateScreen,
-  WalletImport: WalletImportScreen,
-  ImportViaPrivate: ImportViaPrivateScreen,
-  ScanQRCode: ScanQRCodeScreen,
-  ...commonScreens,
-});
+const HomeStack = createStackNavigator(
+  {
+    Start: StartScreen,
+    CreateAccount: CreateAccountScreen,
+    ChatList: ChatListScreen,
+    About: AboutScreen,
+    Settings: SettingsScreen,
+    AccountSetting: AccountSettingScreen,
+    PasswordSetting: PasswordSettingScreen,
+    Transactions: TransactionsScreen,
+    Home: HomeScreen,
+    ...commonScreens,
+  },
+  {
+    navigationOptions: {
+      tabBarLabel: screensList.Home.label,
+      tabBarIcon: HomeStackIcon,
+    },
+  }
+);
 
 const WalletStackIcon = ({ focused }) => (
   <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
 );
 WalletStackIcon.propTypes = iconPropTypes;
 
-WalletStack.navigationOptions = {
-  tabBarLabel: screensList.WalletCreate.label,
-  tabBarIcon: WalletStackIcon,
-};
+const WalletStack = createStackNavigator(
+  {
+    WalletCreate: WalletCreateScreen,
+    WalletImport: WalletImportScreen,
+    ImportViaPrivate: ImportViaPrivateScreen,
+    ScanQRCode: ScanQRCodeScreen,
+    ...commonScreens,
+  },
+  {
+    navigationOptions: {
+      tabBarLabel: screensList.WalletCreate.label,
+      tabBarIcon: WalletStackIcon,
+    },
+  }
+);
 
 export default createBottomTabNavigator({
   HomeStack,

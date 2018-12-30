@@ -25,12 +25,13 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <View style={styles.container}>
-            <Loader />
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-            <PopupWrapper />
-          </View>
+          <AppNavigator>
+            <View style={styles.container}>
+              <Loader />
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              <PopupWrapper />
+            </View>
+          </AppNavigator>
         </Provider>
       );
     }
@@ -50,6 +51,7 @@ export default class App extends React.Component {
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
         OpenSans: require('./assets/fonts/OpenSans-Regular.ttf'),
+        IowanOld: require('./assets/fonts/IowanOldStBTRoman.ttf'),
         'OpenSans-Regular': require('./assets/fonts/OpenSans-Regular.ttf'),
         'OpenSans-Bold': require('./assets/fonts/OpenSans-Bold.ttf'),
         'OpenSans-SemiBold': require('./assets/fonts/OpenSans-SemiBold.ttf'),

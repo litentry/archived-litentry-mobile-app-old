@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Header } from 'react-navigation';
-import Images from './../commons/Images';
 import AppStyle from '../commons/AppStyle';
 
 // Archived component, Not used in our first version
