@@ -1,69 +1,81 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Platform } from 'react-native';
+import Tinode from 'tinode-sdk';
 import AppStyle from '../../../commons/AppStyle';
-import Tinode from 'tinode-sdk'
-import {wsInfo} from "../../../config";
+import { wsInfo } from '../../../config';
 
 export default class Connector extends React.Component {
   static propTypes = {};
 
   static defaultProps = {};
 
-  createTinode(){
-    const platform = Platform.OS === 'ios' ? 'ios' : 'android'
-    let tinode = new Tinode(wsInfo.appName, wsInfo.serverAddress, wsInfo.apiKey, null, wsInfo.isHttps, platform);
+  createTinode() {
+    const platform = Platform.OS === 'ios' ? 'ios' : 'android';
+    let tinode = new Tinode(
+      wsInfo.appName,
+      wsInfo.serverAddress,
+      wsInfo.apiKey,
+      null,
+      wsInfo.isHttps,
+      platform
+    );
     tinode.enableLogging(true, true);
-    tinode.onConnect = ()=> {
+    tinode.onConnect = () => {
       const params = tinode.getServerInfo();
       console.log('connected！', params);
-    }
-    tinode.onDisconnect = (data) => {console.log('disconnected', data)}
+    };
+    tinode.onDisconnect = data => {
+      console.log('disconnected', data);
+    };
     return tinode;
   }
 
-  doLogin(username, password, cred){
+  doLogin(username, password, cred) {
     cred = Tinode.credential(cred);
     // Try to login with login/password. If they are not available, try token. If no token, ask for login/password.
     let promise = null;
     let token = this.tinode.getAuthToken();
-    if (login && password) {
-      promise = this.tinode.loginBasic(login, password, cred);
+    if (username && password) {
+      promise = this.tinode.loginBasic(username, password, cred);
     } else if (token) {
       promise = this.tinode.loginToken(token.token, cred);
     }
 
     if (promise) {
-      promise.then((ctrl) => {
-        if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
-          if (cred) {
-            this.handleError("Code does not match", 'warn');
+      promise
+        .then(ctrl => {
+          if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
+            if (cred) {
+              this.handleError('Code does not match', 'warn');
+            }
+            this.handleCredentialsRequest(ctrl.params);
+          } else {
+            this.handleLoginSuccessful();
           }
-          this.handleCredentialsRequest(ctrl.params);
-        } else {
-          this.handleLoginSuccessful();
-        }
-      }).catch((err) => {
-        // Login failed, report error.
-        this.setState({loginDisabled: false, credMethod: undefined, credCode: undefined});
-        this.handleError(err.message, 'err');
-        localStorage.removeItem('auth-token');
-      });
+        })
+        .catch(err => {
+          // Login failed, report error.
+          this.setState({ loginDisabled: false, credMethod: undefined, credCode: undefined });
+          this.handleError(err.message, 'err');
+          // localStorage.removeItem('auth-token');
+        });
     } else {
       // No login credentials provided.
       // Make sure we are on the login page.
-      this.setState({loginDisabled: false});
+      this.setState({ loginDisabled: false });
     }
   }
 
   // Make a data URL from public.photo
   makeImageUrl(photo) {
-    return (photo && photo.type && photo.data) ?
-      'data:image/' + photo.type + ';base64,' + photo.data : null;
+    return photo && photo.type && photo.data
+      ? 'data:image/' + photo.type + ';base64,' + photo.data
+      : null;
   }
 
   handleCredentialsRequest(params) {
-    console.log('handle credentials request', params)
+    console.log('handle credentials request', params);
   }
 
   tnMeMetaDesc(desc) {
@@ -122,7 +134,7 @@ export default class Connector extends React.Component {
 
   resetContactList() {
     let newState = {
-      chatList: []
+      chatList: [],
     };
     // this.tinode.getMeTopic().contacts((c) => {
     //   newState.chatList.push(c);
@@ -136,9 +148,7 @@ export default class Connector extends React.Component {
     // this.setState(newState);
   }
 
-  handleError(){
-
-  }
+  handleError() {}
 
   tnMeSubsUpdated() {
     this.resetContactList();
@@ -160,15 +170,16 @@ export default class Connector extends React.Component {
       connected: true,
       credMethod: undefined,
       credCode: undefined,
-      myUserId: this.tinode.getCurrentUserID()
+      myUserId: this.tinode.getCurrentUserID(),
     });
     // Subscribe, fetch topic desc, the list of subscriptions. Messages are not fetched.
     me.subscribe(
-      me.startMetaQuery().
-      withLaterSub().
-      withDesc().
-      build()
-    ).catch((err) => {
+      me
+        .startMetaQuery()
+        .withLaterSub()
+        .withDesc()
+        .build()
+    ).catch(err => {
       // localStorage.removeItem('auth-token');
       this.handleError(err.message, 'err');
       // HashNavigation.navigateTo('');
@@ -183,9 +194,8 @@ export default class Connector extends React.Component {
     if (this.tinode.isConnected()) {
       // this.doLogin(login, password, {meth: this.state.credMethod, resp: this.state.credCode});
     } else {
-      this.tinode.connect().catch((err) => {
-        if(err)
-          console.log('err is', err)
+      this.tinode.connect().catch(err => {
+        if (err) console.log('err is', err);
         // Socket error
         // this.setState({loginDisabled: false});
         // this.handleError(err.message, 'err');
@@ -198,10 +208,10 @@ export default class Connector extends React.Component {
     this.tinode = this.createTinode();
   }
 
-  componentDidMount(){
-    const username = 'bob'
-    const password = 'bob123'
-    this.handleLoginRequest(username, password)
+  componentDidMount() {
+    const username = 'bob';
+    const password = 'bob123';
+    this.handleLoginRequest(username, password);
   }
 
   render() {
