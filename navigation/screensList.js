@@ -13,5 +13,6 @@ export const screensList = {
   About: { label: 'About', title: 'About' },
   ChatList: { label: 'ChatList', title: 'Genesis Space' },
   Start: { label: 'Start', title: 'Start' },
-  CreateAccount: { label: 'CreateAccount', title: 'CreateAccount' },
+  CreateAccount: { label: 'CreateAccount', title: 'Create Account' },
+  VerifyCredential: { label: 'VerifyCredential', title: 'Verify Phone' },
 };
