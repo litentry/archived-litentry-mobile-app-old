@@ -25,19 +25,6 @@ const commonScreens = {
   Unlock: UnlockScreen,
 };
 
-const HomeStack = createStackNavigator({
-  Start: StartScreen,
-  CreateAccount: CreateAccountScreen,
-  ChatList: ChatListScreen,
-  About: AboutScreen,
-  Settings: SettingsScreen,
-  AccountSetting: AccountSettingScreen,
-  PasswordSetting: PasswordSettingScreen,
-  Transactions: TransactionsScreen,
-  Home: HomeScreen,
-  ...commonScreens,
-});
-
 const HomeStackIcon = ({ focused }) => (
   <TabBarIcon
     focused={focused}
@@ -50,17 +37,22 @@ const HomeStackIcon = ({ focused }) => (
 );
 HomeStackIcon.propTypes = iconPropTypes;
 
-HomeStack.navigationOptions = {
-  tabBarLabel: screensList.Home.label,
-  tabBarIcon: HomeStackIcon,
-};
-
-const WalletStack = createStackNavigator({
-  WalletCreate: WalletCreateScreen,
-  WalletImport: WalletImportScreen,
-  ImportViaPrivate: ImportViaPrivateScreen,
-  ScanQRCode: ScanQRCodeScreen,
+const HomeStack = createStackNavigator({
+  Start: StartScreen,
+  CreateAccount: CreateAccountScreen,
+  ChatList: ChatListScreen,
+  About: AboutScreen,
+  Settings: SettingsScreen,
+  AccountSetting: AccountSettingScreen,
+  PasswordSetting: PasswordSettingScreen,
+  Transactions: TransactionsScreen,
+  Home: HomeScreen,
   ...commonScreens,
+},{
+  navigationOptions: {
+    tabBarLabel: screensList.Home.label,
+    tabBarIcon: HomeStackIcon,
+  }
 });
 
 const WalletStackIcon = ({ focused }) => (
@@ -68,10 +60,18 @@ const WalletStackIcon = ({ focused }) => (
 );
 WalletStackIcon.propTypes = iconPropTypes;
 
-WalletStack.navigationOptions = {
-  tabBarLabel: screensList.WalletCreate.label,
-  tabBarIcon: WalletStackIcon,
-};
+const WalletStack = createStackNavigator({
+  WalletCreate: WalletCreateScreen,
+  WalletImport: WalletImportScreen,
+  ImportViaPrivate: ImportViaPrivateScreen,
+  ScanQRCode: ScanQRCodeScreen,
+  ...commonScreens,
+}, {
+  navigationOptions: {
+    tabBarLabel: screensList.WalletCreate.label,
+    tabBarIcon: WalletStackIcon,
+  }
+});
 
 export default createBottomTabNavigator({
   HomeStack,
