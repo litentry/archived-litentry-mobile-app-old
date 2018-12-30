@@ -77,4 +77,7 @@ export default {
   userBackgroundColor: 'white',
   coverTextBlack: '#4B4B4B',
   userCancelGreen: '#30D126',
+  userCorrect: '#4A90E2',
+  userIncorrect: '#DF4F52',
+  inputPlaceholder: '#A1A1A1',
 };
