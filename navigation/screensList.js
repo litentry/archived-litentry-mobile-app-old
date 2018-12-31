@@ -17,4 +17,5 @@ export const screensList = {
   VerifyCredential: { label: 'VerifyCredential', title: 'Verify Phone' },
   SetPassword: { label: 'SetPassword', title: 'Set Password' },
   ContinueLogin: { label: 'ContinueLogin', title: 'Continue Login' },
+  Login: {label: 'Login', title: 'Login'},
 };

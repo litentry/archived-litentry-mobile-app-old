@@ -1,23 +1,21 @@
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
-import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 
 const mock = {
-  username: 'alex',
-  email: 'alexcloud@gmail.com',
+  username: 'Bob',
+  password: 'bob123',
 };
 
-class CreateAccountScreen extends React.Component {
+class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    // headerTitle: <NavigationHeader title={''} />,
     headerTransparent: true,
     headerTintColor: AppStyle.userCancelGreen,
     headerStyle: {
@@ -33,7 +31,7 @@ class CreateAccountScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{t.CREATE_ACCOUNT_TITLE}</Text>
+          <Text style={styles.title}>{t.LOGIN_TITLE}</Text>
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
@@ -45,11 +43,14 @@ class CreateAccountScreen extends React.Component {
         <View style={styles.inputContainer}>
           <InputWithValidation
             onChangeText={() => {}}
-            value={mock.email}
+            value={mock.password}
             placeholder={t.PASSWORD_PLACEHOLDER}
           />
+          <TouchableOpacity onPress={()=>{}} style={styles.forgetTextContainer}>
+            <Text style={styles.forgetText}>{t.FORGET_TEXT}</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.hint}>{t.HINT_TEXT}</Text>
+
         <View style={styles.button}>
           <GenesisButton action={() => {}} text={t.BUTTON_TEXT} />
         </View>
@@ -67,20 +68,22 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateAccountScreen);
+)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Header.HEIGHT + 50,
     backgroundColor: 'white',
+    justifyContent: 'center',
   },
   titleContainer: {
-    flex: 3,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
+    flex: 1,
     padding: 30,
     fontSize: AppStyle.fontMiddleBig,
     color: AppStyle.lightGrey,
@@ -88,12 +91,14 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 2,
   },
-  hint: {
-    flex: 2,
+  forgetTextContainer: {
+
+  },
+  forgetText: {
     padding: 30,
-    fontSize: AppStyle.fontMiddle,
-    color: AppStyle.lightGrey,
+    textAlign: 'right',
     fontFamily: AppStyle.coverFont,
+    color: AppStyle.userCancelGreen,
   },
   button: {
     flex: 2,
@@ -101,10 +106,10 @@ const styles = StyleSheet.create({
 });
 
 const t = {
-  CREATE_ACCOUNT_TITLE: 'Create your account',
+  LOGIN_TITLE: 'Login',
   USERNAME_PLACEHOLDER: 'Name',
-  PASSWORD_PLACEHOLDER: 'Email',
-  HINT_TEXT:
-    'By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use. Others will be able to find you by email when provided. ',
-  BUTTON_TEXT: 'Sign Up',
+  PASSWORD_PLACEHOLDER: 'Password',
+  FORGET_TEXT:
+    'Forget password?',
+  BUTTON_TEXT: 'Log in',
 };
