@@ -4,14 +4,12 @@ import { StyleSheet, View, Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import AppStyle from '../../../commons/AppStyle';
 import { wsInfo } from '../../../config';
-import TinodeAPI from "../TinodeAPI";
-
+import TinodeAPI from '../TinodeAPI';
 
 export default class Connector extends React.Component {
   static propTypes = {};
 
-  static defaultProps = {
-  };
+  static defaultProps = {};
 
   createTinode() {
     const platform = Platform.OS === 'ios' ? 'ios' : 'android';
@@ -38,7 +36,7 @@ export default class Connector extends React.Component {
     if (online) {
       this.handleError('', null);
     } else {
-      this.handleError("No connection", 'warn');
+      this.handleError('No connection', 'warn');
     }
   }
 
@@ -159,7 +157,7 @@ export default class Connector extends React.Component {
     // this.setState(newState);
   }
 
-  handleError() {
+  handleError(error) {
     console.log('connect error: ', error);
   }
 
@@ -167,9 +165,7 @@ export default class Connector extends React.Component {
     this.resetContactList();
   }
 
-  handleDisconnect(err) {
-
-  }
+  handleDisconnect(err) {}
 
   handleLoginSuccessful() {
     this.handleError('', null);
@@ -211,10 +207,8 @@ export default class Connector extends React.Component {
     if (this.tinode.isConnected()) {
       // this.doLogin(login, password, {meth: this.state.credMethod, resp: this.state.credCode});
     } else {
-
     }
   }
-
 
   constructor(props) {
     super(props);
