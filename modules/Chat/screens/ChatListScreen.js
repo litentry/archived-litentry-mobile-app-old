@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import Connector from '../components/Connector';
+import TinodeAPI from "../TinodeAPI";
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -30,17 +30,18 @@ class ChatListScreen extends React.Component {
     navigation: PropTypes.object,
   };
 
+  componentDidMount(){
+    TinodeAPI.getTopics();
+  }
+
   render() {
-    return (
-      <View>
-        <Connector />
-      </View>
-    );
+    return <View>{/*<Connector />*/}</View>;
   }
 }
 
 const mapStateToProps = state => ({
   walletAddress: state.walletAddress,
+  chatList: state.chat.chatList,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

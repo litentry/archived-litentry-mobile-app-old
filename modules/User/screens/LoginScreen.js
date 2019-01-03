@@ -10,6 +10,7 @@ import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import Connector from '../../Chat/components/Connector';
 import TinodeAPI from '../../Chat/TinodeAPI';
+import {screensList} from "../../../navigation/screensList";
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -28,8 +29,8 @@ class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      username: 'bob',
+      password: 'bob123',
     };
   }
 
@@ -39,6 +40,7 @@ class LoginScreen extends React.Component {
 
   render() {
     const { username, password } = this.state;
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <Connector />
@@ -67,7 +69,7 @@ class LoginScreen extends React.Component {
         <View style={styles.button}>
           <GenesisButton
             action={() => {
-              TinodeAPI.login(username, password);
+              TinodeAPI.login(username, password, null, navigation);
             }}
             text={t.BUTTON_TEXT}
           />
