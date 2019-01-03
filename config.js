@@ -21,3 +21,16 @@ export const wsInfo = {
   // one of 'web'/'ios'/'android'
   platform: 'web',
 };
+
+export const imageConfig = {
+  /** Maximum in-band (included directly into the message) attachment size which fits into
+   * a message of 256K in size, assuming base64 encoding and 1024 bytes of overhead.
+   * This is size of an object *before* base64 encoding is applied.
+   * Increase this limit to a greater value in production, if desired. Also increase
+   * max_message_size in server config.
+   * MAX_INBAND_ATTACHMENT_SIZE = base64DecodedLen(max_message_size - overhead);**/
+  MAX_INBAND_ATTACHMENT_SIZE: 195840,
+  /** Maximum allowed linear dimension of an inline image in pixels. You may want
+   * to adjust it to 1600 or 2400 for production.**/
+  MAX_IMAGE_DIM: 768,
+};

@@ -65,7 +65,7 @@ export default class InputWithValidation extends React.Component {
         <TextInput
           style={[styles.input, { color: fontColor }]}
           secureTextEntry={isPassword}
-          autoCapitalize={false}
+          autoCapitalize="none"
           onChangeText={onChangeText}
           placeholderTextColor={AppStyle.inputPlaceholder}
           onBlur={() => {

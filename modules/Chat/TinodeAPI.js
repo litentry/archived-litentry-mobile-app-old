@@ -4,7 +4,7 @@ import { wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './chatAction';
 import { loaderAction } from '../../actions/loaderAction';
-import {screensList} from "../../navigation/screensList";
+import { screensList } from '../../navigation/screensList';
 
 class TinodeAPIClass {
   constructor() {
@@ -49,21 +49,24 @@ class TinodeAPIClass {
     // Try to login with login/password. If they are not available, try token. If no token, ask for login/password.
     let promise = null;
     let token = this.tinode.getAuthToken();
-    console.log('token equal? ' , token === '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI=')
-    let ctrl
+    console.log(
+      'token equal? ',
+      token === '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI='
+    );
+    let ctrl;
     try {
       if (username && password) {
-         ctrl = await this.tinode.loginBasic(username, password, cred);
+        ctrl = await this.tinode.loginBasic(username, password, cred);
       } else if (token) {
-         ctrl = await this.tinode.loginToken(token.token, cred);
-      //   token = '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI='
-      //   this.tinode.setAuthToken(token);
-      //    ctrl = await this.tinode.loginToken(token, cred);
+        ctrl = await this.tinode.loginToken(token.token, cred);
+        //   token = '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI='
+        //   this.tinode.setAuthToken(token);
+        //    ctrl = await this.tinode.loginToken(token, cred);
       }
       console.log('ctrl is', ctrl);
 
       const authToken = this.tinode.getAuthToken();
-      console.log('authToken is', authToken)
+      console.log('authToken is', authToken);
 
       const me = this.tinode.getMeTopic();
       // me.onData = this.onData; //Callback which receives a {data} message.
@@ -94,34 +97,32 @@ class TinodeAPIClass {
     }
   }
 
-  onData(data){
-    console.log('data is', data)
+  onData(data) {
+    console.log('data is', data);
   }
 
   onMeta(metaData) {
-    console.log('meta is', metaData)
+    console.log('meta is', metaData);
   }
-
 
   getTopics() {
     const me = this.tinode.getMeTopic();
-    console.log('topics are', me)
+    console.log('topics are', me);
 
     me.subscribe(
-      me.startMetaQuery().
-      withLaterSub().
-      withDesc().
-      build()
-    ).catch((err) => {
+      me
+        .startMetaQuery()
+        .withLaterSub()
+        .withDesc()
+        .build()
+    ).catch(err => {
       //remove auth token
       this.handleError(err.message, 'err');
     });
   }
 
-
-
   tnMeMetaDesc(desc) {
-    console.log('tnMeMetaDesc, ', desc)
+    console.log('tnMeMetaDesc, ', desc);
     if (desc && desc.public) {
       // const state = {
       //   sidePanelTitle: desc.public.fn,
@@ -131,7 +132,7 @@ class TinodeAPIClass {
   }
 
   tnMeContactUpdate(what, count) {
-    console.log('contact update', what, count)
+    console.log('contact update', what, count);
     // if (what === 'on' || what === 'off') {
     //   this.resetContactList();
     //   if (this.state.topicSelected === cont.topic) {
@@ -176,11 +177,11 @@ class TinodeAPIClass {
     // }
   }
 
-  tnMeSubsUpdated (meTopics, data){
+  tnMeSubsUpdated(meTopics, data) {
     console.log('subs updates!', meTopics, data);
-    let chatList = []
-    meTopics.contacts((c) => {
-      console.log('contact is', c)
+    let chatList = [];
+    meTopics.contacts(c => {
+      console.log('contact is', c);
       chatList.push(c);
     });
     store.dispatch(chatAction.updateChatList(chatList));
@@ -188,9 +189,9 @@ class TinodeAPIClass {
   }
 
   resetContactList() {
-    let chatList = []
-    this.tinode.getMeTopic().contacts((c) => {
-      console.log('contact is', c)
+    let chatList = [];
+    this.tinode.getMeTopic().contacts(c => {
+      console.log('contact is', c);
       chatList.push(c);
       // if (this.state.topicSelected == c.topic) {
       //   newState.topicSelectedOnline = c.online;
@@ -198,7 +199,7 @@ class TinodeAPIClass {
       // }
     });
     // Merge search results and chat list.
-    console.log('chat list are', chatList)
+    console.log('chat list are', chatList);
     // const searchableContacts = this.prepareSearchableContacts(chatList, []);
     // this.setState(newState);
   }
@@ -217,7 +218,7 @@ class TinodeAPIClass {
           updated: c.updated,
           public: c.public,
           private: c.private,
-          acs: c.acs
+          acs: c.acs,
         };
       }
     }
@@ -234,7 +235,7 @@ class TinodeAPIClass {
   tnFndSubsUpdated() {
     let foundContacts = [];
     // Don't attempt to create P2P topics which already exist. Server will reject the duplicates.
-    this.tinode.getFndTopic().contacts((s) => {
+    this.tinode.getFndTopic().contacts(s => {
       foundContacts.push(s);
     });
     // this.setState({

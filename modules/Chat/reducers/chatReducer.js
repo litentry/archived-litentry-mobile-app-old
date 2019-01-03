@@ -19,7 +19,7 @@ export const chatReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         chatList: action.chatList,
-      }
+      };
     default:
       return state;
   }

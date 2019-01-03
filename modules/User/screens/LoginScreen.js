@@ -10,7 +10,7 @@ import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import Connector from '../../Chat/components/Connector';
 import TinodeAPI from '../../Chat/TinodeAPI';
-import {screensList} from "../../../navigation/screensList";
+import { screensList } from '../../../navigation/screensList';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

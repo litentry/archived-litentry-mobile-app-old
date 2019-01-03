@@ -1,41 +1,43 @@
 import React from 'react';
-import { Button, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import { Ionicons } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import NavigationHeader from '../../../components/NavigationHeader';
-import TinodeAPI from "../TinodeAPI";
+import TinodeAPI from '../TinodeAPI';
+import ChatListNode from '../components/ChatListNode';
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.ChatList.title} />,
-    headerRight: (
-      <TouchableOpacity
-        style={styles.addIcon}
-        onPress={() => navigation.navigate(screensList.Transactions.label)}>
-        <Ionicons name="md-add" size={AppStyle.fontMiddle} color="black" />
-      </TouchableOpacity>
-    ),
-    headerBackTitle: '',
+    headerTitle: screensList.ChatList.title,
+    headerTransparent: false,
+    headerTintColor: AppStyle.userCancelGreen,
     headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
+      backgroundColor: 'white',
     },
   });
 
   static propTypes = {
     navigation: PropTypes.object,
+    chatList: PropTypes.array.isRequired,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     TinodeAPI.getTopics();
   }
 
   render() {
-    return <View>{/*<Connector />*/}</View>;
+    const { chatList } = this.props;
+    console.log('chatList is', chatList);
+    return (
+      <FlatList
+        style={styles.container}
+        data={chatList}
+        renderItem={({ item }) => <ChatListNode chatNode={item} key={item.topic} />}
+      />
+    );
   }
 }
 
@@ -52,6 +54,9 @@ export default connect(
 )(ChatListScreen);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   addIcon: {
     padding: 10,
     flex: 1,

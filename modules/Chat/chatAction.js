@@ -8,6 +8,6 @@ export const chatActionType = {
 export const chatAction = {
   connected: () => ({ type: chatActionType.CONNECTED }),
   disconnected: () => ({ type: chatActionType.DISCONNECTED }),
-  updateChatList: (chatList) => ({type: chatActionType.UPDATE_CHAT_LIST, chatList}),
+  updateChatList: chatList => ({ type: chatActionType.UPDATE_CHAT_LIST, chatList }),
   login: (username, password) => ({ type: chatActionType.LOGIN, username, password }),
 };

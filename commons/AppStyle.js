@@ -80,4 +80,6 @@ export default {
   userCorrect: '#4A90E2',
   userIncorrect: '#DF4F52',
   inputPlaceholder: '#A1A1A1',
+
+  chatBorder: '#DDD',
 };
