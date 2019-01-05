@@ -40,7 +40,7 @@ class ChatListScreen extends React.Component {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate(screensList.Chat.label, {
+              navigation.navigate(screensList.Topic.label, {
                 topicId: item.topic,
               })
             }>

@@ -9,7 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import TinodeAPI from '../TinodeAPI';
 
-class ChatScreen extends React.Component {
+class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
     headerRight: (
@@ -63,7 +63,7 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChatScreen);
+)(TopicScreen);
 
 const styles = StyleSheet.create({
   container: {},
