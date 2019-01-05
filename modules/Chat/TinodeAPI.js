@@ -1,12 +1,14 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
-import { wsInfo } from '../../config';
+import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
 import { loaderAction } from '../../actions/loaderAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
+
+const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
 class TinodeAPIClass {
   constructor() {
@@ -253,18 +255,47 @@ class TinodeAPIClass {
 
   subscribe(topicId, userId) {
     let topic = this.tinode.getTopic(topicId);
-    let newGroupTopic = Tinode.isNewGroupTopicName(props.topic);
+    let newGroupTopic = Tinode.isNewGroupTopicName(topicId);
 
     topic.onData = this.handleNewMessage.bind(this, topic, topicId);
     // topic.onAllMessagesReceived = this.handleAllMessagesReceived;
     topic.onInfo = this.handleInfoReceipt.bind(this, topic, topicId);
     topic.onMetaDesc = this.handleDescChange.bind(this, topic, topicId);
-    topic.onSubsUpdated = this.handleSubsUpdated.bind(this, topic, topicId);
-    topic.onPres = this.handleSubsUpdated.bind(this, topic, topicId, userId);
+    topic.onSubsUpdated = this.handleSubsUpdated.bind(this, topic, topicId, userId);
+    // topic.onPres = this.handleSubsUpdated.bind(this, topic, topicId, userId);
 
     //TODO why? add title and avatar?
     this.handleDescChange(topic, topicId, 'first desc');
     this.handleSubsUpdated(topic, topicId, userId, 'first update Subs');
+    store.dispatch(chatAction.subscribeChat(topicId));
+
+    if (!topic.isSubscribed()) {
+      // Don't request the tags. They are useless unless the user
+      // is the owner and is editing the topic.
+      let getQuery = topic
+        .startMetaQuery()
+        .withLaterDesc()
+        .withLaterSub()
+        .withLaterData(chatConfig.messagePerPage)
+        .withLaterDel()
+        .withTags();
+      let setQuery = newGroupTopic ? newGroupTopicParams : undefined;
+
+      topic
+        .subscribe(getQuery.build(), setQuery)
+        .then(ctrl => {
+          console.log('subscribe callback ctrl is ', ctrl);
+          // If there are unsent messages, try sending them now.
+          topic.queuedMessages(pub => {
+            if (!pub._sending && topic.isSubscribed()) {
+              topic.publishMessage(pub);
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err.message, 'err');
+        });
+    }
   }
 
   unsubscribe(oldTopicId) {
@@ -289,6 +320,7 @@ class TinodeAPIClass {
           oldTopic.onPres = undefined;
         });
     }
+    store.dispatch(chatAction.subscribeChat(null));
   }
 
   handleNewMessage(topic, topicId, msg) {
@@ -331,8 +363,9 @@ class TinodeAPIClass {
     }
   }
 
-  handleSubsUpdated(topic, topicId, userId, subsUpdated) {
-    console.log('in handle Subs Update, subsUpdated are:', subsUpdated);
+  //TODO which in the future could be optimized with group user, only fetch the user id
+  handleSubsUpdated(topic, topicId, userId, memberIdList) {
+    console.log('in handle Subs Update, subsUpdated are:', memberIdList);
     const subs = [];
     const topicName = topic.topic;
     topic.subscribers(sub => {
@@ -340,7 +373,6 @@ class TinodeAPIClass {
         return subs.push(sub);
       }
       if (sub.user !== userId) {
-        console.log('subs are', sub);
         subs.push(sub);
       }
     });

@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import TinodeAPI from "../TinodeAPI";
+import TinodeAPI from '../TinodeAPI';
 
 class ChatScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -27,21 +27,26 @@ class ChatScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    topicId: PropTypes.string.isRequired,
     topicsMap: PropTypes.object.isRequired,
     userId: PropTypes.string.isRequired,
-    subscribedChatId: PropTypes.string.isRequired,
+    subscribedChatId: PropTypes.string,
     connected: PropTypes.bool.isRequired,
   };
 
-  componentDidMount(){
-    const {topicsMap, topicId, IDE Settings Sync IDE Settings Sync IDE Settings Sync userId, subscribedChatId, connected} = this.props
-    if(connected && subscribedChatId !== topicId){
+  componentDidMount() {
+    const { navigation, userId, subscribedChatId, connected } = this.props;
+    const topicId = navigation.getParam('topicId', null);
+    if (connected && subscribedChatId !== topicId) {
+      if (subscribedChatId !== null) TinodeAPI.unsubscribe(subscribedChatId);
       TinodeAPI.subscribe(topicId, userId);
     }
   }
 
   render() {
+    const { topicsMap, navigation } = this.props;
+    const topicId = navigation.getParam('topicId', null);
+    const messages = _.get(topicsMap, topicId);
+    console.log('messages are', messages);
     return <View style={styles.container} />;
   }
 }

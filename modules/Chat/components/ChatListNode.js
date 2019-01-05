@@ -16,7 +16,6 @@ export default class ChatListNode extends React.Component {
     const { chatNode } = this.props;
 
     const imageUrl = makeImageUrl(chatNode.public.photo);
-    console.log('image url is', imageUrl);
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>

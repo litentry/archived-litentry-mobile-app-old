@@ -18,7 +18,7 @@ export const topicsAction = {
     topicAvatar,
   }),
   updateTopicSubs: (topicName, topicSubs) => ({
-    type: topicsActionType.UPDATE_TOPIC_TITLE,
+    type: topicsActionType.UPDATE_TOPIC_SUBS,
     topicName,
     topicSubs,
   }),

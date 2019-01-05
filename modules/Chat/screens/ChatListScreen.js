@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -30,13 +30,23 @@ class ChatListScreen extends React.Component {
   }
 
   render() {
-    const { chatList } = this.props;
+    const { chatList, navigation } = this.props;
     console.log('chatList is', chatList);
     return (
       <FlatList
         style={styles.container}
         data={chatList}
-        renderItem={({ item }) => <ChatListNode chatNode={item} key={item.topic} />}
+        keyExtractor={item => item.topic}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(screensList.Chat.label, {
+                topicId: item.topic,
+              })
+            }>
+            <ChatListNode chatNode={item} />
+          </TouchableOpacity>
+        )}
       />
     );
   }

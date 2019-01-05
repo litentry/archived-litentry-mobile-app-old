@@ -34,3 +34,22 @@ export const imageConfig = {
    * to adjust it to 1600 or 2400 for production.**/
   MAX_IMAGE_DIM: 768,
 };
+
+export const chatConfig = {
+  messagePerPage: 20,
+  online_now: {
+    id: 'online_now',
+    defaultMessage: 'online now',
+    description: 'Indicator that the user or topic is currently online',
+  },
+  last_seen: {
+    id: 'last_seen_timestamp',
+    defaultMessage: 'Last seen',
+    description: 'Label for the timestamp of when the user or topic was last online',
+  },
+  not_found: {
+    id: 'title_not_found',
+    defaultMessage: 'Not found',
+    description: 'Title shown when topic is not found',
+  },
+};
