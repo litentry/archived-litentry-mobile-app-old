@@ -1,8 +1,10 @@
-import { chatActionType } from '../chatAction';
+import { chatActionType } from '../actions/chatAction';
 
 const INITIAL_STATE = {
   connected: false,
   chatList: [],
+  chatId: '',
+  subscribedChatId: null,
 };
 
 export const chatReducer = (state = INITIAL_STATE, action) => {
@@ -19,6 +21,16 @@ export const chatReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         chatList: action.chatList,
+      };
+    case chatActionType.SET_ID:
+      return {
+        ...state,
+        userId: action.userId,
+      };
+    case chatActionType.SUBSCRIBE_CHAT:
+      return {
+        ...state,
+        subscribedChatId: action.chatId,
       };
     default:
       return state;

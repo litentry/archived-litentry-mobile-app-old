@@ -2,9 +2,11 @@ import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import { wsInfo } from '../../config';
 import { store } from '../../reducers/store';
-import { chatAction } from './chatAction';
+import { chatAction } from './actions/chatAction';
 import { loaderAction } from '../../actions/loaderAction';
 import { screensList } from '../../navigation/screensList';
+import { topicsAction } from './actions/topicsAction';
+import { makeImageUrl } from './lib/blob-helpers';
 
 class TinodeAPIClass {
   constructor() {
@@ -105,7 +107,7 @@ class TinodeAPIClass {
     console.log('meta is', metaData);
   }
 
-  getTopics() {
+  fetchTopics() {
     const me = this.tinode.getMeTopic();
     console.log('topics are', me);
 
@@ -119,6 +121,11 @@ class TinodeAPIClass {
       //remove auth token
       this.handleError(err.message, 'err');
     });
+  }
+
+  fetchUserId() {
+    const userId = this.tinode.getCurrentUserID();
+    store.dispatch(chatAction.setId(userId));
   }
 
   tnMeMetaDesc(desc) {
@@ -242,6 +249,102 @@ class TinodeAPIClass {
     //   searchResults: foundContacts,
     //   searchableContacts: TinodeWeb.prepareSearchableContacts(this.state.chatList, foundContacts)
     // });
+  }
+
+  subscribe(topicId, userId) {
+    let topic = this.tinode.getTopic(topicId);
+    let newGroupTopic = Tinode.isNewGroupTopicName(props.topic);
+
+    topic.onData = this.handleNewMessage.bind(this, topic, topicId);
+    // topic.onAllMessagesReceived = this.handleAllMessagesReceived;
+    topic.onInfo = this.handleInfoReceipt.bind(this, topic, topicId);
+    topic.onMetaDesc = this.handleDescChange.bind(this, topic, topicId);
+    topic.onSubsUpdated = this.handleSubsUpdated.bind(this, topic, topicId);
+    topic.onPres = this.handleSubsUpdated.bind(this, topic, topicId, userId);
+
+    //TODO why? add title and avatar?
+    this.handleDescChange(topic, topicId, 'first desc');
+    this.handleSubsUpdated(topic, topicId, userId, 'first update Subs');
+  }
+
+  unsubscribe(oldTopicId) {
+    if (!oldTopic) {
+      return;
+    }
+    let oldTopic = this.tinode.getTopic(oldTopicId);
+    if (oldTopic && oldTopic.isSubscribed()) {
+      oldTopic
+        .leave(false)
+        .catch(() => {
+          /* do nothing here */
+        })
+        .finally(() => {
+          // We don't care if the request succeeded or failed.
+          // The topic is dead regardless.
+          oldTopic.onData = undefined;
+          oldTopic.onAllMessagesReceived = undefined;
+          oldTopic.onInfo = undefined;
+          oldTopic.onMetaDesc = undefined;
+          oldTopic.onSubsUpdated = undefined;
+          oldTopic.onPres = undefined;
+        });
+    }
+  }
+
+  handleNewMessage(topic, topicId, msg) {
+    console.log('in handle News messages, msg are:', msg);
+    const messages = [];
+    topic.messages(function(m) {
+      if (!m.deleted) {
+        messages.push(m);
+      }
+    });
+    store.dispatch(topicsAction.updateTopicMessages(topicId, messages));
+  }
+
+  handleInfoReceipt(topic, topicId, info) {
+    console.log('in handleInfoReceipt, info are:', info);
+    switch (info.what) {
+      case 'kp':
+      case 'read':
+      case 'recv':
+      default:
+        console.log('receipt info is', info);
+    }
+  }
+
+  handleDescChange(topic, topicId, desc) {
+    console.log('in handleDescChange, desc are:', desc);
+    if (desc.public) {
+      store.dispatch(
+        topicsAction.updateTopicTitle(topicId, desc.public.fn, makeImageUrl(desc.public.photo))
+      );
+    } else {
+      store.dispatch(topicsAction.updateTopicTitle(topicId, '', ''));
+    }
+    if (desc.acs) {
+      console.log('test acs is: ', desc.acs);
+      // this.setState({
+      //   readOnly: !desc.acs.isWriter(),
+      //   writeOnly: !desc.acs.isReader()
+      // });
+    }
+  }
+
+  handleSubsUpdated(topic, topicId, userId, subsUpdated) {
+    console.log('in handle Subs Update, subsUpdated are:', subsUpdated);
+    const subs = [];
+    const topicName = topic.topic;
+    topic.subscribers(sub => {
+      if (topic.getType() === 'grp') {
+        return subs.push(sub);
+      }
+      if (sub.user !== userId) {
+        console.log('subs are', sub);
+        subs.push(sub);
+      }
+    });
+    store.dispatch(topicsAction.updateTopicSubs(topicName, subs));
   }
 }
 

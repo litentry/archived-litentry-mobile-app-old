@@ -25,7 +25,8 @@ class ChatListScreen extends React.Component {
   };
 
   componentDidMount() {
-    TinodeAPI.getTopics();
+    TinodeAPI.fetchTopics();
+    TinodeAPI.fetchUserId();
   }
 
   render() {
