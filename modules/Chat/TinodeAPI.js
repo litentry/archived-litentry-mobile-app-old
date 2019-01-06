@@ -190,7 +190,8 @@ class TinodeAPIClass {
   reformatData(result, value, key){
     if(key === 'photo'){
       const avatar = makeImageUrl(value)
-      return store.dispatch(chatAction.setAvatar(avatar))
+      store.dispatch(chatAction.setAvatar(avatar))
+      return result
     }
     if(key === 'fn') {
       return _.set(result, 'name', value)

@@ -37,6 +37,7 @@ class TopicScreen extends React.Component {
     subscribedChatId: PropTypes.string,
     connected: PropTypes.bool.isRequired,
     avatar: PropTypes.string.isRequired,
+    userInfo: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
@@ -49,20 +50,24 @@ class TopicScreen extends React.Component {
   }
 
   renderMessageNode (message, topic) {
-    const {userId, avatar} = this.props
+    const {userId, avatar, userInfo} = this.props
+    let messageOwnerName
     let messageOwnerAvatar;
     if(message.from === userId) {
       messageOwnerAvatar = {uri: avatar}
+      messageOwnerName = userInfo.name
     } else {
       const messageOwner = _.find(topic.subs, {user: message.from})
       if(messageOwner.public.photo) {
         messageOwnerAvatar = {uri: makeImageUrl(messageOwner.public.photo)}
+        messageOwnerName = messageOwner.public.fn
       }else {
         //EXPO compile the the image as a number in image tree
         messageOwnerAvatar = Images.blankProfile;
+        messageOwnerName = message.from;
       }
     }
-    return <MessageNode message={message} imageSource={messageOwnerAvatar}/>
+    return <MessageNode message={message} imageSource={messageOwnerAvatar} senderName={messageOwnerName}/>
   }
 
   render() {
@@ -91,6 +96,7 @@ const mapStateToProps = state => ({
   subscribedChatId: state.chat.subscribedChatId,
   connected: state.chat.connected,
   avatar: state.chat.avatar,
+  userInfo: state.chat.userInfo,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -102,6 +108,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex:1
+    flex:1,
+    backgroundColor: AppStyle.chatBackGroundColor,
   },
 });
