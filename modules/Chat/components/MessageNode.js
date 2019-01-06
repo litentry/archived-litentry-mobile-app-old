@@ -12,19 +12,18 @@ class MessageNode extends React.Component {
     userId: PropTypes.string.isRequired,
 
     message: PropTypes.object.isRequired,
-    avatar: PropTypes.string.isRequired,
+    imageSource: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
   };
 
   static defaultProps = {};
 
   render() {
-    const {message, userId, avatar} = this.props;
+    const {message, userId, imageSource} = this.props;
     const isUser = message['from'] === userId;
-
 
     return <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: avatar }} />
+        <Image style={styles.image} source={imageSource} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.text}>{message.content}</Text>

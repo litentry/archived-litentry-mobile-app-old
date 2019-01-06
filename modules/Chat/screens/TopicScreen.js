@@ -10,10 +10,11 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import TinodeAPI from '../TinodeAPI';
 import {makeImageUrl} from "../lib/blob-helpers";
 import MessageNode from "../components/MessageNode";
+import Images from "../../../commons/Images";
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={''} />,
+    headerTitle: navigation.state.params.title,
     headerRight: (
       <TouchableOpacity
         onPress={() => navigation.navigate(screensList.Transactions.label)}
@@ -23,8 +24,9 @@ class TopicScreen extends React.Component {
       </TouchableOpacity>
     ),
     headerBackTitle: '',
+    headerTintColor: AppStyle.userCancelGreen,
     headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
+      backgroundColor: 'white',
     },
   });
 
@@ -50,12 +52,17 @@ class TopicScreen extends React.Component {
     const {userId, avatar} = this.props
     let messageOwnerAvatar;
     if(message.from === userId) {
-      messageOwnerAvatar = avatar
+      messageOwnerAvatar = {uri: avatar}
     } else {
       const messageOwner = _.find(topic.subs, {user: message.from})
-      messageOwnerAvatar = makeImageUrl(messageOwner.public.photo)
+      if(messageOwner.public.photo) {
+        messageOwnerAvatar = {uri: makeImageUrl(messageOwner.public.photo)}
+      }else {
+        //EXPO compile the the image as a number in image tree
+        messageOwnerAvatar = Images.blankProfile;
+      }
     }
-    return <MessageNode message={message} avatar={messageOwnerAvatar}/>
+    return <MessageNode message={message} imageSource={messageOwnerAvatar}/>
   }
 
   render() {
@@ -72,7 +79,7 @@ class TopicScreen extends React.Component {
       <FlatList
         style={styles.container}
         data={messages}
-        keyExtractor={message => message.seq}
+        keyExtractor={message => message.seq.toString()}
         renderItem={({item}) => this.renderMessageNode(item, topic)}/>
     </View>;
   }

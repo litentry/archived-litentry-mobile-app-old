@@ -14,6 +14,8 @@ class ChatListScreen extends React.Component {
     headerTitle: screensList.ChatList.title,
     headerTransparent: false,
     headerTintColor: AppStyle.userCancelGreen,
+    headerBackTitle: ' ',
+    headerTruncatedBackTitle: '',
     headerStyle: {
       backgroundColor: 'white',
     },
@@ -42,6 +44,7 @@ class ChatListScreen extends React.Component {
             onPress={() =>
               navigation.navigate(screensList.Topic.label, {
                 topicId: item.topic,
+                title: item.public.fn,
               })
             }>
             <ChatListNode chatNode={item} />
