@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View, TouchableOpacity, Text, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -8,16 +8,19 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import TinodeAPI from '../TinodeAPI';
+import {makeImageUrl} from "../lib/blob-helpers";
+import MessageNode from "../components/MessageNode";
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: <NavigationHeader title={''} />,
     headerRight: (
-      <Button
+      <TouchableOpacity
         onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
         color="black"
-      />
+      >
+        <Text>...</Text>
+      </TouchableOpacity>
     ),
     headerBackTitle: '',
     headerStyle: {
@@ -31,6 +34,7 @@ class TopicScreen extends React.Component {
     userId: PropTypes.string.isRequired,
     subscribedChatId: PropTypes.string,
     connected: PropTypes.bool.isRequired,
+    avatar: PropTypes.string.isRequired,
   };
 
   componentDidMount() {
@@ -42,12 +46,35 @@ class TopicScreen extends React.Component {
     }
   }
 
+  renderMessageNode (message, topic) {
+    const {userId, avatar} = this.props
+    let messageOwnerAvatar;
+    if(message.from === userId) {
+      messageOwnerAvatar = avatar
+    } else {
+      const messageOwner = _.find(topic.subs, {user: message.from})
+      messageOwnerAvatar = makeImageUrl(messageOwner.public.photo)
+    }
+    return <MessageNode message={message} avatar={messageOwnerAvatar}/>
+  }
+
   render() {
     const { topicsMap, navigation } = this.props;
     const topicId = navigation.getParam('topicId', null);
-    const messages = _.get(topicsMap, topicId);
+    const topic = _.get(topicsMap, topicId);
+    if(!topic)
+      return null;
+    const { messages } = topic;
+    if(!messages)
+      return null;
     console.log('messages are', messages);
-    return <View style={styles.container} />;
+    return <View style={styles.container}>
+      <FlatList
+        style={styles.container}
+        data={messages}
+        keyExtractor={message => message.seq}
+        renderItem={({item}) => this.renderMessageNode(item, topic)}/>
+    </View>;
   }
 }
 
@@ -56,6 +83,7 @@ const mapStateToProps = state => ({
   userId: state.chat.userId,
   subscribedChatId: state.chat.subscribedChatId,
   connected: state.chat.connected,
+  avatar: state.chat.avatar,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -66,5 +94,7 @@ export default connect(
 )(TopicScreen);
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex:1
+  },
 });

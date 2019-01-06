@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
+import _ from 'lodash';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
@@ -186,6 +187,17 @@ class TinodeAPIClass {
     // }
   }
 
+  reformatData(result, value, key){
+    if(key === 'photo'){
+      const avatar = makeImageUrl(value)
+      return store.dispatch(chatAction.setAvatar(avatar))
+    }
+    if(key === 'fn') {
+      return _.set(result, 'name', value)
+    }
+    return _.set(result, key, value)
+  }
+
   tnMeSubsUpdated(meTopics, data) {
     console.log('subs updates!', meTopics, data);
     let chatList = [];
@@ -193,8 +205,11 @@ class TinodeAPIClass {
       console.log('contact is', c);
       chatList.push(c);
     });
+    const privateData = meTopics.private
+    const userInfo = _.reduce(meTopics.public, this.reformatData, privateData)
+    store.dispatch(chatAction.setUserInfo(userInfo))
     store.dispatch(chatAction.updateChatList(chatList));
-    // this.resetContactList();
+  // this.resetContactList();
   }
 
   resetContactList() {

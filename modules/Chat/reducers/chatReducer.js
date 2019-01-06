@@ -3,7 +3,9 @@ import { chatActionType } from '../actions/chatAction';
 const INITIAL_STATE = {
   connected: false,
   chatList: [],
-  chatId: '',
+  userId: '',
+  avatar: '',
+  userInfo: {},
   subscribedChatId: null,
 };
 
@@ -27,6 +29,16 @@ export const chatReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userId: action.userId,
       };
+    case chatActionType.SET_AVATAR:
+      return {
+        ...state,
+        avatar: action.avatar,
+      }
+    case chatActionType.SET_USER_INFO:
+      return {
+        ...state,
+        userInfo: action.userInfo,
+      }
     case chatActionType.SUBSCRIBE_CHAT:
       return {
         ...state,
