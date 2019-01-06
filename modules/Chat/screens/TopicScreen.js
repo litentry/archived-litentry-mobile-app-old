@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import TinodeAPI from '../TinodeAPI';
+import { Entypo } from '@expo/vector-icons';
 import {makeImageUrl} from "../lib/blob-helpers";
 import MessageNode from "../components/MessageNode";
 import Images from "../../../commons/Images";
@@ -19,8 +20,14 @@ class TopicScreen extends React.Component {
       <TouchableOpacity
         onPress={() => navigation.navigate(screensList.Transactions.label)}
         color="black"
+        style={styles.dotContainer}
       >
-        <Text>...</Text>
+        <Entypo
+          name="dots-three-horizontal"
+          size={AppStyle.fontMiddle}
+          style={styles.dot}
+          color={AppStyle.lightGrey}
+        />
       </TouchableOpacity>
     ),
     headerBackTitle: '',
@@ -111,4 +118,11 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
+  dotContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dot: {
+    padding:10,
+  }
 });
