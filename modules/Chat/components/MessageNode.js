@@ -11,7 +11,7 @@ class MessageNode extends React.Component {
   static propTypes = {
     userId: PropTypes.string.isRequired,
     message: PropTypes.object.isRequired,
-    imageSource: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    imageSource: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
     senderName: PropTypes.string.isRequired,
   };
 

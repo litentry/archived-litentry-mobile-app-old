@@ -6,7 +6,7 @@ import AppStyle from '../commons/AppStyle';
 const { height, width } = Dimensions.get('window');
 const isSmallScreen = height < 569;
 
-const VariantList = {
+export const VariantList = {
   CONFIRM: 'confirm',
   CANCEL: 'cancel',
 };

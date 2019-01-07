@@ -18,7 +18,10 @@ class TopicScreen extends React.Component {
     headerTitle: navigation.state.params.title,
     headerRight: (
       <TouchableOpacity
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
+        onPress={() => navigation.navigate(screensList.TopicInfo.label, {
+          topicId: navigation.getParam('topicId', null),
+          title: navigation.getParam('title', null),
+        })}
         color="black"
         style={styles.dotContainer}
       >

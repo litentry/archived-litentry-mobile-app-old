@@ -19,4 +19,5 @@ export const screensList = {
   ContinueLogin: { label: 'ContinueLogin', title: 'Continue Login' },
   Login: { label: 'Login', title: 'Login' },
   Topic: { label: 'Topic', title: 'Topic' },
+  TopicInfo: {label: 'TopicInfo', title: 'Topic Info'},
 };
