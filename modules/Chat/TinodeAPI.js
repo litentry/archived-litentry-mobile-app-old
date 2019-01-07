@@ -362,14 +362,15 @@ class TinodeAPIClass {
   }
 
   handleDescChange(topic, topicId, desc) {
-    console.log('in handleDescChange, desc are:', desc);
+    console.log('topics Info is', desc)
     if (desc.public) {
       store.dispatch(
-        topicsAction.updateTopicTitle(topicId, desc.public.fn, makeImageUrl(desc.public.photo))
-      );
+        topicsAction.updateTopicMeta(topicId, desc.public.fn, desc.public.photo, topic.private.comment)
+    );
     } else {
-      store.dispatch(topicsAction.updateTopicTitle(topicId, '', ''));
+      store.dispatch(topicsAction.updateTopicMeta(topicId, '', '', ''));
     }
+    console.log('in handleDescChange, desc are:', desc);
     if (desc.acs) {
       console.log('test acs is: ', desc.acs);
       // this.setState({
@@ -378,7 +379,6 @@ class TinodeAPIClass {
       // });
     }
   }
-
   //TODO which in the future could be optimized with group user, only fetch the user id
   handleSubsUpdated(topic, topicId, userId, memberIdList) {
     console.log('in handle Subs Update, subsUpdated are:', memberIdList);
@@ -393,6 +393,10 @@ class TinodeAPIClass {
       }
     });
     store.dispatch(topicsAction.updateTopicSubs(topicName, subs));
+  }
+
+  static isGroupId  (chatId) {
+    return typeof chatId === 'string' && chatId.indexOf('grp') === 0
   }
 }
 

@@ -18,12 +18,19 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
         topicsMap,
       };
     }
-    case topicsActionType.UPDATE_TOPIC_TITLE: {
+    case topicsActionType.UPDATE_TOPIC_META: {
       const updateName = topicsMap =>
-        set(`${action.topicName}.title`, action.topicTitle, topicsMap);
+        set(`${action.topicName}.public.fn`, action.topicTitle, topicsMap);
       const updateAvatar = topicsMap =>
-        set(`${action.topicName}.avatar`, action.topicAvatar, topicsMap);
-      const topicsMap = updateAvatar(updateName(state.topicsMap));
+        set(`${action.topicName}.public.photo`, action.topicAvatar, topicsMap);
+      const updateDescription = topicsMap =>
+        set(`${action.topicName}.private.comment`, action.description, topicsMap)
+      const updateFunction = _.flow(
+        updateDescription,
+        updateAvatar,
+        updateName,
+      )
+      const topicsMap = updateFunction(state.topicsMap);
       console.log('topics map is', topicsMap);
       return {
         ...state,
