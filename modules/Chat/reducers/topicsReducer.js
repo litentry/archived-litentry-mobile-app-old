@@ -24,12 +24,12 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
       const updateAvatar = topicsMap =>
         set(`${action.topicName}.public.photo`, action.topicAvatar, topicsMap);
       const updateDescription = topicsMap =>
-        set(`${action.topicName}.private.comment`, action.topicDescription, topicsMap)
+        set(`${action.topicName}.private.comment`, action.topicDescription, topicsMap);
       const updateFunction = _.flow(
         updateDescription,
         updateAvatar,
-        updateName,
-      )
+        updateName
+      );
       const topicsMap = updateFunction(state.topicsMap);
       console.log('topics map is', topicsMap);
       return {

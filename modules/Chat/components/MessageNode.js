@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Image, StyleSheet, View, Text} from 'react-native';
-import AppStyle from '../../../commons/AppStyle';
+import { Image, StyleSheet, View, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
-import {makeImageUrl} from "../lib/blob-helpers";
-import _ from 'lodash'
-import connect from "react-redux/src/connect/connect";
+import _ from 'lodash';
+import connect from 'react-redux/src/connect/connect';
+import { makeImageUrl } from '../lib/blob-helpers';
+import AppStyle from '../../../commons/AppStyle';
 
 class MessageNode extends React.Component {
   static propTypes = {
@@ -18,34 +18,37 @@ class MessageNode extends React.Component {
   static defaultProps = {};
 
   render() {
-    const {message, userId, imageSource, senderName} = this.props;
+    const { message, userId, imageSource, senderName } = this.props;
     const isUser = message.from === userId;
 
     const containerFlexDirection = {
-      flexDirection: isUser ? 'row-reverse': 'row'
-    }
+      flexDirection: isUser ? 'row-reverse' : 'row',
+    };
     const backGroundColor = {
-      backgroundColor: isUser ?  AppStyle.userCancelGreen : 'white'
-    }
+      backgroundColor: isUser ? AppStyle.userCancelGreen : 'white',
+    };
     const imageMargin = {
       [isUser ? 'marginLeft' : 'marginRight']: 10,
-    }
+    };
     const titleAlign = {
       textAlign: isUser ? 'right' : 'left',
-    }
+    };
     const arrowStyle = isUser ? styles.rightTriangle : styles.leftTriangle;
-    const messageContent = typeof message.content === 'string' ? message.content : 'Unavailable message';
+    const messageContent =
+      typeof message.content === 'string' ? message.content : 'Unavailable message';
 
-    return <View style={[styles.container, containerFlexDirection]}>
-      <View style={[styles.imageContainer, imageMargin]}>
-        <Image style={styles.image} source={imageSource} />
+    return (
+      <View style={[styles.container, containerFlexDirection]}>
+        <View style={[styles.imageContainer, imageMargin]}>
+          <Image style={styles.image} source={imageSource} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={[styles.title, titleAlign]}>{senderName}</Text>
+          <Text style={[styles.text, backGroundColor]}>{messageContent}</Text>
+          <View style={[styles.textTriangle, arrowStyle]} />
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={[styles.title, titleAlign]}>{senderName}</Text>
-        <Text style={[styles.text, backGroundColor]}>{messageContent}</Text>
-        <View style={[styles.textTriangle, arrowStyle]}/>
-      </View>
-    </View>;
+    );
   }
 }
 
@@ -117,5 +120,5 @@ const styles = StyleSheet.create({
     right: -5,
     borderLeftWidth: 5,
     borderLeftColor: AppStyle.userCancelGreen,
-  }
+  },
 });

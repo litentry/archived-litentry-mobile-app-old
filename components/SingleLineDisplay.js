@@ -19,15 +19,17 @@ export default class SingleLineDisplay extends React.Component {
     Icon: null,
   };
 
-  renderTitle(){
-    const {Icon: Icon, title} = this.props
-    if(!Icon){
-      return <Text style={styles.title}>{title}</Text>
+  renderTitle() {
+    const { Icon, title } = this.props;
+    if (!Icon) {
+      return <Text style={styles.title}>{title}</Text>;
     }
-    return <View style={styles.title}>
-      <Icon style={styles.icon}/>
-      <Text style={styles.title}>{title}</Text>
-    </View>
+    return (
+      <View style={styles.title}>
+        <Icon style={styles.icon} />
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    );
   }
 
   render() {

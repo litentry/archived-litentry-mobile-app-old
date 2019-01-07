@@ -30,7 +30,11 @@ class AccountSettingScreen extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <SingleLineDisplay title={t.ID_TITLE} style={styles.singleLineDisplay} value={mock.mockId} />
+        <SingleLineDisplay
+          title={t.ID_TITLE}
+          style={styles.singleLineDisplay}
+          value={mock.mockId}
+        />
         <SingleLineDisplay
           title={t.PASSWORD_TITLE}
           style={styles.singleLineDisplay}
@@ -55,13 +59,13 @@ export default connect(
 
 const styles = {
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
   singleLineDisplay: {
     marginTop: 20,
-  }
-}
+  },
+};
 
 const t = {
   ID_TITLE: 'Genesis ID',

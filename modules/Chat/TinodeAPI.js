@@ -187,16 +187,16 @@ class TinodeAPIClass {
     // }
   }
 
-  reformatData(result, value, key){
-    if(key === 'photo'){
-      const avatar = makeImageUrl(value)
-      store.dispatch(chatAction.setAvatar(avatar))
-      return result
+  reformatData(result, value, key) {
+    if (key === 'photo') {
+      const avatar = makeImageUrl(value);
+      store.dispatch(chatAction.setAvatar(avatar));
+      return result;
     }
-    if(key === 'fn') {
-      return _.set(result, 'name', value)
+    if (key === 'fn') {
+      return _.set(result, 'name', value);
     }
-    return _.set(result, key, value)
+    return _.set(result, key, value);
   }
 
   tnMeSubsUpdated(meTopics, data) {
@@ -206,11 +206,11 @@ class TinodeAPIClass {
       console.log('contact is', c);
       chatList.push(c);
     });
-    const privateData = meTopics.private
-    const userInfo = _.reduce(meTopics.public, this.reformatData, privateData)
-    store.dispatch(chatAction.setUserInfo(userInfo))
+    const privateData = meTopics.private;
+    const userInfo = _.reduce(meTopics.public, this.reformatData, privateData);
+    store.dispatch(chatAction.setUserInfo(userInfo));
     store.dispatch(chatAction.updateChatList(chatList));
-  // this.resetContactList();
+    // this.resetContactList();
   }
 
   resetContactList() {
@@ -362,11 +362,16 @@ class TinodeAPIClass {
   }
 
   handleDescChange(topic, topicId, desc) {
-    console.log('topics Info is', desc)
+    console.log('topics Info is', desc);
     if (desc.public) {
       store.dispatch(
-        topicsAction.updateTopicMeta(topicId, desc.public.fn, desc.public.photo, topic.private.comment)
-    );
+        topicsAction.updateTopicMeta(
+          topicId,
+          desc.public.fn,
+          desc.public.photo,
+          topic.private.comment
+        )
+      );
     } else {
       store.dispatch(topicsAction.updateTopicMeta(topicId, '', '', ''));
     }
@@ -395,8 +400,8 @@ class TinodeAPIClass {
     store.dispatch(topicsAction.updateTopicSubs(topicName, subs));
   }
 
-  static isGroupId  (chatId) {
-    return typeof chatId === 'string' && chatId.indexOf('grp') === 0
+  static isGroupId(chatId) {
+    return typeof chatId === 'string' && chatId.indexOf('grp') === 0;
   }
 }
 

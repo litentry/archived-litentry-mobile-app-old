@@ -33,12 +33,12 @@ export const chatReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         avatar: action.avatar,
-      }
+      };
     case chatActionType.SET_USER_INFO:
       return {
         ...state,
         userInfo: action.userInfo,
-      }
+      };
     case chatActionType.SUBSCRIBE_CHAT:
       return {
         ...state,

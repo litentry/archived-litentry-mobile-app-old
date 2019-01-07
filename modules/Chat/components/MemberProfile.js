@@ -12,13 +12,17 @@ export default class MemberProfile extends React.Component {
   static defaultProps = {};
 
   render() {
-    const {imageSource, title} = this.props;
-    return <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={imageSource}/>
+    const { imageSource, title } = this.props;
+    return (
+      <View style={styles.container}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={imageSource} />
+        </View>
+        <Text style={styles.title} numberOfLines={1}>
+          {title}
+        </Text>
       </View>
-      <Text style={styles.title} numberOfLines={1}>{title}</Text>
-    </View>;
+    );
   }
 }
 
@@ -27,7 +31,7 @@ const styles = StyleSheet.create({
     margin: 10,
     flexDirection: 'column',
     width: 50,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   imageContainer: {
     height: 50,
@@ -45,5 +49,5 @@ const styles = StyleSheet.create({
     fontSize: AppStyle.fontSmall,
     color: AppStyle.lightGrey,
     fontFamily: AppStyle.mainFont,
-  }
+  },
 });

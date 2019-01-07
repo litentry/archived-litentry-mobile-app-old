@@ -4,26 +4,27 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
+import { Entypo } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
-import { Entypo } from '@expo/vector-icons';
-import {makeImageUrl} from "../lib/blob-helpers";
-import MessageNode from "../components/MessageNode";
-import Images from "../../../commons/Images";
+import { makeImageUrl } from '../lib/blob-helpers';
+import MessageNode from '../components/MessageNode';
+import Images from '../../../commons/Images';
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: navigation.state.params.title,
     headerRight: (
       <TouchableOpacity
-        onPress={() => navigation.navigate(screensList.TopicInfo.label, {
-          topicId: navigation.getParam('topicId', null),
-          title: navigation.getParam('title', null),
-        })}
+        onPress={() =>
+          navigation.navigate(screensList.TopicInfo.label, {
+            topicId: navigation.getParam('topicId', null),
+            title: navigation.getParam('title', null),
+          })
+        }
         color="black"
-        style={styles.dotContainer}
-      >
+        style={styles.dotContainer}>
         <Entypo
           name="dots-three-horizontal"
           size={AppStyle.fontMiddle}
@@ -58,44 +59,51 @@ class TopicScreen extends React.Component {
     }
   }
 
-  renderMessageNode (message, topic) {
-    const {userId, avatar, userInfo} = this.props
-    let messageOwnerName
+  renderMessageNode(message, topic) {
+    const { userId, avatar, userInfo } = this.props;
+    let messageOwnerName;
     let messageOwnerAvatar;
-    if(message.from === userId) {
-      messageOwnerAvatar = {uri: avatar}
-      messageOwnerName = userInfo.name
+    if (message.from === userId) {
+      messageOwnerAvatar = { uri: avatar };
+      messageOwnerName = userInfo.name;
     } else {
-      const messageOwner = _.find(topic.subs, {user: message.from})
-      if(messageOwner.public.photo) {
-        messageOwnerAvatar = {uri: makeImageUrl(messageOwner.public.photo)}
-        messageOwnerName = messageOwner.public.fn
-      }else {
+      const messageOwner = _.find(topic.subs, { user: message.from });
+      if (messageOwner.public.photo) {
+        messageOwnerAvatar = { uri: makeImageUrl(messageOwner.public.photo) };
+        messageOwnerName = messageOwner.public.fn;
+      } else {
         //EXPO compile the the image as a number in image tree
         messageOwnerAvatar = Images.blankProfile;
         messageOwnerName = message.from;
       }
     }
-    return <MessageNode message={message} imageSource={messageOwnerAvatar} senderName={messageOwnerName}/>
+    return (
+      <MessageNode
+        message={message}
+        imageSource={messageOwnerAvatar}
+        senderName={messageOwnerName}
+      />
+    );
   }
 
   render() {
     const { topicsMap, navigation } = this.props;
     const topicId = navigation.getParam('topicId', null);
     const topic = _.get(topicsMap, topicId);
-    if(!topic)
-      return null;
+    if (!topic) return null;
     const { messages } = topic;
-    if(!messages)
-      return null;
+    if (!messages) return null;
     console.log('messages are', messages);
-    return <View style={styles.container}>
-      <FlatList
-        style={styles.container}
-        data={messages}
-        keyExtractor={message => message.seq.toString()}
-        renderItem={({item}) => this.renderMessageNode(item, topic)}/>
-    </View>;
+    return (
+      <View style={styles.container}>
+        <FlatList
+          style={styles.container}
+          data={messages}
+          keyExtractor={message => message.seq.toString()}
+          renderItem={({ item }) => this.renderMessageNode(item, topic)}
+        />
+      </View>
+    );
   }
 }
 
@@ -117,7 +125,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
   dotContainer: {
@@ -125,6 +133,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dot: {
-    padding:10,
-  }
+    padding: 10,
+  },
 });
