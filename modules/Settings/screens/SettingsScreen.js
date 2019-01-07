@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import SingleLineDisplay from '../components/SingleLineDisplay';
+import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import packageJson from '../../../package';
 
 class SettingsScreen extends React.Component {

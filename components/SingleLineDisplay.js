@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import AppStyle from '../../../commons/AppStyle';
+import AppStyle from '../commons/AppStyle';
 
 export default class SingleLineDisplay extends React.Component {
   static propTypes = {
