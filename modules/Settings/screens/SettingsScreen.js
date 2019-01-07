@@ -26,14 +26,16 @@ class SettingsScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View>
+      <View style={styles.container}>
         <SingleLineDisplay
           title={t.SECURITY_TITLE}
           value={''}
+          style={styles.singleDisplay}
           onClick={() => navigation.navigate(screensList.AccountSetting.label)}
         />
         <SingleLineDisplay
           title={t.ABOUT_TITLE}
+          style={styles.singleDisplay}
           value={packageJson.version}
           onClick={() => navigation.navigate(screensList.AccountSetting.label)}
         />
@@ -53,7 +55,15 @@ export default connect(
   mapDispatchToProps
 )(SettingsScreen);
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  singleDisplay: {
+    marginTop: 20,
+  },
+  container: {
+    flex:1,
+    backgroundColor: AppStyle.chatBackGroundColor,
+  },
+});
 
 const t = {
   SECURITY_TITLE: 'Account Security',

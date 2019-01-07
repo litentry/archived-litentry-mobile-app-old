@@ -29,10 +29,11 @@ class AccountSettingScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View>
-        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId} />
+      <View style={styles.container}>
+        <SingleLineDisplay title={t.ID_TITLE} style={styles.singleLineDisplay} value={mock.mockId} />
         <SingleLineDisplay
           title={t.PASSWORD_TITLE}
+          style={styles.singleLineDisplay}
           value={t.PASSWORD_VALUE}
           onClick={() => navigation.navigate(screensList.PasswordSetting.label)}
         />
@@ -51,6 +52,16 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AccountSettingScreen);
+
+const styles = {
+  container: {
+    flex:1,
+    backgroundColor: AppStyle.chatBackGroundColor,
+  },
+  singleLineDisplay: {
+    marginTop: 20,
+  }
+}
 
 const t = {
   ID_TITLE: 'Genesis ID',

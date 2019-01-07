@@ -26,23 +26,21 @@ const styles = StyleSheet.create({
   container: {
     margin: 10,
     flexDirection: 'column',
-    width: 40,
+    width: 50,
     justifyContent: 'center'
   },
   imageContainer: {
-    height: 30,
-    width: 30,
-    margin:5,
+    height: 50,
+    width: 50,
   },
   image: {
-    height: 30,
-    width: 30,
+    height: 50,
+    width: 50,
     resizeMode: 'contain',
   },
   title: {
-    width: 30,
-    marginHorizontal: 10,
-    marginVertical: 5,
+    width: 50,
+    marginTop: 5,
     textAlign: 'center',
     fontSize: AppStyle.fontSmall,
     color: AppStyle.lightGrey,

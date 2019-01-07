@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View, ScrollView } from 'react-native';
+import {Button, StyleSheet, View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -10,9 +10,14 @@ import {makeImageUrl} from "../lib/blob-helpers";
 import GenesisButton, {VariantList as variantList} from "../../../components/GenesisButton";
 import MemberProfile from "../components/MemberProfile";
 import Images from "../../../commons/Images";
+import SingleLineDisplay from "../../../components/SingleLineDisplay";
+import SingleSectionDisplay from "../../../components/SingleSectionDisplay";
+import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 const mock ={
   isJoined: true,
+  meta: '2000',
 }
 
 class TopicInfoScreen extends React.Component {
@@ -33,7 +38,7 @@ class TopicInfoScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    topicsMap: PropTypes.object,
+    topicsMap: PropTypes.object.isRequired,
   };
 
   renderMemberList (subs){
@@ -43,7 +48,7 @@ class TopicInfoScreen extends React.Component {
     } else {
       renderList = subs
     }
-    renderList.map((item)=> {
+    return renderList.map((item)=> {
       let imageSource
       if(item.public.photo){
         imageSource = {uri: makeImageUrl(item.public.photo)}
@@ -69,15 +74,35 @@ class TopicInfoScreen extends React.Component {
     return <ScrollView style={styles.container}>
       <View style={styles.memberContainer}>
         <View style={styles.memberList}>
-          {this.renderMemberList()}
+          {this.renderMemberList(topic.subs)}
         </View>
-        <View style={styles.viewMoreButton}></View>
+        <TouchableOpacity style={styles.viewMoreButton} onPress={()=> {}}>
+          <Text style={styles.viewMoreButtonText}>{t.VIEW_MORE_MEMBERS}</Text>
+          <AntDesign
+            name="right"
+            size={AppStyle.fontMiddle}
+            style={styles.rightArrowIcon}
+            color={AppStyle.lightGrey}
+          />
+        </TouchableOpacity>
       </View>
-      <View style={styles.infoContainer}></View>
-      <View style={styles.rulesContainer}></View>
+
+      <View style={styles.infoContainer}>
+        <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={()=>{}}/>
+        <SingleSectionDisplay title={t.TOPIC_DESCRIPTION_TITLE} value={topicDescription} onClick={()=>{}}/>
+        <SingleLineDisplay title={t.TOPIC_META_TITLE} value={mock.meta} onClick={()=>{}}/>
+      </View>
+      <View style={styles.rulesContainer}>
+        <SingleLineDisplay title={t.TOPIC_RULES} value={''} onClick={()=>{}} style={styles.rules}/>
+      </View>
       {mock.isJoined ?
         <GenesisButton style={styles.button} action={() => {}} text={t.LEAVE_BUTTON} variant={variantList.CANCEL}/> :
-        <GenesisButton style={styles.button} action={() => {}} text={t.JOIN_BUTTON} variant={variantList.CONFIRM}/>
+        <GenesisButton style={styles.button} action={() => {}} text={t.JOIN_BUTTON} variant={variantList.CONFIRM} Icon={
+          <Entypo
+          name="users"
+          size={AppStyle.fontMiddle}
+          color={AppStyle.blueIcon}
+        />}/>
       }
     </ScrollView>;
   }
@@ -85,7 +110,7 @@ class TopicInfoScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.walletAddress,
-  topicsMap: state.chat.topicsMap,
+  topicsMap: state.topics.topicsMap,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -103,26 +128,45 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   memberList: {
-
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   viewMoreButton: {
-
+    padding: 20,
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  viewMoreButtonText: {
+    fontFamily: AppStyle.mainFont,
+    color: AppStyle.lightGrey,
+    fontSize: AppStyle.fontMiddleSmall,
+  },
+  rightArrowIcon: {
+    paddingLeft: 10,
   },
   infoContainer : {
-    marginTop: 15,
+    marginTop: 20,
     backgroundColor: 'white',
   },
   rulesContainer: {
-    marginTop: 15,
+    marginTop: 20,
     backgroundColor: 'white',
   },
+  rules: {
+  },
   button: {
-    marginTop: 30
+
   }
 });
 
 const t = {
   LEAVE_BUTTON: 'Leave',
   JOIN_BUTTON: 'join',
-  VIEW_MORE_MEMBER: 'View more members'
+  VIEW_MORE_MEMBERS: 'View more members',
+  GROUP_TOPIC_TITLE: 'Country Name',
+  TOPIC_META_TITLE: 'National Treasure',
+  TOPIC_DESCRIPTION_TITLE: 'Description',
+  TOPIC_RULES: 'Rules',
 }

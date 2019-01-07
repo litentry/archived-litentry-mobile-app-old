@@ -6,7 +6,6 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import NavigationHeader from '../../../components/NavigationHeader';
 import TinodeAPI from '../TinodeAPI';
 import { Entypo } from '@expo/vector-icons';
 import {makeImageUrl} from "../lib/blob-helpers";
