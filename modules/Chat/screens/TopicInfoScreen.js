@@ -69,7 +69,9 @@ class TopicInfoScreen extends React.Component {
             value={topicDescription}
             onClick={() => {}}
           />
-          <SingleLineDisplay title={t.TOPIC_META_TITLE} value={mock.meta} onClick={() => {}} />
+          <SingleLineDisplay title={t.TOPIC_META_TITLE} value={mock.meta} onClick={() =>
+              navigation.navigate(screensList.Transactions.label);
+          }/>
         </View>
         <View style={styles.rulesContainer}>
           <SingleLineDisplay

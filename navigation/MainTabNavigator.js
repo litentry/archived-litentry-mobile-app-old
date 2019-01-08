@@ -27,6 +27,7 @@ import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
 import MembersScreen from '../modules/Chat/screens/MembersScreen';
 import MemberInfoScreen from '../modules/Chat/screens/MemberInfoScreen';
 import RulesDescriptionScreen from '../modules/Rules/screens/RulesDescriptionScreen';
+import TreasureScreen from '../modules/Rules/screens/TreasureScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -48,6 +49,7 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    Treasure: TreasureScreen,
     Login: LoginScreen,
     RulesDescription: RulesDescriptionScreen,
     MemberInfo: MemberInfoScreen,
