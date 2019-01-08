@@ -25,6 +25,7 @@ import LoginScreen from '../modules/User/screens/LoginScreen';
 import TopicScreen from '../modules/Chat/screens/TopicScreen';
 import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
 import MembersScreen from '../modules/Chat/screens/MembersScreen';
+import MemberInfoScreen from '../modules/Chat/screens/MemberInfoScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -47,6 +48,7 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
+    MemberInfo: MemberInfoScreen,
     Members: MembersScreen,
     Settings: SettingsScreen,
     AccountSetting: AccountSettingScreen,

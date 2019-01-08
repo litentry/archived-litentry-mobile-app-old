@@ -18,7 +18,7 @@ export default class MemberList extends React.Component {
 
   //TODO could use dynamic scroll to fetch the list, now set 500 as limit.
   renderMemberList(subs) {
-    console.log('member list are', subs)
+    console.log('member list are', subs);
     const { limit } = this.props;
     let renderList;
     if (subs.length > limit) {
@@ -33,7 +33,14 @@ export default class MemberList extends React.Component {
       } else {
         imageSource = Images.blankProfile;
       }
-      return <MemberProfile title={item.public.fn} imageSource={imageSource} key={item.user}/>;
+      return (
+        <MemberProfile
+          title={item.public.fn}
+          imageSource={imageSource}
+          key={item.user}
+          raw={item}
+        />
+      );
     });
   }
 

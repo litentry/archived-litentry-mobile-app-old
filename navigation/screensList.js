@@ -21,4 +21,5 @@ export const screensList = {
   Topic: { label: 'Topic', title: 'Topic' },
   TopicInfo: { label: 'TopicInfo', title: 'Topic Info' },
   Members: { label: 'Members', title: 'All members' },
+  MemberInfo: { label: 'MemberInfo', title: 'Member Info' },
 };

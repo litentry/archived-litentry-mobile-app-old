@@ -1,30 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
+import { screensList } from '../../../navigation/screensList';
 
-export default class MemberProfile extends React.Component {
+class MemberProfile extends React.Component {
   static propTypes = {
+    navigation: PropTypes.object.isRequired,
     imageSource: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
     title: PropTypes.string.isRequired,
+    raw: PropTypes.object.isRequired,
   };
 
   static defaultProps = {};
 
   render() {
-    const { imageSource, title } = this.props;
+    const { imageSource, title, navigation, raw } = this.props;
     return (
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() =>
+          navigation.navigate(screensList.MemberInfo.label, { raw, imageSource, title })
+        }>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={imageSource} />
         </View>
         <Text style={styles.title} numberOfLines={1}>
           {title}
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
+
+export default withNavigation(MemberProfile);
 
 const styles = StyleSheet.create({
   container: {
