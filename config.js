@@ -22,6 +22,10 @@ export const wsInfo = {
   platform: 'web',
 };
 
+export const voteInfo = {
+  rulesDescription: '(Join/Quit/Tax/Vote/Status)',
+};
+
 export const imageConfig = {
   /** Maximum in-band (included directly into the message) attachment size which fits into
    * a message of 256K in size, assuming base64 encoding and 1024 bytes of overhead.

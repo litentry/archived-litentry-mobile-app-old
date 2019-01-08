@@ -10,7 +10,7 @@ export default class SingleLineDisplay extends React.Component {
     title: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     style: PropTypes.object,
-    Icon: PropTypes.element,
+    Icon: PropTypes.func,
   };
 
   static defaultProps = {
@@ -25,7 +25,7 @@ export default class SingleLineDisplay extends React.Component {
       return <Text style={styles.title}>{title}</Text>;
     }
     return (
-      <View style={styles.title}>
+      <View style={styles.titleContainer}>
         <Icon style={styles.icon} />
         <Text style={styles.title}>{title}</Text>
       </View>
@@ -33,7 +33,8 @@ export default class SingleLineDisplay extends React.Component {
   }
 
   render() {
-    const { title, value, onClick, style } = this.props;
+    const { value, onClick, style } = this.props;
+    const valueContainerFlex = value.trim() === '' ? 1 : 3;
 
     if (!onClick) {
       return (
@@ -47,7 +48,7 @@ export default class SingleLineDisplay extends React.Component {
     return (
       <TouchableOpacity onPress={onClick} style={[styles.container, style]}>
         {this.renderTitle()}
-        <View style={styles.valueContainer}>
+        <View style={[styles.valueContainer, { flex: valueContainerFlex }]}>
           <Text style={styles.value}>{value}</Text>
           <AntDesign
             name="right"
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 2,
+    flexDirection: 'row',
   },
   icon: {
     paddingRight: 10,

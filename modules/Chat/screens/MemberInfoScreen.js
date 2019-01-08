@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
+import { voteInfo } from '../../../config';
 
 const mock = {
   rule: [-150, -150, -10, 1, 1],
@@ -50,7 +51,7 @@ class MemberInfoScreen extends React.Component {
           </View>
         </View>
         <View style={styles.ruleInfoContainer}>
-          <Text style={styles.ruleTitleText}>{t.RULE_TITLE}</Text>
+          <Text style={styles.ruleTitleText}>{voteInfo.rulesDescription}</Text>
           <Text style={styles.ruleValueText}>{mock.rule.join('/').toString()}</Text>
         </View>
       </View>
@@ -127,6 +128,5 @@ const styles = StyleSheet.create({
 });
 
 const t = {
-  RULE_TITLE: '(Join/Quit/Tax/Vote/Status)',
   ID_TITLE: 'Genesis ID: ',
 };

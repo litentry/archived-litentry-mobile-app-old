@@ -40,7 +40,7 @@ class RulesDescriptionScreen extends React.Component {
       `${mock.economicRule}\n` +
       '\n' +
       `* Voting rules:\n` +
-      `Approved by ${Math.floor(mock.requiredApproved * 100)} voters in ${
+      `Approved by ${Math.floor(mock.requiredApproved * 100).toString()}% voters in ${
         mock.requiredDay
       } days\n` +
       '\n' +

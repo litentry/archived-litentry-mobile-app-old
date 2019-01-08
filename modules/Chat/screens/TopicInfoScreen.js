@@ -69,15 +69,25 @@ class TopicInfoScreen extends React.Component {
             value={topicDescription}
             onClick={() => {}}
           />
-          <SingleLineDisplay title={t.TOPIC_META_TITLE} value={mock.meta} onClick={() =>
-              navigation.navigate(screensList.Transactions.label);
-          }/>
+          <SingleLineDisplay
+            title={t.TOPIC_META_TITLE}
+            value={mock.meta}
+            onClick={() => navigation.navigate(screensList.Transactions.label)}
+          />
         </View>
         <View style={styles.rulesContainer}>
           <SingleLineDisplay
             title={t.TOPIC_RULES}
             value={''}
-            onClick={() => {}}
+            Icon={props => (
+              <Entypo
+                name="users"
+                size={AppStyle.fontMiddle}
+                color={AppStyle.blueIcon}
+                style={props.style}
+              />
+            )}
+            onClick={() => navigation.navigate(screensList.TopicRules.label, { topic })}
             style={styles.rules}
           />
         </View>
@@ -94,7 +104,6 @@ class TopicInfoScreen extends React.Component {
             action={() => {}}
             text={t.JOIN_BUTTON}
             variant={variantList.CONFIRM}
-            Icon={<Entypo name="users" size={AppStyle.fontMiddle} color={AppStyle.blueIcon} />}
           />
         )}
       </ScrollView>
