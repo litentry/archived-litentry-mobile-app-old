@@ -14,10 +14,10 @@ const mock = {
 
 class MemberInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: <NavigationHeader title={screensList.MemberInfo.title} />,
     headerRight: (
       <Button
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
+        onPress={() => navigation.navigate(screensList.RulesDescription.label)}
         title={'Info'}
         color="black"
       />

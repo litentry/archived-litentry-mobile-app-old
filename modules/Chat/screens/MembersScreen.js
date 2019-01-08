@@ -11,7 +11,7 @@ import MemberList from '../components/MemberList';
 
 class MembersScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: <NavigationHeader title={screensList.Members.title} />,
     headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,

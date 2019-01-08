@@ -22,4 +22,5 @@ export const screensList = {
   TopicInfo: { label: 'TopicInfo', title: 'Topic Info' },
   Members: { label: 'Members', title: 'All members' },
   MemberInfo: { label: 'MemberInfo', title: 'Member Info' },
+  RulesDescription: { label: 'RulesDescription', title: 'RulesDescription' },
 };
