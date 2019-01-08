@@ -5,12 +5,14 @@ import { screenReducer } from './screen';
 import { popupReducer } from './popup';
 import { loaderReducer } from './loader';
 import { unlockReducer } from '../modules/Unlock/reducer/unlockReducer';
+import { chatReducer } from '../modules/Chat/reducers/chatReducer';
+import { topicsReducer } from '../modules/Chat/reducers/topicsReducer';
 
 const logger = store => next => action => {
   console.group(action.type);
-  console.info('dispatching', action);
+  // console.info('dispatching', action);
   let result = next(action);
-  console.log('next state', store.getState());
+  // console.log('next state', store.getState());
   console.groupEnd();
   return result;
 };
@@ -33,6 +35,8 @@ const reducers = combineReducers({
   popup: popupReducer,
   appState: loaderReducer,
   unlock: unlockReducer,
+  chat: chatReducer,
+  topics: topicsReducer,
 });
 
 export const store = createStore(enableBatching(reducers), applyMiddleware(logger));

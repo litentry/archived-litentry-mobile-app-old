@@ -32,7 +32,11 @@ export default class InputWithValidation extends React.Component {
     if (isValidated) {
       return (
         <View style={styles.iconContainer}>
-          <Ionicons name="ios-checkmark-circle-outline" size={32} color={AppStyle.userCorrect} />
+          <Ionicons
+            name="ios-checkmark-circle-outline"
+            size={AppStyle.fontMiddle}
+            color={AppStyle.userCorrect}
+          />
         </View>
       );
     } else {
@@ -52,14 +56,16 @@ export default class InputWithValidation extends React.Component {
     let fontColor;
     if (this.state.shouldValidate) {
       fontColor = isValidated ? AppStyle.userCorrect : AppStyle.userIncorrect;
+    } else {
+      fontColor = AppStyle.lightGrey;
     }
-    fontColor = AppStyle.lightGrey;
 
     return (
       <View style={styles.container}>
         <TextInput
           style={[styles.input, { color: fontColor }]}
           secureTextEntry={isPassword}
+          autoCapitalize="none"
           onChangeText={onChangeText}
           placeholderTextColor={AppStyle.inputPlaceholder}
           onBlur={() => {

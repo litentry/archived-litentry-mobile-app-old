@@ -4,6 +4,7 @@ import { StyleSheet, View, Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import AppStyle from '../../../commons/AppStyle';
 import { wsInfo } from '../../../config';
+import TinodeAPI from '../TinodeAPI';
 
 export default class Connector extends React.Component {
   static propTypes = {};
@@ -23,12 +24,20 @@ export default class Connector extends React.Component {
     tinode.enableLogging(true, true);
     tinode.onConnect = () => {
       const params = tinode.getServerInfo();
-      console.log('connected！', params);
+      console.log('connected！server info: ', params);
     };
     tinode.onDisconnect = data => {
       console.log('disconnected', data);
     };
     return tinode;
+  }
+
+  handleOnline(online) {
+    if (online) {
+      this.handleError('', null);
+    } else {
+      this.handleError('No connection', 'warn');
+    }
   }
 
   doLogin(username, password, cred) {
@@ -148,11 +157,15 @@ export default class Connector extends React.Component {
     // this.setState(newState);
   }
 
-  handleError() {}
+  handleError(error) {
+    console.log('connect error: ', error);
+  }
 
   tnMeSubsUpdated() {
     this.resetContactList();
   }
+
+  handleDisconnect(err) {}
 
   handleLoginSuccessful() {
     this.handleError('', null);
@@ -194,24 +207,17 @@ export default class Connector extends React.Component {
     if (this.tinode.isConnected()) {
       // this.doLogin(login, password, {meth: this.state.credMethod, resp: this.state.credCode});
     } else {
-      this.tinode.connect().catch(err => {
-        if (err) console.log('err is', err);
-        // Socket error
-        // this.setState({loginDisabled: false});
-        // this.handleError(err.message, 'err');
-      });
     }
   }
 
   constructor(props) {
     super(props);
-    this.tinode = this.createTinode();
+    TinodeAPI.connect();
   }
 
   componentDidMount() {
     const username = 'bob';
     const password = 'bob123';
-    this.handleLoginRequest(username, password);
   }
 
   render() {

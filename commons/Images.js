@@ -90,6 +90,7 @@ export default {
   logoETH: require('../assets/images/logo_eth.png'),
   imgAnalytics: require('../assets/images/img_analytics.png'),
 
+  blankProfile: require('../assets/images/blankProfile.png'),
   //mockImages
   mockProfile: require('../assets/mockImages/profile.png'),
 };

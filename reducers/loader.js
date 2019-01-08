@@ -6,6 +6,7 @@ import { loaderActionType } from '../actions/loaderAction';
 export const dataEntry = {
   hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false },
   wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0 },
+  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null },
 };
 
 const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);

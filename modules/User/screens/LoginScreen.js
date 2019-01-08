@@ -1,23 +1,19 @@
 import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
-import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
+import Connector from '../../Chat/components/Connector';
+import TinodeAPI from '../../Chat/TinodeAPI';
+import { screensList } from '../../../navigation/screensList';
 
-const mock = {
-  username: 'alex',
-  email: 'alexcloud@gmail.com',
-};
-
-class CreateAccountScreen extends React.Component {
+class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    // headerTitle: <NavigationHeader title={''} />,
     headerTransparent: true,
     headerTintColor: AppStyle.userCancelGreen,
     headerStyle: {
@@ -27,31 +23,56 @@ class CreateAccountScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    token: PropTypes.string,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: 'bob',
+      password: 'bob123',
+    };
+  }
+
+  componentDidMount() {
+    console.log('token is', this.props.token);
+  }
+
   render() {
+    const { username, password } = this.state;
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
+        <Connector />
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{t.CREATE_ACCOUNT_TITLE}</Text>
+          <Text style={styles.title}>{t.LOGIN_TITLE}</Text>
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={() => {}}
-            value={mock.username}
+            onChangeText={username => this.setState({ username })}
+            value={username}
             placeholder={t.USERNAME_PLACEHOLDER}
           />
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={() => {}}
-            value={mock.email}
+            onChangeText={password => this.setState({ password })}
+            value={password}
+            isPassword
             placeholder={t.PASSWORD_PLACEHOLDER}
           />
+          <TouchableOpacity onPress={() => {}} style={styles.forgetTextContainer}>
+            <Text style={styles.forgetText}>{t.FORGET_TEXT}</Text>
+          </TouchableOpacity>
         </View>
-        <Text style={styles.hint}>{t.HINT_TEXT}</Text>
+
         <View style={styles.button}>
-          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} />
+          <GenesisButton
+            action={() => {
+              TinodeAPI.login(username, password, null, navigation);
+            }}
+            text={t.BUTTON_TEXT}
+          />
         </View>
       </View>
     );
@@ -60,6 +81,7 @@ class CreateAccountScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.walletAddress,
+  loginToken: state.appState.loginToken,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -67,20 +89,22 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateAccountScreen);
+)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: Header.HEIGHT + 50,
     backgroundColor: 'white',
+    justifyContent: 'center',
   },
   titleContainer: {
-    flex: 3,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
   title: {
+    flex: 1,
     padding: 30,
     fontSize: AppStyle.fontMiddleBig,
     color: AppStyle.lightGrey,
@@ -88,12 +112,12 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 2,
   },
-  hint: {
-    flex: 2,
+  forgetTextContainer: {},
+  forgetText: {
     padding: 30,
-    fontSize: AppStyle.fontMiddle,
-    color: AppStyle.lightGrey,
+    textAlign: 'right',
     fontFamily: AppStyle.coverFont,
+    color: AppStyle.userCancelGreen,
   },
   button: {
     flex: 2,
@@ -101,10 +125,9 @@ const styles = StyleSheet.create({
 });
 
 const t = {
-  CREATE_ACCOUNT_TITLE: 'Create your account',
+  LOGIN_TITLE: 'Login',
   USERNAME_PLACEHOLDER: 'Name',
-  PASSWORD_PLACEHOLDER: 'Email',
-  HINT_TEXT:
-    'By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use. Others will be able to find you by email when provided. ',
-  BUTTON_TEXT: 'Sign Up',
+  PASSWORD_PLACEHOLDER: 'Password',
+  FORGET_TEXT: 'Forget password?',
+  BUTTON_TEXT: 'Log in',
 };

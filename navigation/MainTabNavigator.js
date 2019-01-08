@@ -18,6 +18,13 @@ import AboutScreen from '../modules/Settings/screens/AboutScreen';
 import ChatListScreen from '../modules/Chat/screens/ChatListScreen';
 import StartScreen from '../modules/User/screens/StartScreen';
 import CreateAccountScreen from '../modules/User/screens/CreateAccountScreen';
+import VerifyCredentialScreen from '../modules/User/screens/VerifyCredentialScreen';
+import SetPasswordScreen from '../modules/User/screens/SetPasswordScreen';
+import ContinueLoginScreen from '../modules/User/screens/ContinueLoginScreen';
+import LoginScreen from '../modules/User/screens/LoginScreen';
+import TopicScreen from '../modules/Chat/screens/TopicScreen';
+import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
+import MembersScreen from '../modules/Chat/screens/MembersScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -39,12 +46,19 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    Login: LoginScreen,
+    Members: MembersScreen,
+    Settings: SettingsScreen,
+    AccountSetting: AccountSettingScreen,
+    TopicInfo: TopicInfoScreen,
+    Topic: TopicScreen,
+    ContinueLogin: ContinueLoginScreen,
+    SetPassword: SetPasswordScreen,
+    VerifyCredential: VerifyCredentialScreen,
     Start: StartScreen,
     CreateAccount: CreateAccountScreen,
     ChatList: ChatListScreen,
     About: AboutScreen,
-    Settings: SettingsScreen,
-    AccountSetting: AccountSettingScreen,
     PasswordSetting: PasswordSettingScreen,
     Transactions: TransactionsScreen,
     Home: HomeScreen,
@@ -73,7 +87,7 @@ const WalletStack = createStackNavigator(
   },
   {
     navigationOptions: {
-      tabBarLabel: screensList.WalletCreate.label,
+      tabBarLabel: screensList.Wallet.title,
       tabBarIcon: WalletStackIcon,
     },
   }
