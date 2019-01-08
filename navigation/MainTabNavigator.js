@@ -23,6 +23,8 @@ import SetPasswordScreen from '../modules/User/screens/SetPasswordScreen';
 import ContinueLoginScreen from '../modules/User/screens/ContinueLoginScreen';
 import LoginScreen from '../modules/User/screens/LoginScreen';
 import TopicScreen from '../modules/Chat/screens/TopicScreen';
+import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
+import MembersScreen from '../modules/Chat/screens/MembersScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -45,6 +47,10 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
+    Members: MembersScreen,
+    Settings: SettingsScreen,
+    AccountSetting: AccountSettingScreen,
+    TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
     ContinueLogin: ContinueLoginScreen,
     SetPassword: SetPasswordScreen,
@@ -53,8 +59,6 @@ const HomeStack = createStackNavigator(
     CreateAccount: CreateAccountScreen,
     ChatList: ChatListScreen,
     About: AboutScreen,
-    Settings: SettingsScreen,
-    AccountSetting: AccountSettingScreen,
     PasswordSetting: PasswordSettingScreen,
     Transactions: TransactionsScreen,
     Home: HomeScreen,
