@@ -18,11 +18,11 @@ const mock = {
 
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: <NavigationHeader title={screensList.MemberRules.title} />,
     headerRight: (
       <Button
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
+        onPress={() => navigation.navigate(screensList.RulesInfo.label)}
+        title={screensList.RulesInfo.title}
         color="black"
       />
     ),

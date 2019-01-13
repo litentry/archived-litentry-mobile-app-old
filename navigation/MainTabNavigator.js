@@ -30,6 +30,7 @@ import RulesDescriptionScreen from '../modules/Rules/screens/RulesDescriptionScr
 import TreasureScreen from '../modules/Rules/screens/TreasureScreen';
 import TopicRulesScreen from '../modules/Rules/screens/TopicRulesScreen';
 import MemberRulesScreen from '../modules/Rules/screens/MemberRulesScreen';
+import RulesInfoScreen from '../modules/Rules/screens/RulesInfoScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -52,6 +53,7 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
+    RulesInfo: RulesInfoScreen,
     MemberRules: MemberRulesScreen,
     TopicRules: TopicRulesScreen,
     Treasure: TreasureScreen,

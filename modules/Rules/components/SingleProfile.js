@@ -8,12 +8,15 @@ export default class SingleProfile extends React.Component {
     imageSource: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
     info: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    fontColor: PropTypes.string,
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    fontColor: AppStyle.lightGrey,
+  };
 
   render() {
-    const { imageSource, info, name } = this.props;
+    const { imageSource, info, name, fontColor } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.profileContainer}>
@@ -22,7 +25,7 @@ export default class SingleProfile extends React.Component {
           </View>
           <Text style={styles.nameText}>{name}</Text>
         </View>
-        <Text style={styles.infoText}>{info}</Text>
+        <Text style={[styles.infoText, { color: fontColor }]}>{info}</Text>
       </View>
     );
   }
@@ -60,6 +63,5 @@ const styles = StyleSheet.create({
   infoText: {
     fontFamily: AppStyle.mainFont,
     fontSize: AppStyle.fontMiddleSmall,
-    color: AppStyle.lightGrey,
   },
 });
