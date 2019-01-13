@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -34,6 +34,7 @@ class TopicRulesScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.introContainer}>
@@ -46,7 +47,13 @@ class TopicRulesScreen extends React.Component {
           <Text style={styles.introText}>{t.RULES_INTRO}</Text>
         </View>
         <Text style={styles.rulesTitle}>{t.PEOPLE_RULES_TITLE}</Text>
-        <SingleLineDisplay title={voteInfo.rulesDescription} value={''} onClick={() => {}} />
+        <SingleLineDisplay
+          title={voteInfo.rulesDescription}
+          value={''}
+          onClick={() => {
+            navigation.navigate(screensList.MemberRules.label);
+          }}
+        />
         <Text style={styles.rulesTitle}>{t.VOTING_RULES_TITLE}</Text>
         <SingleLineDisplay
           title={t.SUPPORT_TITLE}

@@ -68,7 +68,6 @@ class RulesDescriptionScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
   subscribedChatId: state.chat.subscribedChatId,
   topicsMap: state.topics.topicsMap,
 });
