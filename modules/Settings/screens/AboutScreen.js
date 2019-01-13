@@ -9,7 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { aboutInfo } from '../../../config';
 import packageJson from '../../../package';
-import MultiLineDisplay from '../components/MultiLineDisplay';
+import MultiLineDisplay from '../../../components/MultiLineDisplay';
 
 class AboutScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

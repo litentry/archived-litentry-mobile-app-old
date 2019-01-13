@@ -9,7 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
-import MultiLineDisplay from '../../Settings/components/MultiLineDisplay';
+import MultiLineDisplay from '../../../components/MultiLineDisplay';
 
 class RulesInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
