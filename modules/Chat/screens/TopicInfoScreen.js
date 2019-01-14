@@ -30,13 +30,15 @@ class TopicInfoScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     topicsMap: PropTypes.object.isRequired,
+    subscribedChatId: PropTypes.string,
   };
 
   render() {
-    const { topicsMap, navigation } = this.props;
-    const topicId = navigation.getParam('topicId', null);
-    const topic = _.get(topicsMap, topicId);
+    const { topicsMap, navigation, subscribedChatId } = this.props;
+    const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
+
+    console.log('topic is', topic)
 
     const topicTitle = topic.public.fn;
     const topicAvatart = makeImageUrl(topic.public.photo);
@@ -114,6 +116,7 @@ class TopicInfoScreen extends React.Component {
 const mapStateToProps = state => ({
   walletAddress: state.walletAddress,
   topicsMap: state.topics.topicsMap,
+  subscribedChatId: state.chat.subscribedChatId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
