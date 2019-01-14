@@ -27,4 +27,5 @@ export const screensList = {
   TopicRules: { label: 'TopicRules', title: 'Rules' },
   MemberRules: { label: 'MemberRules', title: 'Member Rules' },
   RulesInfo: { label: 'RulesInfo', title: 'Rules Info' },
+  StartVote: { label: 'StartVote', title: 'Start a Vote' },
 };

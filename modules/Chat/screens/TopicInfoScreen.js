@@ -162,7 +162,7 @@ const t = {
   JOIN_BUTTON: 'join',
   VIEW_MORE_MEMBERS: 'View more members',
   GROUP_TOPIC_TITLE: 'Country Name',
-  TOPIC_META_TITLE: 'National Treasure',
   TOPIC_DESCRIPTION_TITLE: 'Description',
+  TOPIC_META_TITLE: 'National Treasure',
   TOPIC_RULES: 'Rules',
 };
