@@ -18,6 +18,7 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
         topicsMap,
       };
     }
+    //first fetch function to be called in the app
     case topicsActionType.UPDATE_TOPIC_META: {
       const updateName = topicsMap =>
         set(`${action.topicName}.public.fn`, action.topicTitle, topicsMap);
@@ -25,10 +26,13 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
         set(`${action.topicName}.public.photo`, action.topicAvatar, topicsMap);
       const updateDescription = topicsMap =>
         set(`${action.topicName}.private.comment`, action.topicDescription, topicsMap);
+      const updateInput = topicsMap =>
+        set(`${action.topicName}.userInput`, '', topicsMap);
       const updateFunction = _.flow(
         updateDescription,
         updateAvatar,
-        updateName
+        updateName,
+        updateInput
       );
       const topicsMap = updateFunction(state.topicsMap);
       console.log('topics map is', topicsMap);
@@ -39,6 +43,13 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
     }
     case topicsActionType.UPDATE_TOPIC_SUBS: {
       const topicsMap = set(`${action.topicName}.subs`, action.topicSubs, state.topicsMap);
+      return {
+        ...state,
+        topicsMap,
+      };
+    }
+    case topicsActionType.UPDATE_TOPIC_USER_INPUT: {
+      const topicsMap = set(`${action.topicName}.userInput`, action.userInput, state.topicsMap);
       return {
         ...state,
         topicsMap,

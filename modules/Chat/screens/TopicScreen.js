@@ -12,6 +12,7 @@ import { makeImageUrl } from '../lib/blob-helpers';
 import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
 import { Ionicons } from '@expo/vector-icons';
+import {topicsAction} from "../actions/topicsAction";
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -49,6 +50,7 @@ class TopicScreen extends React.Component {
     connected: PropTypes.bool.isRequired,
     avatar: PropTypes.string.isRequired,
     userInfo: PropTypes.object.isRequired,
+    updateUserInput: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -88,13 +90,12 @@ class TopicScreen extends React.Component {
   }
 
   render() {
-    const { topicsMap, navigation } = this.props;
+    const { topicsMap, navigation, updateUserInput } = this.props;
     const topicId = navigation.getParam('topicId', null);
     const topic = _.get(topicsMap, topicId);
     if (!topic) return null;
     const { messages } = topic;
     if (!messages) return null;
-    console.log('messages are', messages);
     return (
       <View style={styles.container}>
         <FlatList
@@ -104,7 +105,7 @@ class TopicScreen extends React.Component {
           renderItem={({ item }) => this.renderMessageNode(item, topic)}
         />
         <View style={styles.actionBar}>
-            <TextInput onChangeText={()=>{}} value={''} style={styles.input}/>
+            <TextInput onChangeText={(userInput)=>{updateUserInput(topicId, userInput)}} value={topic.userInput} style={styles.input}/>
             <Ionicons
               name="md-add-circle-outline"
               size={AppStyle.fontMiddleBig}
@@ -126,7 +127,9 @@ const mapStateToProps = state => ({
   userInfo: state.chat.userInfo,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  updateUserInput: topicsAction.updateUserInput
+});
 
 export default connect(
   mapStateToProps,
