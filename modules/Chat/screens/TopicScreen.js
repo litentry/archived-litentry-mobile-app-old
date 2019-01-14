@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View, TouchableOpacity, Text, FlatList } from 'react-native';
+import { Button, StyleSheet, View, TouchableOpacity, TextInput, FlatList, Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -11,6 +11,7 @@ import TinodeAPI from '../TinodeAPI';
 import { makeImageUrl } from '../lib/blob-helpers';
 import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
+import { Ionicons } from '@expo/vector-icons';
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -68,7 +69,7 @@ class TopicScreen extends React.Component {
       messageOwnerName = userInfo.name;
     } else {
       const messageOwner = _.find(topic.subs, { user: message.from });
-      if (messageOwner.public.photo) {
+      if (messageOwner && messageOwner.public.photo) {
         messageOwnerAvatar = { uri: makeImageUrl(messageOwner.public.photo) };
         messageOwnerName = messageOwner.public.fn;
       } else {
@@ -102,6 +103,15 @@ class TopicScreen extends React.Component {
           keyExtractor={message => message.seq.toString()}
           renderItem={({ item }) => this.renderMessageNode(item, topic)}
         />
+        <View style={styles.actionBar}>
+            <TextInput onChangeText={()=>{}} value={''} style={styles.input}/>
+            <Ionicons
+              name="md-add-circle-outline"
+              size={AppStyle.fontMiddleBig}
+              color={'black'}
+              style={styles.actionButton}
+            />
+        </View>
       </View>
     );
   }
@@ -127,6 +137,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
+    position: 'relative',
   },
   dotContainer: {
     justifyContent: 'center',
@@ -134,5 +145,42 @@ const styles = StyleSheet.create({
   },
   dot: {
     padding: 10,
+  },
+  actionBar: {
+    borderTopWidth:1,
+    borderTopColor: AppStyle.chatActionBackgroundColor,
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom:0,
+    width: '100%',
+    backgroundColor: AppStyle.chatActionBackgroundColor,
+    alignItems: 'center',
+
+    ...Platform.select({
+      ios: {
+        shadowColor: AppStyle.chatActionBackgroundColor,
+        shadowOffset: {
+          width: 0,
+          height: -0.5,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.11,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  input: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  actionButton: {
+    padding:20,
+    paddingLeft: 0,
   },
 });

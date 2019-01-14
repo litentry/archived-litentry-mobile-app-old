@@ -77,9 +77,17 @@ const HomeStack = createStackNavigator(
     ...commonScreens,
   },
   {
-    navigationOptions: {
-      tabBarLabel: screensList.Home.label,
-      tabBarIcon: HomeStackIcon,
+    navigationOptions: ({ navigation }) => {
+      let tabBarVisible = true;
+      if (navigation.state.index > 1) {
+        tabBarVisible = false;
+      }
+
+      return {
+        tabBarLabel: screensList.Home.label,
+        tabBarIcon: HomeStackIcon,
+        tabBarVisible,
+      }
     },
   }
 );
