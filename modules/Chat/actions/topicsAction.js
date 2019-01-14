@@ -28,5 +28,5 @@ export const topicsAction = {
     type: topicsActionType.UPDATE_TOPIC_USER_INPUT,
     topicName,
     userInput,
-  })
+  }),
 };

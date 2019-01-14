@@ -1,18 +1,26 @@
 import React from 'react';
-import { Button, StyleSheet, View, TouchableOpacity, TextInput, FlatList, Platform } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+  Platform,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
 import { makeImageUrl } from '../lib/blob-helpers';
 import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
-import { Ionicons } from '@expo/vector-icons';
-import {topicsAction} from "../actions/topicsAction";
+import { topicsAction } from '../actions/topicsAction';
+import ActionList from '../components/ActionList';
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -52,6 +60,13 @@ class TopicScreen extends React.Component {
     userInfo: PropTypes.object.isRequired,
     updateUserInput: PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showAction: false,
+    };
+  }
 
   componentDidMount() {
     const { navigation, userId, subscribedChatId, connected } = this.props;
@@ -105,13 +120,24 @@ class TopicScreen extends React.Component {
           renderItem={({ item }) => this.renderMessageNode(item, topic)}
         />
         <View style={styles.actionBar}>
-            <TextInput onChangeText={(userInput)=>{updateUserInput(topicId, userInput)}} value={topic.userInput} style={styles.input}/>
-            <Ionicons
-              name="md-add-circle-outline"
-              size={AppStyle.fontMiddleBig}
-              color={'black'}
-              style={styles.actionButton}
+          <View style={styles.chatContainer}>
+            <TextInput
+              onChangeText={userInput => {
+                updateUserInput(topicId, userInput);
+              }}
+              value={topic.userInput}
+              style={styles.input}
             />
+            <TouchableOpacity onPress={() => this.setState({ showAction: !this.state.showAction })}>
+              <Ionicons
+                name="md-add-circle-outline"
+                size={AppStyle.fontMiddleBig}
+                color={'black'}
+                style={styles.actionButton}
+              />
+            </TouchableOpacity>
+          </View>
+          <ActionList show={this.state.showAction} />
         </View>
       </View>
     );
@@ -128,7 +154,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
-  updateUserInput: topicsAction.updateUserInput
+  updateUserInput: topicsAction.updateUserInput,
 });
 
 export default connect(
@@ -150,14 +176,14 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   actionBar: {
-    borderTopWidth:1,
+    borderTopWidth: 1,
     borderTopColor: AppStyle.chatActionBackgroundColor,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    alignItems: 'stretch',
     position: 'absolute',
-    bottom:0,
+    bottom: 0,
     width: '100%',
     backgroundColor: AppStyle.chatActionBackgroundColor,
-    alignItems: 'center',
 
     ...Platform.select({
       ios: {
@@ -166,13 +192,17 @@ const styles = StyleSheet.create({
           width: 0,
           height: -0.5,
         },
-        shadowOpacity: 0.20,
+        shadowOpacity: 0.2,
         shadowRadius: 1.11,
       },
       android: {
         elevation: 2,
       },
     }),
+  },
+  chatContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   input: {
     flex: 1,
@@ -183,7 +213,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   actionButton: {
-    padding:20,
+    padding: 20,
     paddingLeft: 0,
   },
 });

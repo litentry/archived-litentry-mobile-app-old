@@ -87,7 +87,7 @@ const HomeStack = createStackNavigator(
         tabBarLabel: screensList.Home.label,
         tabBarIcon: HomeStackIcon,
         tabBarVisible,
-      }
+      };
     },
   }
 );

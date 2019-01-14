@@ -95,5 +95,5 @@ export default {
   mockProfile: require('../assets/mockImages/profile.png'),
 
   appStore: require('../assets/dappImages/appStore.png'),
-  vote: require('../assets/dappImages/appStore.png'),
+  vote: require('../assets/dappImages/vote.png'),
 };

@@ -26,8 +26,7 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
         set(`${action.topicName}.public.photo`, action.topicAvatar, topicsMap);
       const updateDescription = topicsMap =>
         set(`${action.topicName}.private.comment`, action.topicDescription, topicsMap);
-      const updateInput = topicsMap =>
-        set(`${action.topicName}.userInput`, '', topicsMap);
+      const updateInput = topicsMap => set(`${action.topicName}.userInput`, '', topicsMap);
       const updateFunction = _.flow(
         updateDescription,
         updateAvatar,
