@@ -13,7 +13,7 @@ import MultiLineDisplay from '../../../components/MultiLineDisplay';
 
 class RulesInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: <NavigationHeader title={screensList.RulesInfo.title} />,
     headerBackTitle: '',
     headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="black" />,
     headerStyle: {

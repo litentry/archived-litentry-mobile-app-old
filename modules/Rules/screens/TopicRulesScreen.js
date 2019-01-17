@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import { Alert } from 'expo';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
@@ -17,7 +18,7 @@ const mock = {
   requiredApproved: 0.5,
   requiredDay: 7,
   groupWebsitePrefix: 'Https://www.bacaoke.com/',
-  cost: 1000,
+  voteCost: 1000,
 };
 
 class TopicRulesScreen extends React.Component {
@@ -33,8 +34,26 @@ class TopicRulesScreen extends React.Component {
     navigation: PropTypes.object,
   };
 
+  conditionalOpen(screenLabel) {
+    const { navigation } = this.props;
+    const { voteEnabled } = navigation.getParam('voteEnabled', false);
+    if(voteEnabled){
+      navigation.navigate(screenLabel);
+    } else {
+      Alert.alert(
+        'Vote needed',
+        'To make changes please start a vote from chat window',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
+
   render() {
     const { navigation } = this.props;
+    const { voteEnabled } = navigation.getParam('voteEnabled', false);
     return (
       <View style={styles.container}>
         <View style={styles.introContainer}>
@@ -51,21 +70,23 @@ class TopicRulesScreen extends React.Component {
           title={voteInfo.rulesDescription}
           value={''}
           onClick={() => {
-            navigation.navigate(screensList.MemberRules.label);
+            navigation.navigate(screensList.MemberRules.label, {
+              voteEnabled,
+            });
           }}
         />
         <Text style={styles.rulesTitle}>{t.VOTING_RULES_TITLE}</Text>
         <SingleLineDisplay
           title={t.SUPPORT_TITLE}
           value={Math.floor(mock.requiredApproved * 100) + '%'}
-          onClick={() => {}}
+          onClick={() => this.conditionalOpen()}
         />
         <SingleLineDisplay
           title={t.DURATION_TITLE}
           value={`${mock.requiredDay * 24} Hours`}
-          onClick={() => {}}
+          onClick={() => {this.conditionalOpen()}}
         />
-        <SingleLineDisplay title={t.COST_TITLE} value={`- ${mock.cost} NES`} onClick={() => {}} />
+        <SingleLineDisplay title={t.COST_TITLE} value={`- ${mock.voteCost} NES`} onClick={() => this.conditionalOpen()} />
       </View>
     );
   }

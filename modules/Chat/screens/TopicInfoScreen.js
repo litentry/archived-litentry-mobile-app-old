@@ -89,7 +89,9 @@ class TopicInfoScreen extends React.Component {
                 style={props.style}
               />
             )}
-            onClick={() => navigation.navigate(screensList.TopicRules.label, { topic })}
+            onClick={() => navigation.navigate(screensList.TopicRules.label, {
+              topic, voteEnabled: false
+            })}
             style={styles.rules}
           />
         </View>
