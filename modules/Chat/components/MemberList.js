@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
-import _ from '../screens/TopicInfoScreen';
+import _ from 'lodash';
 import { makeImageUrl } from '../lib/blob-helpers';
 import Images from '../../../commons/Images';
 import MemberProfile from './MemberProfile';

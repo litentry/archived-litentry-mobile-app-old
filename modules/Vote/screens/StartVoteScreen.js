@@ -10,6 +10,20 @@ import { screensList } from '../../../navigation/screensList';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
+import { voteAction } from '../voteAction';
+
+const mock = {
+  meta: {
+    economicRule: 'Standard plan',
+    requiredApproved: 50,
+    requiredHour: 168,
+    groupWebsitePrefix: 'Https://www.bacaoke.com/',
+    voteCost: 1000,
+    memberRules: {
+      default: [150, 150, 10, 1, 1],
+    },
+  }
+}
 
 class StartVoteScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -24,7 +38,15 @@ class StartVoteScreen extends React.Component {
     navigation: PropTypes.object,
     topicsMap: PropTypes.object.isRequired,
     subscribedChatId: PropTypes.string,
+    initVote: PropTypes.func.isRequired,
   };
+
+  componentDidMount() {
+    const { topicsMap, initVote, subscribedChatId } = this.props;
+    const topic = _.get(topicsMap, subscribedChatId);
+    if (!topic) return null;
+    initVote(mock.meta);
+  }
 
   render() {
     const { topicsMap, navigation, subscribedChatId } = this.props;
@@ -69,9 +91,12 @@ class StartVoteScreen extends React.Component {
                 style={props.style}
               />
             )}
-            onClick={() => navigation.navigate(screensList.TopicRules.label, {
-              topic, voteEnabled: true
-            })}
+            onClick={() =>
+              navigation.navigate(screensList.TopicRules.label, {
+                topic,
+                voteEnabled: true,
+              })
+            }
             style={styles.rules}
           />
         </View>
@@ -85,7 +110,9 @@ const mapStateToProps = state => ({
   topicsMap: state.topics.topicsMap,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  initVote: voteAction.initVote,
+});
 
 export default connect(
   mapStateToProps,

@@ -28,4 +28,8 @@ export const screensList = {
   MemberRules: { label: 'MemberRules', title: 'Member Rules' },
   RulesInfo: { label: 'RulesInfo', title: 'Rules Info' },
   StartVote: { label: 'StartVote', title: 'Start a Vote' },
+  AmendSupport: { label: 'AmendSupport', title: 'Amend Support' },
+  AmendDuration: { label: 'AmendDuration', title: 'Amend Duration' },
+  AmendCost: { label: 'AmendCost', title: 'Amend Cost' },
+  AmendMemberRules: { label: 'AmendMemberRules', title: 'Amend Member Rule' },
 };

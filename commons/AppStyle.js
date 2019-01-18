@@ -74,6 +74,7 @@ export default {
   fontBig: 35,
 
   userHeaderBackgroundColor: 'white',
+  voteHeaderBackgroundColor: 'black',
   userBackgroundColor: 'white',
   coverTextBlack: '#4B4B4B',
   userCancelGreen: '#30D126',
