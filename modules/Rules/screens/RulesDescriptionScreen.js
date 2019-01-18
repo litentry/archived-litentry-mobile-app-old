@@ -11,8 +11,8 @@ import NavigationHeader from '../../../components/NavigationHeader';
 const mock = {
   groupRuleName: 'democracy',
   economicRule: 'Standard plan',
-  requiredApproved: 0.5,
-  requiredDay: 7,
+  requiredApproved: 50,
+  requiredHour: 168,
   groupWebsitePrefix: 'Https://www.bacaoke.com/',
 };
 
@@ -40,9 +40,7 @@ class RulesDescriptionScreen extends React.Component {
       `${mock.economicRule}\n` +
       '\n' +
       `* Voting rules:\n` +
-      `Approved by ${Math.floor(mock.requiredApproved * 100).toString()}% voters in ${
-        mock.requiredDay
-      } days\n` +
+      `Approved by ${mock.requiredApproved.toFixed(1)}% voters in ${mock.requiredHour} days\n` +
       '\n' +
       `Detailed rules please see:\n` +
       `${mock.groupWebsitePrefix}/${groupInfo.topic}\n`

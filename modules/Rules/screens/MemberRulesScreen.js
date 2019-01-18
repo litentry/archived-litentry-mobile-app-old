@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View, Text, ScrollView, FlatList } from 'react-native';
+import { Button, StyleSheet, View, Text, ScrollView, FlatList, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -46,9 +46,31 @@ class MemberRulesScreen extends React.Component {
       imageSource = Images.blankProfile;
     }
     return (
-      <SingleProfile imageSource={imageSource} info={mock.rule.join('/')} name={item.public.fn} />
+      <SingleProfile
+        imageSource={imageSource}
+        info={mock.rule.join('/')}
+        name={item.public.fn}
+        onPress={() => this.conditionalOpen(item.topic)}
+      />
     );
   };
+
+  conditionalOpen(userId) {
+    const { navigation } = this.props;
+    const voteEnabled = navigation.getParam('voteEnabled', false);
+    if (voteEnabled) {
+      navigation.navigate(screensList.AmendMemberRules.label, {
+        userId,
+      });
+    } else {
+      Alert.alert(
+        'Vote needed',
+        'To make changes please start a vote from chat window',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false }
+      );
+    }
+  }
 
   render() {
     const { topicsMap, subscribedChatId } = this.props;
@@ -65,6 +87,7 @@ class MemberRulesScreen extends React.Component {
           imageSource={Images.blankProfile}
           info={mock.rule.join('/')}
           name={t.FUTURE_CITIZEN}
+          onPress={() => this.conditionalOpen('default')}
         />
 
         <FlatList

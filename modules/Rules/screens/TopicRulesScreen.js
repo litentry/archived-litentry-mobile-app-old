@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import { Alert } from 'expo';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
@@ -15,8 +14,8 @@ import SingleLineDisplay from '../../../components/SingleLineDisplay';
 const mock = {
   groupRuleName: 'democracy',
   economicRule: 'Standard plan',
-  requiredApproved: 0.5,
-  requiredDay: 7,
+  requiredApproved: 50,
+  requiredHour: 168,
   groupWebsitePrefix: 'Https://www.bacaoke.com/',
   voteCost: 1000,
 };
@@ -36,24 +35,22 @@ class TopicRulesScreen extends React.Component {
 
   conditionalOpen(screenLabel) {
     const { navigation } = this.props;
-    const { voteEnabled } = navigation.getParam('voteEnabled', false);
-    if(voteEnabled){
+    const voteEnabled = navigation.getParam('voteEnabled', false);
+    if (voteEnabled) {
       navigation.navigate(screenLabel);
     } else {
       Alert.alert(
         'Vote needed',
         'To make changes please start a vote from chat window',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false }
-      )
+      );
     }
   }
 
   render() {
     const { navigation } = this.props;
-    const { voteEnabled } = navigation.getParam('voteEnabled', false);
+    const voteEnabled = navigation.getParam('voteEnabled', false);
     return (
       <View style={styles.container}>
         <View style={styles.introContainer}>
@@ -78,15 +75,21 @@ class TopicRulesScreen extends React.Component {
         <Text style={styles.rulesTitle}>{t.VOTING_RULES_TITLE}</Text>
         <SingleLineDisplay
           title={t.SUPPORT_TITLE}
-          value={Math.floor(mock.requiredApproved * 100) + '%'}
-          onClick={() => this.conditionalOpen()}
+          value={mock.requiredApproved.toFixed(1) + '%'}
+          onClick={() => this.conditionalOpen(screensList.AmendSupport.label)}
         />
         <SingleLineDisplay
           title={t.DURATION_TITLE}
-          value={`${mock.requiredDay * 24} Hours`}
-          onClick={() => {this.conditionalOpen()}}
+          value={`${mock.requiredHour} Hours`}
+          onClick={() => {
+            this.conditionalOpen(screensList.AmendDuration.label);
+          }}
         />
-        <SingleLineDisplay title={t.COST_TITLE} value={`- ${mock.voteCost} NES`} onClick={() => this.conditionalOpen()} />
+        <SingleLineDisplay
+          title={t.COST_TITLE}
+          value={`- ${mock.voteCost} NES`}
+          onClick={() => this.conditionalOpen(screensList.AmendCost.label)}
+        />
       </View>
     );
   }

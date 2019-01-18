@@ -38,7 +38,7 @@ class TopicInfoScreen extends React.Component {
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
-    console.log('topic is', topic)
+    console.log('topic is', topic);
 
     const topicTitle = topic.public.fn;
     const topicAvatart = makeImageUrl(topic.public.photo);
@@ -89,9 +89,12 @@ class TopicInfoScreen extends React.Component {
                 style={props.style}
               />
             )}
-            onClick={() => navigation.navigate(screensList.TopicRules.label, {
-              topic, voteEnabled: false
-            })}
+            onClick={() =>
+              navigation.navigate(screensList.TopicRules.label, {
+                topic,
+                voteEnabled: false,
+              })
+            }
             style={styles.rules}
           />
         </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Image, Text } from 'react-native';
 import AppStyle from '../../../commons/AppStyle';
 
 export default class SingleProfile extends React.Component {
@@ -9,16 +9,18 @@ export default class SingleProfile extends React.Component {
     info: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     fontColor: PropTypes.string,
+    onPress: PropTypes.func,
   };
 
   static defaultProps = {
     fontColor: AppStyle.lightGrey,
+    onPress: () => {},
   };
 
   render() {
-    const { imageSource, info, name, fontColor } = this.props;
+    const { imageSource, info, name, fontColor, onPress } = this.props;
     return (
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={onPress}>
         <View style={styles.profileContainer}>
           <View style={styles.imageContainer}>
             <Image source={imageSource} style={styles.image} />
@@ -26,7 +28,7 @@ export default class SingleProfile extends React.Component {
           <Text style={styles.nameText}>{name}</Text>
         </View>
         <Text style={[styles.infoText, { color: fontColor }]}>{info}</Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
