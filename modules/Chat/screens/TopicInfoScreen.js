@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, ScrollView, Text, TouchableOpacity, Alert} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -33,6 +33,15 @@ class TopicInfoScreen extends React.Component {
     subscribedChatId: PropTypes.string,
   };
 
+  showVoteNeededAlert() {
+    Alert.alert(
+      'Vote needed',
+      'To make changes please start a vote from chat window',
+      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+      { cancelable: false }
+    );
+  }
+
   render() {
     const { topicsMap, navigation, subscribedChatId } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
@@ -65,11 +74,11 @@ class TopicInfoScreen extends React.Component {
         </View>
 
         <View style={styles.infoContainer}>
-          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => {}} />
+          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={this.showVoteNeededAlert} />
           <SingleSectionDisplay
             title={t.TOPIC_DESCRIPTION_TITLE}
             value={topicDescription}
-            onClick={() => {}}
+            onClick={this.showVoteNeededAlert}
           />
           <SingleLineDisplay
             title={t.TOPIC_META_TITLE}

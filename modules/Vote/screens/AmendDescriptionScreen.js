@@ -1,17 +1,16 @@
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
-import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
-import {groupMetaRules} from "../../../config";
+import { groupMetaRules } from '../../../config';
 
-class AmendMemberRulesScreen extends React.Component {
+class AmendDescriptionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: screensList.AmendMemberRules.title,
+    headerTitle: screensList.AmendDescription.title,
     headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="white" />,
     headerTintColor: 'white',
     headerStyle: {
@@ -19,22 +18,15 @@ class AmendMemberRulesScreen extends React.Component {
     },
   });
 
-  static propTypes = {
-    navigation: PropTypes.object,
-  };
-
   render() {
-    const { navigation } = this.props;
-    const userId = navigation.getParam('userId', 'default');
-
     return (
       <View style={styles.container}>
         <AmendInput
-          propertyPath={`${groupMetaRules.MEMBER_RULES}.${userId}`}
-          unit={''}
-          isNumber={false}
+          propertyPath={groupMetaRules.DESCRIPTION}
+          unit={t.UNIT_TEXT}
           intro={t.INTRO_TEXT}
           description={t.DESCRIPTION_TEXT}
+          isNumber={false}
         />
       </View>
     );
@@ -42,21 +34,20 @@ class AmendMemberRulesScreen extends React.Component {
 }
 
 const t = {
-  INTRO_TEXT: 'What is the rules applied to this user?',
+  UNIT_TEXT: '',
+  INTRO_TEXT: 'What is the slogan of the country? ',
   DESCRIPTION_TEXT:
-    'Each value will present for a center rule, please check the rule info before amend it.',
+    '',
 };
 
-const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AmendMemberRulesScreen);
+)(AmendDescriptionScreen);
 
 const styles = StyleSheet.create({
   container: {

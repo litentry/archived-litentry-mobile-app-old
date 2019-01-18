@@ -36,6 +36,8 @@ import AmendSupportScreen from '../modules/Vote/screens/AmendSupportScreen';
 import AmendCostScreen from '../modules/Vote/screens/AmendCostScreen';
 import AmendMemberRulesScreen from '../modules/Vote/screens/AmendMemberRulesScreen';
 import AmendDurationScreen from '../modules/Vote/screens/AmendDurationScreen';
+import AmendDescriptionScreen from "../modules/Vote/screens/AmendDescriptionScreen";
+import AmendCountryNameScreen from "../modules/Vote/screens/AmendCountryNameScreen";
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -62,6 +64,8 @@ const HomeStack = createStackNavigator(
     AmendSupport: AmendSupportScreen,
     AmendMemberRules: AmendMemberRulesScreen,
     AmendDuration: AmendDurationScreen,
+    AmendDescription: AmendDescriptionScreen,
+    AmendCountryName: AmendCountryNameScreen,
     StartVote: StartVoteScreen,
     RulesInfo: RulesInfoScreen,
     MemberRules: MemberRulesScreen,

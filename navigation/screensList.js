@@ -32,4 +32,6 @@ export const screensList = {
   AmendDuration: { label: 'AmendDuration', title: 'Amend Duration' },
   AmendCost: { label: 'AmendCost', title: 'Amend Cost' },
   AmendMemberRules: { label: 'AmendMemberRules', title: 'Amend Member Rule' },
+  AmendCountryName: { label: 'AmendCountryName', title: 'Amend Country Name'},
+  AmendDescription: { label: 'AmendDescription', title: 'Amend Description'},
 };

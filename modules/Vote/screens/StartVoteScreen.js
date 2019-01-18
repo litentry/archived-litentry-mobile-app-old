@@ -88,11 +88,11 @@ class StartVoteScreen extends React.Component {
         <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
 
         <View style={styles.infoContainer}>
-          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => {}} />
+          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => navigation.navigate(screensList.AmendCountryName.label)} />
           <SingleSectionDisplay
             title={t.TOPIC_DESCRIPTION_TITLE}
             value={topicDescription}
-            onClick={() => {}}
+            onClick={() => navigation.navigate(screensList.AmendDescription.label)}
           />
         </View>
 
