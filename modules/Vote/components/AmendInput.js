@@ -14,7 +14,7 @@ class AmendInput extends React.Component {
     intro: PropTypes.string,
     description: PropTypes.string,
     placeholder: PropTypes.string,
-    voteOrigin: PropTypes.object.isRequired,
+    voteCached: PropTypes.object.isRequired,
     setVote: PropTypes.func.isRequired,
     isNumber: PropTypes.bool.isRequired,
   };
@@ -25,28 +25,17 @@ class AmendInput extends React.Component {
     description: '',
   };
 
-  constructor(props) {
-    super(props);
-    this.state = { value: '' };
-  }
-
-  componentDidMount() {
-    const { voteOrigin, propertyPath } = this.props;
-    this.setState({ value: _.get(voteOrigin, propertyPath, '').toString() });
-  }
-
   render() {
-    const { unit, placeholder, intro, description, setVote, propertyPath } = this.props;
-    const { value } = this.state;
+    const { unit, placeholder, intro, description, setVote, propertyPath, isNumber, voteCached,  } = this.props;
+    const value = _.get(voteCached, propertyPath,  isNumber ? 0 : '').toString();
 
     const InputContainer = () => (
       <View style={styles.inputContainer}>
         <View style={styles.mainInput}>
           <TextInput
             style={styles.input}
-            onChangeText={v => this.setState({ value: v })}
-            onBlur={() => {
-              const formattedValue = Number.parseFloat(value).toFixed(1);
+            onChangeText={v => {
+              const formattedValue = isNumber ? Number(Number.parseFloat(v).toFixed(1)) : v;
               setVote(_.set({}, propertyPath, formattedValue));
             }}
             value={value}
@@ -68,7 +57,7 @@ class AmendInput extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  voteOrigin: state.vote.origin,
+  voteCached: state.vote.cached,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
