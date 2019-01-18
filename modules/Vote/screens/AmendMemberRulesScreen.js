@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
-import {groupMetaRules} from "../../../config";
+import { groupMetaRules } from '../../../config';
 
 class AmendMemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

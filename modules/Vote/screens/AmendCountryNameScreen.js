@@ -36,8 +36,7 @@ class AmendCountryNameScreen extends React.Component {
 const t = {
   UNIT_TEXT: '',
   INTRO_TEXT: 'What is the country name? ',
-  DESCRIPTION_TEXT:
-    '',
+  DESCRIPTION_TEXT: '',
 };
 
 const mapStateToProps = state => ({});

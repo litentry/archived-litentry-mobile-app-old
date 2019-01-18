@@ -11,7 +11,7 @@ import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import { voteAction } from '../voteAction';
-import GenesisButton from "../../../components/GenesisButton";
+import GenesisButton from '../../../components/GenesisButton';
 
 const mock = {
   meta: {
@@ -25,13 +25,13 @@ const mock = {
     memberRules: {
       default: [150, 150, 10, 1, 1],
     },
-  }
-}
+  },
+};
 
 class StartVoteScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.StartVote.title,
-    headerBackTitle: '',
+    headerBackTitle: ' ',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
     },
@@ -52,17 +52,17 @@ class StartVoteScreen extends React.Component {
     const metaData = _.merge(mock.data, {
       countryName: _.get(topic, 'public.fn', ''),
       description: _.get(topic, 'private.comment', ''),
-    })
+    });
     initVote(metaData);
   }
 
-  onPayment(){
+  onPayment() {
     Alert.alert(
       'Payment',
       `${mock.meta.voteCost} NES`,
       [{ text: 'Pay now', onPress: () => console.log('OK Pressed') }],
       { cancelable: false }
-    )
+    );
   }
 
   render() {
@@ -88,7 +88,11 @@ class StartVoteScreen extends React.Component {
         <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
 
         <View style={styles.infoContainer}>
-          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => navigation.navigate(screensList.AmendCountryName.label)} />
+          <SingleLineDisplay
+            title={t.GROUP_TOPIC_TITLE}
+            value={topicTitle}
+            onClick={() => navigation.navigate(screensList.AmendCountryName.label)}
+          />
           <SingleSectionDisplay
             title={t.TOPIC_DESCRIPTION_TITLE}
             value={topicDescription}
@@ -117,7 +121,7 @@ class StartVoteScreen extends React.Component {
             style={styles.rules}
           />
         </View>
-        {edited && <GenesisButton action={this.onPayment} text={t.BUTTON_TEXT}/>}
+        {edited && <GenesisButton action={this.onPayment} text={t.BUTTON_TEXT} />}
       </View>
     );
   }

@@ -26,8 +26,17 @@ class AmendInput extends React.Component {
   };
 
   render() {
-    const { unit, placeholder, intro, description, setVote, propertyPath, isNumber, voteCached,  } = this.props;
-    const value = _.get(voteCached, propertyPath,  isNumber ? 0 : '').toString();
+    const {
+      unit,
+      placeholder,
+      intro,
+      description,
+      setVote,
+      propertyPath,
+      isNumber,
+      voteCached,
+    } = this.props;
+    const value = _.get(voteCached, propertyPath, isNumber ? 0 : '').toString();
 
     const InputContainer = () => (
       <View style={styles.inputContainer}>

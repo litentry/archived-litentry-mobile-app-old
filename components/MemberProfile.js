@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import AppStyle from '../../../commons/AppStyle';
-import { screensList } from '../../../navigation/screensList';
+import AppStyle from '../commons/AppStyle';
+import { screensList } from '../navigation/screensList';
 
 class MemberProfile extends React.Component {
   static propTypes = {

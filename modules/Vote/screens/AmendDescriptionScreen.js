@@ -36,8 +36,7 @@ class AmendDescriptionScreen extends React.Component {
 const t = {
   UNIT_TEXT: '',
   INTRO_TEXT: 'What is the slogan of the country? ',
-  DESCRIPTION_TEXT:
-    '',
+  DESCRIPTION_TEXT: '',
 };
 
 const mapStateToProps = state => ({});

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView, Text, TouchableOpacity, Alert} from 'react-native';
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -11,7 +11,7 @@ import { makeImageUrl } from '../lib/blob-helpers';
 import GenesisButton, { VariantList as variantList } from '../../../components/GenesisButton';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
-import MemberList from '../components/MemberList';
+import MemberList from '../../../components/MemberList';
 
 const mock = {
   isJoined: true,
@@ -74,7 +74,11 @@ class TopicInfoScreen extends React.Component {
         </View>
 
         <View style={styles.infoContainer}>
-          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={this.showVoteNeededAlert} />
+          <SingleLineDisplay
+            title={t.GROUP_TOPIC_TITLE}
+            value={topicTitle}
+            onClick={this.showVoteNeededAlert}
+          />
           <SingleSectionDisplay
             title={t.TOPIC_DESCRIPTION_TITLE}
             value={topicDescription}
