@@ -30,13 +30,17 @@ export default class GenesisButton extends Component {
     style: PropTypes.object,
     styleText: PropTypes.object,
     disabled: PropTypes.bool,
+    containerStyle: PropTypes.object,
     variant: PropTypes.oneOf(Object.values(VariantList)),
   };
 
   render() {
-    const { disabled, variant, action, style, styleText, text } = this.props;
+    const { disabled, variant, action, style, styleText, text, containerStyle } = this.props;
     return (
-      <TouchableOpacity disabled={disabled} onPress={() => action()} style={styles.canvas}>
+      <TouchableOpacity
+        disabled={disabled}
+        onPress={() => action()}
+        style={[styles.canvas, containerStyle]}>
         <View
           style={[
             styles.container,
