@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -7,11 +7,17 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import MemberList from '../components/MemberList';
 
-class MembersScreen extends React.Component {
+class TreasureScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Members.title} />,
+    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerRight: (
+      <Button
+        onPress={() => navigation.navigate(screensList.Transactions.label)}
+        title={screensList.Transactions.title}
+        color="black"
+      />
+    ),
     headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
@@ -23,12 +29,7 @@ class MembersScreen extends React.Component {
   };
 
   render() {
-    const { navigation } = this.props;
-    return (
-      <View style={styles.container}>
-        <MemberList list={navigation.getParam('list', [])} />
-      </View>
-    );
+    return <View style={styles.container} />;
   }
 }
 
@@ -41,7 +42,7 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MembersScreen);
+)(TreasureScreen);
 
 const styles = StyleSheet.create({
   container: {},

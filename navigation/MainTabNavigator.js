@@ -25,6 +25,17 @@ import LoginScreen from '../modules/User/screens/LoginScreen';
 import TopicScreen from '../modules/Chat/screens/TopicScreen';
 import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
 import MembersScreen from '../modules/Chat/screens/MembersScreen';
+import MemberInfoScreen from '../modules/Chat/screens/MemberInfoScreen';
+import RulesDescriptionScreen from '../modules/Rules/screens/RulesDescriptionScreen';
+import TreasureScreen from '../modules/Rules/screens/TreasureScreen';
+import TopicRulesScreen from '../modules/Rules/screens/TopicRulesScreen';
+import MemberRulesScreen from '../modules/Rules/screens/MemberRulesScreen';
+import RulesInfoScreen from '../modules/Rules/screens/RulesInfoScreen';
+import StartVoteScreen from '../modules/Vote/screens/StartVoteScreen';
+import AmendSupportScreen from '../modules/Vote/screens/AmendSupportScreen';
+import AmendCostScreen from '../modules/Vote/screens/AmendCostScreen';
+import AmendMemberRulesScreen from '../modules/Vote/screens/AmendMemberRulesScreen';
+import AmendDurationScreen from '../modules/Vote/screens/AmendDurationScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -47,6 +58,17 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
+    AmendCost: AmendCostScreen,
+    AmendSupport: AmendSupportScreen,
+    AmendMemberRules: AmendMemberRulesScreen,
+    AmendDuration: AmendDurationScreen,
+    StartVote: StartVoteScreen,
+    RulesInfo: RulesInfoScreen,
+    MemberRules: MemberRulesScreen,
+    TopicRules: TopicRulesScreen,
+    Treasure: TreasureScreen,
+    RulesDescription: RulesDescriptionScreen,
+    MemberInfo: MemberInfoScreen,
     Members: MembersScreen,
     Settings: SettingsScreen,
     AccountSetting: AccountSettingScreen,
@@ -65,9 +87,17 @@ const HomeStack = createStackNavigator(
     ...commonScreens,
   },
   {
-    navigationOptions: {
-      tabBarLabel: screensList.Home.label,
-      tabBarIcon: HomeStackIcon,
+    navigationOptions: ({ navigation }) => {
+      let tabBarVisible = true;
+      if (navigation.state.index > 1) {
+        tabBarVisible = false;
+      }
+
+      return {
+        tabBarLabel: screensList.Home.label,
+        tabBarIcon: HomeStackIcon,
+        tabBarVisible,
+      };
     },
   }
 );

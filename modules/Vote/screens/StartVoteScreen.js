@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -7,21 +7,28 @@ import { bindActionCreators } from 'redux';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import { makeImageUrl } from '../lib/blob-helpers';
-import GenesisButton, { VariantList as variantList } from '../../../components/GenesisButton';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
-import MemberList from '../components/MemberList';
+import { makeImageUrl } from '../../Chat/lib/blob-helpers';
+import { voteAction } from '../voteAction';
 
 const mock = {
-  isJoined: true,
-  meta: '2000',
-};
+  meta: {
+    economicRule: 'Standard plan',
+    requiredApproved: 50,
+    requiredHour: 168,
+    groupWebsitePrefix: 'Https://www.bacaoke.com/',
+    voteCost: 1000,
+    memberRules: {
+      default: [150, 150, 10, 1, 1],
+    },
+  }
+}
 
-class TopicInfoScreen extends React.Component {
+class StartVoteScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: navigation.getParam('title', null),
-    headerBackTitle: ' ',
+    headerTitle: screensList.StartVote.title,
+    headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
     },
@@ -31,38 +38,37 @@ class TopicInfoScreen extends React.Component {
     navigation: PropTypes.object,
     topicsMap: PropTypes.object.isRequired,
     subscribedChatId: PropTypes.string,
+    initVote: PropTypes.func.isRequired,
   };
+
+  componentDidMount() {
+    const { topicsMap, initVote, subscribedChatId } = this.props;
+    const topic = _.get(topicsMap, subscribedChatId);
+    if (!topic) return null;
+    initVote(mock.meta);
+  }
 
   render() {
     const { topicsMap, navigation, subscribedChatId } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
-    console.log('topic is', topic);
-
     const topicTitle = topic.public.fn;
     const topicAvatart = makeImageUrl(topic.public.photo);
     const topicDescription = topic.private.comment;
+
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.memberContainer}>
-          <MemberList list={topic.subs} limit={25} />
-          <TouchableOpacity
-            style={styles.viewMoreButton}
-            onPress={() =>
-              navigation.navigate(screensList.Members.label, {
-                list: topic.subs,
-              })
-            }>
-            <Text style={styles.viewMoreButtonText}>{t.VIEW_MORE_MEMBERS}</Text>
-            <AntDesign
-              name="right"
-              size={AppStyle.fontMiddle}
-              style={styles.rightArrowIcon}
-              color={AppStyle.lightGrey}
-            />
-          </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.introContainer}>
+          <AntDesign
+            name="addfile"
+            size={AppStyle.fontBig}
+            color={AppStyle.blueIcon}
+            style={styles.introIcon}
+          />
+          <Text style={styles.introText}>{t.VOTE_INTRO}</Text>
         </View>
+        <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
 
         <View style={styles.infoContainer}>
           <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => {}} />
@@ -71,12 +77,8 @@ class TopicInfoScreen extends React.Component {
             value={topicDescription}
             onClick={() => {}}
           />
-          <SingleLineDisplay
-            title={t.TOPIC_META_TITLE}
-            value={mock.meta}
-            onClick={() => navigation.navigate(screensList.Transactions.label)}
-          />
         </View>
+
         <View style={styles.rulesContainer}>
           <SingleLineDisplay
             title={t.TOPIC_RULES}
@@ -92,66 +94,69 @@ class TopicInfoScreen extends React.Component {
             onClick={() =>
               navigation.navigate(screensList.TopicRules.label, {
                 topic,
-                voteEnabled: false,
+                voteEnabled: true,
               })
             }
             style={styles.rules}
           />
         </View>
-        {mock.isJoined ? (
-          <GenesisButton
-            style={styles.button}
-            action={() => {}}
-            text={t.LEAVE_BUTTON}
-            variant={variantList.CANCEL}
-          />
-        ) : (
-          <GenesisButton
-            style={styles.button}
-            action={() => {}}
-            text={t.JOIN_BUTTON}
-            variant={variantList.CONFIRM}
-          />
-        )}
-      </ScrollView>
+      </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
-  topicsMap: state.topics.topicsMap,
   subscribedChatId: state.chat.subscribedChatId,
+  topicsMap: state.topics.topicsMap,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  initVote: voteAction.initVote,
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TopicInfoScreen);
+)(StartVoteScreen);
+
+const t = {
+  VOTE_INTRO:
+    'To star a vote, simply provide new values. All changes must go through voting to take effect.' +
+    ' These changes affect everyone in the country. Amend with caution! ',
+  VOTE_RULES_TITLE: 'Information',
+  GROUP_TOPIC_TITLE: 'Country Name',
+  TOPIC_DESCRIPTION_TITLE: 'Description',
+  TOPIC_RULES: 'Rules',
+};
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
-  memberContainer: {
-    backgroundColor: 'white',
-  },
-  viewMoreButton: {
+  introContainer: {
     padding: 20,
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
+    backgroundColor: 'white',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
-  viewMoreButtonText: {
-    fontFamily: AppStyle.mainFont,
+  introText: {
+    flex: 3,
     color: AppStyle.lightGrey,
+    fontFamily: AppStyle.mainFont,
     fontSize: AppStyle.fontMiddleSmall,
   },
-  rightArrowIcon: {
-    paddingLeft: 10,
+  introIcon: {
+    padding: 20,
+  },
+  rulesTitle: {
+    paddingTop: 30,
+    paddingBottom: 10,
+    paddingHorizontal: 20,
+    color: AppStyle.lightGrey,
+    fontFamily: AppStyle.mainFont,
+    fontSize: AppStyle.fontMiddleSmall,
   },
   infoContainer: {
     marginTop: 20,
@@ -161,16 +166,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: 'white',
   },
-  rules: {},
-  button: {},
 });
-
-const t = {
-  LEAVE_BUTTON: 'Leave',
-  JOIN_BUTTON: 'join',
-  VIEW_MORE_MEMBERS: 'View more members',
-  GROUP_TOPIC_TITLE: 'Country Name',
-  TOPIC_DESCRIPTION_TITLE: 'Description',
-  TOPIC_META_TITLE: 'National Treasure',
-  TOPIC_RULES: 'Rules',
-};

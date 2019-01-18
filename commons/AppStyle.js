@@ -74,6 +74,7 @@ export default {
   fontBig: 35,
 
   userHeaderBackgroundColor: 'white',
+  voteHeaderBackgroundColor: 'black',
   userBackgroundColor: 'white',
   coverTextBlack: '#4B4B4B',
   userCancelGreen: '#30D126',
@@ -81,6 +82,7 @@ export default {
   userIncorrect: '#DF4F52',
   inputPlaceholder: '#A1A1A1',
   chatBackGroundColor: '#EBEBEB',
+  chatActionBackgroundColor: '#F4F4F6',
   blueIcon: '#10AEFF',
 
   chatBorder: '#DDD',
