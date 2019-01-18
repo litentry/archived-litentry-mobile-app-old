@@ -39,6 +39,12 @@ export const imageConfig = {
   MAX_IMAGE_DIM: 768,
 };
 
+export const groupMetaRules = {
+  VOTE_COST: 'voteCost',
+  REQUIRED_APPROVED: 'requiredApproved',
+  REQUIRED_HOUR: 'requiredHour',
+};
+
 export const chatConfig = {
   messagePerPage: 20,
   online_now: {
