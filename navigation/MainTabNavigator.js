@@ -39,6 +39,7 @@ import AmendDurationScreen from '../modules/Vote/screens/AmendDurationScreen';
 import AmendDescriptionScreen from '../modules/Vote/screens/AmendDescriptionScreen';
 import AmendCountryNameScreen from '../modules/Vote/screens/AmendCountryNameScreen';
 import VoteInfoScreen from '../modules/Vote/screens/VoteInfoScreen';
+import WalletScreen from '../screens/WalletScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -119,6 +120,7 @@ const WalletStack = createStackNavigator(
     WalletImport: WalletImportScreen,
     ImportViaPrivate: ImportViaPrivateScreen,
     ScanQRCode: ScanQRCodeScreen,
+    Wallet: WalletScreen,
     ...commonScreens,
   },
   {

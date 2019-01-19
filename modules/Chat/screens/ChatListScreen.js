@@ -39,21 +39,21 @@ class ChatListScreen extends React.Component {
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     TinodeAPI.fetchTopics().then(() => {
-      this.setState({refreshing: false});
+      this.setState({ refreshing: false });
     });
-  }
+  };
 
   render() {
     const { chatList, navigation } = this.props;
     console.log('chatList is', chatList);
     return (
-      <ScrollView style={styles.container} refreshControl={
-        <RefreshControl
-          refreshing={this.state.refreshing}
-          onRefresh={this._onRefresh}
-        />}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
+        }>
         <FlatList
           style={styles.listContainer}
           data={chatList}

@@ -46,7 +46,7 @@ export default class SmallCard extends Component {
       onPress,
       style,
     } = this.props;
-    const styleImage = isSmallScreen ? { height: height * 0.2} : {};
+    const styleImage = isSmallScreen ? { height: height * 0.2 } : {};
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.container, style]}>

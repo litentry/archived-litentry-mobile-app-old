@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
   subtitle: {
     color: AppStyle.secondaryTextColor,
     marginTop: 4,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
 
 const t = {

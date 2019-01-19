@@ -114,16 +114,18 @@ class TinodeAPIClass {
     const me = this.tinode.getMeTopic();
     console.log('topics are', me);
 
-    return me.subscribe(
-      me
-        .startMetaQuery()
-        .withLaterSub()
-        .withDesc()
-        .build()
-    ).catch(err => {
-      //remove auth token
-      this.handleError(err.message, 'err');
-    });
+    return me
+      .subscribe(
+        me
+          .startMetaQuery()
+          .withLaterSub()
+          .withDesc()
+          .build()
+      )
+      .catch(err => {
+        //remove auth token
+        this.handleError(err.message, 'err');
+      });
   }
 
   fetchUserId() {

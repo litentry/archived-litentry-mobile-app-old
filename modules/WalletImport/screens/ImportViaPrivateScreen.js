@@ -26,6 +26,7 @@ import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismiss
 import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
+import GenesisButton from '../../../components/GenesisButton';
 
 const { width } = Dimensions.get('window');
 
@@ -103,8 +104,9 @@ class ImportViaPrivateScreen extends Component {
   };
 
   goToEnterName = () => {
+    const { navigation } = this.props;
     // this.props.navigation.navigate('EnterNameViaAddress');
-    lockScreen(this.props.navigation).then(() => console.log('success unlock screen!'));
+    lockScreen(navigation).then(navigation.navigate(screensList.Wallet.label));
   };
 
   render() {
@@ -141,7 +143,12 @@ class ImportViaPrivateScreen extends Component {
                 action={this.gotoScan}
               />
             </KeyboardView>
-            <BottomButton onPress={this.goToEnterName} disable={!isValidPrivateKey} />
+            <GenesisButton
+              containerStyle={styles.button}
+              action={this.goToEnterName}
+              disable={!isValidPrivateKey}
+              text={t.DONE}
+            />
             {loading && <Spinner />}
           </View>
         </TouchOutSideDismissKeyboard>
@@ -172,6 +179,7 @@ const t = {
   SCAN_QR_CODE: 'Scan QR Code',
   EXISTED_WALLET: 'Wallet already exists.',
   INVALID_PRIVATE_KEY: 'Invalid Private Key.',
+  DONE: 'Done',
 };
 
 const styles = StyleSheet.create({
@@ -211,5 +219,10 @@ const styles = StyleSheet.create({
     color: AppStyle.mainColor,
     fontFamily: 'OpenSans-SemiBold',
     fontSize: 16,
+  },
+  button: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 30,
   },
 });

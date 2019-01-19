@@ -9,10 +9,6 @@ import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
 
-const t = {
-  createButtonLabel: 'create Wallet',
-};
-
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
