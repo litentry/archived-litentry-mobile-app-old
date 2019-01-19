@@ -32,29 +32,23 @@ export default class WalletCreateScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <SmallCard
-            title={t.createTitle}
-            subtitle={t.createSubtitle}
-            imageCard={Images.imgCardCreate}
-            onPress={this.gotoEnterName}
-            imageBackground="backgroundCard"
-            titleTextStyle={{ color: AppStyle.mainColor }}
-            subtitleTextStyle={{ color: AppStyle.secondaryTextColor, marginTop: 4, fontSize: 16 }}
-          />
+        <SmallCard
+          style={styles.card}
+          title={t.createTitle}
+          subtitle={t.createSubtitle}
+          imageCard={Images.imgCardCreate}
+          onPress={this.gotoEnterName}
+          subtitleTextStyle={styles.subtitle}
+        />
 
-          <SmallCard
-            style={{ marginTop: 40 }}
-            title={t.importTitle}
-            subtitle={t.importSubtitle}
-            imageCard={Images.imgCardImport}
-            onPress={this.gotoImport}
-            imgBackground="backgroundCard"
-            imgBackgroundStyle={{ height: 214, borderRadius: 14, width: width - 40 }}
-            titleTextStyle={{ color: AppStyle.mainTextColor }}
-            subtitleTextStyle={{ color: AppStyle.secondaryTextColor, marginTop: 4, fontSize: 16 }}
-          />
-        </View>
+        <SmallCard
+          style={styles.card}
+          title={t.importTitle}
+          subtitle={t.importSubtitle}
+          imageCard={Images.imgCardImport}
+          onPress={this.gotoImport}
+          subtitleTextStyle={styles.subtitle}
+        />
       </View>
     );
   }
@@ -63,7 +57,18 @@ export default class WalletCreateScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyle.chatBackGroundColor,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  card: {
+    marginTop: 40,
+  },
+  subtitle: {
+    color: AppStyle.secondaryTextColor,
+    marginTop: 4,
+    fontSize: 16
+  }
 });
 
 const t = {

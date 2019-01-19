@@ -20,12 +20,10 @@ export default class SmallCard extends Component {
     title: PropTypes.string.isRequired,
     subtitle: PropTypes.string,
     imageCard: PropTypes.number.isRequired,
-    imageBackground: PropTypes.string,
     titleTextStyle: PropTypes.object,
     subtitleTextStyle: PropTypes.object,
     onPress: PropTypes.func,
     style: PropTypes.object,
-    imageBackgroundStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -43,32 +41,15 @@ export default class SmallCard extends Component {
       title,
       subtitle,
       imageCard,
-      imageBackground,
-      imageBackgroundStyle,
       titleTextStyle,
       subtitleTextStyle,
       onPress,
       style,
     } = this.props;
-    const styleImage = isSmallScreen ? { height: height * 0.2 } : {};
-    const heightImageBackground = isSmallScreen ? height * 0.2 + 60 : 214;
+    const styleImage = isSmallScreen ? { height: height * 0.2} : {};
     return (
       <TouchableWithoutFeedback onPress={onPress}>
         <View style={[styles.container, style]}>
-          {imageBackground && (
-            <Image
-              source={Images[imageBackground]}
-              style={[
-                {
-                  position: 'absolute',
-                  width: width - 40,
-                  height: heightImageBackground,
-                  borderRadius: 14,
-                },
-                imageBackgroundStyle,
-              ]}
-            />
-          )}
           <View
             style={{
               justifyContent: 'center',
@@ -79,7 +60,10 @@ export default class SmallCard extends Component {
               <Text style={[styles.subtitle, subtitleTextStyle]}>{subtitle}</Text>
             )}
           </View>
-          <Image resizeMode="contain" style={styleImage} source={imageCard} />
+          <View style={[styles.imageContainer, styleImage]}>
+            <Image resizeMode="contain" style={styles.image} source={imageCard} />
+            <View style={styles.overlay} />
+          </View>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -98,7 +82,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowOffset: { width: 0, height: 10 },
     shadowRadius: 20,
-    backgroundColor: AppStyle.backgroundColor,
+    backgroundColor: 'white',
     borderRadius: 14,
     margin: 5,
     elevation: 4,
@@ -106,11 +90,11 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'OpenSans-Bold',
     fontSize: 24,
-    color: AppStyle.mainTextColor,
+    color: 'black',
   },
   subtitle: {
     fontFamily: Platform.OS === 'ios' ? 'OpenSans' : 'OpenSans-Regular',
     fontSize: isSmallScreen ? 10 : 12,
-    color: AppStyle.secondaryTextColor,
+    color: AppStyle.lightGrey,
   },
 });

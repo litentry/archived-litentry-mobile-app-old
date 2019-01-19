@@ -25,42 +25,21 @@ export default class WalletImportScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <SmallCard
-              style={{ height: 174, marginTop: 20 }}
-              title={t.titlePrivateKey}
-              subtitle={t.contentPrivateKey}
-              imageCard={Images.iconPrivateKey}
-              onPress={this.gotoImportPrivate}
-              imageBackground="backgroundCard"
-              imageBackgroundStyle={{ height: 174 }}
-              titleTextStyle={{ color: AppStyle.mainColor }}
-              subtitleTextStyle={{
-                color: AppStyle.secondaryTextColor,
-                marginTop: 10,
-              }}
-            />
+        <SmallCard
+          style={styles.card}
+          title={t.titlePrivateKey}
+          subtitle={t.contentPrivateKey}
+          imageCard={Images.iconPrivateKey}
+          onPress={this.gotoImportPrivate}
+        />
 
-            <SmallCard
-              style={{ height: 174, marginTop: 20 }}
-              title={t.titleMnemonicPhrase}
-              subtitle={t.contentMnemonicPhrase}
-              imageCard={Images.iconMnemonic}
-              onPress={this.gotoImportMnemonic}
-              titleTextStyle={{ color: AppStyle.mainTextColor }}
-              subtitleTextStyle={{
-                color: AppStyle.secondaryTextColor,
-                marginTop: 10,
-              }}
-            />
-          </View>
-        </ScrollView>
+        <SmallCard
+          style={styles.card}
+          title={t.titleMnemonicPhrase}
+          subtitle={t.contentMnemonicPhrase}
+          imageCard={Images.iconMnemonic}
+          onPress={this.gotoImportMnemonic}
+        />
       </View>
     );
   }
@@ -81,5 +60,15 @@ const t = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: AppStyle.chatBackGroundColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  card: {
+    height: 174,
+    marginTop: 20,
+  },
+  subtitle: {
+    marginTop: 10,
   },
 });
