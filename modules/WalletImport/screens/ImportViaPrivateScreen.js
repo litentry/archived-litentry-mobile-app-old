@@ -27,6 +27,8 @@ import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
 import GenesisButton from '../../../components/GenesisButton';
+import {loaderAction} from "../../../actions/loaderAction";
+import {getPublicKey} from "../../../utils/ethereumUtils";
 
 const { width } = Dimensions.get('window');
 
@@ -40,6 +42,7 @@ class ImportViaPrivateScreen extends Component {
     setTitle: PropTypes.func.isRequired,
     setPrivateKey: PropTypes.func.isRequired,
     setFocusField: PropTypes.func.isRequired,
+    saveAppData: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
@@ -106,8 +109,17 @@ class ImportViaPrivateScreen extends Component {
   goToEnterName = () => {
     const { navigation } = this.props;
     // this.props.navigation.navigate('EnterNameViaAddress');
-    lockScreen(navigation).then(()=>navigation.navigate(screensList.Wallet.label));
+    lockScreen(navigation).then(this.onImportSuccess);
   };
+
+  onImportSuccess = () => {
+    const {privateKey} = this.props
+    //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
+    // and then split the default screen into two different screens.
+    const publicKey = getPublicKey(privateKey);
+    
+    navigation.navigate(screensList.Wallet.label);
+  }
 
   render() {
     const { privateKey, loading, isValidPrivateKey } = this.props;
@@ -167,7 +179,10 @@ const mapStateToProps = state => ({
   isValidPrivateKey: validPrivateKey(state.walletImport.privateKey),
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)(walletImportAction);
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  ...walletImportAction,
+  saveAppData: loaderAction.saveAppData,
+});
 
 export default connect(
   mapStateToProps,

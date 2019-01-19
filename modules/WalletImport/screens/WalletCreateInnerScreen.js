@@ -5,9 +5,10 @@ import Images from '../../../commons/Images';
 import SmallCard from '../../../components/SmallCard';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
+import { withNavigation } from 'react-navigation';
 const { width } = Dimensions.get('window');
 
-export default class WalletCreateScreen extends Component {
+class WalletCreateInnerScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
   };
@@ -53,6 +54,8 @@ export default class WalletCreateScreen extends Component {
     );
   }
 }
+
+export default withNavigation(WalletCreateInnerScreen);
 
 const styles = StyleSheet.create({
   container: {

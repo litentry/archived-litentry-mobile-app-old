@@ -2,6 +2,7 @@ import { SecureStore } from 'expo';
 
 const secureDataEntry = {
   password: 'SECURE_PASSWORD',
+  privateKey: 'SECURE_PRIVATE_KEY',
 };
 
 export const comparePasswordAsync = (pincode, resolve, reject) => {
@@ -18,6 +19,12 @@ export const comparePasswordAsync = (pincode, resolve, reject) => {
 
 export const savePasswordAsync = (password, resolve, reject) => {
   SecureStore.setItemAsync(secureDataEntry.password, password)
+    .then(resolve)
+    .catch(reject);
+};
+
+export const savePrivateKeyAsync = (privateKey, resolve, reject) => {
+  SecureStore.setItemAsync(secureDataEntry.privateKey, privateKey)
     .then(resolve)
     .catch(reject);
 };
