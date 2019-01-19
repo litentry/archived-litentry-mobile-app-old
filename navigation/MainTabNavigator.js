@@ -4,9 +4,9 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
-import WalletCreateScreen from '../screens/WalletCreateScreen';
 import HomeScreen from '../screens/HomeScreen';
-import WalletImportScreen from '../screens/WalletImportScreen';
+import WalletCreateScreen from '../modules/WalletImport/screens/WalletCreateScreen';
+import WalletImportScreen from '../modules/WalletImport/screens/WalletImportScreen';
 import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
 import UnlockScreen from '../modules/Unlock/screens/UnlockScreen';

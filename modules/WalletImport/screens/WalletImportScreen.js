@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import SmallCard from '../components/SmallCard';
-import Images from '../commons/Images';
-import AppStyle from '../commons/AppStyle';
-import { screensList } from '../navigation/screensList';
+import SmallCard from '../../../components/SmallCard';
+import Images from '../../../commons/Images';
+import AppStyle from '../../../commons/AppStyle';
+import { screensList } from '../../../navigation/screensList';
 
 export default class WalletImportScreen extends Component {
   static propTypes = {

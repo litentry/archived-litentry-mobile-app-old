@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
-import Images from '../commons/Images';
-import SmallCard from '../components/SmallCard';
-import AppStyle from '../commons/AppStyle';
-import { screensList } from '../navigation/screensList';
+import Images from '../../../commons/Images';
+import SmallCard from '../../../components/SmallCard';
+import AppStyle from '../../../commons/AppStyle';
+import { screensList } from '../../../navigation/screensList';
 const { width } = Dimensions.get('window');
 
 export default class WalletCreateScreen extends Component {
