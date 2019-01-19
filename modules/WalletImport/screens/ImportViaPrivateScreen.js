@@ -106,7 +106,7 @@ class ImportViaPrivateScreen extends Component {
   goToEnterName = () => {
     const { navigation } = this.props;
     // this.props.navigation.navigate('EnterNameViaAddress');
-    lockScreen(navigation).then(navigation.navigate(screensList.Wallet.label));
+    lockScreen(navigation).then(()=>navigation.navigate(screensList.Wallet.label));
   };
 
   render() {

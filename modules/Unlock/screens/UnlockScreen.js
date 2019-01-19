@@ -115,7 +115,7 @@ class UnlockScreen extends Component {
               ],
             },
           ]}>
-          {this.renderDots(6)}
+          {this.renderDots(4)}
         </Animated.View>
         <Keyboard />
       </View>
