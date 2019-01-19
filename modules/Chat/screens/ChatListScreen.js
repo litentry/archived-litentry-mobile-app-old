@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, FlatList, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -26,31 +26,51 @@ class ChatListScreen extends React.Component {
     chatList: PropTypes.array.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   componentDidMount() {
     TinodeAPI.fetchTopics();
     TinodeAPI.fetchUserId();
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    TinodeAPI.fetchTopics().then(() => {
+      this.setState({refreshing: false});
+    });
   }
 
   render() {
     const { chatList, navigation } = this.props;
     console.log('chatList is', chatList);
     return (
-      <FlatList
-        style={styles.container}
-        data={chatList}
-        keyExtractor={item => item.topic}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(screensList.Topic.label, {
-                topicId: item.topic,
-                title: item.public.fn,
-              })
-            }>
-            <ChatListNode chatNode={item} />
-          </TouchableOpacity>
-        )}
-      />
+      <ScrollView style={styles.container} refreshControl={
+        <RefreshControl
+          refreshing={this.state.refreshing}
+          onRefresh={this._onRefresh}
+        />}>
+        <FlatList
+          style={styles.listContainer}
+          data={chatList}
+          keyExtractor={item => item.topic}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(screensList.Topic.label, {
+                  topicId: item.topic,
+                  title: item.public.fn,
+                })
+              }>
+              <ChatListNode chatNode={item} />
+            </TouchableOpacity>
+          )}
+        />
+      </ScrollView>
     );
   }
 }
@@ -69,6 +89,9 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  listContainer: {
     flex: 1,
   },
   addIcon: {

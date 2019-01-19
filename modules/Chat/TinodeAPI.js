@@ -78,9 +78,9 @@ class TinodeAPIClass {
       // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
       // me.onPres = console.log //	Callback which receives a {pres} message.
       // me.onInfo = console.log //Callback which receives an {info} message.
-      me.onMetaDesc = this.tnMeMetaDesc; //Callback which receives changes to topic desctioption desc.
+      me.onMetaDesc = this.tnMeMetaDesc; //Callback which receives changes to topic description desc.
       me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
-      me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been recieved and cached.
+      me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
       // me.onMetaSub = console.log //	Called for a single subscription record change.
       // me.onDeleteTopic = console.log // Called after the topic is deleted.
 
@@ -114,7 +114,7 @@ class TinodeAPIClass {
     const me = this.tinode.getMeTopic();
     console.log('topics are', me);
 
-    me.subscribe(
+    return me.subscribe(
       me
         .startMetaQuery()
         .withLaterSub()
