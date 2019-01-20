@@ -8,7 +8,7 @@ import { loaderAction } from '../../actions/loaderAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
-import { dataEntry} from '../../reducers/loader';
+import { dataEntry } from '../../reducers/loader';
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -91,7 +91,9 @@ class TinodeAPIClass {
         }
         // this.handleCredentialsRequest(ctrl.params);
       } else {
-        store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: ctrl.params.token }));
+        store.dispatch(
+          loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: ctrl.params.token })
+        );
         navigation.navigate(screensList.ChatList.label);
         // this.handleLoginSuccessful();
       }

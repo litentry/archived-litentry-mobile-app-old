@@ -11,7 +11,7 @@ export const dataEntry = {
 };
 
 const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);
-const getLabel = stateName => _.find(dataEntry, { stateName }).label
+const getLabel = stateName => _.find(dataEntry, { stateName }).label;
 
 export const loaderReducer = (state = INIT_STATE, action) => {
   switch (action.type) {

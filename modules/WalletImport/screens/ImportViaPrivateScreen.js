@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import ActionButton from '../../../components/ActionButton';
+import { AntDesign } from '@expo/vector-icons';
 import Spinner from '../../../components/Spinner';
 import Checker from '../../../utils/Checker';
 import Images from '../../../commons/Images';
@@ -29,7 +29,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import { loaderAction } from '../../../actions/loaderAction';
 import { getPublicKey } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
-
+import LightButton from '../../../components/LightButton';
 const { width } = Dimensions.get('window');
 
 class ImportViaPrivateScreen extends Component {
@@ -39,9 +39,7 @@ class ImportViaPrivateScreen extends Component {
     loading: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     isValidPrivateKey: PropTypes.bool.isRequired,
-    setTitle: PropTypes.func.isRequired,
     setPrivateKey: PropTypes.func.isRequired,
-    setFocusField: PropTypes.func.isRequired,
     saveAppData: PropTypes.func.isRequired,
   };
 
@@ -60,43 +58,13 @@ class ImportViaPrivateScreen extends Component {
     }
   };
 
-  _renderPasteButton() {
-    return (
-      <View style={{ position: 'absolute', right: 0 }}>
-        <TouchableOpacity onPress={this.onPaste}>
-          <View style={{ padding: 15 }}>
-            <Text style={styles.pasteText}>{t.PASTE}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
   clearText = () => {
     this.onChangePrivateKey('');
-  };
-
-  _renderClearButton() {
-    return (
-      <View style={{ position: 'absolute', right: 15, top: 15 }}>
-        <TouchableOpacity onPress={this.clearText}>
-          <Image source={Images.iconCloseSearch} />
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  onChangeName = text => {
-    this.props.setTitle(text);
   };
 
   onChangePrivateKey = text => {
     this.props.setPrivateKey(text);
   };
-
-  onFocusName = () => this.props.setFocusField('name');
-  onFocusPrivateKey = () => this.props.setFocusField('privateKey');
-  onBlurTextField = () => this.props.setFocusField('');
 
   gotoScan = () => {
     this.props.navigation.navigate(screensList.ScanQRCode.label);
@@ -113,17 +81,35 @@ class ImportViaPrivateScreen extends Component {
   };
 
   onImportSuccess = () => {
-    const { privateKey, navigation, saveAppData } = this.props
+    const { privateKey, navigation, saveAppData } = this.props;
     //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
     // and then split the default screen into two different screens.
     const publicKey = getPublicKey(privateKey);
-    saveAppData({[ dataEntry.publicKey.stateName]: publicKey });
+    saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
 
     navigation.navigate(screensList.Wallet.label);
-  }
+  };
 
   render() {
     const { privateKey, loading, isValidPrivateKey } = this.props;
+    const ClearButton = () => (
+      <View style={styles.clearButton}>
+        <TouchableOpacity onPress={this.clearText}>
+          <AntDesign name="delete" size={AppStyle.fontMiddle} color={AppStyle.lightGrey} />
+        </TouchableOpacity>
+      </View>
+    );
+
+    const PasteButton = () => (
+      <View style={styles.pasteButton}>
+        <TouchableOpacity onPress={this.onPaste}>
+          <View style={{ padding: 15 }}>
+            <Text style={styles.pasteText}>{t.PASTE}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <TouchOutSideDismissKeyboard>
@@ -139,22 +125,13 @@ class ImportViaPrivateScreen extends Component {
                   onChangeText={this.onChangePrivateKey}
                   value={privateKey}
                 />
-                {privateKey === '' ? this._renderPasteButton() : this._renderClearButton()}
+                {privateKey === '' ? <PasteButton /> : <ClearButton />}
               </View>
               {!isValidPrivateKey && privateKey !== '' && (
                 <Text style={styles.errorText}>{t.INVALID_PRIVATE_KEY}</Text>
               )}
-              <ActionButton
-                style={{ height: 40, marginTop: 25 }}
-                buttonItem={{
-                  name: t.SCAN_QR_CODE,
-                  icon: Images.iconQrCode,
-                  background: '#121734',
-                }}
-                styleText={{ color: AppStyle.mainTextColor }}
-                styleIcon={{ tintColor: AppStyle.mainTextColor }}
-                action={this.gotoScan}
-              />
+              <View style={styles.scanButton} />
+              <LightButton onPress={this.gotoScan} text={t.SCAN_QR_CODE} />
             </KeyboardView>
             <GenesisButton
               containerStyle={styles.button}
@@ -202,6 +179,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: AppStyle.chatBackGroundColor,
   },
   titleText: {
     fontSize: 16,
@@ -213,9 +191,9 @@ const styles = StyleSheet.create({
   textInput: {
     height: 182,
     width: width - 40,
-    backgroundColor: '#14192D',
+    backgroundColor: 'white',
     borderRadius: 14,
-    color: '#7F8286',
+    color: AppStyle.lightGrey,
     fontFamily: Platform.OS === 'ios' ? 'OpenSans' : 'OpenSans-Regular',
     fontSize: 18,
     paddingHorizontal: 27,
@@ -232,7 +210,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   pasteText: {
-    color: AppStyle.mainColor,
+    color: AppStyle.lightGrey,
     fontFamily: 'OpenSans-SemiBold',
     fontSize: 16,
   },
@@ -240,5 +218,14 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     bottom: 30,
+  },
+  pasteButton: {
+    position: 'absolute',
+    right: 0,
+  },
+  clearButton: {
+    position: 'absolute',
+    right: 15,
+    top: 15,
   },
 });

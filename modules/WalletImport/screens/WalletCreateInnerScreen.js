@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import PropTypes from 'prop-types';
+import { withNavigation } from 'react-navigation';
 import Images from '../../../commons/Images';
 import SmallCard from '../../../components/SmallCard';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import { withNavigation } from 'react-navigation';
 const { width } = Dimensions.get('window');
 
 class WalletCreateInnerScreen extends Component {

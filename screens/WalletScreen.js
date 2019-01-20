@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
-import { walletAction } from '../actions/walletAction';
 import _ from 'lodash';
+import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
@@ -38,8 +38,7 @@ class WalletScreen extends React.Component {
 
   render() {
     const { publicKey } = this.props;
-    if(_.isEmpty(publicKey))
-      return <WalletCreateInnerScreen/>
+    if (_.isEmpty(publicKey)) return <WalletCreateInnerScreen />;
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>
