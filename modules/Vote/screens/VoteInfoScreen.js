@@ -10,6 +10,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import MultiLineButton from '../../../components/MultiLineButton';
 import MemberList from '../../../components/MemberList';
+import LightButton from '../../../components/LightButton';
 
 const locale = window.navigator.language;
 const mock = {
@@ -65,21 +66,14 @@ class VoteInfoScreen extends React.Component {
         </View>
         <View style={styles.supportList}>
           <MemberList list={props.list} limit={12} />
-          <TouchableOpacity
-            style={styles.viewMoreButton}
+          <LightButton
             onPress={() =>
               navigation.navigate(screensList.Members.label, {
                 list: props.list,
               })
-            }>
-            <Text style={styles.viewMoreButtonText}>{t.VIEW_MORE_MEMBERS}</Text>
-            <AntDesign
-              name="right"
-              size={AppStyle.fontMiddle}
-              style={styles.rightArrowIcon}
-              color={AppStyle.lightGrey}
-            />
-          </TouchableOpacity>
+            }
+            text={t.VIEW_MORE_MEMBERS}
+          />
         </View>
       </View>
     );
@@ -163,19 +157,5 @@ const styles = StyleSheet.create({
   },
   supportList: {
     flexDirection: 'column',
-  },
-  viewMoreButton: {
-    height: 100,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewMoreButtonText: {
-    fontFamily: AppStyle.mainFont,
-    color: AppStyle.lightGrey,
-    fontSize: AppStyle.fontMiddleSmall,
-  },
-  rightArrowIcon: {
-    paddingLeft: 10,
   },
 });
