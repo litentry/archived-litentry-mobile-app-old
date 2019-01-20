@@ -69,14 +69,14 @@ class Keyboard extends Component {
       addOnePincode,
     } = this.props;
 
-    if (pincode.length === 6) {
+    if (pincode.length === 4) {
       return null;
     }
     // HapticHandler.ImpactLight();
     addOnePincode(number);
     const newPinCode = pincode + number;
 
-    if (newPinCode.length === 6) {
+    if (newPinCode.length === 4) {
       if (!hasPassword) {
         if (pincodeToBeConfirm) {
           this._confirmPassword(newPinCode, resolve);
