@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import { walletAction } from '../actions/walletAction';
+import _ from 'lodash';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
@@ -64,7 +65,7 @@ class WalletScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  publicKey: state.loader.publicKey,
+  publicKey: state.appState.publicKey,
 });
 
 const mapDispatchToProps = dispatch => ({});
