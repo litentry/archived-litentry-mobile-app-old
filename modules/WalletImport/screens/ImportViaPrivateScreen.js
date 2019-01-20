@@ -117,7 +117,7 @@ class ImportViaPrivateScreen extends Component {
     //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
     // and then split the default screen into two different screens.
     const publicKey = getPublicKey(privateKey);
-    saveAppData({[dataEntry.publicKey.label]: publicKey});
+    saveAppData({[ dataEntry.publicKey.stateName]: publicKey });
 
     navigation.navigate(screensList.Wallet.label);
   }

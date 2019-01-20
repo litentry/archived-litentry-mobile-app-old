@@ -11,11 +11,14 @@ export const dataEntry = {
 };
 
 const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);
+const getLabel = stateName => _.find(dataEntry, { stateName }).label
 
 export const loaderReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
     case loaderActionType.READ_APP_DATA: {
       const { resultList } = action;
+      //TODO to be removed
+      console.log('result list is', resultList);
       return _.reduce(
         resultList,
         (resultState, singleResult) => {
@@ -37,12 +40,13 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       if (Object.keys(action.data).length > 1) {
         const dataSet = _.reduce(
           action.data,
-          (result, value, key) => _.concat(result, [key, value]),
+          (result, value, key) => _.concat(result, [getLabel(key), value]),
           []
         );
         AsyncStorage.mulitSet(dataSet);
       } else {
-        const key = Object.keys(action.data)[0];
+        const stateName = Object.keys(action.data)[0];
+        const key = getLabel(stateName);
         const value = Object.values(action.data)[0];
         AsyncStorage.setItem(key, value);
       }

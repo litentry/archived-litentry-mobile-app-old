@@ -91,7 +91,7 @@ class TinodeAPIClass {
         }
         // this.handleCredentialsRequest(ctrl.params);
       } else {
-        store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.label]: ctrl.params.token }));
+        store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: ctrl.params.token }));
         navigation.navigate(screensList.ChatList.label);
         // this.handleLoginSuccessful();
       }
