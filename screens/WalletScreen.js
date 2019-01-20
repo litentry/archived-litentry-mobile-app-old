@@ -8,6 +8,7 @@ import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
+import WalletCreateInnerScreen from '../modules/WalletImport/screens/WalletCreateInnerScreen';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -27,6 +28,7 @@ class WalletScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    publicKey: PropTypes.string.isRequired,
   };
 
   receiveTransaction = () => {};
@@ -34,6 +36,9 @@ class WalletScreen extends React.Component {
   sendTransaction = () => {};
 
   render() {
+    const { publicKey } = this.props;
+    if(_.isEmpty(publicKey))
+      return <WalletCreateInnerScreen/>
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>
@@ -58,7 +63,9 @@ class WalletScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  publicKey: state.loader.publicKey,
+});
 
 const mapDispatchToProps = dispatch => ({});
 
