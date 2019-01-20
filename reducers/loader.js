@@ -7,6 +7,7 @@ export const dataEntry = {
   hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false },
   wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0 },
   loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null },
+  publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: '' },
 };
 
 const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);
@@ -31,7 +32,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       );
     }
 
-    //TODO change into async function
+    //TODO change into async function with try and catch
     case loaderActionType.SAVE_APP_DATA: {
       if (Object.keys(action.data).length > 1) {
         const dataSet = _.reduce(

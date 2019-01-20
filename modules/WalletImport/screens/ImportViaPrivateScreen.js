@@ -17,7 +17,6 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import ActionButton from '../../../components/ActionButton';
 import Spinner from '../../../components/Spinner';
-import BottomButton from '../../../components/BottomButton';
 import Checker from '../../../utils/Checker';
 import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
@@ -27,8 +26,9 @@ import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
 import GenesisButton from '../../../components/GenesisButton';
-import {loaderAction} from "../../../actions/loaderAction";
-import {getPublicKey} from "../../../utils/ethereumUtils";
+import { loaderAction } from '../../../actions/loaderAction';
+import { getPublicKey } from '../../../utils/ethereumUtils';
+import { dataEntry } from '../../../reducers/loader';
 
 const { width } = Dimensions.get('window');
 
@@ -113,11 +113,12 @@ class ImportViaPrivateScreen extends Component {
   };
 
   onImportSuccess = () => {
-    const {privateKey} = this.props
+    const { privateKey, navigation, saveAppData } = this.props
     //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
     // and then split the default screen into two different screens.
     const publicKey = getPublicKey(privateKey);
-    
+    saveAppData({[dataEntry.publicKey.label]: publicKey});
+
     navigation.navigate(screensList.Wallet.label);
   }
 
