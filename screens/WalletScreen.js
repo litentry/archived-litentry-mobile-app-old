@@ -48,6 +48,7 @@ class WalletScreen extends React.Component {
           <View style={styles.textContainer}>
             <Text style={styles.balanceText}>Balance</Text>
             <Text style={styles.amountText}>325.67</Text>
+            <Text style={styles.publicKey}>Public Address: {publicKey}</Text>
           </View>
         </View>
         <View style={styles.actionsContainer}>
@@ -106,6 +107,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   amountText: {
+    fontSize: AppStyle.fontSmall,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  publicKey: {
     fontSize: AppStyle.fontSmall,
     color: 'white',
     fontWeight: 'bold',

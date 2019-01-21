@@ -7,6 +7,7 @@ import AppNavigator from './navigation/AppNavigator';
 import { store } from './reducers/store';
 import PopupWrapper from './components/PopupWrapper';
 import Loader from './modules/Loader/components/Loader';
+import './shim.js';
 
 export default class App extends React.Component {
   state = {
@@ -25,13 +26,17 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <AppNavigator>
-            <View style={styles.container}>
-              <Loader />
               {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <PopupWrapper />
-            </View>
-          </AppNavigator>
+          <View style={styles.container}>
+            <Loader/>
+            <AppNavigator>
+              <View style={styles.container}>
+
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <PopupWrapper />
+              </View>
+            </AppNavigator>
+          </View>
         </Provider>
       );
     }
