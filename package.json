@@ -1,6 +1,6 @@
 {
   "name": "my-new-project",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "./main.js",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -28,7 +28,7 @@
     "elliptic": "^6.4.1",
     "ethereumjs-util": "^6.0.0",
     "events": "^1.1.1",
-    "expo": "^31.0.2",
+    "expo": "^32.0.1",
     "https-browserify": "0.0.1",
     "js-sha3": "^0.8.0",
     "lodash": "^4.17.11",
@@ -37,8 +37,8 @@
     "prop-types": "^15.6.2",
     "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
-    "react": "^16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-crypto": "^2.1.2",
     "react-native-haptic-feedback": "^1.4.2",
     "react-native-level-fs": "^3.0.1",
@@ -71,7 +71,7 @@
     "eslint-config-universe": "^1.0.7",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
-    "jest-expo": "^31.0.0",
+    "jest-expo": "^32.0.0",
     "prettier": "1.15.2",
     "react-test-renderer": "^16.6.3"
   },
