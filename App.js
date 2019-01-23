@@ -7,7 +7,6 @@ import AppNavigator from './navigation/AppNavigator';
 import { store } from './reducers/store';
 import PopupWrapper from './components/PopupWrapper';
 import Loader from './modules/Loader/components/Loader';
-import './shim.js';
 
 export default class App extends React.Component {
   state = {
@@ -26,7 +25,6 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <View style={styles.container}>
             <Loader/>
             <AppNavigator>
