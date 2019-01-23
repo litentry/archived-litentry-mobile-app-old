@@ -27,7 +27,7 @@ import { walletImportAction } from '../walletImportAction';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
 import GenesisButton from '../../../components/GenesisButton';
 import { loaderAction } from '../../../actions/loaderAction';
-import { getPublicKey } from '../../../utils/ethereumUtils';
+import { getPublicKeyFromPrivateKey } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
 import LightButton from '../../../components/LightButton';
 const { width } = Dimensions.get('window');
@@ -84,7 +84,7 @@ class ImportViaPrivateScreen extends Component {
     const { privateKey, navigation, saveAppData } = this.props;
     //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
     // and then split the default screen into two different screens.
-    const publicKey = getPublicKey(privateKey);
+    const publicKey = getPublicKeyFromPrivateKey(privateKey);
     saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
 
     navigation.navigate(screensList.Wallet.label);
