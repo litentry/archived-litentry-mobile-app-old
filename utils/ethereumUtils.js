@@ -1,4 +1,5 @@
 import util from 'ethereumjs-util'
+import {Wallet} from 'ethers'
 
 const path = "m/44'/60'/0'/0/index";
 
@@ -14,5 +15,8 @@ export const getPublicKeyFromPrivateKey = privateKey => {
 };
 
 export const getPublicKeyFromMnemonic = mnemonic => {
-
+  mnemonic = mnemonic.join(' ')
+  const wallet = Wallet.fromMnemonic(mnemonic);
+  console.log('wallet is', wallet);
+  return wallet;
 }

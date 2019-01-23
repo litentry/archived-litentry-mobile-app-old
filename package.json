@@ -27,6 +27,7 @@
     "domain-browser": "^1.2.0",
     "elliptic": "^6.4.1",
     "ethereumjs-util": "^6.0.0",
+    "ethers": "^4.0.21",
     "events": "^1.1.1",
     "expo": "^32.0.1",
     "https-browserify": "0.0.1",
