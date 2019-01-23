@@ -33,8 +33,6 @@ const { width } = Dimensions.get('window');
 class ImportViaPrivateScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
-    privateKey: PropTypes.string.isRequired,
-    isValidPrivateKey: PropTypes.bool.isRequired,
     setPrivateKey: PropTypes.func.isRequired,
     saveAppData: PropTypes.func.isRequired,
   };
@@ -46,6 +44,7 @@ class ImportViaPrivateScreen extends Component {
     super(props);
     this.state = {
       loading: false,
+      privateKey: '',
     }
   }
 
@@ -60,12 +59,14 @@ class ImportViaPrivateScreen extends Component {
     this.onChangePrivateKey('');
   };
 
-  onChangePrivateKey = text => {
-    this.props.setPrivateKey(text);
+  onChangePrivateKey = privateKey => {
+    this.setState({ privateKey })
   };
 
   gotoScan = () => {
-    this.props.navigation.navigate(screensList.ScanQRCode.label);
+    this.props.navigation.navigate(screensList.ScanQRCode.label, {
+      onChangePrivateKey: this.onChangePrivateKey.bind(this)
+    });
   };
 
   onConfirm = () => {
@@ -75,7 +76,8 @@ class ImportViaPrivateScreen extends Component {
 
   onImportSuccess = () => {
     this.setState({loading:true})
-    const { privateKey, navigation, saveAppData } = this.props;
+    const { navigation, saveAppData } = this.props;
+    const { privateKey } = this.state
     //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
     // and then split the default screen into two different screens.
     const publicKey = getPublicKeyFromPrivateKey(privateKey);
@@ -85,8 +87,8 @@ class ImportViaPrivateScreen extends Component {
   };
 
   render() {
-    const { privateKey, isValidPrivateKey } = this.props;
-    const { loading } = this.state
+    const { loading, privateKey } = this.state
+    const isValidPrivateKey = privateKey !== '' && !_.isEmpty(Checker.checkPrivateKey(privateKey));
     const ClearButton = () => (
       <View style={styles.clearButton}>
         <TouchableOpacity onPress={this.clearText}>
@@ -141,12 +143,7 @@ class ImportViaPrivateScreen extends Component {
   }
 }
 
-const validPrivateKey = privateKey =>
-  privateKey !== '' && !_.isEmpty(Checker.checkPrivateKey(privateKey));
-
 const mapStateToProps = state => ({
-  privateKey: state.walletImport.privateKey,
-  isValidPrivateKey: validPrivateKey(state.walletImport.privateKey),
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
