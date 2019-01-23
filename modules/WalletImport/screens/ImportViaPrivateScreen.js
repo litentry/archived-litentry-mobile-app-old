@@ -9,7 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
   Clipboard,
-  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
@@ -18,7 +17,6 @@ import { bindActionCreators } from 'redux';
 import { AntDesign } from '@expo/vector-icons';
 import Spinner from '../../../components/Spinner';
 import Checker from '../../../utils/Checker';
-import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
@@ -36,19 +34,19 @@ class ImportViaPrivateScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
     privateKey: PropTypes.string.isRequired,
-    loading: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired,
     isValidPrivateKey: PropTypes.bool.isRequired,
     setPrivateKey: PropTypes.func.isRequired,
     saveAppData: PropTypes.func.isRequired,
   };
 
   static navigationOptions = {
-    title: screensList.ImportViaPrivate.title,
   };
 
-  constructor(props) {
-    super();
+  constructor(props){
+    super(props);
+    this.state = {
+      loading: false,
+    }
   }
 
   onPaste = async () => {
@@ -70,28 +68,25 @@ class ImportViaPrivateScreen extends Component {
     this.props.navigation.navigate(screensList.ScanQRCode.label);
   };
 
-  goBack = () => {
-    this.props.navigation.goBack();
-  };
-
-  goToEnterName = () => {
+  onConfirm = () => {
     const { navigation } = this.props;
-    // this.props.navigation.navigate('EnterNameViaAddress');
     lockScreen(navigation).then(this.onImportSuccess);
   };
 
   onImportSuccess = () => {
+    this.setState({loading:true})
     const { privateKey, navigation, saveAppData } = this.props;
     //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
     // and then split the default screen into two different screens.
     const publicKey = getPublicKeyFromPrivateKey(privateKey);
     saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
-
+    this.setState({loading:false})
     navigation.navigate(screensList.Wallet.label);
   };
 
   render() {
-    const { privateKey, loading, isValidPrivateKey } = this.props;
+    const { privateKey, isValidPrivateKey } = this.props;
+    const { loading } = this.state
     const ClearButton = () => (
       <View style={styles.clearButton}>
         <TouchableOpacity onPress={this.clearText}>
@@ -130,12 +125,11 @@ class ImportViaPrivateScreen extends Component {
               {!isValidPrivateKey && privateKey !== '' && (
                 <Text style={styles.errorText}>{t.INVALID_PRIVATE_KEY}</Text>
               )}
-              <View style={styles.scanButton} />
               <LightButton onPress={this.gotoScan} text={t.SCAN_QR_CODE} />
             </KeyboardView>
             <GenesisButton
               containerStyle={styles.button}
-              action={this.goToEnterName}
+              action={this.onConfirm}
               disable={!isValidPrivateKey}
               text={t.DONE}
             />
@@ -152,8 +146,6 @@ const validPrivateKey = privateKey =>
 
 const mapStateToProps = state => ({
   privateKey: state.walletImport.privateKey,
-  loading: state.walletImport.loading,
-  title: state.walletImport.title,
   isValidPrivateKey: validPrivateKey(state.walletImport.privateKey),
 });
 
@@ -180,13 +172,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: AppStyle.chatBackGroundColor,
-  },
-  titleText: {
-    fontSize: 16,
-    fontFamily: 'OpenSans-SemiBold',
-    color: 'white',
-    alignSelf: 'flex-start',
-    marginLeft: 20,
   },
   textInput: {
     height: 182,

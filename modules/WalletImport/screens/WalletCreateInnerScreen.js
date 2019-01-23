@@ -22,8 +22,8 @@ class WalletCreateInnerScreen extends Component {
     this.props.navigation.goBack();
   };
 
-  gotoEnterName = () => {
-    this.props.navigation.navigate('WalletTypeCreateScreen');
+  createWallet = () => {
+
   };
 
   gotoImport = () => {
@@ -38,7 +38,7 @@ class WalletCreateInnerScreen extends Component {
           title={t.createTitle}
           subtitle={t.createSubtitle}
           imageCard={Images.imgCardCreate}
-          onPress={this.gotoEnterName}
+          onPress={this.createWallet}
           subtitleTextStyle={styles.subtitle}
         />
 
