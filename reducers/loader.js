@@ -8,6 +8,7 @@ export const dataEntry = {
   wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0 },
   loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null },
   walletAddress: { label: 'WALLET_ADDRESS', stateName: 'walletAddress', initValue: '' },
+  publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: ''},
 };
 
 const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);

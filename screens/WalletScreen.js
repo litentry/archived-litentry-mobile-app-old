@@ -38,7 +38,7 @@ class WalletScreen extends React.Component {
 
   render() {
     const { walletAddress } = this.props;
-    if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
+    if (!_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>

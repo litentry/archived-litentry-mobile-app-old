@@ -26,8 +26,10 @@ class ImportViaMnemonicScreen extends Component {
       if (!wallet) {
         return reject();
       }
-      const walletAddress = wallet.address;
-      saveAppData({ [dataEntry.walletAddress.stateName]: walletAddress });
+      saveAppData({
+        [dataEntry.walletAddress.stateName]:  wallet.address,
+        [dataEntry.publicKey.stateName]: wallet.signingKey.publicKey,
+      });
       return resolve(wallet);
     });
 
