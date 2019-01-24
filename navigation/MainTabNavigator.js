@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
 import HomeScreen from '../screens/HomeScreen';
-import WalletCreateInnerScreen from '../modules/WalletImport/screens/WalletCreateInnerScreen';
 import WalletImportScreen from '../modules/WalletImport/screens/WalletImportScreen';
 import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
@@ -118,7 +117,6 @@ WalletStackIcon.propTypes = iconPropTypes;
 const WalletStack = createStackNavigator(
   {
     Wallet: WalletScreen,
-    WalletCreate: WalletCreateInnerScreen,
     WalletImport: WalletImportScreen,
     ImportViaPrivate: ImportViaPrivateScreen,
     ImportViaMnemonic: ImportViaMnemonicScreen,

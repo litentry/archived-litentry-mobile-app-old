@@ -8,7 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 const { width } = Dimensions.get('window');
 
-class WalletCreateInnerScreen extends Component {
+class NewWalletInnerScreen extends Component {
   static propTypes = {
     navigation: PropTypes.object,
   };
@@ -50,7 +50,7 @@ class WalletCreateInnerScreen extends Component {
   }
 }
 
-export default withNavigation(WalletCreateInnerScreen);
+export default withNavigation(NewWalletInnerScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -73,7 +73,6 @@ class TextWithQRInput extends React.Component {
     const { input } = this.state;
 
     generateKey(input)
-      .then(() => lockScreen(navigation))
       .then((wallet) => new Promise((resolve, reject)=> {
         savePrivateKeyAsync(wallet.privateKey, ()=> {
           resolve(wallet)
@@ -81,11 +80,15 @@ class TextWithQRInput extends React.Component {
       }))
       .then((wallet) => new Promise((resolve, reject)=> {
         saveMnemonicAsync(wallet.mnemonic, ()=> {
+          console.log('save successd mnemonic key')
           resolve(wallet)
         }, reject)
       }))
       .then((wallet) => {
         console.log('all save successfully, wallet is', wallet);
+        return lockScreen(navigation)
+      })
+      .then(() => {
         this.setState(initState);
         navigation.navigate(nextScreen);
       })

@@ -9,7 +9,7 @@ import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
-import WalletCreateInnerScreen from '../modules/WalletImport/screens/WalletCreateInnerScreen';
+import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -38,7 +38,7 @@ class WalletScreen extends React.Component {
 
   render() {
     const { publicKey } = this.props;
-    if (_.isEmpty(publicKey)) return <WalletCreateInnerScreen />;
+    if (_.isEmpty(publicKey)) return <NewWalletInnerScreen />;
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>
