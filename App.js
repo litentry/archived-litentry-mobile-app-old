@@ -25,13 +25,15 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <AppNavigator>
-            <View style={styles.container}>
-              <Loader />
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              <PopupWrapper />
-            </View>
-          </AppNavigator>
+          <View style={styles.container}>
+            <Loader />
+            <AppNavigator>
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <PopupWrapper />
+              </View>
+            </AppNavigator>
+          </View>
         </Provider>
       );
     }

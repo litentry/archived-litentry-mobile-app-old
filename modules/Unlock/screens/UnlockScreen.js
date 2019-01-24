@@ -16,7 +16,6 @@ import connect from 'react-redux/es/connect/connect';
 import DisableView from '../components/DisableView';
 import AppStyle from '../../../commons/AppStyle';
 import Keyboard from '../components/Keyboard';
-import Spinner from '../../../components/Spinner';
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 569;
@@ -73,17 +72,9 @@ class UnlockScreen extends Component {
     const dots = [];
     const pinTyped = pincode.length;
 
-    const styleDot = {
-      width: 13,
-      height: 13,
-      borderRadius: 6.5,
-      borderWidth: 1,
-      borderColor: 'white',
-      marginHorizontal: 12,
-    };
     for (let i = 0; i < numberOfDots; i++) {
-      const backgroundColor = i < pinTyped ? { backgroundColor: 'white' } : {};
-      const dot = <View style={[styleDot, backgroundColor]} key={i} />;
+      const fillDotStyle = i < pinTyped ? { backgroundColor: AppStyle.lightGrey } : {};
+      const dot = <View style={[styles.dot, fillDotStyle]} key={i} />;
       dots.push(dot);
     }
     return dots;
@@ -123,7 +114,7 @@ class UnlockScreen extends Component {
               ],
             },
           ]}>
-          {this.renderDots(6)}
+          {this.renderDots(4)}
         </Animated.View>
         <Keyboard />
       </View>
@@ -136,7 +127,6 @@ class UnlockScreen extends Component {
     return (
       <View style={[styles.container, container]}>
         <StatusBar hidden />
-        <Spinner style={{ marginTop: shouldDisableApp ? 80 : 0 }} isSpin={false} />
         {this.renderContent()}
       </View>
     );
@@ -172,11 +162,12 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
+    backgroundColor: AppStyle.chatBackGroundColor,
   },
   desText: {
-    color: 'white',
+    color: AppStyle.lightGrey,
     fontSize: isSmallScreen ? 14 : 22,
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: AppStyle.mainFont,
     marginTop: isSmallScreen ? 10 : height * 0.03,
     marginBottom: isSmallScreen ? 8 : height * 0.015,
   },
@@ -189,5 +180,13 @@ const styles = StyleSheet.create({
     color: AppStyle.errorColor,
     fontFamily: 'OpenSans-SemiBold',
     fontSize: 16,
+  },
+  dot: {
+    width: 13,
+    height: 13,
+    borderRadius: 6.5,
+    borderWidth: 1,
+    borderColor: AppStyle.lightGrey,
+    marginHorizontal: 12,
   },
 });

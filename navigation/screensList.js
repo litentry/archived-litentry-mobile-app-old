@@ -3,7 +3,8 @@ export const screensList = {
   Wallet: { label: 'Wallet', title: 'Wallet' },
   WalletCreate: { label: 'WalletCreate', title: 'Create Wallet' },
   WalletImport: { label: 'WalletImport', title: 'Import Wallet' },
-  ImportViaPrivate: { label: 'ImportViaPrivate', title: 'Import Wallet via Address' },
+  ImportViaPrivate: { label: 'ImportViaPrivate', title: 'Import Wallet via PrivateKey' },
+  ImportViaMnemonic: { label: 'ImportViaMnemonic', title: 'Import Wallet via Mnemonic Phrase' },
   ScanQRCode: { label: 'ScanQRCode', title: 'Scan QR Code' },
   Unlock: { label: 'Unlock', title: 'Unlock Screen' },
   Transactions: { label: 'Transactions', title: 'Transactions' },
@@ -32,4 +33,7 @@ export const screensList = {
   AmendDuration: { label: 'AmendDuration', title: 'Amend Duration' },
   AmendCost: { label: 'AmendCost', title: 'Amend Cost' },
   AmendMemberRules: { label: 'AmendMemberRules', title: 'Amend Member Rule' },
+  AmendCountryName: { label: 'AmendCountryName', title: 'Amend Country Name' },
+  AmendDescription: { label: 'AmendDescription', title: 'Amend Description' },
+  VoteInfo: { label: 'VoteInfo', title: 'Participate a vote' },
 };

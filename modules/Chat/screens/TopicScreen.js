@@ -42,7 +42,7 @@ class TopicScreen extends React.Component {
         />
       </TouchableOpacity>
     ),
-    headerBackTitle: '',
+    headerBackTitle: ' ',
     headerTintColor: AppStyle.userCancelGreen,
     headerStyle: {
       backgroundColor: 'white',

@@ -2,6 +2,8 @@ import { SecureStore } from 'expo';
 
 const secureDataEntry = {
   password: 'SECURE_PASSWORD',
+  privateKey: 'SECURE_PRIVATE_KEY',
+  mnemonic: 'SECURE_MNEMONIC',
 };
 
 export const comparePasswordAsync = (pincode, resolve, reject) => {
@@ -18,6 +20,34 @@ export const comparePasswordAsync = (pincode, resolve, reject) => {
 
 export const savePasswordAsync = (password, resolve, reject) => {
   SecureStore.setItemAsync(secureDataEntry.password, password)
+    .then(resolve)
+    .catch(reject);
+};
+
+export const savePrivateKeyAsync = (privateKey, resolve, reject) => {
+  SecureStore.setItemAsync(secureDataEntry.privateKey, privateKey)
+    .then(resolve)
+    .catch(reject);
+};
+
+export const getPrivateKeyAsync = (resolve, reject) => {
+  SecureStore.getItemAsync(secureDataEntry.privateKey)
+    .then(resolve)
+    .catch(reject);
+};
+
+export const saveMnemonicAsync = (mnemonic, resolve, reject) => {
+  //TODO Now ethers.js does not support create mnemonic from private key.
+  if (mnemonic === undefined) {
+    return resolve();
+  }
+  SecureStore.setItemAsync(secureDataEntry.mnemonic, mnemonic)
+    .then(resolve)
+    .catch(reject);
+};
+
+export const getMnemonicAsync = (resolve, reject) => {
+  SecureStore.getItemAsync(secureDataEntry.mnemonic)
     .then(resolve)
     .catch(reject);
 };

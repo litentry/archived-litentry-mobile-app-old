@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import _ from 'lodash';
-import { makeImageUrl } from '../lib/blob-helpers';
-import Images from '../../../commons/Images';
+import { makeImageUrl } from '../modules/Chat/lib/blob-helpers';
+import Images from '../commons/Images';
 import MemberProfile from './MemberProfile';
 
 export default class MemberList extends React.Component {

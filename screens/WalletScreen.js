@@ -3,15 +3,13 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
+import _ from 'lodash';
 import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
-
-const t = {
-  createButtonLabel: 'create Wallet',
-};
+import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -31,6 +29,7 @@ class WalletScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    walletAddress: PropTypes.string.isRequired,
   };
 
   receiveTransaction = () => {};
@@ -38,6 +37,8 @@ class WalletScreen extends React.Component {
   sendTransaction = () => {};
 
   render() {
+    const { walletAddress } = this.props;
+    if (!_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>
@@ -47,6 +48,7 @@ class WalletScreen extends React.Component {
           <View style={styles.textContainer}>
             <Text style={styles.balanceText}>Balance</Text>
             <Text style={styles.amountText}>325.67</Text>
+            <Text style={styles.walletAddress}>Public Address: {walletAddress}</Text>
           </View>
         </View>
         <View style={styles.actionsContainer}>
@@ -62,7 +64,9 @@ class WalletScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  walletAddress: state.appState.walletAddress,
+});
 
 const mapDispatchToProps = dispatch => ({});
 
@@ -103,6 +107,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   amountText: {
+    fontSize: AppStyle.fontSmall,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  walletAddress: {
     fontSize: AppStyle.fontSmall,
     color: 'white',
     fontWeight: 'bold',

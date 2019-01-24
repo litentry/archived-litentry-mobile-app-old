@@ -8,6 +8,7 @@ import { loaderAction } from '../../actions/loaderAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
+import { dataEntry } from '../../reducers/loader';
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -78,9 +79,9 @@ class TinodeAPIClass {
       // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
       // me.onPres = console.log //	Callback which receives a {pres} message.
       // me.onInfo = console.log //Callback which receives an {info} message.
-      me.onMetaDesc = this.tnMeMetaDesc; //Callback which receives changes to topic desctioption desc.
+      me.onMetaDesc = this.tnMeMetaDesc; //Callback which receives changes to topic description desc.
       me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
-      me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been recieved and cached.
+      me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
       // me.onMetaSub = console.log //	Called for a single subscription record change.
       // me.onDeleteTopic = console.log // Called after the topic is deleted.
 
@@ -90,7 +91,9 @@ class TinodeAPIClass {
         }
         // this.handleCredentialsRequest(ctrl.params);
       } else {
-        store.dispatch(loaderAction.saveAppData({ loginToken: ctrl.params.token }));
+        store.dispatch(
+          loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: ctrl.params.token })
+        );
         navigation.navigate(screensList.ChatList.label);
         // this.handleLoginSuccessful();
       }
@@ -114,16 +117,18 @@ class TinodeAPIClass {
     const me = this.tinode.getMeTopic();
     console.log('topics are', me);
 
-    me.subscribe(
-      me
-        .startMetaQuery()
-        .withLaterSub()
-        .withDesc()
-        .build()
-    ).catch(err => {
-      //remove auth token
-      this.handleError(err.message, 'err');
-    });
+    return me
+      .subscribe(
+        me
+          .startMetaQuery()
+          .withLaterSub()
+          .withDesc()
+          .build()
+      )
+      .catch(err => {
+        //remove auth token
+        this.handleError(err.message, 'err');
+      });
   }
 
   fetchUserId() {

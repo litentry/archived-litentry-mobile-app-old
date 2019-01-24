@@ -25,7 +25,9 @@ class ActionList extends React.Component {
       {
         name: 'AppStore',
         imageSource: Images.appStore,
-        action: () => {},
+        action: () => {
+          navigation.navigate(screensList.VoteInfo.label);
+        },
       },
     ];
 

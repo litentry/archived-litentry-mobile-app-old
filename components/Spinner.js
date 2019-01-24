@@ -22,7 +22,7 @@ export default class Spinner extends Component {
   };
 
   static defaultProps = {
-    style: [],
+    style: {},
     visible: false,
   };
 

@@ -43,6 +43,9 @@ export const groupMetaRules = {
   VOTE_COST: 'voteCost',
   REQUIRED_APPROVED: 'requiredApproved',
   REQUIRED_HOUR: 'requiredHour',
+  COUNTRY_NAME: 'countryName',
+  DESCRIPTION: 'description',
+  MEMBER_RULES: 'memberRules',
 };
 
 export const chatConfig = {

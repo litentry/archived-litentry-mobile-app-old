@@ -4,9 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
-import WalletCreateScreen from '../screens/WalletCreateScreen';
 import HomeScreen from '../screens/HomeScreen';
-import WalletImportScreen from '../screens/WalletImportScreen';
+import WalletImportScreen from '../modules/WalletImport/screens/WalletImportScreen';
 import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
 import UnlockScreen from '../modules/Unlock/screens/UnlockScreen';
@@ -36,6 +35,12 @@ import AmendSupportScreen from '../modules/Vote/screens/AmendSupportScreen';
 import AmendCostScreen from '../modules/Vote/screens/AmendCostScreen';
 import AmendMemberRulesScreen from '../modules/Vote/screens/AmendMemberRulesScreen';
 import AmendDurationScreen from '../modules/Vote/screens/AmendDurationScreen';
+import AmendDescriptionScreen from '../modules/Vote/screens/AmendDescriptionScreen';
+import AmendCountryNameScreen from '../modules/Vote/screens/AmendCountryNameScreen';
+import VoteInfoScreen from '../modules/Vote/screens/VoteInfoScreen';
+import WalletScreen from '../screens/WalletScreen';
+import ImportViaMnemonicScreen from '../modules/WalletImport/screens/ImportViaMnemonicScreen';
+import WalletCreateScreen from '../modules/WalletImport/screens/WalletCreateScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -58,10 +63,13 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
+    VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,
     AmendMemberRules: AmendMemberRulesScreen,
     AmendDuration: AmendDurationScreen,
+    AmendDescription: AmendDescriptionScreen,
+    AmendCountryName: AmendCountryNameScreen,
     StartVote: StartVoteScreen,
     RulesInfo: RulesInfoScreen,
     MemberRules: MemberRulesScreen,
@@ -109,9 +117,11 @@ WalletStackIcon.propTypes = iconPropTypes;
 
 const WalletStack = createStackNavigator(
   {
-    WalletCreate: WalletCreateScreen,
+    Wallet: WalletScreen,
     WalletImport: WalletImportScreen,
+    WalletCreate: WalletCreateScreen,
     ImportViaPrivate: ImportViaPrivateScreen,
+    ImportViaMnemonic: ImportViaMnemonicScreen,
     ScanQRCode: ScanQRCodeScreen,
     ...commonScreens,
   },

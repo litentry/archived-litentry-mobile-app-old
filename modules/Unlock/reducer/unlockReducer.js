@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 export const unlockReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case unlockActionType.ADD_ONE_PINCODE:
-      if (state.pincode.length === 6) {
+      if (state.pincode.length === 4) {
         return state;
       }
       return {

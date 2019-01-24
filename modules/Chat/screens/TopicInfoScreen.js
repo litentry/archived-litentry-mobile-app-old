@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -11,7 +11,8 @@ import { makeImageUrl } from '../lib/blob-helpers';
 import GenesisButton, { VariantList as variantList } from '../../../components/GenesisButton';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
-import MemberList from '../components/MemberList';
+import MemberList from '../../../components/MemberList';
+import LightButton from '../../Vote/screens/VoteInfoScreen';
 
 const mock = {
   isJoined: true,
@@ -33,6 +34,15 @@ class TopicInfoScreen extends React.Component {
     subscribedChatId: PropTypes.string,
   };
 
+  showVoteNeededAlert() {
+    Alert.alert(
+      'Vote needed',
+      'To make changes please start a vote from chat window',
+      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+      { cancelable: false }
+    );
+  }
+
   render() {
     const { topicsMap, navigation, subscribedChatId } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
@@ -47,29 +57,26 @@ class TopicInfoScreen extends React.Component {
       <ScrollView style={styles.container}>
         <View style={styles.memberContainer}>
           <MemberList list={topic.subs} limit={25} />
-          <TouchableOpacity
-            style={styles.viewMoreButton}
+          <LightButton
             onPress={() =>
               navigation.navigate(screensList.Members.label, {
                 list: topic.subs,
               })
-            }>
-            <Text style={styles.viewMoreButtonText}>{t.VIEW_MORE_MEMBERS}</Text>
-            <AntDesign
-              name="right"
-              size={AppStyle.fontMiddle}
-              style={styles.rightArrowIcon}
-              color={AppStyle.lightGrey}
-            />
-          </TouchableOpacity>
+            }
+            text={t.VIEW_MORE_MEMBERS}
+          />
         </View>
 
         <View style={styles.infoContainer}>
-          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => {}} />
+          <SingleLineDisplay
+            title={t.GROUP_TOPIC_TITLE}
+            value={topicTitle}
+            onClick={this.showVoteNeededAlert}
+          />
           <SingleSectionDisplay
             title={t.TOPIC_DESCRIPTION_TITLE}
             value={topicDescription}
-            onClick={() => {}}
+            onClick={this.showVoteNeededAlert}
           />
           <SingleLineDisplay
             title={t.TOPIC_META_TITLE}
@@ -137,21 +144,6 @@ const styles = StyleSheet.create({
   },
   memberContainer: {
     backgroundColor: 'white',
-  },
-  viewMoreButton: {
-    padding: 20,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewMoreButtonText: {
-    fontFamily: AppStyle.mainFont,
-    color: AppStyle.lightGrey,
-    fontSize: AppStyle.fontMiddleSmall,
-  },
-  rightArrowIcon: {
-    paddingLeft: 10,
   },
   infoContainer: {
     marginTop: 20,

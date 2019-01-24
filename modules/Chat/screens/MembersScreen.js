@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import MemberList from '../components/MemberList';
+import MemberList from '../../../components/MemberList';
 
 class MembersScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

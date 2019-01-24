@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -11,9 +11,12 @@ import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import { voteAction } from '../voteAction';
+import GenesisButton from '../../../components/GenesisButton';
 
 const mock = {
   meta: {
+    countryName: '',
+    description: '',
     economicRule: 'Standard plan',
     requiredApproved: 50,
     requiredHour: 168,
@@ -22,13 +25,13 @@ const mock = {
     memberRules: {
       default: [150, 150, 10, 1, 1],
     },
-  }
-}
+  },
+};
 
 class StartVoteScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.StartVote.title,
-    headerBackTitle: '',
+    headerBackTitle: ' ',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
     },
@@ -39,17 +42,31 @@ class StartVoteScreen extends React.Component {
     topicsMap: PropTypes.object.isRequired,
     subscribedChatId: PropTypes.string,
     initVote: PropTypes.func.isRequired,
+    edited: PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
     const { topicsMap, initVote, subscribedChatId } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
-    initVote(mock.meta);
+    const metaData = _.merge(mock.data, {
+      countryName: _.get(topic, 'public.fn', ''),
+      description: _.get(topic, 'private.comment', ''),
+    });
+    initVote(metaData);
+  }
+
+  onPayment() {
+    Alert.alert(
+      'Payment',
+      `${mock.meta.voteCost} NES`,
+      [{ text: 'Pay now', onPress: () => console.log('OK Pressed') }],
+      { cancelable: false }
+    );
   }
 
   render() {
-    const { topicsMap, navigation, subscribedChatId } = this.props;
+    const { topicsMap, navigation, subscribedChatId, edited } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
@@ -71,11 +88,15 @@ class StartVoteScreen extends React.Component {
         <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
 
         <View style={styles.infoContainer}>
-          <SingleLineDisplay title={t.GROUP_TOPIC_TITLE} value={topicTitle} onClick={() => {}} />
+          <SingleLineDisplay
+            title={t.GROUP_TOPIC_TITLE}
+            value={topicTitle}
+            onClick={() => navigation.navigate(screensList.AmendCountryName.label)}
+          />
           <SingleSectionDisplay
             title={t.TOPIC_DESCRIPTION_TITLE}
             value={topicDescription}
-            onClick={() => {}}
+            onClick={() => navigation.navigate(screensList.AmendDescription.label)}
           />
         </View>
 
@@ -100,6 +121,7 @@ class StartVoteScreen extends React.Component {
             style={styles.rules}
           />
         </View>
+        {edited && <GenesisButton action={this.onPayment} text={t.BUTTON_TEXT} />}
       </View>
     );
   }
@@ -108,6 +130,7 @@ class StartVoteScreen extends React.Component {
 const mapStateToProps = state => ({
   subscribedChatId: state.chat.subscribedChatId,
   topicsMap: state.topics.topicsMap,
+  edited: !_.isEqual(state.vote.origin, state.vote.cached),
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
@@ -127,6 +150,7 @@ const t = {
   GROUP_TOPIC_TITLE: 'Country Name',
   TOPIC_DESCRIPTION_TITLE: 'Description',
   TOPIC_RULES: 'Rules',
+  BUTTON_TEXT: 'Confirm and starting Voting',
 };
 
 const styles = StyleSheet.create({

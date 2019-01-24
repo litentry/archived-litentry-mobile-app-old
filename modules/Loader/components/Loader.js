@@ -6,6 +6,7 @@ import connect from 'react-redux/es/connect/connect';
 import PropTypes from 'prop-types';
 import { loaderAction } from '../../../actions/loaderAction';
 import { dataEntry } from '../../../reducers/loader';
+import { testScript } from '../../../testScript';
 
 class Loader extends Component {
   static propTypes = {
@@ -13,8 +14,8 @@ class Loader extends Component {
   };
 
   async componentDidMount() {
+    testScript();
     const { readAppData } = this.props;
-    console.log('loader did mount!');
     const requestList = _.map(dataEntry, v => v.label);
     const resultList = await AsyncStorage.multiGet(requestList);
     readAppData(resultList);
