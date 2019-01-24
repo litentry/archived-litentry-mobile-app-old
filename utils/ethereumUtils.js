@@ -3,7 +3,7 @@ import { Wallet } from 'ethers';
 
 const path = "m/44'/60'/0'/0/index";
 
-export const getPublicKeyFromPrivateKey = privateKey => {
+export const getAddressFromPrivateKey = privateKey => {
   if (privateKey.indexOf('0x') === 0) {
     privateKey = privateKey.slice(2);
   }
@@ -18,7 +18,7 @@ export const getPublicKeyFromPrivateKey = privateKey => {
   }
 };
 
-export const getPublicKeyFromMnemonic = mnemonic => {
+export const getAddressFromMnemonic = mnemonic => {
   mnemonic = mnemonic.trim();
   if (mnemonic.split(' ').length !== 12) return false;
   try {

@@ -29,7 +29,7 @@ class WalletScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    publicKey: PropTypes.string.isRequired,
+    walletAddress: PropTypes.string.isRequired,
   };
 
   receiveTransaction = () => {};
@@ -37,8 +37,8 @@ class WalletScreen extends React.Component {
   sendTransaction = () => {};
 
   render() {
-    const { publicKey } = this.props;
-    if (_.isEmpty(publicKey)) return <NewWalletInnerScreen />;
+    const { walletAddress } = this.props;
+    if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>
@@ -48,7 +48,7 @@ class WalletScreen extends React.Component {
           <View style={styles.textContainer}>
             <Text style={styles.balanceText}>Balance</Text>
             <Text style={styles.amountText}>325.67</Text>
-            <Text style={styles.publicKey}>Public Address: {publicKey}</Text>
+            <Text style={styles.walletAddress}>Public Address: {walletAddress}</Text>
           </View>
         </View>
         <View style={styles.actionsContainer}>
@@ -65,7 +65,7 @@ class WalletScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  publicKey: state.appState.publicKey,
+  walletAddress: state.appState.walletAddress,
 });
 
 const mapDispatchToProps = dispatch => ({});
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
   },
-  publicKey: {
+  walletAddress: {
     fontSize: AppStyle.fontSmall,
     color: 'white',
     fontWeight: 'bold',

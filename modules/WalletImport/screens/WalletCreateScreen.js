@@ -38,8 +38,8 @@ class WalletCreateScreen extends React.Component {
       if (!wallet) {
         return reject();
       }
-      const publicKey = wallet.address;
-      saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
+      const walletAddress = wallet.address;
+      saveAppData({ [dataEntry.walletAddress.stateName]: walletAddress });
       return resolve(wallet);
     });
 

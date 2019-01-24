@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { walletImportAction } from '../walletImportAction';
 import { loaderAction } from '../../../actions/loaderAction';
-import { getPublicKeyFromMnemonic } from '../../../utils/ethereumUtils';
+import { getAddressFromMnemonic } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
 import TextWithQRInput from '../components/TextWithQRInput';
 
@@ -22,12 +22,12 @@ class ImportViaMnemonicScreen extends Component {
       const { saveAppData } = this.props;
       //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
       // and then split the default screen into two different screens.
-      const wallet = getPublicKeyFromMnemonic(privateKey);
+      const wallet = getAddressFromMnemonic(privateKey);
       if (!wallet) {
         return reject();
       }
-      const publicKey = wallet.address;
-      saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
+      const walletAddress = wallet.address;
+      saveAppData({ [dataEntry.walletAddress.stateName]: walletAddress });
       return resolve(wallet);
     });
 
