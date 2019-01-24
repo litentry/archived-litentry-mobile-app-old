@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 import { AntDesign } from '@expo/vector-icons';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, StackActions, NavigationActions } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
@@ -22,7 +22,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import Spinner from '../../../components/Spinner';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
-import {saveMnemonicAsync, savePrivateKeyAsync} from "../../../utils/secureStoreUtils";
+import { saveMnemonicAsync, savePrivateKeyAsync } from '../../../utils/secureStoreUtils';
 
 const { width } = Dimensions.get('window');
 
@@ -35,7 +35,6 @@ class TextWithQRInput extends React.Component {
   static propTypes = {
     generateKey: PropTypes.func.isRequired,
     validate: PropTypes.func.isRequired,
-    nextScreen: PropTypes.string.isRequired,
     errorText: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
   };
@@ -69,28 +68,45 @@ class TextWithQRInput extends React.Component {
   };
 
   onConfirm = () => {
-    const { navigation, generateKey, nextScreen } = this.props;
+    const { navigation, generateKey } = this.props;
     const { input } = this.state;
 
     generateKey(input)
-      .then((wallet) => new Promise((resolve, reject)=> {
-        savePrivateKeyAsync(wallet.privateKey, ()=> {
-          resolve(wallet)
-        }, reject)
-      }))
-      .then((wallet) => new Promise((resolve, reject)=> {
-        saveMnemonicAsync(wallet.mnemonic, ()=> {
-          console.log('save successd mnemonic key')
-          resolve(wallet)
-        }, reject)
-      }))
-      .then((wallet) => {
+      .then(
+        wallet =>
+          new Promise((resolve, reject) => {
+            savePrivateKeyAsync(
+              wallet.privateKey,
+              () => {
+                resolve(wallet);
+              },
+              reject
+            );
+          })
+      )
+      .then(
+        wallet =>
+          new Promise((resolve, reject) => {
+            saveMnemonicAsync(
+              wallet.mnemonic,
+              () => {
+                resolve(wallet);
+              },
+              reject
+            );
+          })
+      )
+      .then(wallet => {
         console.log('all save successfully, wallet is', wallet);
-        return lockScreen(navigation)
+        return lockScreen(navigation);
       })
       .then(() => {
         this.setState(initState);
-        navigation.navigate(nextScreen);
+        const resetAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: screensList.Wallet.label })],
+        });
+        navigation.dispatch(resetAction);
       })
       .catch(e => {
         console.log(e);

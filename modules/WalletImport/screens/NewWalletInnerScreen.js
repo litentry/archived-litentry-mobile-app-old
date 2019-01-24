@@ -6,7 +6,6 @@ import Images from '../../../commons/Images';
 import SmallCard from '../../../components/SmallCard';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-const { width } = Dimensions.get('window');
 
 class NewWalletInnerScreen extends Component {
   static propTypes = {
@@ -22,8 +21,6 @@ class NewWalletInnerScreen extends Component {
     this.props.navigation.goBack();
   };
 
-  createWallet = () => {};
-
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -33,7 +30,7 @@ class NewWalletInnerScreen extends Component {
           title={t.createTitle}
           subtitle={t.createSubtitle}
           imageCard={Images.imgCardCreate}
-          onPress={this.createWallet}
+          onPress={() => navigate(screensList.WalletCreate.label)}
           subtitleTextStyle={styles.subtitle}
         />
 

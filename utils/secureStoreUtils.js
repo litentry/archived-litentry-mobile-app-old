@@ -33,21 +33,21 @@ export const savePrivateKeyAsync = (privateKey, resolve, reject) => {
 export const getPrivateKeyAsync = (resolve, reject) => {
   SecureStore.getItemAsync(secureDataEntry.privateKey)
     .then(resolve)
-    .catch(reject)
-}
+    .catch(reject);
+};
 
 export const saveMnemonicAsync = (mnemonic, resolve, reject) => {
   //TODO Now ethers.js does not support create mnemonic from private key.
-  if(mnemonic === undefined) {
+  if (mnemonic === undefined) {
     return resolve();
   }
   SecureStore.setItemAsync(secureDataEntry.mnemonic, mnemonic)
     .then(resolve)
-    .catch(reject)
-}
+    .catch(reject);
+};
 
 export const getMnemonicAsync = (resolve, reject) => {
   SecureStore.getItemAsync(secureDataEntry.mnemonic)
     .then(resolve)
-    .catch(reject)
-}
+    .catch(reject);
+};

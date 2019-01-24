@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 import { loaderAction } from '../../../actions/loaderAction';
 import { getPublicKeyFromMnemonic } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
 import TextWithQRInput from '../components/TextWithQRInput';
-import {savePrivateKeyAsync} from "../../../utils/secureStoreUtils";
 
 class ImportViaMnemonicScreen extends Component {
   static propTypes = {
@@ -41,7 +39,6 @@ class ImportViaMnemonicScreen extends Component {
       <TextWithQRInput
         generateKey={this.generateKey.bind(this)}
         validate={this.validate}
-        nextScreen={screensList.Wallet.label}
         errorText={t.INVALID_MNEMONIC_PHRASE}
       />
     );

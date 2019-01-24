@@ -4,7 +4,6 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import Checker from '../../../utils/Checker';
-import { screensList } from '../../../navigation/screensList';
 import { walletImportAction } from '../walletImportAction';
 import { loaderAction } from '../../../actions/loaderAction';
 import { getPublicKeyFromMnemonic, getPublicKeyFromPrivateKey } from '../../../utils/ethereumUtils';
@@ -40,7 +39,6 @@ class ImportViaPrivateScreen extends Component {
       <TextWithQRInput
         generateKey={this.generateKey}
         validate={this.validate}
-        nextScreen={screensList.Wallet.label}
         errorText={t.INVALID_PRIVATE_KEY}
       />
     );
