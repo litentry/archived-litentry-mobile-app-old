@@ -5,8 +5,8 @@ import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import { withNavigation } from 'react-navigation';
-import images from '../../../commons/Images';
 import { AntDesign } from '@expo/vector-icons';
+import images from '../../../commons/Images';
 import { comparePasswordAsync, savePasswordAsync } from '../../../utils/secureStoreUtils';
 import { loaderAction } from '../../../actions/loaderAction';
 import { unlockAction } from '../unlockAction';
@@ -121,7 +121,9 @@ class Keyboard extends Component {
             }
           }}>
           <View style={styles.numberField}>
-            {numberData.actions !== 'cancel' && <AntDesign name='delete' color={AppStyle.lightGrey} size={AppStyle.fontMiddleBig} />}
+            {numberData.actions !== 'cancel' && (
+              <AntDesign name="delete" color={AppStyle.lightGrey} size={AppStyle.fontMiddleBig} />
+            )}
             {numberData.actions === 'cancel' && <Text style={styles.cancelText}>Cancel</Text>}
           </View>
         </TouchableOpacity>

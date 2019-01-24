@@ -41,7 +41,7 @@ class ScanQRCodeScreen extends Component {
 
   handleBarCodeScanned = ({ type, data }) => {
     const { navigation, showPopup } = this.props;
-    const onChangePrivateKey = navigation.getParam('onChangePrivateKey', ()=>{})
+    const onChangePrivateKey = navigation.getParam('onChangePrivateKey', () => {});
     console.log(`Bar code with type ${type} and data ${data} has been scanned!`);
     const resChecker = Checker.checkPrivateKey(data.toString());
     if (resChecker && resChecker.length > 0) {

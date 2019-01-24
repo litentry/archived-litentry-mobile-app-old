@@ -16,7 +16,6 @@ import connect from 'react-redux/es/connect/connect';
 import DisableView from '../components/DisableView';
 import AppStyle from '../../../commons/AppStyle';
 import Keyboard from '../components/Keyboard';
-import Spinner from '../../../components/Spinner';
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 569;
@@ -128,7 +127,6 @@ class UnlockScreen extends Component {
     return (
       <View style={[styles.container, container]}>
         <StatusBar hidden />
-        <Spinner style={{ marginTop: shouldDisableApp ? 80 : 0 }} isSpin={false} />
         {this.renderContent()}
       </View>
     );

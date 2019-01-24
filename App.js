@@ -26,10 +26,9 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style={styles.container}>
-            <Loader/>
+            <Loader />
             <AppNavigator>
               <View style={styles.container}>
-
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
                 <PopupWrapper />
               </View>

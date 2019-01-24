@@ -40,7 +40,7 @@ import AmendDescriptionScreen from '../modules/Vote/screens/AmendDescriptionScre
 import AmendCountryNameScreen from '../modules/Vote/screens/AmendCountryNameScreen';
 import VoteInfoScreen from '../modules/Vote/screens/VoteInfoScreen';
 import WalletScreen from '../screens/WalletScreen';
-import ImportViaMnemonicScreen from "../modules/WalletImport/screens/ImportViaMnemonicScreen";
+import ImportViaMnemonicScreen from '../modules/WalletImport/screens/ImportViaMnemonicScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
