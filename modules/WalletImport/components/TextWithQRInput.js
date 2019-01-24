@@ -22,6 +22,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import Spinner from '../../../components/Spinner';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
+import {saveMnemonicAsync, savePrivateKeyAsync} from "../../../utils/secureStoreUtils";
 
 const { width } = Dimensions.get('window');
 
@@ -73,7 +74,18 @@ class TextWithQRInput extends React.Component {
 
     generateKey(input)
       .then(() => lockScreen(navigation))
-      .then(() => {
+      .then((wallet) => new Promise((resolve, reject)=> {
+        savePrivateKeyAsync(wallet.privateKey, ()=> {
+          resolve(wallet)
+        }, reject)
+      }))
+      .then((wallet) => new Promise((resolve, reject)=> {
+        saveMnemonicAsync(wallet.mnemonic, ()=> {
+          resolve(wallet)
+        }, reject)
+      }))
+      .then((wallet) => {
+        console.log('all save successfully, wallet is', wallet);
         this.setState(initState);
         navigation.navigate(nextScreen);
       })

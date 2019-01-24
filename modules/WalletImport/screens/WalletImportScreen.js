@@ -16,13 +16,8 @@ export default class WalletImportScreen extends Component {
     headerBackTitle: null,
   };
 
-  gotoImportPrivate = () => this.props.navigation.navigate(screensList.ImportViaPrivate.label);
-
-  gotoImportMnemonic = () => this.props.navigation.navigate('ImportViaMnemonicScreen');
-
-  goBack = () => this.props.navigation.navigate.goBack();
-
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <SmallCard
@@ -30,7 +25,7 @@ export default class WalletImportScreen extends Component {
           title={t.titlePrivateKey}
           subtitle={t.contentPrivateKey}
           imageCard={Images.iconPrivateKey}
-          onPress={this.gotoImportPrivate}
+          onPress={() => navigate(screensList.ImportViaPrivate.label)}
         />
 
         <SmallCard
@@ -38,7 +33,7 @@ export default class WalletImportScreen extends Component {
           title={t.titleMnemonicPhrase}
           subtitle={t.contentMnemonicPhrase}
           imageCard={Images.iconMnemonic}
-          onPress={this.gotoImportMnemonic}
+          onPress={() => navigate(screensList.ImportViaMnemonic.label)}
         />
       </View>
     );

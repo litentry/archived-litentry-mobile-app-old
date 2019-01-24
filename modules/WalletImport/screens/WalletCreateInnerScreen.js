@@ -22,15 +22,10 @@ class WalletCreateInnerScreen extends Component {
     this.props.navigation.goBack();
   };
 
-  createWallet = () => {
-
-  };
-
-  gotoImport = () => {
-    this.props.navigation.navigate(screensList.WalletImport.label);
-  };
+  createWallet = () => {};
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
         <SmallCard
@@ -47,7 +42,7 @@ class WalletCreateInnerScreen extends Component {
           title={t.importTitle}
           subtitle={t.importSubtitle}
           imageCard={Images.imgCardImport}
-          onPress={this.gotoImport}
+          onPress={() => navigate(screensList.WalletImport.label)}
           subtitleTextStyle={styles.subtitle}
         />
       </View>

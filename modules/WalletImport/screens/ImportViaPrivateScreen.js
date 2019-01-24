@@ -30,7 +30,7 @@ class ImportViaPrivateScreen extends Component {
       }
       const publicKey = wallet.address;
       saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
-      return resolve();
+      return resolve(wallet);
     });
 
   validate = privateKey => privateKey === '' || !_.isEmpty(Checker.checkPrivateKey(privateKey));

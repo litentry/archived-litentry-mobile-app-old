@@ -9,6 +9,7 @@ import { loaderAction } from '../../../actions/loaderAction';
 import { getPublicKeyFromMnemonic } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
 import TextWithQRInput from '../components/TextWithQRInput';
+import {savePrivateKeyAsync} from "../../../utils/secureStoreUtils";
 
 class ImportViaMnemonicScreen extends Component {
   static propTypes = {
@@ -29,7 +30,7 @@ class ImportViaMnemonicScreen extends Component {
       }
       const publicKey = wallet.address;
       saveAppData({ [dataEntry.publicKey.stateName]: publicKey });
-      return resolve();
+      return resolve(wallet);
     });
 
   validate = mnemonicPhrase =>
