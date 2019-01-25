@@ -39,7 +39,7 @@ class WalletCreateScreen extends React.Component {
         return reject();
       }
       saveAppData({
-        [dataEntry.walletAddress.stateName]:  wallet.address,
+        [dataEntry.walletAddress.stateName]: wallet.address,
         [dataEntry.publicKey.stateName]: wallet.signingKey.publicKey,
       });
       return resolve(wallet);

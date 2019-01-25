@@ -8,7 +8,7 @@ export const dataEntry = {
   wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0 },
   loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null },
   walletAddress: { label: 'WALLET_ADDRESS', stateName: 'walletAddress', initValue: '' },
-  publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: ''},
+  publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: '' },
 };
 
 const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);
@@ -41,10 +41,10 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       if (Object.keys(action.data).length > 1) {
         const dataSet = _.reduce(
           action.data,
-          (result, value, key) => _.concat(result, [getLabel(key), value]),
+          (result, value, key) => _.concat(result, [[getLabel(key), value]]),
           []
         );
-        AsyncStorage.mulitSet(dataSet);
+        AsyncStorage.multiSet(dataSet);
       } else {
         const stateName = Object.keys(action.data)[0];
         const key = getLabel(stateName);

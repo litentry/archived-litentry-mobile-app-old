@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import _ from 'lodash';
+import { bindActionCreators } from 'redux';
 import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
-import {ethers} from 'ethers';
+import { contractInfo } from '../config';
+import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -31,34 +33,32 @@ class WalletScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     walletAddress: PropTypes.string.isRequired,
+    updateNes: PropTypes.func.isRequired,
+    updateEth: PropTypes.func.isRequired,
+    nes: PropTypes.number,
     eth: PropTypes.number,
   };
 
   updateBalance() {
-    const { walletAddress } = this.props;
-    const provider = ethers.getDefaultProvider();
-    provider.getBalance(walletAddress).then((balance) => {
-
-      // balance is a BigNumber (in wei); format is as a sting (in ether)
-      let etherString = ethers.utils.formatEther(balance);
-      console.log("Balance: " + etherString);
-    })
+    const { walletAddress, updateNes, updateEth } = this.props;
+    getTokenBalance(walletAddress)
+      .then(nesBalance => updateNes(nesBalance))
+      .catch(e => console.log('err', e));
+    getEtherBalance(walletAddress)
+      .then(ethBalance => updateEth(ethBalance))
+      .catch(e => console.log('err', e));
   }
 
   componentDidMount() {
-    const {eth, walletAddress} = this.props;
-    if (!_.isNull(eth) || _.isNull(walletAddress))
-      return;
+    const { nes, walletAddress } = this.props;
+    if (!_.isNull(nes) || _.isNull(walletAddress)) return;
     this.updateBalance();
   }
 
-
-  receiveTransaction = () => {};
-
-  sendTransaction = () => {};
+  renderBalance = balance => (_.isNull(balance) ? '0' : balance.toString());
 
   render() {
-    const { walletAddress } = this.props;
+    const { walletAddress, nes } = this.props;
     if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <View style={styles.container}>
@@ -68,17 +68,17 @@ class WalletScreen extends React.Component {
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.balanceText}>Balance</Text>
-            <Text style={styles.amountText}>325.67</Text>
+            <Text style={styles.amountText}>{this.renderBalance(nes)}</Text>
             <Text style={styles.walletAddress}>Public Address: {walletAddress}</Text>
           </View>
         </View>
         <View style={styles.actionsContainer}>
-          <GenesisButton
-            action={this.receiveTransaction}
-            text={'Receive'}
-            style={{ marginTop: 50 }}
-          />
-          <GenesisButton action={this.sendTransaction} text={'Send'} disabled />
+          {/*<GenesisButton*/}
+          {/*action={()=> {}}*/}
+          {/*text={'Receive'}*/}
+          {/*style={{ marginTop: 50 }}*/}
+          {/*/>*/}
+          {/*<GenesisButton action={()=>{}} text={'Send'} disabled />*/}
         </View>
       </View>
     );
@@ -87,10 +87,14 @@ class WalletScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
+  nes: state.wallet.nes,
   eth: state.wallet.eth,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  updateNes: walletAction.updateNes,
+  updateEth: walletAction.updateEth,
+});
 
 export default connect(
   mapStateToProps,
