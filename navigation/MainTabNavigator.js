@@ -41,6 +41,7 @@ import VoteInfoScreen from '../modules/Vote/screens/VoteInfoScreen';
 import WalletScreen from '../screens/WalletScreen';
 import ImportViaMnemonicScreen from '../modules/WalletImport/screens/ImportViaMnemonicScreen';
 import WalletCreateScreen from '../modules/WalletImport/screens/WalletCreateScreen';
+import UploadProfileScreen from '../modules/User/screens/UploadProfileScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -63,6 +64,8 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    UploadProfile: UploadProfileScreen,
+    CreateAccount: CreateAccountScreen,
     Login: LoginScreen,
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
@@ -87,7 +90,7 @@ const HomeStack = createStackNavigator(
     SetPassword: SetPasswordScreen,
     VerifyCredential: VerifyCredentialScreen,
     Start: StartScreen,
-    CreateAccount: CreateAccountScreen,
+
     ChatList: ChatListScreen,
     About: AboutScreen,
     PasswordSetting: PasswordSettingScreen,

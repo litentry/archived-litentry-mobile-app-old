@@ -1,6 +1,5 @@
 import set from 'lodash/fp/set';
 import _ from 'lodash';
-import concat from 'lodash/fp/concat';
 import { topicsActionType } from '../actions/topicsAction';
 
 const INITIAL_STATE = {
