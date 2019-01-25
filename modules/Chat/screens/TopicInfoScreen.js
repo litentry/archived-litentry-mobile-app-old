@@ -126,7 +126,7 @@ class TopicInfoScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
   topicsMap: state.topics.topicsMap,
   subscribedChatId: state.chat.subscribedChatId,
 });

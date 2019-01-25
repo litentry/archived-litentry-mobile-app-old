@@ -30,7 +30,7 @@ const enableBatching = reducer => {
 };
 
 const reducers = combineReducers({
-  walletAddress: walletReducer,
+  wallet: walletReducer,
   walletImport: walletImportReducer,
   screen: screenReducer,
   popup: popupReducer,

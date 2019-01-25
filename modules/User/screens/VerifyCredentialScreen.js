@@ -53,7 +53,7 @@ class VerifyCredentialScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

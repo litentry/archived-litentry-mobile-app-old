@@ -80,7 +80,7 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
   loginToken: state.appState.loginToken,
 });
 

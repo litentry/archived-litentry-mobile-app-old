@@ -10,6 +10,7 @@ import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
+import {ethers} from 'ethers';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -30,7 +31,27 @@ class WalletScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     walletAddress: PropTypes.string.isRequired,
+    eth: PropTypes.number,
   };
+
+  updateBalance() {
+    const { walletAddress } = this.props;
+    const provider = ethers.getDefaultProvider();
+    provider.getBalance(walletAddress).then((balance) => {
+
+      // balance is a BigNumber (in wei); format is as a sting (in ether)
+      let etherString = ethers.utils.formatEther(balance);
+      console.log("Balance: " + etherString);
+    })
+  }
+
+  componentDidMount() {
+    const {eth, walletAddress} = this.props;
+    if (!_.isNull(eth) || _.isNull(walletAddress))
+      return;
+    this.updateBalance();
+  }
+
 
   receiveTransaction = () => {};
 
@@ -38,7 +59,7 @@ class WalletScreen extends React.Component {
 
   render() {
     const { walletAddress } = this.props;
-    if (!_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
+    if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <View style={styles.container}>
         <View style={styles.displayContainer}>
@@ -66,6 +87,7 @@ class WalletScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
+  eth: state.wallet.eth,
 });
 
 const mapDispatchToProps = dispatch => ({});

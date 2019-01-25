@@ -48,7 +48,7 @@ const t = {
 };
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

@@ -76,7 +76,7 @@ class ChatListScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
   chatList: state.chat.chatList,
 });
 
