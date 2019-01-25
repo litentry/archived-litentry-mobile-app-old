@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, Button, RefreshControl, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, Button, RefreshControl, ScrollView, Clipboard} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,12 +8,11 @@ import { bindActionCreators } from 'redux';
 import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
-import GenesisButton from '../components/GenesisButton';
+import GenesisButton, {VariantList as variantList} from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
-import { contractInfo } from '../config';
+import QRCode from 'react-native-qrcode';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
-import TinodeAPI from "../modules/Chat/TinodeAPI";
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -72,7 +71,7 @@ class WalletScreen extends React.Component {
   renderBalance = balance => (_.isNull(balance) ? '0' : balance.toString());
 
   render() {
-    const { walletAddress, nes } = this.props;
+    const { walletAddress, nes, eth } = this.props;
     if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <ScrollView style={styles.container} refreshControl={
@@ -84,11 +83,18 @@ class WalletScreen extends React.Component {
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.balanceText}>Balance</Text>
-            <Text style={styles.amountText}>{this.renderBalance(nes)}</Text>
-            <Text style={styles.walletAddress}>Public Address: {walletAddress}</Text>
+            <Text style={styles.amountText}>NES: {this.renderBalance(nes)}</Text>
+            <Text style={styles.amountText}>ETH: {this.renderBalance(eth)}</Text>
           </View>
         </View>
         <View style={styles.actionsContainer}>
+          <Text style={styles.walletAddress}>{walletAddress}</Text>
+          <QRCode
+            value={walletAddress}
+            size={200}
+            bgColor='white'
+            fgColor='black'/>
+          <GenesisButton action={()=>Clipboard.setString(walletAddress)} style={styles.copyButton} text={t.COPY_ADDRESS_TEXT}/>
           {/*<GenesisButton*/}
           {/*action={()=> {}}*/}
           {/*text={'Receive'}*/}
@@ -99,6 +105,10 @@ class WalletScreen extends React.Component {
       </ScrollView>
     );
   }
+}
+
+const t = {
+  COPY_ADDRESS_TEXT: 'Copy Wallet Address'
 }
 
 const mapStateToProps = state => ({
@@ -124,13 +134,11 @@ const styles = StyleSheet.create({
   },
   displayContainer: {
     flex: 3,
-    paddingVertical: 20,
+    paddingTop: 50,
+    paddingBottom: 30,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: AppStyle.walletBackgroundColor,
-  },
-  actionsContainer: {
-    flex: 7,
   },
   iconContainer: {
     height: 50,
@@ -151,12 +159,20 @@ const styles = StyleSheet.create({
   },
   amountText: {
     fontSize: AppStyle.fontSmall,
+    paddingTop: 10,
     color: 'white',
-    fontWeight: 'bold',
+  },
+  actionsContainer: {
+    flex: 7,
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   walletAddress: {
     fontSize: AppStyle.fontSmall,
-    color: 'white',
-    fontWeight: 'bold',
+    color: AppStyle.lightGrey,
+    paddingVertical: 50,
   },
+  copyButton: {
+    backgroundColor: AppStyle.lightGrey,
+  }
 });

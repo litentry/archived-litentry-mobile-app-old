@@ -46,6 +46,7 @@ const iconPropTypes = { focused: PropTypes.bool };
 
 const commonScreens = {
   Unlock: UnlockScreen,
+  Transactions: TransactionsScreen,
 };
 
 const HomeStackIcon = ({ focused }) => (
@@ -90,7 +91,6 @@ const HomeStack = createStackNavigator(
     ChatList: ChatListScreen,
     About: AboutScreen,
     PasswordSetting: PasswordSettingScreen,
-    Transactions: TransactionsScreen,
     Home: HomeScreen,
     ...commonScreens,
   },
