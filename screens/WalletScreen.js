@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import {Text, View, StyleSheet, Button, RefreshControl, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,6 +13,7 @@ import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
 import { contractInfo } from '../config';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
+import TinodeAPI from "../modules/Chat/TinodeAPI";
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -30,6 +31,13 @@ class WalletScreen extends React.Component {
     },
   });
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
+
   static propTypes = {
     navigation: PropTypes.object,
     walletAddress: PropTypes.string.isRequired,
@@ -41,10 +49,9 @@ class WalletScreen extends React.Component {
 
   updateBalance() {
     const { walletAddress, updateNes, updateEth } = this.props;
-    getTokenBalance(walletAddress)
+    return getTokenBalance(walletAddress)
       .then(nesBalance => updateNes(nesBalance))
-      .catch(e => console.log('err', e));
-    getEtherBalance(walletAddress)
+      .then(()=>getEtherBalance(walletAddress))
       .then(ethBalance => updateEth(ethBalance))
       .catch(e => console.log('err', e));
   }
@@ -55,13 +62,22 @@ class WalletScreen extends React.Component {
     this.updateBalance();
   }
 
+  onRefresh = () => {
+    this.setState({ refreshing: true });
+    this.updateBalance().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+
   renderBalance = balance => (_.isNull(balance) ? '0' : balance.toString());
 
   render() {
     const { walletAddress, nes } = this.props;
     if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container} refreshControl={
+        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
+      }>
         <View style={styles.displayContainer}>
           <View style={styles.iconContainer}>
             <Ionicons name="logo-yen" size={32} color={AppStyle.walletBackgroundColor} />
@@ -80,7 +96,7 @@ class WalletScreen extends React.Component {
           {/*/>*/}
           {/*<GenesisButton action={()=>{}} text={'Send'} disabled />*/}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -108,6 +124,7 @@ const styles = StyleSheet.create({
   },
   displayContainer: {
     flex: 3,
+    paddingVertical: 20,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: AppStyle.walletBackgroundColor,
