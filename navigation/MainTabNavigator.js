@@ -67,7 +67,6 @@ const HomeStack = createStackNavigator(
     Login: LoginScreen,
     UploadProfile: UploadProfileScreen,
     CreateAccount: CreateAccountScreen,
-
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,

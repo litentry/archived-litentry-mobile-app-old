@@ -9,6 +9,7 @@ import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
 import { dataEntry } from '../../reducers/loader';
+import {NavigationActions, StackActions} from "react-navigation";
 
 const saveLoginData = token =>
   store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
@@ -98,7 +99,11 @@ class TinodeAPIClass {
       // this.handleCredentialsRequest(ctrl.params);
     } else {
       saveLoginData(ctrl.params.token);
-      navigation.navigate(screensList.ChatList.label);
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: screensList.ChatList.label })],
+      });
+      navigation.dispatch(resetAction);
       // this.handleLoginSuccessful();
     }
   }
