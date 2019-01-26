@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   StyleSheet,
   View,
   TouchableOpacity,

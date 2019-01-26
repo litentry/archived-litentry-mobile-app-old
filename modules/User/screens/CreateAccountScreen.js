@@ -10,9 +10,7 @@ import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
-
-const usernameRegex = /^[a-zA-Z0-9]+$/;
-const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import {usernameRegex, emailRegex} from "../../../utils/regexUtils";
 
 class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
