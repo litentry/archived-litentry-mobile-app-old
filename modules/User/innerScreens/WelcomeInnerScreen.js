@@ -34,6 +34,10 @@ class WelcomeInnerScreen extends React.Component {
             action={() => navigation.navigate(screensList.CreateAccount.label)}
             text={t.BUTTON_TEXT}
           />
+          <GenesisButton
+            action={() => navigation.navigate(screensList.Login.label)}
+            text={t.LOGIN_TEXT}
+          />
         </View>
       </View>
     );
@@ -95,4 +99,5 @@ const t = {
     'We are creating a world where anyone, anywhere may express his or her beliefs, no matter how singular, without fear of being coerced into silence or conformity.',
   NAME: 'John Perry Barlow',
   BUTTON_TEXT: 'Get Started',
+  LOGIN_TEXT: 'Log in'
 };

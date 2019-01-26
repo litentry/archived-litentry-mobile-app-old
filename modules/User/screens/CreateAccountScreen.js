@@ -9,11 +9,9 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
+import {userRegisterAction} from "../actions/userRegiseterActions";
 
-const mock = {
-  username: 'alex',
-  email: 'alexcloud@gmail.com',
-};
+const usernameRegex = /^[a-zA-Z0-9]+$/;
 
 class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -27,9 +25,13 @@ class CreateAccountScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    updateUserRegisterInfo: PropTypes.func.isRequired,
   };
 
   render() {
+    const {username, email, updateUserRegisterInfo} = this.props
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -37,16 +39,20 @@ class CreateAccountScreen extends React.Component {
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={() => {}}
-            value={mock.username}
+            onChangeText={(username) => updateUserRegisterInfo({username})}
+            value={username}
+            validator={(value)=> usernameRegex.test(value) }
+            errorMessage={t.USERNAME_ERROR}
             placeholder={t.USERNAME_PLACEHOLDER}
           />
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={() => {}}
-            value={mock.email}
-            placeholder={t.PASSWORD_PLACEHOLDER}
+            onChangeText={(email) => updateUserRegisterInfo({email})}
+            value={email}
+            validator={()=>true}
+            errorMessage={t.EMAIL_ERROR}
+            placeholder={t.EMAIL_PLACEHOLDER}
           />
         </View>
         <Text style={styles.hint}>{t.HINT_TEXT}</Text>
@@ -59,10 +65,13 @@ class CreateAccountScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
+  username: state.userRegister.username,
+  email: state.userRegister.email,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  updateUserRegisterInfo: userRegisterAction.update,
+});
 
 export default connect(
   mapStateToProps,
@@ -103,8 +112,10 @@ const styles = StyleSheet.create({
 const t = {
   CREATE_ACCOUNT_TITLE: 'Create your account',
   USERNAME_PLACEHOLDER: 'Name',
-  PASSWORD_PLACEHOLDER: 'Email',
+  EMAIL_PLACEHOLDER: 'Email',
   HINT_TEXT:
     'By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use. Others will be able to find you by email when provided. ',
   BUTTON_TEXT: 'Sign Up',
+  USERNAME_ERROR: 'should only contain digits and letters',
+  EMAIL_ERROR: 'Not a valid email address',
 };

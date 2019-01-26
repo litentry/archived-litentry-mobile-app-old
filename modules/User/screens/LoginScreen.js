@@ -8,7 +8,6 @@ import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
-import Connector from '../../Chat/components/Connector';
 
 import TinodeAPI from '../../Chat/TinodeAPI';
 
@@ -64,7 +63,7 @@ class LoginScreen extends React.Component {
         <View style={styles.button}>
           <GenesisButton
             action={() => {
-              TinodeAPI.login(null, null, loginToken, null, navigation);
+              TinodeAPI.login(username, password, null, null, navigation);
             }}
             text={t.BUTTON_TEXT}
           />
