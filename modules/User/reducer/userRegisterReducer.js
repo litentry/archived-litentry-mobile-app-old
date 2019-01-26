@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export const userRegisterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case userRegisterActionType.UPDATE:
-      console.log('update is', _.assign({}, state, action.data))
+      console.log('update is', _.assign({}, state, action.data));
       return _.assign({}, state, action.data);
     case userRegisterActionType.RESET:
       return INITIAL_STATE;

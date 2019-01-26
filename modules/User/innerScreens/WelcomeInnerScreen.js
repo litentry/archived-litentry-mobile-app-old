@@ -99,5 +99,5 @@ const t = {
     'We are creating a world where anyone, anywhere may express his or her beliefs, no matter how singular, without fear of being coerced into silence or conformity.',
   NAME: 'John Perry Barlow',
   BUTTON_TEXT: 'Get Started',
-  LOGIN_TEXT: 'Log in'
+  LOGIN_TEXT: 'Log in',
 };

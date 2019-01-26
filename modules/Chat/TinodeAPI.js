@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import _ from 'lodash';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
@@ -9,7 +10,6 @@ import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
 import { dataEntry } from '../../reducers/loader';
-import {NavigationActions, StackActions} from "react-navigation";
 
 const saveLoginData = token =>
   store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));

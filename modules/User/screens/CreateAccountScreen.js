@@ -9,9 +9,10 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
-import {userRegisterAction} from "../actions/userRegiseterActions";
+import { userRegisterAction } from '../actions/userRegiseterActions';
 
 const usernameRegex = /^[a-zA-Z0-9]+$/;
+const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -31,7 +32,11 @@ class CreateAccountScreen extends React.Component {
   };
 
   render() {
-    const {username, email, updateUserRegisterInfo} = this.props
+    const { username, email, updateUserRegisterInfo, navigation } = this.props;
+    const usernameValidator = value => usernameRegex.test(value);
+    const emailValidator = email => emailRegex.test(email);
+    const isNextValid = () => usernameValidator(username) && emailValidator(email);
+
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -39,25 +44,31 @@ class CreateAccountScreen extends React.Component {
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={(username) => updateUserRegisterInfo({username})}
+            onChangeText={username => updateUserRegisterInfo({ username })}
             value={username}
-            validator={(value)=> usernameRegex.test(value) }
+            validator={usernameValidator}
             errorMessage={t.USERNAME_ERROR}
             placeholder={t.USERNAME_PLACEHOLDER}
           />
         </View>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={(email) => updateUserRegisterInfo({email})}
+            onChangeText={email => updateUserRegisterInfo({ email: email.toLowerCase() })}
             value={email}
-            validator={()=>true}
+            validator={emailValidator}
             errorMessage={t.EMAIL_ERROR}
             placeholder={t.EMAIL_PLACEHOLDER}
           />
         </View>
         <Text style={styles.hint}>{t.HINT_TEXT}</Text>
         <View style={styles.button}>
-          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} />
+          <GenesisButton
+            disabled={!isNextValid()}
+            action={() => {
+              navigation.navigate(screensList.VerifyCredential.label);
+            }}
+            text={t.BUTTON_TEXT}
+          />
         </View>
       </View>
     );
