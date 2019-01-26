@@ -3,15 +3,19 @@ import _ from 'lodash';
 import set from 'lodash/fp/set';
 import { loaderActionType } from '../actions/loaderAction';
 
+export const isLoadedLabel = 'isLoaded';
+
 export const dataEntry = {
   hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false },
   wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0 },
   loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null },
   walletAddress: { label: 'WALLET_ADDRESS', stateName: 'walletAddress', initValue: '' },
   publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: '' },
+  profileImage: { label: 'PROFILE_IMAGE', stateName: 'profileImage', initValue: null },
+  profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: null },
 };
 
-const INIT_STATE = _.mapValues(dataEntry, v => v.initValue);
+const INIT_STATE = set(isLoadedLabel, false, _.mapValues(dataEntry, v => v.initValue));
 const getLabel = stateName => _.find(dataEntry, { stateName }).label;
 
 export const loaderReducer = (state = INIT_STATE, action) => {
@@ -20,7 +24,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       const { resultList } = action;
       //TODO to be removed
       console.log('result list is', resultList);
-      return _.reduce(
+      const loadedResults = _.reduce(
         resultList,
         (resultState, singleResult) => {
           const resultValue = singleResult[1];
@@ -34,6 +38,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
         },
         state
       );
+      return set(isLoadedLabel, true, loadedResults);
     }
 
     //TODO change into async function with try and catch

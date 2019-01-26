@@ -1,50 +1,52 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import { Header } from 'react-navigation';
+import { Header, withNavigation } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import Images from '../../../commons/Images';
+import TinodeAPI from '../../Chat/TinodeAPI';
 
-const mock = {
-  profile: Images.mockProfile,
-  name: ' ' + 'Hannah',
-};
-
-class ContinueLoginScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerBackTitle: '',
-    headerTransparent: true,
-    headerTintColor: AppStyle.userCancelGreen,
-    headerStyle: {
-      backgroundColor: AppStyle.userHeaderBackgroundColor,
-    },
-  });
-
+class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
+    loginToken: PropTypes.string.isRequired,
+    profileImage: PropTypes.string,
+    profileName: PropTypes.string,
+  };
+
+  renderImageSource = () => {
+    const { profileImage } = this.props;
+    return profileImage ? { uri: profileImage } : Images.blankProfile;
   };
 
   render() {
+    const { loginToken, navigation, profileName } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
-        <View style={styles.profileContainer}>
-          <Image style={styles.profile} resizeMode="contain" source={mock.profile} />
+        <TouchableOpacity
+          style={styles.profileContainer}
+          onPress={() => {
+            TinodeAPI.login(null, null, loginToken, null, navigation);
+          }}>
+          <Image style={styles.profile} resizeMode="contain" source={this.renderImageSource()} />
           <Text style={styles.textContainer}>
             <Text style={styles.textContinue}>{t.CONTINUE}</Text>
-            <Text style={styles.textName}>{mock.name}</Text>
+            <Text style={styles.textName}> {profileName ? profileName : 'last user'}</Text>
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
+  loginToken: state.appState.loginToken,
+  profileImage: state.appState.profileImage,
+  profileName: state.appState.profileName,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -52,7 +54,7 @@ const mapDispatchToProps = _.curry(bindActionCreators)({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ContinueLoginScreen);
+)(withNavigation(ContinueLoginInnerScreen));
 
 const styles = StyleSheet.create({
   container: {
@@ -71,7 +73,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  profile: {},
+  profile: {
+    height: 150,
+    width: 150,
+  },
   textContainer: {
     padding: 20,
   },

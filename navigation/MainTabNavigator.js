@@ -19,8 +19,6 @@ import StartScreen from '../modules/User/screens/StartScreen';
 import CreateAccountScreen from '../modules/User/screens/CreateAccountScreen';
 import VerifyCredentialScreen from '../modules/User/screens/VerifyCredentialScreen';
 import SetPasswordScreen from '../modules/User/screens/SetPasswordScreen';
-import ContinueLoginScreen from '../modules/User/screens/ContinueLoginScreen';
-import LoginScreen from '../modules/User/screens/LoginScreen';
 import TopicScreen from '../modules/Chat/screens/TopicScreen';
 import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
 import MembersScreen from '../modules/Chat/screens/MembersScreen';
@@ -42,6 +40,7 @@ import WalletScreen from '../screens/WalletScreen';
 import ImportViaMnemonicScreen from '../modules/WalletImport/screens/ImportViaMnemonicScreen';
 import WalletCreateScreen from '../modules/WalletImport/screens/WalletCreateScreen';
 import UploadProfileScreen from '../modules/User/screens/UploadProfileScreen';
+import LoginScreen from '../modules/User/screens/LoginScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -64,9 +63,11 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    Start: StartScreen,
+    Login: LoginScreen,
     UploadProfile: UploadProfileScreen,
     CreateAccount: CreateAccountScreen,
-    Login: LoginScreen,
+
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,
@@ -86,10 +87,8 @@ const HomeStack = createStackNavigator(
     AccountSetting: AccountSettingScreen,
     TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
-    ContinueLogin: ContinueLoginScreen,
     SetPassword: SetPasswordScreen,
     VerifyCredential: VerifyCredentialScreen,
-    Start: StartScreen,
 
     ChatList: ChatListScreen,
     About: AboutScreen,

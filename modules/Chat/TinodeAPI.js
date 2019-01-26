@@ -10,7 +10,7 @@ import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
 import { dataEntry } from '../../reducers/loader';
 
-const saveLoginToken = token =>
+const saveLoginData = token =>
   store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
@@ -51,20 +51,20 @@ class TinodeAPIClass {
   }
 
   //with credential, please refer to the doLogin function in
-  async login(username, password, cred, navigation) {
+  async login(username, password, token, cred, navigation) {
     if (cred) {
       cred = Tinode.credential(cred);
     }
     // Try to login with login/password. If they are not available, try token. If no token, ask for login/password.
     let promise = null;
-    let token = this.tinode.getAuthToken();
+    // let token = this.tinode.getAuthToken();
     console.log('authToken is', token);
     let ctrl;
     try {
       if (username && password) {
         ctrl = await this.tinode.loginBasic(username, password, cred);
       } else if (token) {
-        ctrl = await this.tinode.loginToken(token.token, cred);
+        ctrl = await this.tinode.loginToken(token, cred);
         //   token = '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI='
         //   this.tinode.setAuthToken(token);
         //    ctrl = await this.tinode.loginToken(token, cred);
@@ -85,7 +85,7 @@ class TinodeAPIClass {
     // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
     // me.onPres = console.log //	Callback which receives a {pres} message.
     // me.onInfo = console.log //Callback which receives an {info} message.
-    me.onMetaDesc = this.tnMeMetaDesc; //Callback which receives changes to topic description desc.
+    me.onMetaDesc = this.tnMeMetaDesc.bind(this); //Callback which receives changes to topic description desc.
     me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
     me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
     // me.onMetaSub = console.log //	Called for a single subscription record change.
@@ -97,7 +97,7 @@ class TinodeAPIClass {
       }
       // this.handleCredentialsRequest(ctrl.params);
     } else {
-      saveLoginToken(ctrl.params.token);
+      saveLoginData(ctrl.params.token);
       navigation.navigate(screensList.ChatList.label);
       // this.handleLoginSuccessful();
     }
@@ -134,13 +134,18 @@ class TinodeAPIClass {
     store.dispatch(chatAction.setId(userId));
   }
 
-  tnMeMetaDesc(desc) {
-    console.log('tnMeMetaDesc, ', desc);
-    if (desc && desc.public) {
-      // const state = {
-      //   sidePanelTitle: desc.public.fn,
-      //   sidePanelAvatar: this.makeImageUrl(desc.public.photo)
-      // };
+  tnMeMetaDesc(meTopics) {
+    console.log('tnMeMetaDesc, ', meTopics);
+    if (meTopics && meTopics.public) {
+      const privateData = meTopics.private;
+      const userInfo = _.reduce(meTopics.public, this.reformatData, privateData);
+      store.dispatch(chatAction.setUserInfo(userInfo));
+      store.dispatch(
+        loaderAction.saveAppData({
+          [dataEntry.profileImage.stateName]: userInfo.avatar,
+          [dataEntry.profileName.stateName]: userInfo.name,
+        })
+      );
     }
   }
 
@@ -194,7 +199,7 @@ class TinodeAPIClass {
     if (key === 'photo') {
       const avatar = makeImageUrl(value);
       store.dispatch(chatAction.setAvatar(avatar));
-      return result;
+      return _.set(result, 'avatar', avatar);
     }
     if (key === 'fn') {
       return _.set(result, 'name', value);
@@ -209,9 +214,6 @@ class TinodeAPIClass {
       console.log('contact is', c);
       chatList.push(c);
     });
-    const privateData = meTopics.private;
-    const userInfo = _.reduce(meTopics.public, this.reformatData, privateData);
-    store.dispatch(chatAction.setUserInfo(userInfo));
     store.dispatch(chatAction.updateChatList(chatList));
     // this.resetContactList();
   }
