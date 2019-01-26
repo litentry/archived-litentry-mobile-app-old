@@ -412,12 +412,12 @@ class TinodeAPIClass {
 
   handleCredentialsRequest() {}
 
-  handleCreateNewAccount(navigation, username, password, publicInfo, tags, cred) {
+  handleCreateNewAccount(navigation, email, password, username, photo, tags, cred) {
     this.tinode
-      .createAccountBasic(username, password, {
-        public: publicInfo,
+      .createAccountBasic(email, password, {
+        public: this.generatePublicInfo(username, photo),
         tags,
-        cred: Tinode.credential({ meth: 'email', val: cred }),
+        cred: null,
       })
       .then(ctrl => {
         if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
@@ -435,20 +435,16 @@ class TinodeAPIClass {
     return typeof chatId === 'string' && chatId.indexOf('grp') === 0;
   }
 
-  generatePublicInfo(fn, imageDataUrl) {
+  generatePublicInfo(profileName, imageData) {
     let publicInfo = null;
 
-    if ((fn && fn.trim()) || imageDataUrl) {
+    if (profileName || imageData) {
       publicInfo = {};
-      if (fn) {
-        publicInfo.fn = fn.trim();
+      if (profileName) {
+        publicInfo.fn = profileName.trim();
       }
-      if (imageDataUrl) {
-        const dataStart = imageDataUrl.indexOf(',');
-        publicInfo.photo = {
-          data: imageDataUrl.substring(dataStart + 1),
-          type: 'jpg',
-        };
+      if (imageData) {
+        publicInfo.photo = imageData;
       }
     }
     return publicInfo;

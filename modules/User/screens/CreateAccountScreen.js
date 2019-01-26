@@ -10,7 +10,7 @@ import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
-import {usernameRegex, emailRegex} from "../../../utils/regexUtils";
+import { usernameRegex, emailRegex } from '../../../utils/regexUtils';
 
 class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

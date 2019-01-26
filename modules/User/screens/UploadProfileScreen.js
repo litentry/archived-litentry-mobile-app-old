@@ -12,6 +12,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import Images from '../../../commons/Images';
 import { makeImageUrl, MIME_EXTENSIONS } from '../../Chat/lib/blob-helpers';
+import TinodeAPI from '../../Chat/TinodeAPI';
 
 const isValidExtension = imageCallback => {
   const extension = imageCallback.uri.split('.')[1];
@@ -36,6 +37,9 @@ class UploadProfileScreen extends React.Component {
     navigation: PropTypes.object,
     updateUserRegisterInfo: PropTypes.func.isRequired,
     photo: PropTypes.object,
+    username: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
   };
 
   pickFromCamera = async () => {
@@ -82,8 +86,13 @@ class UploadProfileScreen extends React.Component {
     return _.isEmpty(photo) ? Images.blankProfile : { uri: makeImageUrl(photo) };
   };
 
+  createAccountRequest = () => {
+    const { navigation, username, password, photo, email } = this.props;
+    TinodeAPI.handleCreateNewAccount(navigation, email, password, username, photo, null);
+  };
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, photo } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
@@ -97,8 +106,9 @@ class UploadProfileScreen extends React.Component {
           text={t.FROM_GALLERY}
         />
         <GenesisButton
+          // disabled={_.isEmpty(photo)}
           containerStyle={styles.nextButton}
-          action={() => navigation.navigate(screensList.SetPassword.label)}
+          action={this.createAccountRequest}
           text={t.NEXT}
         />
         <Text style={styles.textContainer}>
@@ -111,6 +121,9 @@ class UploadProfileScreen extends React.Component {
 
 const mapStateToProps = state => ({
   photo: state.userRegister.photo,
+  username: state.userRegister.username,
+  password: state.userRegister.password,
+  email: state.userRegister.email,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({

@@ -8,9 +8,9 @@ import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
-import {passwordRegex} from "../../../utils/regexUtils";
-import {userRegisterAction} from "../actions/userRegiseterActions";
-import {screensList} from "../../../navigation/screensList";
+import { passwordRegex } from '../../../utils/regexUtils';
+import { userRegisterAction } from '../actions/userRegiseterActions';
+import { screensList } from '../../../navigation/screensList';
 
 class SetPasswordScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -22,12 +22,12 @@ class SetPasswordScreen extends React.Component {
     },
   });
 
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       isSet: false,
       repeatPassword: '',
-    }
+    };
   }
 
   static propTypes = {
@@ -37,10 +37,11 @@ class SetPasswordScreen extends React.Component {
   };
 
   render() {
-    const { password, updateUserRegisterInfo, navigation} = this.props;
+    const { password, updateUserRegisterInfo, navigation } = this.props;
     const { isSet, repeatPassword } = this.state;
-    const validator = () => isSet ? repeatPassword === password : passwordRegex.test(password)
-    const onPress = () => isSet ? navigation.navigate(screensList.UploadProfile.label) : this.setState({isSet: true})
+    const validator = () => (isSet ? repeatPassword === password : passwordRegex.test(password));
+    const onPress = () =>
+      isSet ? navigation.navigate(screensList.UploadProfile.label) : this.setState({ isSet: true });
 
     return (
       <View style={styles.container}>
@@ -48,19 +49,23 @@ class SetPasswordScreen extends React.Component {
         <Text style={styles.subtitle}>{t.SUBTITLE}</Text>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={(input) => {
-              isSet ? this.setState({repeatPassword: input}) : updateUserRegisterInfo({password: input})
+            onChangeText={input => {
+              isSet
+                ? this.setState({ repeatPassword: input })
+                : updateUserRegisterInfo({ password: input });
             }}
-            isPassword={true}
+            isPassword
             value={isSet ? repeatPassword : password}
             validator={validator}
             placeholder={t.PLACEHOLDER}
-            errorMessage={isSet ? t.REPEAT_ERROR : t.ERROR_MESSAGE }
+            errorMessage={isSet ? t.REPEAT_ERROR : t.ERROR_MESSAGE}
           />
         </View>
-        {isSet && <TouchableOpacity onPress={()=>this.setState({isSet:false})} style={styles.reset}>
-          <Text style={styles.resetText}>{t.RESET}</Text>
-        </TouchableOpacity>}
+        {isSet && (
+          <TouchableOpacity onPress={() => this.setState({ isSet: false })} style={styles.reset}>
+            <Text style={styles.resetText}>{t.RESET}</Text>
+          </TouchableOpacity>
+        )}
         <View style={styles.button}>
           <GenesisButton disabled={!validator()} action={onPress} text={t.BUTTON_TEXT} />
         </View>
@@ -87,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Header.HEIGHT + 50,
     backgroundColor: AppStyle.userBackgroundColor,
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
   title: {
     flex: 1,
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: AppStyle.coverFont,
     color: AppStyle.userCancelGreen,
-  }
+  },
 });
 
 const t = {

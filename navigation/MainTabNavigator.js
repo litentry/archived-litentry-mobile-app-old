@@ -63,8 +63,9 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
-    SetPassword: SetPasswordScreen,
     Start: StartScreen,
+    SetPassword: SetPasswordScreen,
+
     Login: LoginScreen,
     UploadProfile: UploadProfileScreen,
     CreateAccount: CreateAccountScreen,
