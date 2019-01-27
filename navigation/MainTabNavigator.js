@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
+import _ from 'lodash';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
@@ -88,9 +89,7 @@ const HomeStack = createStackNavigator(
     AccountSetting: AccountSettingScreen,
     TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
-
     VerifyCredential: VerifyCredentialScreen,
-
     ChatList: ChatListScreen,
     About: AboutScreen,
     PasswordSetting: PasswordSettingScreen,
@@ -100,7 +99,8 @@ const HomeStack = createStackNavigator(
   {
     navigationOptions: ({ navigation }) => {
       let tabBarVisible = true;
-      if (navigation.state.index > 1) {
+      const currentRouter = _.last(navigation.state.routes).routeName;
+      if (navigation.state.index > 0 || currentRouter === screensList.Start.label) {
         tabBarVisible = false;
       }
 

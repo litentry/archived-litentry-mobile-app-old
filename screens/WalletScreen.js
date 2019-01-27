@@ -19,10 +19,10 @@ import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton, { VariantList as variantList } from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
-import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
+import NewWalletInnerScreen from '../modules/WalletImport/innerScreens/NewWalletInnerScreen';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
-import {lockScreen} from "../modules/Unlock/lockScreenUtils";
-import {getPrivateKeyAsync} from "../utils/secureStoreUtils";
+import { lockScreen } from '../modules/Unlock/lockScreenUtils';
+import { getPrivateKeyAsync } from '../utils/secureStoreUtils';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -52,6 +52,7 @@ class WalletScreen extends React.Component {
     walletAddress: PropTypes.string.isRequired,
     updateNes: PropTypes.func.isRequired,
     updateEth: PropTypes.func.isRequired,
+    isLoaded: PropTypes.bool.isRequired,
     nes: PropTypes.number,
     eth: PropTypes.number,
   };
@@ -81,7 +82,8 @@ class WalletScreen extends React.Component {
   renderBalance = balance => (_.isNull(balance) ? '0' : balance.toString());
 
   render() {
-    const { walletAddress, nes, eth, navigation } = this.props;
+    const { walletAddress, nes, eth, navigation, isLoaded } = this.props;
+    if (!isLoaded) return null;
     if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <ScrollView
@@ -108,13 +110,15 @@ class WalletScreen extends React.Component {
             text={t.COPY_ADDRESS_TEXT}
           />
           <GenesisButton
-            action={() => lockScreen(navigation)
-              .then(()=> new Promise(getPrivateKeyAsync))
-              .then((privateKey)=>{
-                console.log('private key is', privateKey)
-                Clipboard.setString(privateKey)
-                alert(t.PRIVATE_KEY_COPIED)
-              })}
+            action={() =>
+              lockScreen(navigation)
+                .then(() => new Promise(getPrivateKeyAsync))
+                .then(privateKey => {
+                  console.log('private key is', privateKey);
+                  Clipboard.setString(privateKey);
+                  alert(t.PRIVATE_KEY_COPIED);
+                })
+            }
             style={styles.copyButton}
             text={t.SHOW_PRIVATE}
           />
@@ -140,6 +144,7 @@ const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
   nes: state.wallet.nes,
   eth: state.wallet.eth,
+  isLoaded: state.appState.isLoaded,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({

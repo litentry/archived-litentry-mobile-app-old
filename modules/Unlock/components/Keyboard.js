@@ -11,7 +11,7 @@ import { comparePasswordAsync, savePasswordAsync } from '../../../utils/secureSt
 import { loaderAction } from '../../../actions/loaderAction';
 import { unlockAction } from '../unlockAction';
 import AppStyle from '../../../commons/AppStyle';
-import {dataEntry} from "../../../reducers/loader";
+import { dataEntry } from '../../../reducers/loader';
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 569;
@@ -44,11 +44,11 @@ class Keyboard extends Component {
   };
 
   _confirmPassword(pincode, resolve) {
-    const {saveAppData, pincodeToBeConfirm, resetPincode} = this.props
+    const { saveAppData, pincodeToBeConfirm, resetPincode } = this.props;
     if (pincodeToBeConfirm !== pincode) {
       resetPincode();
     } else {
-      saveAppData({[dataEntry.hasPassword.stateName]: true})
+      saveAppData({ [dataEntry.hasPassword.stateName]: true });
       savePasswordAsync(pincode, resolve, resetPincode);
     }
   }
