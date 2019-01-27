@@ -8,6 +8,7 @@ import { Header, withNavigation } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import Images from '../../../commons/Images';
 import TinodeAPI from '../../Chat/TinodeAPI';
+import { screensList } from '../../../navigation/screensList';
 
 class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
@@ -38,6 +39,11 @@ class ContinueLoginInnerScreen extends React.Component {
             <Text style={styles.textContinue}>{t.CONTINUE}</Text>
             <Text style={styles.textName}> {profileName ? profileName : 'last user'}</Text>
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.newLoginContainer}
+          onPress={() => navigation.navigate(screensList.Login.label)}>
+          <Text style={styles.newLoginText}>{t.NEW_LOGIN}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -90,9 +96,20 @@ const styles = StyleSheet.create({
     fontFamily: AppStyle.mainFontBold,
     fontSize: AppStyle.fontMiddleBig,
   },
+  newLoginContainer: {
+    paddingBottom: 50,
+    marginTop: 'auto',
+  },
+  newLoginText: {
+    textAlign: 'center',
+    fontSize: AppStyle.fontMiddleSmall,
+    fontFamily: AppStyle.coverFont,
+    color: AppStyle.userCancelGreen,
+  },
 });
 
 const t = {
   TITLE: 'Welcome to Genesis Space!',
   CONTINUE: 'Continue as',
+  NEW_LOGIN: 'New login? old wallet data will be erased.',
 };
