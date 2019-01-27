@@ -6,17 +6,31 @@ import { loaderActionType } from '../actions/loaderAction';
 export const isLoadedLabel = 'isLoaded';
 
 export const dataEntry = {
-  hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false },
-  wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0 },
-  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null },
-  walletAddress: { label: 'WALLET_ADDRESS', stateName: 'walletAddress', initValue: '' },
-  publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: '' },
-  profileImage: { label: 'PROFILE_IMAGE', stateName: 'profileImage', initValue: null },
-  profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: null },
+  hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false , type: 'bool'},
+  wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0, type: 'int' },
+  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null, type: 'string'},
+  walletAddress: { label: 'WALLET_ADDRESS', stateName: 'walletAddress', initValue: '', type: 'string' },
+  publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: '', type: 'string' },
+  profileImage: { label: 'PROFILE_IMAGE', stateName: 'profileImage', initValue: null, type: 'string' },
+  profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: null, type: 'string' },
 };
 
 const INIT_STATE = set(isLoadedLabel, false, _.mapValues(dataEntry, v => v.initValue));
 const getLabel = stateName => _.find(dataEntry, { stateName }).label;
+
+// React Native 0.58 Async Storage only accept string value.
+const parseType = (value, type) => {
+  if (type === 'bool'){
+    return value === 'true'
+  }
+  if (type === 'int') {
+    return parseInt(value)
+  }
+  if (type === 'float') {
+    return parseFloat(value)
+  }
+  return value
+}
 
 export const loaderReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
@@ -27,10 +41,11 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       const loadedResults = _.reduce(
         resultList,
         (resultState, singleResult) => {
-          const resultValue = singleResult[1];
           const resultKey = singleResult[0];
           const stateDataEntry = _.find(dataEntry, { label: resultKey });
+          const resultType = stateDataEntry.type;
           const stateName = stateDataEntry.stateName;
+          const resultValue = parseType(singleResult[1], resultType);
           if (resultValue != null) {
             return set(stateName, resultValue, resultState);
           }
@@ -46,7 +61,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       if (Object.keys(action.data).length > 1) {
         const dataSet = _.reduce(
           action.data,
-          (result, value, key) => _.concat(result, [[getLabel(key), value]]),
+          (result, value, key) => _.concat(result, [[getLabel(key), value.toString()]]),
           []
         );
         AsyncStorage.multiSet(dataSet);
@@ -54,7 +69,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
         const stateName = Object.keys(action.data)[0];
         const key = getLabel(stateName);
         const value = Object.values(action.data)[0];
-        AsyncStorage.setItem(key, value);
+        AsyncStorage.setItem(key, value.toString());
       }
       return { ...state, ...action.data };
     }
