@@ -11,6 +11,7 @@ import { comparePasswordAsync, savePasswordAsync } from '../../../utils/secureSt
 import { loaderAction } from '../../../actions/loaderAction';
 import { unlockAction } from '../unlockAction';
 import AppStyle from '../../../commons/AppStyle';
+import {dataEntry} from "../../../reducers/loader";
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 569;
@@ -39,13 +40,16 @@ class Keyboard extends Component {
     deleteOnePincode: PropTypes.func.isRequired,
     addErrorCount: PropTypes.func.isRequired,
     addOnePincode: PropTypes.func.isRequired,
+    saveAppData: PropTypes.func.isRequired,
   };
 
   _confirmPassword(pincode, resolve) {
-    if (this.props.pincodeToBeConfirm !== pincode) {
-      this.props.resetPincode();
+    const {saveAppData, pincodeToBeConfirm, resetPincode} = this.props
+    if (pincodeToBeConfirm !== pincode) {
+      resetPincode();
     } else {
-      savePasswordAsync(pincode, resolve, this.props.resetPincode);
+      saveAppData({[dataEntry.hasPassword.stateName]: true})
+      savePasswordAsync(pincode, resolve, resetPincode);
     }
   }
 
@@ -157,6 +161,7 @@ const mapDispatchToProps = _.curry(bindActionCreators)({
   setPincodeToBeConfirm: unlockAction.setPincodeToBeConfirm,
   deleteOnePincode: unlockAction.deleteOnePincode,
   addErrorCount: loaderAction.addErrorCount,
+  saveAppData: loaderAction.saveAppData,
 });
 
 export default connect(

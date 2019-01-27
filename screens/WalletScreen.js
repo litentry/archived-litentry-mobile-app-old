@@ -21,6 +21,8 @@ import GenesisButton, { VariantList as variantList } from '../components/Genesis
 import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/screens/NewWalletInnerScreen';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
+import {lockScreen} from "../modules/Unlock/lockScreenUtils";
+import {getPrivateKeyAsync} from "../utils/secureStoreUtils";
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -79,7 +81,7 @@ class WalletScreen extends React.Component {
   renderBalance = balance => (_.isNull(balance) ? '0' : balance.toString());
 
   render() {
-    const { walletAddress, nes, eth } = this.props;
+    const { walletAddress, nes, eth, navigation } = this.props;
     if (_.isEmpty(walletAddress)) return <NewWalletInnerScreen />;
     return (
       <ScrollView
@@ -105,6 +107,17 @@ class WalletScreen extends React.Component {
             style={styles.copyButton}
             text={t.COPY_ADDRESS_TEXT}
           />
+          <GenesisButton
+            action={() => lockScreen(navigation)
+              .then(()=> new Promise(getPrivateKeyAsync))
+              .then((privateKey)=>{
+                console.log('private key is', privateKey)
+                Clipboard.setString(privateKey)
+                alert(t.PRIVATE_KEY_COPIED)
+              })}
+            style={styles.copyButton}
+            text={t.SHOW_PRIVATE}
+          />
           {/*<GenesisButton*/}
           {/*action={()=> {}}*/}
           {/*text={'Receive'}*/}
@@ -119,6 +132,8 @@ class WalletScreen extends React.Component {
 
 const t = {
   COPY_ADDRESS_TEXT: 'Copy Wallet Address',
+  SHOW_PRIVATE: 'Copy Private Key',
+  PRIVATE_KEY_COPIED: 'Private Key has been copied',
 };
 
 const mapStateToProps = state => ({
