@@ -22,7 +22,7 @@ class LoginScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    loginToken: PropTypes.string,
+    oldUserId: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -35,7 +35,7 @@ class LoginScreen extends React.Component {
 
   render() {
     const { username, password } = this.state;
-    const { navigation, loginToken } = this.props;
+    const { navigation, oldUserId } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -63,7 +63,7 @@ class LoginScreen extends React.Component {
         <View style={styles.button}>
           <GenesisButton
             action={() => {
-              TinodeAPI.login(username, password, null, null, navigation);
+              TinodeAPI.login(username, password, oldUserId, null, null, navigation);
             }}
             text={t.BUTTON_TEXT}
           />
@@ -75,7 +75,7 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
-  loginToken: state.appState.loginToken,
+  oldUserId: state.appState.userId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

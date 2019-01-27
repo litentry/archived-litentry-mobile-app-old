@@ -15,6 +15,7 @@ class ContinueLoginInnerScreen extends React.Component {
     loginToken: PropTypes.string.isRequired,
     profileImage: PropTypes.string,
     profileName: PropTypes.string,
+    oldUserId: PropTypes.string.isRequired,
   };
 
   renderImageSource = () => {
@@ -23,14 +24,14 @@ class ContinueLoginInnerScreen extends React.Component {
   };
 
   render() {
-    const { loginToken, navigation, profileName } = this.props;
+    const { loginToken, navigation, profileName, oldUserId } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
         <TouchableOpacity
           style={styles.profileContainer}
           onPress={() => {
-            TinodeAPI.login(null, null, loginToken, null, navigation);
+            TinodeAPI.login(null, null, oldUserId, loginToken, null, navigation);
           }}>
           <Image style={styles.profile} resizeMode="contain" source={this.renderImageSource()} />
           <Text style={styles.textContainer}>
@@ -47,6 +48,7 @@ const mapStateToProps = state => ({
   loginToken: state.appState.loginToken,
   profileImage: state.appState.profileImage,
   profileName: state.appState.profileName,
+  oldUserId: state.appState.userId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

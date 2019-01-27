@@ -6,7 +6,8 @@ import {
   Button,
   RefreshControl,
   ScrollView,
-  Clipboard, Alert,
+  Clipboard,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';

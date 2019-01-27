@@ -6,13 +6,29 @@ import { loaderActionType } from '../actions/loaderAction';
 export const isLoadedLabel = 'isLoaded';
 
 export const dataEntry = {
-  hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false , type: 'bool'},
-  wrongPincodeCount: { label: 'WRONG_PINCODE_COUNT', stateName: 'wrongPincodeCount', initValue: 0, type: 'int' },
-  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null, type: 'string'},
-  walletAddress: { label: 'WALLET_ADDRESS', stateName: 'walletAddress', initValue: '', type: 'string' },
+  hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false, type: 'bool' },
+  wrongPincodeCount: {
+    label: 'WRONG_PINCODE_COUNT',
+    stateName: 'wrongPincodeCount',
+    initValue: 0,
+    type: 'int',
+  },
+  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null, type: 'string' },
+  walletAddress: {
+    label: 'WALLET_ADDRESS',
+    stateName: 'walletAddress',
+    initValue: '',
+    type: 'string',
+  },
   publicKey: { label: 'PUBLIC_KEY', stateName: 'publicKey', initValue: '', type: 'string' },
-  profileImage: { label: 'PROFILE_IMAGE', stateName: 'profileImage', initValue: null, type: 'string' },
+  profileImage: {
+    label: 'PROFILE_IMAGE',
+    stateName: 'profileImage',
+    initValue: null,
+    type: 'string',
+  },
   profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: null, type: 'string' },
+  userId: { label: 'USER_ID', stateName: 'userId', initValue: '', type: 'string' },
 };
 
 const INIT_STATE = set(isLoadedLabel, false, _.mapValues(dataEntry, v => v.initValue));
@@ -20,17 +36,17 @@ const getLabel = stateName => _.find(dataEntry, { stateName }).label;
 
 // React Native 0.58 Async Storage only accept string value.
 const parseType = (value, type) => {
-  if (type === 'bool'){
-    return value === 'true'
+  if (type === 'bool') {
+    return value === 'true';
   }
   if (type === 'int') {
-    return parseInt(value)
+    return parseInt(value);
   }
   if (type === 'float') {
-    return parseFloat(value)
+    return parseFloat(value);
   }
-  return value
-}
+  return value;
+};
 
 export const loaderReducer = (state = INIT_STATE, action) => {
   switch (action.type) {
@@ -72,6 +88,22 @@ export const loaderReducer = (state = INIT_STATE, action) => {
         AsyncStorage.setItem(key, value.toString());
       }
       return { ...state, ...action.data };
+    }
+    case loaderActionType.CLEAR_APP_DATA: {
+      return _.assign(
+        {},
+        _.omit(INIT_STATE, [
+          /**
+         // TODO now save profileName and profileImage happens after
+         // the data is cleared, but need test in the future
+         dataEntry.profileName.stateName,
+         dataEntry.profileImage.stateName,
+        **/
+        ]),
+        {
+          loginToken: action.loginToken,
+        }
+      );
     }
     case loaderActionType.ADD_ERROR_COUNT: {
       const currentCount = state.wrongPincodeCount + 1;

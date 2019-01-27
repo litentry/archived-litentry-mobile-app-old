@@ -11,9 +11,6 @@ import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
 import { dataEntry } from '../../reducers/loader';
 
-const saveLoginData = token =>
-  store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
-
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
 class TinodeAPIClass {
@@ -52,7 +49,7 @@ class TinodeAPIClass {
   }
 
   //with credential, please refer to the doLogin function in
-  async login(username, password, token, cred, navigation) {
+  async login(username, password, oldUserId, token, cred, navigation) {
     if (cred) {
       cred = Tinode.credential(cred);
     }
@@ -71,7 +68,7 @@ class TinodeAPIClass {
         //    ctrl = await this.tinode.loginToken(token, cred);
       }
       console.log('ctrl is', ctrl);
-      this.handleLoginSuccessful(ctrl, navigation, cred);
+      this.handleLoginSuccessful(ctrl, navigation, oldUserId, cred);
     } catch (err) {
       // Login failed, report error.
       // this.setState({ loginDisabled: false, credMethod: undefined, credCode: undefined });
@@ -80,7 +77,7 @@ class TinodeAPIClass {
     }
   }
 
-  handleLoginSuccessful(ctrl, navigation, cred) {
+  handleLoginSuccessful(ctrl, navigation, oldUserId, cred) {
     const me = this.tinode.getMeTopic();
     // me.onData = this.onData; //Callback which receives a {data} message.
     // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
@@ -98,13 +95,23 @@ class TinodeAPIClass {
       }
       // this.handleCredentialsRequest(ctrl.params);
     } else {
-      saveLoginData(ctrl.params.token);
+      this.saveLoginData(oldUserId, ctrl.params.token);
       const resetAction = StackActions.reset({
         index: 0,
         actions: [NavigationActions.navigate({ routeName: screensList.ChatList.label })],
       });
       navigation.dispatch(resetAction);
       // this.handleLoginSuccessful();
+    }
+  }
+
+  saveLoginData(oldUserId, token) {
+    const currentId = this.tinode.getCurrentUserID();
+    store.dispatch(chatAction.setId(currentId));
+    if (currentId !== oldUserId) {
+      store.dispatch(loaderAction.clearAppData(token));
+    } else {
+      store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
     }
   }
 
@@ -132,11 +139,6 @@ class TinodeAPIClass {
         //remove auth token
         this.handleError(err.message, 'err');
       });
-  }
-
-  fetchUserId() {
-    const userId = this.tinode.getCurrentUserID();
-    store.dispatch(chatAction.setId(userId));
   }
 
   tnMeMetaDesc(meTopics) {
