@@ -6,14 +6,19 @@ import { loaderActionType } from '../actions/loaderAction';
 export const isLoadedLabel = 'isLoaded';
 
 export const dataEntry = {
-  hasPassword: { label: 'HAS_PASSWORD', stateName: 'hasPassword', initValue: false, type: 'bool' },
+  hasPassword: {
+    label: 'HAS_PASSWORD',
+    stateName: 'hasPassword',
+    initValue: 'false',
+    type: 'bool',
+  },
   wrongPincodeCount: {
     label: 'WRONG_PINCODE_COUNT',
     stateName: 'wrongPincodeCount',
-    initValue: 0,
+    initValue: '0',
     type: 'int',
   },
-  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: null, type: 'string' },
+  loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: '', type: 'string' },
   walletAddress: {
     label: 'WALLET_ADDRESS',
     stateName: 'walletAddress',
@@ -24,10 +29,10 @@ export const dataEntry = {
   profileImage: {
     label: 'PROFILE_IMAGE',
     stateName: 'profileImage',
-    initValue: null,
+    initValue: '',
     type: 'string',
   },
-  profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: null, type: 'string' },
+  profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: '', type: 'string' },
   userId: { label: 'USER_ID', stateName: 'userId', initValue: '', type: 'string' },
 };
 
@@ -46,6 +51,16 @@ const parseType = (value, type) => {
     return parseFloat(value);
   }
   return value;
+};
+
+const saveMultipleData = dataObject => {
+  const dataSet = _.reduce(
+    dataObject,
+    (result, value, key) =>
+      value === null ? result : _.concat(result, [[getLabel(key), value.toString()]]),
+    []
+  );
+  AsyncStorage.multiSet(dataSet);
 };
 
 export const loaderReducer = (state = INIT_STATE, action) => {
@@ -75,12 +90,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
     //TODO change into async function with try and catch
     case loaderActionType.SAVE_APP_DATA: {
       if (Object.keys(action.data).length > 1) {
-        const dataSet = _.reduce(
-          action.data,
-          (result, value, key) => _.concat(result, [[getLabel(key), value.toString()]]),
-          []
-        );
-        AsyncStorage.multiSet(dataSet);
+        saveMultipleData(action.data);
       } else {
         const stateName = Object.keys(action.data)[0];
         const key = getLabel(stateName);
@@ -90,7 +100,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       return { ...state, ...action.data };
     }
     case loaderActionType.CLEAR_APP_DATA: {
-      return _.assign(
+      const newData = _.assign(
         {},
         _.omit(INIT_STATE, [
           /**
@@ -99,11 +109,12 @@ export const loaderReducer = (state = INIT_STATE, action) => {
          dataEntry.profileName.stateName,
          dataEntry.profileImage.stateName,
         **/
+          isLoadedLabel,
         ]),
-        {
-          loginToken: action.loginToken,
-        }
+        action.data
       );
+      saveMultipleData(newData);
+      return set(isLoadedLabel, true, newData);
     }
     case loaderActionType.ADD_ERROR_COUNT: {
       const currentCount = state.wrongPincodeCount + 1;

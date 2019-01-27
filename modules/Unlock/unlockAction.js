@@ -7,7 +7,7 @@ export const unlockActionType = {
 
 export const unlockAction = {
   addOnePincode: key => ({ type: unlockActionType.ADD_ONE_PINCODE, key }),
-  resetPincode: key => ({ type: unlockActionType.RESET_PINCODE }),
+  resetPincode: () => ({ type: unlockActionType.RESET_PINCODE }),
   setPincodeToBeConfirm: pincodeToBeConfirm => ({
     type: unlockActionType.SET_PINCODE_TO_BE_CONFIRM,
     pincodeToBeConfirm,

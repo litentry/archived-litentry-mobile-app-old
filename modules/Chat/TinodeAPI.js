@@ -109,7 +109,12 @@ class TinodeAPIClass {
     const currentId = this.tinode.getCurrentUserID();
     store.dispatch(chatAction.setId(currentId));
     if (currentId !== oldUserId) {
-      store.dispatch(loaderAction.clearAppData(token));
+      store.dispatch(
+        loaderAction.clearAppData({
+          [dataEntry.userId.stateName]: currentId,
+          [dataEntry.loginToken.stateName]: token,
+        })
+      );
     } else {
       store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
     }
