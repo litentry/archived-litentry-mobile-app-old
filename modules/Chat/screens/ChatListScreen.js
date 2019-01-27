@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import {StyleSheet, FlatList, TouchableOpacity, ScrollView, RefreshControl, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -9,6 +9,8 @@ import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
 import ChatListNode from '../components/ChatListNode';
 import { loaderAction } from '../../../actions/loaderAction';
+import { AntDesign } from '@expo/vector-icons';
+import { Header } from 'react-navigation';
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -16,6 +18,16 @@ class ChatListScreen extends React.Component {
     headerTransparent: false,
     headerTintColor: AppStyle.userCancelGreen,
     headerBackTitle: ' ',
+    headerRight: (
+      <TouchableOpacity onPress={()=>{navigation.navigate(screensList.CreateTopic.label)}} style={styles.createTopicIconContainer}>
+        <AntDesign
+          style={styles.createTopicIcon}
+          size={AppStyle.fontMiddle}
+          name='plus'
+          color={AppStyle.userCancelGreen}
+        />
+      </TouchableOpacity>
+    ),
     headerTruncatedBackTitle: '',
     headerStyle: {
       backgroundColor: 'white',
@@ -94,6 +106,15 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  createTopicIconContainer: {
+    height: Header.HEIGHT,
+    paddingRight: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  createTopicIcon: {
+
   },
   listContainer: {
     flex: 1,

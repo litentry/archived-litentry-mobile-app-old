@@ -12,7 +12,7 @@ import GenesisButton, { VariantList as variantList } from '../../../components/G
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
 import MemberList from '../../../components/MemberList';
-import LightButton from '../../Vote/screens/VoteInfoScreen';
+import LightButton from "../../../components/LightButton";
 
 const mock = {
   isJoined: true,
