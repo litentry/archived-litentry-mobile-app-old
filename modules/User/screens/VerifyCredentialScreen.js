@@ -8,10 +8,8 @@ import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
-
-const mock = {
-  email: '754611',
-};
+import { userRegisterAction } from '../actions/userRegiseterActions';
+import { screensList } from '../../../navigation/screensList';
 
 class VerifyCredentialScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -25,26 +23,38 @@ class VerifyCredentialScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    updateUserRegisterInfo: PropTypes.func.isRequired,
+    email: PropTypes.string.isRequired,
+    emailCredential: PropTypes.string.isRequired,
   };
 
   render() {
+    const { email, updateUserRegisterInfo, emailCredential, navigation } = this.props;
     const validator = () => true;
 
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
-        <Text style={styles.subtitle}>{t.SUBTITLE}</Text>
+        <Text style={styles.subtitle}>{t.SUBTITLE + email}</Text>
         <View style={styles.inputContainer}>
           <InputWithValidation
-            onChangeText={() => {}}
-            value={mock.email}
+            onChangeText={emailCredential => {
+              updateUserRegisterInfo({ emailCredential });
+            }}
+            value={emailCredential}
             validator={validator}
             placeholder={t.PLACEHOLDER}
             errorMessage={t.ERROR_MESSAGE}
           />
         </View>
         <View style={styles.button}>
-          <GenesisButton action={() => {}} text={t.BUTTON_TEXT} />
+          <GenesisButton
+            disabled={!validator(emailCredential)}
+            action={() => {
+              navigation.navigate(screensList.SetPassword.label);
+            }}
+            text={t.BUTTON_TEXT}
+          />
         </View>
         <Text style={styles.resend}>{t.RESEND}</Text>
       </View>
@@ -53,10 +63,14 @@ class VerifyCredentialScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
+  email: state.userRegister.email,
+  emailCredential: state.userRegister.emailCredential,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  updateUserRegisterInfo: userRegisterAction.update,
+});
 
 export default connect(
   mapStateToProps,
@@ -100,7 +114,7 @@ const styles = StyleSheet.create({
 
 const t = {
   TITLE: 'Verify Email',
-  SUBTITLE: 'We have sent your verification code to davidfan@gmail.com',
+  SUBTITLE: 'We have sent your verification code to ',
   PLACEHOLDER: 'Verification Code',
   BUTTON_TEXT: 'Next',
   RESEND: 'Didn’t receive email?',

@@ -2,6 +2,10 @@ export const environment = {
   disableQRScan: true,
 };
 
+export const contractInfo = {
+  address: '0xa74ae2d3a4c3f6d9454634fee91dc7aab6724cf9',
+};
+
 export const aboutInfo = {
   appName: 'Genesis Space Client',
   date: '2019-01-30',

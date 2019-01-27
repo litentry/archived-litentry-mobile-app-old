@@ -17,7 +17,6 @@ export const screensList = {
   CreateAccount: { label: 'CreateAccount', title: 'Create Account' },
   VerifyCredential: { label: 'VerifyCredential', title: 'Verify Phone' },
   SetPassword: { label: 'SetPassword', title: 'Set Password' },
-  ContinueLogin: { label: 'ContinueLogin', title: 'Continue Login' },
   Login: { label: 'Login', title: 'Login' },
   Topic: { label: 'Topic', title: 'Topic' },
   TopicInfo: { label: 'TopicInfo', title: 'Topic Info' },
@@ -36,4 +35,5 @@ export const screensList = {
   AmendCountryName: { label: 'AmendCountryName', title: 'Amend Country Name' },
   AmendDescription: { label: 'AmendDescription', title: 'Amend Description' },
   VoteInfo: { label: 'VoteInfo', title: 'Participate a vote' },
+  UploadProfile: { label: 'UploadProfile', title: 'Upload your profile' },
 };

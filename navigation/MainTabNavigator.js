@@ -1,5 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
+import _ from 'lodash';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
@@ -19,8 +20,6 @@ import StartScreen from '../modules/User/screens/StartScreen';
 import CreateAccountScreen from '../modules/User/screens/CreateAccountScreen';
 import VerifyCredentialScreen from '../modules/User/screens/VerifyCredentialScreen';
 import SetPasswordScreen from '../modules/User/screens/SetPasswordScreen';
-import ContinueLoginScreen from '../modules/User/screens/ContinueLoginScreen';
-import LoginScreen from '../modules/User/screens/LoginScreen';
 import TopicScreen from '../modules/Chat/screens/TopicScreen';
 import TopicInfoScreen from '../modules/Chat/screens/TopicInfoScreen';
 import MembersScreen from '../modules/Chat/screens/MembersScreen';
@@ -41,11 +40,14 @@ import VoteInfoScreen from '../modules/Vote/screens/VoteInfoScreen';
 import WalletScreen from '../screens/WalletScreen';
 import ImportViaMnemonicScreen from '../modules/WalletImport/screens/ImportViaMnemonicScreen';
 import WalletCreateScreen from '../modules/WalletImport/screens/WalletCreateScreen';
+import UploadProfileScreen from '../modules/User/screens/UploadProfileScreen';
+import LoginScreen from '../modules/User/screens/LoginScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
 const commonScreens = {
   Unlock: UnlockScreen,
+  Transactions: TransactionsScreen,
 };
 
 const HomeStackIcon = ({ focused }) => (
@@ -62,7 +64,12 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    Start: StartScreen,
+    SetPassword: SetPasswordScreen,
+
     Login: LoginScreen,
+    UploadProfile: UploadProfileScreen,
+    CreateAccount: CreateAccountScreen,
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,
@@ -82,22 +89,18 @@ const HomeStack = createStackNavigator(
     AccountSetting: AccountSettingScreen,
     TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
-    ContinueLogin: ContinueLoginScreen,
-    SetPassword: SetPasswordScreen,
     VerifyCredential: VerifyCredentialScreen,
-    Start: StartScreen,
-    CreateAccount: CreateAccountScreen,
     ChatList: ChatListScreen,
     About: AboutScreen,
     PasswordSetting: PasswordSettingScreen,
-    Transactions: TransactionsScreen,
     Home: HomeScreen,
     ...commonScreens,
   },
   {
     navigationOptions: ({ navigation }) => {
       let tabBarVisible = true;
-      if (navigation.state.index > 1) {
+      const currentRouter = _.last(navigation.state.routes).routeName;
+      if (navigation.state.index > 0 || currentRouter === screensList.Start.label) {
         tabBarVisible = false;
       }
 

@@ -8,9 +8,8 @@ import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
-import Connector from '../../Chat/components/Connector';
+
 import TinodeAPI from '../../Chat/TinodeAPI';
-import { screensList } from '../../../navigation/screensList';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,7 +22,7 @@ class LoginScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    token: PropTypes.string,
+    loginToken: PropTypes.string,
   };
 
   constructor(props) {
@@ -34,16 +33,11 @@ class LoginScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
-    console.log('token is', this.props.token);
-  }
-
   render() {
     const { username, password } = this.state;
-    const { navigation } = this.props;
+    const { navigation, loginToken } = this.props;
     return (
       <View style={styles.container}>
-        <Connector />
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{t.LOGIN_TITLE}</Text>
         </View>
@@ -69,7 +63,7 @@ class LoginScreen extends React.Component {
         <View style={styles.button}>
           <GenesisButton
             action={() => {
-              TinodeAPI.login(username, password, null, navigation);
+              TinodeAPI.login(username, password, null, null, navigation);
             }}
             text={t.BUTTON_TEXT}
           />
@@ -80,7 +74,7 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
   loginToken: state.appState.loginToken,
 });
 

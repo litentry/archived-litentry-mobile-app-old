@@ -38,7 +38,7 @@ class ChatListScreen extends React.Component {
     TinodeAPI.fetchUserId();
   }
 
-  _onRefresh = () => {
+  onRefresh = () => {
     this.setState({ refreshing: true });
     TinodeAPI.fetchTopics().then(() => {
       this.setState({ refreshing: false });
@@ -52,7 +52,7 @@ class ChatListScreen extends React.Component {
       <ScrollView
         style={styles.container}
         refreshControl={
-          <RefreshControl refreshing={this.state.refreshing} onRefresh={this._onRefresh} />
+          <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
         }>
         <FlatList
           style={styles.listContainer}
@@ -76,7 +76,7 @@ class ChatListScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.walletAddress,
+  walletAddress: state.appState.walletAddress,
   chatList: state.chat.chatList,
 });
 

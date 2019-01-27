@@ -4,6 +4,7 @@
 
 import { imageConfig } from '../../../config';
 import { bytesToHumanSize } from './strformat';
+import Images from '../../../commons/Images';
 
 // Supported image MIME types and corresponding file extensions.
 export const SUPPORTED_IMAGE_FORMATS = [
@@ -20,6 +21,12 @@ export function makeImageUrl(photo) {
   return photo && photo.type && photo.data
     ? 'data:image/' + photo.type + ';base64,' + photo.data
     : null;
+}
+
+export function makeImageSource(photo) {
+  return photo && photo.type && photo.data
+    ? { uri: 'data:image/' + photo.type + ';base64,' + photo.data }
+    : Images.blankProfile;
 }
 
 // Calculate linear dimensions for scaling image down to fit under a certain size.

@@ -52,7 +52,7 @@ export default class InputWithValidation extends React.Component {
 
   render() {
     const { onChangeText, value, placeholder, validator, isPassword, errorMessage } = this.props;
-    const isValidated = validator();
+    const isValidated = validator(value);
     let fontColor;
     if (this.state.shouldValidate) {
       fontColor = isValidated ? AppStyle.userCorrect : AppStyle.userIncorrect;

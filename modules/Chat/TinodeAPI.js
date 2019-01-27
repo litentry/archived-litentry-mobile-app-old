@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import _ from 'lodash';
+import { NavigationActions, StackActions } from 'react-navigation';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
@@ -9,6 +10,9 @@ import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import { makeImageUrl } from './lib/blob-helpers';
 import { dataEntry } from '../../reducers/loader';
+
+const saveLoginData = token =>
+  store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -48,60 +52,59 @@ class TinodeAPIClass {
   }
 
   //with credential, please refer to the doLogin function in
-  async login(username, password, cred, navigation) {
+  async login(username, password, token, cred, navigation) {
     if (cred) {
       cred = Tinode.credential(cred);
     }
     // Try to login with login/password. If they are not available, try token. If no token, ask for login/password.
     let promise = null;
-    let token = this.tinode.getAuthToken();
-    console.log(
-      'token equal? ',
-      token === '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI='
-    );
+    // let token = this.tinode.getAuthToken();
+    console.log('authToken is', token);
     let ctrl;
     try {
       if (username && password) {
         ctrl = await this.tinode.loginBasic(username, password, cred);
       } else if (token) {
-        ctrl = await this.tinode.loginToken(token.token, cred);
+        ctrl = await this.tinode.loginToken(token, cred);
         //   token = '7k7lEbfMqdQPSj9cFAABAAEAA6pHN+0nlq3HE/xnsuvjeYMGXMPjBXSntvY/8tBMjOI='
         //   this.tinode.setAuthToken(token);
         //    ctrl = await this.tinode.loginToken(token, cred);
       }
       console.log('ctrl is', ctrl);
-
-      const authToken = this.tinode.getAuthToken();
-      console.log('authToken is', authToken);
-
-      const me = this.tinode.getMeTopic();
-      // me.onData = this.onData; //Callback which receives a {data} message.
-      // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
-      // me.onPres = console.log //	Callback which receives a {pres} message.
-      // me.onInfo = console.log //Callback which receives an {info} message.
-      me.onMetaDesc = this.tnMeMetaDesc; //Callback which receives changes to topic description desc.
-      me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
-      me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
-      // me.onMetaSub = console.log //	Called for a single subscription record change.
-      // me.onDeleteTopic = console.log // Called after the topic is deleted.
-
-      if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
-        if (cred) {
-          this.handleError('Code does not match', 'warn');
-        }
-        // this.handleCredentialsRequest(ctrl.params);
-      } else {
-        store.dispatch(
-          loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: ctrl.params.token })
-        );
-        navigation.navigate(screensList.ChatList.label);
-        // this.handleLoginSuccessful();
-      }
+      this.handleLoginSuccessful(ctrl, navigation, cred);
     } catch (err) {
       // Login failed, report error.
       // this.setState({ loginDisabled: false, credMethod: undefined, credCode: undefined });
       this.handleError(err.message, 'err');
       // localStorage.removeItem('auth-token');
+    }
+  }
+
+  handleLoginSuccessful(ctrl, navigation, cred) {
+    const me = this.tinode.getMeTopic();
+    // me.onData = this.onData; //Callback which receives a {data} message.
+    // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
+    // me.onPres = console.log //	Callback which receives a {pres} message.
+    // me.onInfo = console.log //Callback which receives an {info} message.
+    me.onMetaDesc = this.tnMeMetaDesc.bind(this); //Callback which receives changes to topic description desc.
+    me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
+    me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
+    // me.onMetaSub = console.log //	Called for a single subscription record change.
+    // me.onDeleteTopic = console.log // Called after the topic is deleted.
+
+    if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
+      if (cred) {
+        this.handleError('Code does not match', 'warn');
+      }
+      // this.handleCredentialsRequest(ctrl.params);
+    } else {
+      saveLoginData(ctrl.params.token);
+      const resetAction = StackActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName: screensList.ChatList.label })],
+      });
+      navigation.dispatch(resetAction);
+      // this.handleLoginSuccessful();
     }
   }
 
@@ -136,13 +139,18 @@ class TinodeAPIClass {
     store.dispatch(chatAction.setId(userId));
   }
 
-  tnMeMetaDesc(desc) {
-    console.log('tnMeMetaDesc, ', desc);
-    if (desc && desc.public) {
-      // const state = {
-      //   sidePanelTitle: desc.public.fn,
-      //   sidePanelAvatar: this.makeImageUrl(desc.public.photo)
-      // };
+  tnMeMetaDesc(meTopics) {
+    console.log('tnMeMetaDesc, ', meTopics);
+    if (meTopics && meTopics.public) {
+      const privateData = meTopics.private;
+      const userInfo = _.reduce(meTopics.public, this.reformatData, privateData);
+      store.dispatch(chatAction.setUserInfo(userInfo));
+      store.dispatch(
+        loaderAction.saveAppData({
+          [dataEntry.profileImage.stateName]: userInfo.avatar,
+          [dataEntry.profileName.stateName]: userInfo.name,
+        })
+      );
     }
   }
 
@@ -196,7 +204,7 @@ class TinodeAPIClass {
     if (key === 'photo') {
       const avatar = makeImageUrl(value);
       store.dispatch(chatAction.setAvatar(avatar));
-      return result;
+      return _.set(result, 'avatar', avatar);
     }
     if (key === 'fn') {
       return _.set(result, 'name', value);
@@ -211,9 +219,6 @@ class TinodeAPIClass {
       console.log('contact is', c);
       chatList.push(c);
     });
-    const privateData = meTopics.private;
-    const userInfo = _.reduce(meTopics.public, this.reformatData, privateData);
-    store.dispatch(chatAction.setUserInfo(userInfo));
     store.dispatch(chatAction.updateChatList(chatList));
     // this.resetContactList();
   }
@@ -405,8 +410,44 @@ class TinodeAPIClass {
     store.dispatch(topicsAction.updateTopicSubs(topicName, subs));
   }
 
+  handleCredentialsRequest() {}
+
+  handleCreateNewAccount(navigation, email, password, username, photo, tags, cred) {
+    this.tinode
+      .createAccountBasic(email, password, {
+        public: this.generatePublicInfo(username, photo),
+        tags,
+        cred: null,
+      })
+      .then(ctrl => {
+        if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
+          this.handleCredentialsRequest(ctrl.params);
+        } else {
+          this.handleLoginSuccessful(ctrl, navigation, cred);
+        }
+      })
+      .catch(err => {
+        this.handleError(err.message, 'err');
+      });
+  }
+
   static isGroupId(chatId) {
     return typeof chatId === 'string' && chatId.indexOf('grp') === 0;
+  }
+
+  generatePublicInfo(profileName, imageData) {
+    let publicInfo = null;
+
+    if (profileName || imageData) {
+      publicInfo = {};
+      if (profileName) {
+        publicInfo.fn = profileName.trim();
+      }
+      if (imageData) {
+        publicInfo.photo = imageData;
+      }
+    }
+    return publicInfo;
   }
 }
 

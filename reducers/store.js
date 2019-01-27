@@ -8,6 +8,7 @@ import { unlockReducer } from '../modules/Unlock/reducer/unlockReducer';
 import { chatReducer } from '../modules/Chat/reducers/chatReducer';
 import { topicsReducer } from '../modules/Chat/reducers/topicsReducer';
 import { voteReducer } from '../modules/Vote/reducer/voteReducer';
+import { userRegisterReducer } from '../modules/User/reducer/userRegisterReducer';
 
 const logger = store => next => action => {
   console.group(action.type);
@@ -30,7 +31,7 @@ const enableBatching = reducer => {
 };
 
 const reducers = combineReducers({
-  walletAddress: walletReducer,
+  wallet: walletReducer,
   walletImport: walletImportReducer,
   screen: screenReducer,
   popup: popupReducer,
@@ -39,6 +40,7 @@ const reducers = combineReducers({
   chat: chatReducer,
   topics: topicsReducer,
   vote: voteReducer,
+  userRegister: userRegisterReducer,
 });
 
 export const store = createStore(enableBatching(reducers), applyMiddleware(logger));
