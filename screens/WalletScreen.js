@@ -7,6 +7,7 @@ import {
   RefreshControl,
   ScrollView,
   Clipboard,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -103,7 +104,9 @@ class WalletScreen extends React.Component {
         </View>
         <View style={styles.actionsContainer}>
           <Text style={styles.walletAddress}>{walletAddress}</Text>
-          <QRCode value={walletAddress} size={200} bgColor="white" fgColor="black" />
+          <View style={styles.qrCode}>
+            <QRCode value={walletAddress} size={200} bgColor="white" fgColor="black" />
+          </View>
           <GenesisButton
             action={() => Clipboard.setString(walletAddress)}
             style={styles.copyButton}
@@ -114,9 +117,13 @@ class WalletScreen extends React.Component {
               lockScreen(navigation)
                 .then(() => new Promise(getPrivateKeyAsync))
                 .then(privateKey => {
-                  console.log('private key is', privateKey);
                   Clipboard.setString(privateKey);
-                  alert(t.PRIVATE_KEY_COPIED);
+                  Alert.alert(
+                    'Vote needed',
+                    t.PRIVATE_KEY_COPIED,
+                    [{ text: 'OK', onPress: () => navigation.navigate(screensList.Wallet.label) }],
+                    { cancelable: false }
+                  );
                 })
             }
             style={styles.copyButton}
@@ -194,13 +201,17 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     flex: 7,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'space-around',
   },
   walletAddress: {
+    alignSelf: 'center',
     fontSize: AppStyle.fontSmall,
     color: AppStyle.lightGrey,
     paddingVertical: 50,
+  },
+  qrCode: {
+    alignSelf: 'center',
   },
   copyButton: {
     backgroundColor: AppStyle.lightGrey,

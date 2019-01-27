@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
 import ChatListNode from '../components/ChatListNode';
+import { loaderAction } from '../../../actions/loaderAction';
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -24,6 +25,7 @@ class ChatListScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     chatList: PropTypes.array.isRequired,
+    userId: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -35,7 +37,6 @@ class ChatListScreen extends React.Component {
 
   componentDidMount() {
     TinodeAPI.fetchTopics();
-    TinodeAPI.fetchUserId();
   }
 
   onRefresh = () => {
@@ -78,9 +79,12 @@ class ChatListScreen extends React.Component {
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
   chatList: state.chat.chatList,
+  userId: state.appState.userId,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  clearAppData: loaderAction.clearAppData,
+});
 
 export default connect(
   mapStateToProps,
