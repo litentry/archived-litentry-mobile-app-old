@@ -9,7 +9,7 @@ import AppStyle from '../../../commons/AppStyle';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
-import { screensList } from '../../../navigation/screensList';
+import TinodeAPI from '../../Chat/TinodeAPI';
 
 class VerifyCredentialScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,23 +23,33 @@ class VerifyCredentialScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    updateUserRegisterInfo: PropTypes.func.isRequired,
-    email: PropTypes.string.isRequired,
-    emailCredential: PropTypes.string.isRequired,
+    // updateUserRegisterInfo: PropTypes.func.isRequired,
+    // email: PropTypes.string.isRequired,
+    // emailCredential: PropTypes.string.isRequired,
+    loginToken: PropTypes.string.isRequired,
+    oldUserId: PropTypes.string.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      emailCredential: '',
+    };
+  }
+
   render() {
-    const { email, updateUserRegisterInfo, emailCredential, navigation } = this.props;
+    const { navigation, oldUserId, loginToken } = this.props;
+    const { emailCredential } = this.state;
     const validator = () => true;
 
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
-        <Text style={styles.subtitle}>{t.SUBTITLE + email}</Text>
+        <Text style={styles.subtitle}>{t.SUBTITLE}</Text>
         <View style={styles.inputContainer}>
           <InputWithValidation
             onChangeText={emailCredential => {
-              updateUserRegisterInfo({ emailCredential });
+              this.setState({ emailCredential });
             }}
             value={emailCredential}
             validator={validator}
@@ -51,7 +61,7 @@ class VerifyCredentialScreen extends React.Component {
           <GenesisButton
             disabled={!validator(emailCredential)}
             action={() => {
-              navigation.navigate(screensList.SetPassword.label);
+              TinodeAPI.login(null, null, oldUserId, loginToken, emailCredential, navigation);
             }}
             text={t.BUTTON_TEXT}
           />
@@ -63,9 +73,8 @@ class VerifyCredentialScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
-  email: state.userRegister.email,
-  emailCredential: state.userRegister.emailCredential,
+  loginToken: state.appState.loginToken,
+  oldUserId: state.appState.userId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
@@ -114,7 +123,7 @@ const styles = StyleSheet.create({
 
 const t = {
   TITLE: 'Verify Email',
-  SUBTITLE: 'We have sent your verification code to ',
+  SUBTITLE: 'We have sent your verification code to your email address',
   PLACEHOLDER: 'Verification Code',
   BUTTON_TEXT: 'Next',
   RESEND: 'Didn’t receive email?',

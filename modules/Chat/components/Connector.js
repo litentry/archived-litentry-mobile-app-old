@@ -1,8 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { StyleSheet, View, Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
-import AppStyle from '../../../commons/AppStyle';
 import { wsInfo } from '../../../config';
 import TinodeAPI from '../TinodeAPI';
 
@@ -30,50 +28,6 @@ export default class Connector extends React.Component {
       console.log('disconnected', data);
     };
     return tinode;
-  }
-
-  handleOnline(online) {
-    if (online) {
-      this.handleError('', null);
-    } else {
-      this.handleError('No connection', 'warn');
-    }
-  }
-
-  doLogin(username, password, cred) {
-    cred = Tinode.credential(cred);
-    // Try to login with login/password. If they are not available, try token. If no token, ask for login/password.
-    let promise = null;
-    let token = this.tinode.getAuthToken();
-    if (username && password) {
-      promise = this.tinode.loginBasic(username, password, cred);
-    } else if (token) {
-      promise = this.tinode.loginToken(token.token, cred);
-    }
-
-    if (promise) {
-      promise
-        .then(ctrl => {
-          if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
-            if (cred) {
-              this.handleError('Code does not match', 'warn');
-            }
-            this.handleCredentialsRequest(ctrl.params);
-          } else {
-            this.handleLoginSuccessful();
-          }
-        })
-        .catch(err => {
-          // Login failed, report error.
-          this.setState({ loginDisabled: false, credMethod: undefined, credCode: undefined });
-          this.handleError(err.message, 'err');
-          // localStorage.removeItem('auth-token');
-        });
-    } else {
-      // No login credentials provided.
-      // Make sure we are on the login page.
-      this.setState({ loginDisabled: false });
-    }
   }
 
   // Make a data URL from public.photo

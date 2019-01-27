@@ -1,15 +1,12 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
-import _ from 'lodash';
 import { NavigationActions, StackActions } from 'react-navigation';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
-import { loaderAction } from '../../actions/loaderAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
-import { makeImageUrl } from './lib/blob-helpers';
-import { dataEntry } from '../../reducers/loader';
+import * as chatUtils from '../../utils/chatUtils';
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -49,9 +46,10 @@ class TinodeAPIClass {
   }
 
   //with credential, please refer to the doLogin function in
-  async login(username, password, oldUserId, token, cred, navigation) {
-    if (cred) {
-      cred = Tinode.credential(cred);
+  async login(username, password, oldUserId, token, credentialCode, navigation) {
+    let cred = Tinode.credential({ meth: 'email', val: username });
+    if (credentialCode) {
+      cred = Tinode.credential({ meth: 'email', resp: credentialCode });
     }
     // Try to login with login/password. If they are not available, try token. If no token, ask for login/password.
     let promise = null;
@@ -68,7 +66,7 @@ class TinodeAPIClass {
         //    ctrl = await this.tinode.loginToken(token, cred);
       }
       console.log('ctrl is', ctrl);
-      this.handleLoginSuccessful(ctrl, navigation, oldUserId, cred);
+      this.handleLoginSuccessful(ctrl, navigation, oldUserId);
     } catch (err) {
       // Login failed, report error.
       // this.setState({ loginDisabled: false, credMethod: undefined, credCode: undefined });
@@ -77,7 +75,7 @@ class TinodeAPIClass {
     }
   }
 
-  handleLoginSuccessful(ctrl, navigation, oldUserId, cred) {
+  handleLoginSuccessful(ctrl, navigation, oldUserId) {
     const me = this.tinode.getMeTopic();
     // me.onData = this.onData; //Callback which receives a {data} message.
     // me.onMeta = this.onMeta; //Callback which receives a {meta} message.
@@ -90,33 +88,15 @@ class TinodeAPIClass {
     // me.onDeleteTopic = console.log // Called after the topic is deleted.
 
     if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
-      if (cred) {
-        this.handleError('Code does not match', 'warn');
-      }
-      // this.handleCredentialsRequest(ctrl.params);
+      chatUtils.handleCredentialsRequest(navigation, ctrl.params);
     } else {
-      this.saveLoginData(oldUserId, ctrl.params.token);
+      chatUtils.saveLoginData(ctrl.params.user, oldUserId, ctrl.params.token);
       const resetAction = StackActions.reset({
         index: 0,
         actions: [NavigationActions.navigate({ routeName: screensList.ChatList.label })],
       });
       navigation.dispatch(resetAction);
       // this.handleLoginSuccessful();
-    }
-  }
-
-  saveLoginData(oldUserId, token) {
-    const currentId = this.tinode.getCurrentUserID();
-    store.dispatch(chatAction.setId(currentId));
-    if (currentId !== oldUserId) {
-      store.dispatch(
-        loaderAction.clearAppData({
-          [dataEntry.userId.stateName]: currentId,
-          [dataEntry.loginToken.stateName]: token,
-        })
-      );
-    } else {
-      store.dispatch(loaderAction.saveAppData({ [dataEntry.loginToken.stateName]: token }));
     }
   }
 
@@ -148,75 +128,11 @@ class TinodeAPIClass {
 
   tnMeMetaDesc(meTopics) {
     console.log('tnMeMetaDesc, ', meTopics);
-    if (meTopics && meTopics.public) {
-      const privateData = meTopics.private;
-      const userInfo = _.reduce(meTopics.public, this.reformatData, privateData);
-      store.dispatch(chatAction.setUserInfo(userInfo));
-      store.dispatch(
-        loaderAction.saveAppData({
-          [dataEntry.profileImage.stateName]: userInfo.avatar,
-          [dataEntry.profileName.stateName]: userInfo.name,
-        })
-      );
-    }
+    chatUtils.saveUserData(meTopics);
   }
 
   tnMeContactUpdate(what, count) {
     console.log('contact update', what, count);
-    // if (what === 'on' || what === 'off') {
-    //   this.resetContactList();
-    //   if (this.state.topicSelected === cont.topic) {
-    //     this.setState({topicSelectedOnline: (what === 'on')});
-    //   }
-    // } else if (what === 'read') {
-    //   this.resetContactList();
-    // } else if (what === 'msg') {
-    //   // New message received
-    //   // Skip update if the topic is currently open, otherwise the badge will annoyingly flash.
-    //   if (this.state.topicSelected !== cont.topic) {
-    //     if (this.state.messageSounds) {
-    //       POP_SOUND.play();
-    //     }
-    //     this.resetContactList();
-    //   } else if (document.hidden && this.state.messageSounds) {
-    //     POP_SOUND.play();
-    //   }
-    // } else if (what ==='recv') {
-    //   // Explicitly ignoring "recv" -- it causes no visible updates to contact list.
-    // } else if (what === 'gone' || what === 'unsub') {
-    //   // Topic deleted or user unsubscribed. Remove topic from view.
-    //   // If the currently selected topic is gone, clear the selection.
-    //   if (this.state.topicSelected === cont.topic) {
-    //     this.handleTopicSelected(null);
-    //   }
-    //   // Redraw without the deleted topic.
-    //   this.resetContactList();
-    // } else if (what === 'acs') {
-    //   // Permissions changed. If it's for the currently selected topic,
-    //   // update the views.
-    //   if (this.state.topicSelected === cont.topic) {
-    //     this.setState({topicSelectedAcs: cont.acs});
-    //   }
-    // } else if (what === 'del') {
-    //   // messages deleted (hard or soft) -- update pill counter.
-    // } else {
-    //   // TODO(gene): handle other types of notifications:
-    //   // * ua -- user agent changes (maybe display a pictogram for mobile/desktop).
-    //   // * upd -- topic 'public' updated, issue getMeta().
-    //   console.log("Unsupported (yet) presence update:" + what + " in: " + cont.topic);
-    // }
-  }
-
-  reformatData(result, value, key) {
-    if (key === 'photo') {
-      const avatar = makeImageUrl(value);
-      store.dispatch(chatAction.setAvatar(avatar));
-      return _.set(result, 'avatar', avatar);
-    }
-    if (key === 'fn') {
-      return _.set(result, 'name', value);
-    }
-    return _.set(result, key, value);
   }
 
   tnMeSubsUpdated(meTopics, data) {
@@ -228,62 +144,6 @@ class TinodeAPIClass {
     });
     store.dispatch(chatAction.updateChatList(chatList));
     // this.resetContactList();
-  }
-
-  resetContactList() {
-    let chatList = [];
-    this.tinode.getMeTopic().contacts(c => {
-      console.log('contact is', c);
-      chatList.push(c);
-      // if (this.state.topicSelected == c.topic) {
-      //   newState.topicSelectedOnline = c.online;
-      //   newState.topicSelectedAcs = c.acs;
-      // }
-    });
-    // Merge search results and chat list.
-    console.log('chat list are', chatList);
-    // const searchableContacts = this.prepareSearchableContacts(chatList, []);
-    // this.setState(newState);
-  }
-
-  // Merge search results and contact list to create a single flat
-  // list of known contacts for GroupManager to use.
-  prepareSearchableContacts(chatList, foundContacts) {
-    let merged = {};
-
-    // For chatList topics merge only p2p topics and convert them to the
-    // same format as foundContacts.
-    for (const c of chatList) {
-      if (Tinode.topicType(c.topic) === 'p2p') {
-        merged[c.topic] = {
-          user: c.topic,
-          updated: c.updated,
-          public: c.public,
-          private: c.private,
-          acs: c.acs,
-        };
-      }
-    }
-    // Add all foundCountacts if they have not been added already.
-    for (const c of foundContacts) {
-      if (!merged[c.user]) {
-        merged[c.user] = c;
-      }
-    }
-
-    return Object.values(merged);
-  }
-
-  tnFndSubsUpdated() {
-    let foundContacts = [];
-    // Don't attempt to create P2P topics which already exist. Server will reject the duplicates.
-    this.tinode.getFndTopic().contacts(s => {
-      foundContacts.push(s);
-    });
-    // this.setState({
-    //   searchResults: foundContacts,
-    //   searchableContacts: TinodeWeb.prepareSearchableContacts(this.state.chatList, foundContacts)
-    // });
   }
 
   subscribe(topicId, userId) {
@@ -417,44 +277,25 @@ class TinodeAPIClass {
     store.dispatch(topicsAction.updateTopicSubs(topicName, subs));
   }
 
-  handleCredentialsRequest() {}
-
-  handleCreateNewAccount(navigation, email, password, username, photo, tags, cred) {
+  handleCreateNewAccount(navigation, email, password, username, photo) {
+    console.log('create public is', chatUtils.generatePublicInfo(username, photo));
     this.tinode
       .createAccountBasic(email, password, {
-        public: this.generatePublicInfo(username, photo),
-        tags,
-        cred: null,
+        public: chatUtils.generatePublicInfo(username, photo),
+        tags: undefined,
+        cred: Tinode.credential({ meth: 'email', val: email }),
       })
       .then(ctrl => {
+        console.log('ctrl is', ctrl);
         if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
-          this.handleCredentialsRequest(ctrl.params);
+          chatUtils.handleCredentialsRequest(navigation, ctrl.params);
         } else {
-          this.handleLoginSuccessful(ctrl, navigation, cred);
+          this.handleLoginSuccessful(ctrl, navigation);
         }
       })
       .catch(err => {
         this.handleError(err.message, 'err');
       });
-  }
-
-  static isGroupId(chatId) {
-    return typeof chatId === 'string' && chatId.indexOf('grp') === 0;
-  }
-
-  generatePublicInfo(profileName, imageData) {
-    let publicInfo = null;
-
-    if (profileName || imageData) {
-      publicInfo = {};
-      if (profileName) {
-        publicInfo.fn = profileName.trim();
-      }
-      if (imageData) {
-        publicInfo.photo = imageData;
-      }
-    }
-    return publicInfo;
   }
 }
 

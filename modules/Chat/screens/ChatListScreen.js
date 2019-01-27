@@ -1,16 +1,23 @@
 import React from 'react';
-import {StyleSheet, FlatList, TouchableOpacity, ScrollView, RefreshControl, Button} from 'react-native';
+import {
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+  RefreshControl,
+  Button,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
+import { AntDesign } from '@expo/vector-icons';
+import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
 import ChatListNode from '../components/ChatListNode';
 import { loaderAction } from '../../../actions/loaderAction';
-import { AntDesign } from '@expo/vector-icons';
-import { Header } from 'react-navigation';
 
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,11 +26,15 @@ class ChatListScreen extends React.Component {
     headerTintColor: AppStyle.userCancelGreen,
     headerBackTitle: ' ',
     headerRight: (
-      <TouchableOpacity onPress={()=>{navigation.navigate(screensList.CreateTopic.label)}} style={styles.createTopicIconContainer}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate(screensList.CreateTopic.label);
+        }}
+        style={styles.createTopicIconContainer}>
         <AntDesign
           style={styles.createTopicIcon}
           size={AppStyle.fontMiddle}
-          name='plus'
+          name="plus"
           color={AppStyle.userCancelGreen}
         />
       </TouchableOpacity>
@@ -113,9 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  createTopicIcon: {
-
-  },
+  createTopicIcon: {},
   listContainer: {
     flex: 1,
   },

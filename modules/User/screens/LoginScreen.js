@@ -10,7 +10,7 @@ import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 
 import TinodeAPI from '../../Chat/TinodeAPI';
-import {screensList} from "../../../navigation/screensList";
+import { screensList } from '../../../navigation/screensList';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -70,7 +70,7 @@ class LoginScreen extends React.Component {
           />
           <GenesisButton
             action={() => {
-              navigation.navigate(screensList.CreateAccount.label)
+              navigation.navigate(screensList.CreateAccount.label);
             }}
             text={t.REGISTER}
           />

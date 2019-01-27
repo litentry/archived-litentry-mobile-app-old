@@ -63,7 +63,7 @@ class CreateAccountScreen extends React.Component {
           <GenesisButton
             disabled={!isNextValid()}
             action={() => {
-              navigation.navigate(screensList.VerifyCredential.label);
+              navigation.navigate(screensList.SetPassword.label);
             }}
             text={t.BUTTON_TEXT}
           />

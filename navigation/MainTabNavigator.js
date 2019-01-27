@@ -42,7 +42,7 @@ import ImportViaMnemonicScreen from '../modules/WalletImport/screens/ImportViaMn
 import WalletCreateScreen from '../modules/WalletImport/screens/WalletCreateScreen';
 import UploadProfileScreen from '../modules/User/screens/UploadProfileScreen';
 import LoginScreen from '../modules/User/screens/LoginScreen';
-import CreateTopicScreen from "../modules/CreateTopic/screens/CreateTopicScreen";
+import CreateTopicScreen from '../modules/CreateTopic/screens/CreateTopicScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
