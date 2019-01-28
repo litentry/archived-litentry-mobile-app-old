@@ -47,9 +47,9 @@ class TopicScreen extends React.Component {
     userId: PropTypes.string.isRequired,
     subscribedChatId: PropTypes.string,
     connected: PropTypes.bool.isRequired,
-    avatar: PropTypes.string.isRequired,
     userInfo: PropTypes.object.isRequired,
     updateUserInput: PropTypes.func.isRequired,
+    photo: PropTypes.object,
   };
 
   constructor(props) {
@@ -68,12 +68,17 @@ class TopicScreen extends React.Component {
     }
   }
 
+  renderUserAvatarSource = () => {
+    const { photo } = this.props;
+    return _.isEmpty(photo) ? Images.blankProfile : { uri: makeImageUrl(photo) };
+  };
+
   renderMessageNode(message, topic) {
-    const { userId, avatar, userInfo } = this.props;
+    const { userId, userInfo } = this.props;
     let messageOwnerName;
     let messageOwnerAvatar;
     if (message.from === userId) {
-      messageOwnerAvatar = { uri: avatar };
+      messageOwnerAvatar = this.renderUserAvatarSource();
       messageOwnerName = userInfo.name;
     } else {
       const messageOwner = _.find(topic.subs, { user: message.from });
@@ -140,8 +145,8 @@ const mapStateToProps = state => ({
   userId: state.chat.userId,
   subscribedChatId: state.chat.subscribedChatId,
   connected: state.chat.connected,
-  avatar: state.chat.avatar,
   userInfo: state.chat.userInfo,
+  photo: state.chat.userInfo.photo,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({

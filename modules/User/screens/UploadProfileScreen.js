@@ -88,7 +88,7 @@ class UploadProfileScreen extends React.Component {
 
   createAccountRequest = () => {
     const { navigation, username, password, photo, email } = this.props;
-    TinodeAPI.handleCreateNewAccount(navigation, email, password, username, photo, null);
+    TinodeAPI.handleCreateNewAccount(navigation, email, password, username, photo);
   };
 
   render() {

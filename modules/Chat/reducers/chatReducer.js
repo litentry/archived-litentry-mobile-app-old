@@ -4,7 +4,6 @@ const INITIAL_STATE = {
   connected: false,
   chatList: [],
   userId: '',
-  avatar: '',
   userInfo: {},
   subscribedChatId: null,
 };
@@ -28,11 +27,6 @@ export const chatReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userId: action.userId,
-      };
-    case chatActionType.SET_AVATAR:
-      return {
-        ...state,
-        avatar: action.avatar,
       };
     case chatActionType.SET_USER_INFO:
       return {

@@ -21,7 +21,7 @@ class ContinueLoginInnerScreen extends React.Component {
 
   renderImageSource = () => {
     const { profileImage } = this.props;
-    return profileImage ? { uri: profileImage } : Images.blankProfile;
+    return _.isEmpty(profileImage) ? Images.blankProfile : { uri: profileImage };
   };
 
   render() {
@@ -37,7 +37,10 @@ class ContinueLoginInnerScreen extends React.Component {
           <Image style={styles.profile} resizeMode="contain" source={this.renderImageSource()} />
           <Text style={styles.textContainer}>
             <Text style={styles.textContinue}>{t.CONTINUE}</Text>
-            <Text style={styles.textName}> {profileName ? profileName : 'last user'}</Text>
+            <Text style={styles.textName}>
+              {' '}
+              {!_.isEmpty(profileName) ? profileName : 'last user'}
+            </Text>
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

@@ -45,9 +45,8 @@ class Keyboard extends Component {
 
   _confirmPassword(pincode, resolve) {
     const { saveAppData, pincodeToBeConfirm, resetPincode } = this.props;
-    if (pincodeToBeConfirm !== pincode) {
-      resetPincode();
-    } else {
+    resetPincode();
+    if (pincodeToBeConfirm === pincode) {
       saveAppData({ [dataEntry.hasPassword.stateName]: true });
       savePasswordAsync(pincode, resolve, resetPincode);
     }

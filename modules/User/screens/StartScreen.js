@@ -27,7 +27,7 @@ class StartScreen extends React.Component {
   renderInner() {
     const { isLoaded, loginToken } = this.props;
 
-    if (isLoaded && !_.isNull(loginToken)) {
+    if (isLoaded && !_.isEmpty(loginToken)) {
       return <ContinueLoginInnerScreen />;
     }
     return <WelcomeInnerScreen />;

@@ -9,5 +9,5 @@ export const loaderAction = {
   readAppData: resultList => ({ type: loaderActionType.READ_APP_DATA, resultList }),
   saveAppData: data => ({ type: loaderActionType.SAVE_APP_DATA, data }),
   addErrorCount: () => ({ type: loaderActionType.ADD_ERROR_COUNT }),
-  clearAppData: loginToken => ({ type: loaderActionType.CLEAR_APP_DATA, loginToken }),
+  clearAppData: data => ({ type: loaderActionType.CLEAR_APP_DATA, data }),
 };
