@@ -60,6 +60,7 @@ export default {
 
   variantConfirm: '#27B24A',
   variantDisable: '#929292',
+  variantPrimary: '#4A90E2',
   lightGrey: '#929292',
   variantCancel: '#DF4F52',
   superLightGrey: '#D9D9D9',

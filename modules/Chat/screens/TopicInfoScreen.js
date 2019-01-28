@@ -26,7 +26,7 @@ class TopicInfoScreen extends React.Component {
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
-    return <TopicInnerScreen description={t.TOPIC_DESCRIPTION_TITLE} topic={topic} isJoined={true} allowEdit={false} iconName={'addfile'}/>
+    return <TopicInnerScreen description={t.TOPIC_DESCRIPTION_TITLE} topic={topic} isJoined={true} allowEdit={true} iconName={'addfile'}/>
   }
 }
 

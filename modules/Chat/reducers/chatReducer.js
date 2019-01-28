@@ -5,8 +5,8 @@ const INITIAL_STATE = {
   chatList: [],
   userId: '',
   userInfo: {
-    //name:
-    //avatar:
+    name: '',
+    avatar: '',
   },
   subscribedChatId: null,
 };

@@ -70,6 +70,7 @@ class TopicInnerScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     initVote: PropTypes.func.isRequired,
+    resetVote: PropTypes.func.isRequired,
     edited: PropTypes.bool.isRequired,
 
     topic: PropTypes.object.isRequired,
@@ -81,7 +82,7 @@ class TopicInnerScreen extends React.Component {
 
   componentDidMount() {
     const { initVote, topic } = this.props;
-    const metaData = _.merge(mock.data, {
+    const metaData = _.merge(mock.meta, {
       countryName: _.get(topic, 'public.fn', ''),
       description: _.get(topic, 'private.comment', ''),
     });
@@ -117,9 +118,12 @@ class TopicInnerScreen extends React.Component {
   }
 
   renderButton() {
-    const {isJoined, allowEdit, edited} = this.props
+    const {isJoined, edited, resetVote} = this.props
     if(edited)
-      return <GenesisButton action={this.onPayment} text={t.BUTTON_CONFIRM_EDIT} variant={variantList.CONFIRM}/>
+      return <React.Fragment>
+        <GenesisButton action={()=>resetVote()} text={t.BUTTON_RESET_EDIT} variant={variantList.PRIMARY}/>
+        <GenesisButton action={this.onPayment} text={t.BUTTON_CONFIRM_EDIT} variant={variantList.CONFIRM}/>
+      </React.Fragment>
     if(isJoined)
       return <GenesisButton action={this.onPayment} text={t.BUTTON_LEAVE} variant={variantList.CANCEL}/>
     if(this.isBlockedUser)
@@ -204,6 +208,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
   initVote: voteAction.initVote,
+  resetVote: voteAction.resetVote,
 });
 
 export default connect(
@@ -223,6 +228,7 @@ const t = {
   VIEW_MORE_MEMBERS: 'View more members',
 
   BUTTON_CONFIRM_EDIT: 'Confirm and starting Voting',
+  BUTTON_RESET_EDIT: 'Reset the rules',
   BUTTON_LEAVE: 'Delete and leave',
   BUTTON_JOIN: 'Join',
   BUTTON_CREATE: 'Confirm and create',

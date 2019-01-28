@@ -9,6 +9,7 @@ const isSmallScreen = height < 569;
 export const VariantList = {
   CONFIRM: 'confirm',
   CANCEL: 'cancel',
+  PRIMARY: 'primary'
 };
 
 const getBackgroundColor = (variant, disabled) => {
@@ -18,6 +19,8 @@ const getBackgroundColor = (variant, disabled) => {
       return AppStyle.variantConfirm;
     case VariantList.CANCEL:
       return AppStyle.variantCancel;
+    case VariantList.PRIMARY:
+      return AppStyle.variantPrimary;
     default:
       return AppStyle.variantConfirm;
   }
