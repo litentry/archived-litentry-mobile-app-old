@@ -49,7 +49,7 @@ class TopicScreen extends React.Component {
     connected: PropTypes.bool.isRequired,
     userInfo: PropTypes.object.isRequired,
     updateUserInput: PropTypes.func.isRequired,
-    photo: PropTypes.object,
+    avatar: PropTypes.string,
   };
 
   constructor(props) {
@@ -69,8 +69,8 @@ class TopicScreen extends React.Component {
   }
 
   renderUserAvatarSource = () => {
-    const { photo } = this.props;
-    return _.isEmpty(photo) ? Images.blankProfile : { uri: makeImageUrl(photo) };
+    const { avatar } = this.props;
+    return _.isEmpty(avatar) ? Images.blankProfile : { uri: avatar };
   };
 
   renderMessageNode(message, topic) {
@@ -146,7 +146,7 @@ const mapStateToProps = state => ({
   subscribedChatId: state.chat.subscribedChatId,
   connected: state.chat.connected,
   userInfo: state.chat.userInfo,
-  photo: state.chat.userInfo.photo,
+  avatar: state.chat.userInfo.avatar,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({

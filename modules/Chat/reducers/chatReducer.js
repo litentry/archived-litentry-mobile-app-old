@@ -4,7 +4,10 @@ const INITIAL_STATE = {
   connected: false,
   chatList: [],
   userId: '',
-  userInfo: {},
+  userInfo: {
+    //name:
+    //avatar:
+  },
   subscribedChatId: null,
 };
 
