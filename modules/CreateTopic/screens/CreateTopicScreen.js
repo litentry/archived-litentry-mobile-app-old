@@ -7,10 +7,11 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
+import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
 
 class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: <NavigationHeader title={screensList.CreateTopic.title} />,
     headerRight: (
       <Button
         onPress={() => navigation.navigate(screensList.Transactions.label)}
@@ -29,7 +30,7 @@ class CreateTopicScreen extends React.Component {
   };
 
   render() {
-    return <View style={styles.container} />;
+    return <TopicInnerScreen/>
   }
 }
 
