@@ -9,6 +9,17 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
 
+const topicTemplate = {
+  public: {
+    fn: 'new topic',
+    photo: null,
+  },
+  private:
+    {
+    comment: 'new country description'
+  }
+}
+
 class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.CreateTopic.title} />,
@@ -30,7 +41,8 @@ class CreateTopicScreen extends React.Component {
   };
 
   render() {
-    return <TopicInnerScreen/>
+    return <TopicInnerScreen description={t.DESCRIPTION} topic={topicTemplate} allowEdit={true} isJoined={false}
+    iconName={'addfile'}/>
   }
 }
 
@@ -48,3 +60,7 @@ export default connect(
 const styles = StyleSheet.create({
   container: {},
 });
+
+const t = {
+  DESCRIPTION: 'Create a new country'
+}

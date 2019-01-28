@@ -12,6 +12,7 @@ import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import { voteAction } from '../voteAction';
 import GenesisButton from '../../../components/GenesisButton';
+import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
 
 const mock = {
   meta: {
@@ -70,59 +71,8 @@ class StartVoteScreen extends React.Component {
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
-    const topicTitle = topic.public.fn;
-    const topicAvatart = makeImageUrl(topic.public.photo);
-    const topicDescription = topic.private.comment;
-
     return (
-      <View style={styles.container}>
-        <View style={styles.introContainer}>
-          <AntDesign
-            name="addfile"
-            size={AppStyle.fontBig}
-            color={AppStyle.blueIcon}
-            style={styles.introIcon}
-          />
-          <Text style={styles.introText}>{t.VOTE_INTRO}</Text>
-        </View>
-        <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
-
-        <View style={styles.infoContainer}>
-          <SingleLineDisplay
-            title={t.GROUP_TOPIC_TITLE}
-            value={topicTitle}
-            onClick={() => navigation.navigate(screensList.AmendCountryName.label)}
-          />
-          <SingleSectionDisplay
-            title={t.TOPIC_DESCRIPTION_TITLE}
-            value={topicDescription}
-            onClick={() => navigation.navigate(screensList.AmendDescription.label)}
-          />
-        </View>
-
-        <View style={styles.rulesContainer}>
-          <SingleLineDisplay
-            title={t.TOPIC_RULES}
-            value={''}
-            Icon={props => (
-              <Entypo
-                name="users"
-                size={AppStyle.fontMiddle}
-                color={AppStyle.blueIcon}
-                style={props.style}
-              />
-            )}
-            onClick={() =>
-              navigation.navigate(screensList.TopicRules.label, {
-                topic,
-                voteEnabled: true,
-              })
-            }
-            style={styles.rules}
-          />
-        </View>
-        {edited && <GenesisButton action={this.onPayment} text={t.BUTTON_TEXT} />}
-      </View>
+      <TopicInnerScreen description={t.VOTE_INTRO} iconName={'addfile'} allowEdit={true} isJoined={true} topic={topic}/>
     );
   }
 }

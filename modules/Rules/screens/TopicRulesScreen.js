@@ -95,9 +95,7 @@ class TopicRulesScreen extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
 
