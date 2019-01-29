@@ -40,7 +40,7 @@ class TinodeAPIClass {
   connect() {
     this.tinode.connect().catch(err => {
       if (err) {
-        // this.handleError(err);
+        this.handleError(err);
       }
     });
   }
@@ -110,20 +110,24 @@ class TinodeAPIClass {
 
   fetchTopics() {
     const me = this.tinode.getMeTopic();
-    console.log('topics are', me);
-
-    return me
-      .subscribe(
-        me
-          .startMetaQuery()
-          .withLaterSub()
-          .withDesc()
-          .build()
-      )
-      .catch(err => {
-        //remove auth token
-        this.handleError(err.message, 'err');
-      });
+    const subscribePromise = me.subscribe(me
+      .startMetaQuery()
+      .withLaterSub()
+      .withDesc()
+      .build()
+    )
+    if(me.isSubscribed()) {
+      return me.leave(false)
+        .then(() => subscribePromise)
+        .catch(err => {
+          this.handleError(err.message, 'err');
+        });
+    } else {
+      return subscribePromise
+        .catch(err => {
+          this.handleError(err.message, 'err');
+        });
+    }
   }
 
   tnMeMetaDesc(meTopics) {
@@ -295,6 +299,31 @@ class TinodeAPIClass {
       })
       .catch(err => {
         this.handleError(err.message, 'err');
+      });
+  }
+
+  createAndSubscribeNewTopic(groupName, privateInfo, userId) {
+    const publicInfo = chatUtils.generatePublicInfo(groupName, null);
+    const topicName = this.tinode.newGroupTopicName();
+    let topic = this.tinode.getTopic(topicName);
+    const newTopicParams = { desc: { public: publicInfo, private: { comment: privateInfo } } };
+    let getQuery = topic
+      .startMetaQuery()
+      .withLaterDesc()
+      .withLaterSub()
+      .withLaterData(chatConfig.messagePerPage)
+      .withLaterDel();
+    return topic
+      .subscribe(getQuery.build(), newTopicParams)
+      .then(ctrl => {
+        console.log('create new topic ctrl is', ctrl);
+        this.subscribe(ctrl.topic, userId);
+        return new Promise((resolve, reject) => {
+          resolve(ctrl);
+        });
+      })
+      .catch(err => {
+        this.handleError(err.message);
       });
   }
 }
