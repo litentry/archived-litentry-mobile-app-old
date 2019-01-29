@@ -68,7 +68,9 @@ export const saveUserData = meTopics => {
     store.dispatch(chatAction.setUserInfo(userInfo));
     store.dispatch(
       loaderAction.saveAppData({
-        [dataEntry.profileImage.stateName]: userInfo.avatar ? userInfo.avatar : dataEntry.profileImage.initValue,
+        [dataEntry.profileImage.stateName]: userInfo.avatar
+          ? userInfo.avatar
+          : dataEntry.profileImage.initValue,
         [dataEntry.profileName.stateName]: userInfo.name,
       })
     );

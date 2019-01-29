@@ -12,7 +12,7 @@ import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import { voteAction } from '../voteAction';
 import GenesisButton from '../../../components/GenesisButton';
-import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
+import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 
 const mock = {
   meta: {
@@ -72,7 +72,13 @@ class StartVoteScreen extends React.Component {
     if (!topic) return null;
 
     return (
-      <TopicInnerScreen description={t.VOTE_INTRO} iconName={'addfile'} allowEdit={true} isJoined={true} topic={topic}/>
+      <TopicInnerScreen
+        description={t.VOTE_INTRO}
+        iconName='addfile'
+        allowEdit
+        isJoined
+        topic={topic}
+      />
     );
   }
 }

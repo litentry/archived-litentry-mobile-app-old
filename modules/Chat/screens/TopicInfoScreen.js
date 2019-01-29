@@ -4,7 +4,7 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
-import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
+import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 
 class TopicInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -26,7 +26,15 @@ class TopicInfoScreen extends React.Component {
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
-    return <TopicInnerScreen description={t.TOPIC_DESCRIPTION_TITLE} topic={topic} isJoined={true} allowEdit={true} iconName={'addfile'}/>
+    return (
+      <TopicInnerScreen
+        description={t.TOPIC_DESCRIPTION_TITLE}
+        topic={topic}
+        isJoined
+        allowEdit
+        iconName='addfile'
+      />
+    );
   }
 }
 
@@ -45,4 +53,4 @@ export default connect(
 
 const t = {
   TOPIC_DESCRIPTION_TITLE: 'Topic Description',
-}
+};

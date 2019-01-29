@@ -7,18 +7,17 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
+import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 
 const topicTemplate = {
   public: {
     fn: 'new topic',
     photo: null,
   },
-  private:
-    {
-    comment: 'new country description'
-  }
-}
+  private: {
+    comment: 'new country description',
+  },
+};
 
 class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -41,8 +40,15 @@ class CreateTopicScreen extends React.Component {
   };
 
   render() {
-    return <TopicInnerScreen description={t.DESCRIPTION} topic={topicTemplate} allowEdit={true} isJoined={false}
-    iconName={'addfile'}/>
+    return (
+      <TopicInnerScreen
+        description={t.DESCRIPTION}
+        topic={topicTemplate}
+        allowEdit
+        isJoined={false}
+        iconName='addfile'
+      />
+    );
   }
 }
 
@@ -62,5 +68,5 @@ const styles = StyleSheet.create({
 });
 
 const t = {
-  DESCRIPTION: 'Create a new country'
-}
+  DESCRIPTION: 'Create a new country',
+};
