@@ -32,7 +32,7 @@ class TopicInfoScreen extends React.Component {
         topic={topic}
         isJoined
         allowEdit
-        iconName='addfile'
+        iconName="addfile"
       />
     );
   }

@@ -43,7 +43,7 @@ export const generatePublicInfo = (profileName, imageData) => {
     if (profileName) {
       publicInfo.fn = profileName.trim();
     }
-    if (imageData) {
+    if (!_.isEmpty(imageData)) {
       publicInfo.photo = imageData;
     }
   }

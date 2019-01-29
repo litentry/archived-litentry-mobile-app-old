@@ -52,6 +52,7 @@ export const groupMetaRules = {
   COUNTRY_NAME: 'countryName',
   DESCRIPTION: 'description',
   MEMBER_RULES: 'memberRules',
+  PROFILE: 'profile',
 };
 
 export const chatConfig = {

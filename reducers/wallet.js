@@ -19,7 +19,7 @@ export const walletReducer = (state = INITIAL_STATE, action) => {
     case walletActionType.UPDATE_NES:
       return set('nes', action.nes, state);
     case walletActionType.UPDATE_BALANCES:
-      return _.assign({}, state, action.balances);
+      return _.merge({}, state, action.balances);
     default:
       return state;
   }

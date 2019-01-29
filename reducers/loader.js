@@ -100,7 +100,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       return { ...state, ...action.data };
     }
     case loaderActionType.CLEAR_APP_DATA: {
-      const newData = _.assign(
+      const newData = _.merge(
         {},
         _.omit(INIT_STATE, [
           /**

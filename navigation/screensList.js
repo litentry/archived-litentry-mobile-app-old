@@ -35,6 +35,7 @@ export const screensList = {
   AmendCountryName: { label: 'AmendCountryName', title: 'Amend Country Name' },
   AmendDescription: { label: 'AmendDescription', title: 'Amend Description' },
   VoteInfo: { label: 'VoteInfo', title: 'Participate a vote' },
-  UploadProfile: { label: 'UploadProfile', title: 'Upload your profile' },
+  UploadUserProfile: { label: 'UploadUserProfile', title: 'Upload your profile' },
+  UploadCountryProfile: { label: 'UploadCountryProfile', title: 'Upload country profile' },
   CreateTopic: { label: 'CreateTopic', title: 'Create a country' },
 };

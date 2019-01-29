@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -12,35 +12,10 @@ import SingleLineDisplay from '../components/SingleLineDisplay';
 import SingleSectionDisplay from '../components/SingleSectionDisplay';
 import GenesisButton, { VariantList as variantList } from '../components/GenesisButton';
 import { voteAction } from '../modules/Vote/voteAction';
-import { makeImageUrl } from '../modules/Chat/lib/blob-helpers';
 import TinodeAPI from '../modules/Chat/TinodeAPI';
 import { MemberListContainer, IntroContainer } from './components';
 import { popupAction } from '../actions/popupAction';
-
-const mock = {
-  meta: {
-    countryName: '',
-    description: '',
-    economicRule: 'Standard plan',
-    value: '1000',
-    requiredApproved: 50,
-    requiredHour: 168,
-    groupWebsitePrefix: 'Https://www.bacaoke.com/',
-    voteCost: 1000,
-    memberRules: {
-      default: [150, 150, 10, 1, 1],
-    },
-  },
-  topic: {
-    public: {
-      fn: 'new topic',
-      photo: null,
-    },
-    private: {
-      comment: 'new country description',
-    },
-  },
-};
+import { renderImageSource } from '../utils/imageUtils';
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -49,6 +24,7 @@ class TopicInnerScreen extends React.Component {
     resetVote: PropTypes.func.isRequired,
     edited: PropTypes.bool.isRequired,
     voteCached: PropTypes.object.isRequired,
+    voteOrigin: PropTypes.object.isRequired,
     userId: PropTypes.string.isRequired,
     showPopup: PropTypes.func.isRequired,
 
@@ -60,18 +36,19 @@ class TopicInnerScreen extends React.Component {
   };
 
   componentDidMount() {
-    const { initVote, topic } = this.props;
-    const metaData = _.merge(mock.meta, {
-      countryName: _.get(topic, 'public.fn', ''),
-      description: _.get(topic, 'private.comment', ''),
+    const { initVote, topic, voteOrigin } = this.props;
+    const voteData = _.merge({}, voteOrigin, {
+      countryName: _.get(topic, 'public.fn', voteOrigin.countryName),
+      description: _.get(topic, 'private.comment', voteOrigin.description),
     });
-    initVote(metaData);
+    initVote(voteData);
   }
 
   onPayment() {
+    const { voteCached } = this.props;
     Alert.alert(
       'Payment',
-      `${mock.meta.voteCost} NES`,
+      `${voteCached.voteCost} NES`,
       [{ text: 'Pay now', onPress: () => console.log('OK Pressed') }],
       { cancelable: false }
     );
@@ -133,25 +110,17 @@ class TopicInnerScreen extends React.Component {
 
   validateTopicParams() {
     const { voteCached } = this.props;
-    if(_.isEmpty(voteCached.countryName))
-      return {error: t.CREATE_NAME_ERROR}
-    if(_.isEmpty(voteCached.description))
-      return {error: t.CREATE_DESCRIPTION_ERROR}
-    if(_.isEmpty(voteCached.photo))
-      return {error: t.CREATE_PHOTO_ERROR}
-    return {error: null}
+    if (_.isEmpty(voteCached.countryName)) return { error: t.CREATE_NAME_ERROR };
+    if (_.isEmpty(voteCached.description)) return { error: t.CREATE_DESCRIPTION_ERROR };
+    if (_.isEmpty(voteCached.profile)) return { error: t.CREATE_PHOTO_ERROR };
+    return { error: null };
   }
 
   createNewTopic() {
-    const { voteCached, navigation, userId, showPopup } = this.props;
+    const { voteCached, userId, showPopup } = this.props;
     const paramError = _.get(this.validateTopicParams(), 'error', null);
-    if (paramError)
-      return showPopup(paramError)
-    TinodeAPI.createAndSubscribeNewTopic(
-      voteCached.countryName,
-      voteCached.description,
-      userId
-    ).then(ctrl => {
+    if (paramError) return showPopup(paramError);
+    TinodeAPI.createAndSubscribeNewTopic(voteCached, userId).then(ctrl => {
       showPopup('Please login again to see the topic');
       console.log('in topicInnerScreen log out success', ctrl);
       //TODO to be validate here and add upload profile function
@@ -163,20 +132,21 @@ class TopicInnerScreen extends React.Component {
   }
 
   renderIntroOrMemberList() {
-    const { isJoined, description, iconName, edited, topic } = this.props;
+    const { isJoined, description, iconName, edited, topic, navigation } = this.props;
     if (edited) return <IntroContainer iconName={iconName} description={t.VOTE_INTRO} />;
     if (isJoined) return <MemberListContainer topic={topic} navigation={navigation} />;
     if (this.isCreatingNewTopic)
       return <IntroContainer iconName={iconName} description={description} />;
-    return <MemberListContainer topic={topic} navigation={navigation}/>;
+    return <MemberListContainer topic={topic} navigation={navigation} />;
   }
 
   render() {
-    const { topic, navigation, edited, allowEdit, isJoined } = this.props;
+    const { navigation, allowEdit, isJoined, voteCached } = this.props;
+    if (_.isEmpty(voteCached))
+      return null;
 
-    const topicTitle = topic.public.fn;
-    const topicAvatart = makeImageUrl(topic.public.photo);
-    const topicDescription = topic.private.comment;
+    const topicTitle = voteCached.countryName;
+    const topicDescription = voteCached.description;
 
     return (
       <ScrollView style={styles.container}>
@@ -205,10 +175,20 @@ class TopicInnerScreen extends React.Component {
           {isJoined && (
             <SingleLineDisplay
               title={t.TOPIC_META_TITLE}
-              value={mock.meta.value}
+              value={voteCached.treasury}
               onClick={() => navigation.navigate(screensList.Transactions.label)}
             />
           )}
+          <SingleLineDisplay
+            title={t.CREATE_UPLOAD_PROFILE}
+            value={''}
+            Icon={() => (
+              <View style={styles.imageContainer}>
+                <Image style={styles.image} source={renderImageSource(voteCached.profile)} />
+              </View>
+            )}
+            onClick={() => navigation.navigate(screensList.UploadCountryProfile.label)}
+          />
         </View>
 
         <View style={styles.rulesContainer}>
@@ -225,11 +205,10 @@ class TopicInnerScreen extends React.Component {
             )}
             onClick={() =>
               navigation.navigate(screensList.TopicRules.label, {
-                topic,
+                topic: voteCached,
                 voteEnabled: true,
               })
             }
-            style={styles.rules}
           />
         </View>
         {this.renderButton()}
@@ -241,6 +220,7 @@ class TopicInnerScreen extends React.Component {
 const mapStateToProps = state => ({
   edited: !_.isEqual(state.vote.origin, state.vote.cached),
   voteCached: state.vote.cached,
+  voteOrigin: state.vote.origin,
   userId: state.appState.userId,
 });
 
@@ -298,5 +278,14 @@ const styles = StyleSheet.create({
   rulesContainer: {
     marginTop: 20,
     backgroundColor: 'white',
+  },
+  imageContainer: {
+    height: 50,
+    width: 50,
+  },
+  image: {
+    height: 50,
+    width: 50,
+    resizeMode: 'contain',
   },
 });

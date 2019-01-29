@@ -1,11 +1,13 @@
+/* eslint-disable react/prop-types */
+
 import { Text, View } from 'react-native';
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 import AppStyle from '../commons/AppStyle';
 import { screensList } from '../navigation/screensList';
-import PropTypes from 'prop-types';
-import LightButton from "../components/LightButton";
-import MemberList from "../components/MemberList";
+import LightButton from '../components/LightButton';
+import MemberList from '../components/MemberList';
 
 export const IntroContainer = props => (
   <View style={styles.introContainer}>
@@ -22,7 +24,7 @@ export const IntroContainer = props => (
 IntroContainer.prototype = {
   iconName: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-}
+};
 
 export const MemberListContainer = props => (
   <View style={styles.memberContainer}>
@@ -41,7 +43,7 @@ export const MemberListContainer = props => (
 MemberListContainer.prototype = {
   topic: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
-}
+};
 
 const styles = {
   introIcon: {
@@ -63,4 +65,4 @@ const styles = {
   memberContainer: {
     backgroundColor: 'white',
   },
-}
+};

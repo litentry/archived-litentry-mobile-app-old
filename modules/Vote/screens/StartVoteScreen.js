@@ -74,7 +74,7 @@ class StartVoteScreen extends React.Component {
     return (
       <TopicInnerScreen
         description={t.VOTE_INTRO}
-        iconName='addfile'
+        iconName="addfile"
         allowEdit
         isJoined
         topic={topic}

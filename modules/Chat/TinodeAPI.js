@@ -110,23 +110,24 @@ class TinodeAPIClass {
 
   fetchTopics() {
     const me = this.tinode.getMeTopic();
-    const subscribePromise = me.subscribe(me
-      .startMetaQuery()
-      .withLaterSub()
-      .withDesc()
-      .build()
-    )
-    if(me.isSubscribed()) {
-      return me.leave(false)
+    const subscribePromise = me.subscribe(
+      me
+        .startMetaQuery()
+        .withLaterSub()
+        .withDesc()
+        .build()
+    );
+    if (me.isSubscribed()) {
+      return me
+        .leave(false)
         .then(() => subscribePromise)
         .catch(err => {
           this.handleError(err.message, 'err');
         });
     } else {
-      return subscribePromise
-        .catch(err => {
-          this.handleError(err.message, 'err');
-        });
+      return subscribePromise.catch(err => {
+        this.handleError(err.message, 'err');
+      });
     }
   }
 
@@ -283,7 +284,7 @@ class TinodeAPIClass {
 
   handleCreateNewAccount(navigation, email, password, username, photo) {
     console.log('create public is', chatUtils.generatePublicInfo(username, photo));
-    this.tinode
+    return this.tinode
       .createAccountBasic(email, password, {
         public: chatUtils.generatePublicInfo(username, photo),
         tags: undefined,
@@ -302,11 +303,12 @@ class TinodeAPIClass {
       });
   }
 
-  createAndSubscribeNewTopic(groupName, privateInfo, userId) {
-    const publicInfo = chatUtils.generatePublicInfo(groupName, null);
+  createAndSubscribeNewTopic(cachedVote, userId) {
+    const { countryName, profile, description } = cachedVote;
+    const publicInfo = chatUtils.generatePublicInfo(countryName, profile);
     const topicName = this.tinode.newGroupTopicName();
     let topic = this.tinode.getTopic(topicName);
-    const newTopicParams = { desc: { public: publicInfo, private: { comment: privateInfo } } };
+    const newTopicParams = { desc: { public: publicInfo, private: { comment: description } } };
     let getQuery = topic
       .startMetaQuery()
       .withLaterDesc()

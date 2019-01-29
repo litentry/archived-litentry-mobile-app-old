@@ -41,7 +41,9 @@ class SetPasswordScreen extends React.Component {
     const { isSet, repeatPassword } = this.state;
     const validator = () => (isSet ? repeatPassword === password : passwordRegex.test(password));
     const onPress = () =>
-      isSet ? navigation.navigate(screensList.UploadProfile.label) : this.setState({ isSet: true });
+      isSet
+        ? navigation.navigate(screensList.UploadUserProfile.label)
+        : this.setState({ isSet: true });
 
     return (
       <View style={styles.container}>

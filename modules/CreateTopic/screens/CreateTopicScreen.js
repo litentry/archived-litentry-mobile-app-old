@@ -9,16 +9,6 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 
-const topicTemplate = {
-  public: {
-    fn: 'new topic',
-    photo: null,
-  },
-  private: {
-    comment: 'new country description',
-  },
-};
-
 class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.CreateTopic.title} />,
@@ -43,10 +33,10 @@ class CreateTopicScreen extends React.Component {
     return (
       <TopicInnerScreen
         description={t.DESCRIPTION}
-        topic={topicTemplate}
+        topic={{}}
         allowEdit
         isJoined={false}
-        iconName='addfile'
+        iconName="addfile"
       />
     );
   }

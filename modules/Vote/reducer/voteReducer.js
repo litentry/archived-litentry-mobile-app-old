@@ -2,7 +2,25 @@ import _ from 'lodash';
 import { voteActionType } from '../voteAction';
 
 const INIT_VALUE = {
-  origin: {},
+  origin: {
+    // Information extracted from topic
+    countryName: 'New Country',
+    description: 'A brand new country.',
+    profile: {},
+
+    // Information related to smart contract
+    economicRule: 'Standard plan',
+    treasury: '1000',
+    requiredApproved: 50,
+    requiredHour: 168,
+    groupWebsitePrefix: 'Https://www.bacaoke.com/',
+    entryCost: 100,
+    exitCost: 50,
+    voteCost: 1000,
+    memberRules: {
+      default: [150, 150, 10, 1, 1],
+    },
+  },
   cached: {},
 };
 
@@ -17,7 +35,7 @@ export const voteReducer = (state = INIT_VALUE, action) => {
     case voteActionType.SET: {
       return {
         ...state,
-        cached: _.assign({}, state.origin, action.data),
+        cached: _.merge({}, state.origin, action.data),
       };
     }
     case voteActionType.RESET: {
