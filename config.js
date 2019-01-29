@@ -41,6 +41,8 @@ export const imageConfig = {
   /** Maximum allowed linear dimension of an inline image in pixels. You may want
    * to adjust it to 1600 or 2400 for production.**/
   MAX_IMAGE_DIM: 768,
+
+  MAX_PHOTO_SIZE: 4194304,
 };
 
 export const groupMetaRules = {

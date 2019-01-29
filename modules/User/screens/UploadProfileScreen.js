@@ -13,6 +13,8 @@ import { userRegisterAction } from '../actions/userRegiseterActions';
 import Images from '../../../commons/Images';
 import { makeImageUrl, MIME_EXTENSIONS } from '../../Chat/lib/blob-helpers';
 import TinodeAPI from '../../Chat/TinodeAPI';
+import { base64DecodedLen } from '../../../utils/imageUtils';
+import { imageConfig } from '../../../config';
 
 const isValidExtension = imageCallback => {
   const extension = imageCallback.uri.split('.')[1];
@@ -42,8 +44,18 @@ class UploadProfileScreen extends React.Component {
     email: PropTypes.string.isRequired,
   };
 
+  validateAndUpdateImage = image => {
+    const { showPopup, updateUserRegisterInfo } = this.props;
+    if (image.cancelled || !isValidExtension(image)) {
+      return showPopup(t.PHOTO_TYPE_ERROR);
+    }
+    if (base64DecodedLen(image.base64) > imageConfig.MAX_PHOTO_SIZE) {
+      return showPopup(t.PHOTO_BIG_ERROR);
+    }
+    updateUserRegisterInfo({ photo: generatePhotoObject(image) });
+  };
+
   pickFromCamera = async () => {
-    const { updateUserRegisterInfo } = this.props;
     if (Platform.OS === 'ios') {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
       if (status !== 'granted') {
@@ -56,14 +68,10 @@ class UploadProfileScreen extends React.Component {
       quality: 0.78,
       aspect: [1, 1],
     });
-    if (image.cancelled || !isValidExtension(image)) {
-      return;
-    }
-    updateUserRegisterInfo({ photo: generatePhotoObject(image) });
+    this.validateAndUpdateImage(image);
   };
 
   pickFromGallery = async () => {
-    const { updateUserRegisterInfo } = this.props;
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL, Permissions.CAMERA);
     if (status !== 'granted') {
       alert(t.GALLERY_ALERT);
@@ -75,10 +83,7 @@ class UploadProfileScreen extends React.Component {
       quality: 0.78,
       aspect: [1, 1],
     });
-    if (image.cancelled || !isValidExtension(image)) {
-      return;
-    }
-    updateUserRegisterInfo({ photo: generatePhotoObject(image) });
+    this.validateAndUpdateImage(image);
   };
 
   renderSource = () => {
@@ -186,4 +191,6 @@ const t = {
   CAMERA_ALERT:
     'Hey! You might want to enable camera roll for my app, then you may make brand new profile.',
   NEXT: 'Next',
+  PHOTO_BIG_ERROR: 'Photo size too large, please choose a small one',
+  PHOTO_TYPE_ERROR: 'Photo format is not supported or upload failed',
 };
