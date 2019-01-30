@@ -1,39 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Modal, Text, TouchableHighlight } from 'react-native';
-import _ from "lodash";
-import {popupAction} from "../actions/popupAction";
-import connect from "react-redux/es/connect/connect";
-import PropType from 'prop-types';
-import AppStyle from "../commons/AppStyle";
+import _ from 'lodash';
+import connect from 'react-redux/es/connect/connect';
+import { popupAction } from '../actions/popupAction';
+import AppStyle from '../commons/AppStyle';
 
 class PopupModal extends React.Component {
   static propTypes = {
-    content: PropType.string,
-    visible: PropType.bool,
+    content: PropTypes.string,
+    visible: PropTypes.bool,
     hidePopup: PropTypes.func.isRequired,
   };
 
   static defaultProps = {};
 
   render() {
-    const {visible, content, hidePopup} = this.props
+    const { visible, content, hidePopup } = this.props;
     return (
       <View style={styles.marginTop}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={true}
-          onRequestClose={hidePopup}>
+        <Modal animationType="slide" transparent visible onRequestClose={hidePopup}>
           <View style={styles.overlay}>
             <View style={styles.innerContainer}>
               <View style={styles.contentContainer}>
                 <Text style={styles.contentText}>{content}</Text>
               </View>
-              <TouchableHighlight
-                onPress={hidePopup}
-                style={styles.buttonContainer}
-              >
+              <TouchableHighlight onPress={hidePopup} style={styles.buttonContainer}>
                 <Text style={styles.buttonText}>{t.BUTTON_OK}</Text>
               </TouchableHighlight>
             </View>
@@ -45,7 +37,7 @@ class PopupModal extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  marginTop: {marginTop: 22},
+  marginTop: { marginTop: 22 },
   overlay: {
     flex: 1,
     alignItems: 'center',
@@ -82,13 +74,13 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontSize: AppStyle.fontMiddle,
-    fontFamily: AppStyle.mainFont
+    fontFamily: AppStyle.mainFont,
   },
-})
+});
 
 const t = {
   BUTTON_OK: 'OK',
-}
+};
 
 const mapStateToProps = state => ({
   visible: state.popup.visible,

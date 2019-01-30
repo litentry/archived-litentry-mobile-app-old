@@ -106,7 +106,6 @@ class TopicScreen extends React.Component {
     const topic = _.get(topicsMap, topicId);
     if (!topic) return null;
     const { messages } = topic;
-    if (!messages) return null;
     return (
       <View style={styles.container}>
         <FlatList

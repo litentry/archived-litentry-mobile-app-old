@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import { NavigationActions, StackActions } from 'react-navigation';
+import _ from 'lodash';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
@@ -108,6 +109,16 @@ class TinodeAPIClass {
     console.log('meta is', metaData);
   }
 
+  leaveTopic(topicId) {
+    if (!topicId) {
+      return;
+    }
+    let topic = this.tinode.getTopic(topicId);
+    if (topic && topic.isSubscribed()) {
+      return topic.leave(true).catch(err => this.handleError(err));
+    }
+  }
+
   fetchTopics() {
     const me = this.tinode.getMeTopic();
     const subscribePromise = me.subscribe(
@@ -147,6 +158,7 @@ class TinodeAPIClass {
       console.log('contact is', c);
       chatList.push(c);
     });
+    console.log('update chat list is', chatList);
     store.dispatch(chatAction.updateChatList(chatList));
     // this.resetContactList();
   }
@@ -249,21 +261,21 @@ class TinodeAPIClass {
       store.dispatch(
         topicsAction.updateTopicMeta(
           topicId,
-          desc.public.fn,
-          desc.public.photo,
-          topic.private.comment
+          _.pick(topic, [
+            'private',
+            'public',
+            'topic',
+            'created',
+            'touched',
+            'updated',
+            '_tags',
+            'online',
+            'acs',
+          ])
         )
       );
     } else {
       store.dispatch(topicsAction.updateTopicMeta(topicId, '', '', ''));
-    }
-    console.log('in handleDescChange, desc are:', desc);
-    if (desc.acs) {
-      console.log('test acs is: ', desc.acs);
-      // this.setState({
-      //   readOnly: !desc.acs.isWriter(),
-      //   writeOnly: !desc.acs.isReader()
-      // });
     }
   }
   //TODO which in the future could be optimized with group user, only fetch the user id

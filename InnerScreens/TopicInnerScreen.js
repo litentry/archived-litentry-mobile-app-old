@@ -54,6 +54,15 @@ class TopicInnerScreen extends React.Component {
     );
   }
 
+  onLeave() {
+    const { navigation, topic } = this.props;
+    if (_.isEmpty(_.get(topic, 'topic', null))) return;
+    return TinodeAPI.leaveTopic(topic.topic).then(ctrl => {
+      console.log('leave ctrl is', ctrl);
+      navigation.navigate(screensList.ChatList.label);
+    });
+  }
+
   showVoteNeededAlert() {
     Alert.alert(
       'Vote needed',
@@ -101,7 +110,7 @@ class TopicInnerScreen extends React.Component {
     if (isJoined)
       return (
         <GenesisButton
-          action={() => this.onPayment()}
+          action={() => this.onLeave()}
           text={t.BUTTON_LEAVE}
           variant={variantList.CANCEL}
         />
@@ -125,7 +134,7 @@ class TopicInnerScreen extends React.Component {
   }
 
   createNewTopic() {
-    const { voteCached, userId, showPopup } = this.props;
+    const { voteCached, userId, showPopup, navigation } = this.props;
     const paramError = _.get(this.validateTopicParams(), 'error', null);
     if (paramError) return showPopup(paramError);
     TinodeAPI.createAndSubscribeNewTopic(voteCached, userId).then(ctrl => {
@@ -135,7 +144,7 @@ class TopicInnerScreen extends React.Component {
       navigation.navigate(screensList.Topic.label, {
         topicId: ctrl.topic,
         title: voteCached.countryName,
-      })
+      });
     });
   }
 

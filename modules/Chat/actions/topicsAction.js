@@ -12,12 +12,10 @@ export const topicsAction = {
     topicName,
     topicMessages,
   }),
-  updateTopicMeta: (topicName, topicTitle, topicAvatar, topicDescription) => ({
+  updateTopicMeta: (topicName, topicData) => ({
     type: topicsActionType.UPDATE_TOPIC_META,
     topicName,
-    topicTitle,
-    topicAvatar,
-    topicDescription,
+    topicData,
   }),
   updateTopicSubs: (topicName, topicSubs) => ({
     type: topicsActionType.UPDATE_TOPIC_SUBS,
