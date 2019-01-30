@@ -75,6 +75,14 @@ class TopicInnerScreen extends React.Component {
 
   renderButton() {
     const { isJoined, edited, resetVote } = this.props;
+    if (this.isCreatingNewTopic)
+      return (
+        <GenesisButton
+          action={() => this.createNewTopic()}
+          text={t.BUTTON_CREATE}
+          variant={variantList.CONFIRM}
+        />
+      );
     if (edited)
       return (
         <React.Fragment>
@@ -84,7 +92,7 @@ class TopicInnerScreen extends React.Component {
             variant={variantList.PRIMARY}
           />
           <GenesisButton
-            action={this.onPayment}
+            action={() => this.onPayment()}
             text={t.BUTTON_CONFIRM_EDIT}
             variant={variantList.CONFIRM}
           />
@@ -92,17 +100,17 @@ class TopicInnerScreen extends React.Component {
       );
     if (isJoined)
       return (
-        <GenesisButton action={this.onPayment} text={t.BUTTON_LEAVE} variant={variantList.CANCEL} />
+        <GenesisButton
+          action={() => this.onPayment()}
+          text={t.BUTTON_LEAVE}
+          variant={variantList.CANCEL}
+        />
       );
     if (this.isBlockedUser)
       return (
-        <GenesisButton action={this.onPayment} text={t.BUTTON_JOIN} variant={variantList.CONFIRM} />
-      );
-    if (this.isCreatingNewTopic)
-      return (
         <GenesisButton
-          action={() => this.createNewTopic()}
-          text={t.BUTTON_CREATE}
+          action={() => this.onPayment()}
+          text={t.BUTTON_JOIN}
           variant={variantList.CONFIRM}
         />
       );
@@ -124,10 +132,10 @@ class TopicInnerScreen extends React.Component {
       showPopup('Please login again to see the topic');
       console.log('in topicInnerScreen log out success', ctrl);
       //TODO to be validate here and add upload profile function
-      // navigation.navigate(screensList.Topic.label, {
-      //   topicId: ctrl.topic,
-      //   title: ctrl.public.fn,
-      // })
+      navigation.navigate(screensList.Topic.label, {
+        topicId: ctrl.topic,
+        title: voteCached.countryName,
+      })
     });
   }
 
@@ -142,8 +150,7 @@ class TopicInnerScreen extends React.Component {
 
   render() {
     const { navigation, allowEdit, isJoined, voteCached } = this.props;
-    if (_.isEmpty(voteCached))
-      return null;
+    if (_.isEmpty(voteCached)) return null;
 
     const topicTitle = voteCached.countryName;
     const topicDescription = voteCached.description;
@@ -255,7 +262,7 @@ const t = {
   CREATE_NAME_ERROR: 'Please fill a valid country name',
   CREATE_DESCRIPTION_ERROR: 'Please fill a description for your country',
   CREATE_PHOTO_ERROR: 'Please upload a profile photo for the country',
-  CREATE_UPLOAD_PROFILE: 'Upload a country profile',
+  CREATE_UPLOAD_PROFILE: 'Upload a profile',
 };
 
 const styles = StyleSheet.create({
@@ -282,6 +289,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: 50,
     width: 50,
+    marginRight: 10,
   },
   image: {
     height: 50,

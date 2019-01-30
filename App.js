@@ -30,9 +30,9 @@ export default class App extends React.Component {
             <AppNavigator>
               <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-                <PopupWrapper />
               </View>
             </AppNavigator>
+            <PopupWrapper />
           </View>
         </Provider>
       );

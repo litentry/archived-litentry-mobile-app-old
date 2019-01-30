@@ -10,6 +10,7 @@ import Images from '../../../commons/Images';
 import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
 import { renderImageSource } from '../../../utils/imageUtils';
+import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 
 class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
@@ -33,7 +34,7 @@ class ContinueLoginInnerScreen extends React.Component {
           <Image
             style={styles.profile}
             resizeMode="contain"
-            source={renderImageSource(profileImage)}
+            source={_.isEmpty(profileImage) ? Images.blankProfile : { uri: profileImage }}
           />
           <Text style={styles.textContainer}>
             <Text style={styles.textContinue}>{t.CONTINUE}</Text>

@@ -72,10 +72,11 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 2,
+    alignItems: 'center',
     flexDirection: 'row',
   },
   icon: {
-    paddingRight: 10,
+    marginRight: 10,
   },
   title: {
     flex: 2,

@@ -42,9 +42,9 @@ class UploadUserProfileScreen extends React.Component {
     const { photo } = this.props;
     return (
       <PhotoUploader
-        onConfirm={this.createAccountRequest}
+        onConfirm={this.createAccountRequest.bind(this)}
         photo={photo}
-        updatePhoto={this.updatePhoto}
+        updatePhoto={this.updatePhoto.bind(this)}
         title={t.TITLE}
       />
     );

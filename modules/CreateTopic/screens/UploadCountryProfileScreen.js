@@ -30,18 +30,18 @@ class UploadCountryProfileScreen extends React.Component {
     navigation.goBack();
   }
 
-  updateProfile(profileObject) {
+  updateProfile = profileObject => {
     const { setVote } = this.props;
     setVote({ [groupMetaRules.PROFILE]: profileObject });
-  }
+  };
 
   render() {
     const { profile } = this.props;
     return (
       <PhotoUploader
-        onConfirm={this.onConfirm}
+        onConfirm={() => this.onConfirm()}
         photo={profile}
-        updatePhoto={this.updateProfile}
+        updatePhoto={this.updateProfile.bind(this)}
         title={t.TITLE}
       />
     );

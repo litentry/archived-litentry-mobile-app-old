@@ -37,7 +37,7 @@ class PhotoUploader extends React.Component {
     if (image.cancelled || !isValidExtension(image)) {
       return showPopup(t.PHOTO_TYPE_ERROR);
     }
-    if (!validateImageSize(image.base64)) {
+    if (!validateImageSize(image.base64.length)) {
       return showPopup(t.PHOTO_BIG_ERROR);
     }
     updatePhoto(generatePhotoObject(image));

@@ -66,3 +66,7 @@ const styles = {
     backgroundColor: 'white',
   },
 };
+
+const t = {
+  VIEW_MORE_MEMBERS: 'View more members',
+}

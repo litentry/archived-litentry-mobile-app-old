@@ -21,7 +21,7 @@ class TopicScreen extends React.Component {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate(screensList.TopicInfo.label, {
-            title: navigation.getParam('title', null),
+            title: navigation.getParam('title', ''),
           })
         }
         color="black"

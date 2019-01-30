@@ -71,7 +71,6 @@ class ChatListScreen extends React.Component {
 
   render() {
     const { chatList, navigation } = this.props;
-    console.log('chatList is', chatList);
     return (
       <ScrollView
         style={styles.container}
