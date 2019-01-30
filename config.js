@@ -56,7 +56,7 @@ export const groupMetaRules = {
 };
 
 export const chatConfig = {
-  messagePerPage: 20,
+  messagePerPage: 5,
   online_now: {
     id: 'online_now',
     defaultMessage: 'online now',

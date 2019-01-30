@@ -8,6 +8,7 @@ import { chatAction } from './actions/chatAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import * as chatUtils from '../../utils/chatUtils';
+import { popupAction } from '../../actions/popupAction';
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -36,6 +37,7 @@ class TinodeAPIClass {
 
   handleError(err) {
     console.log('error is', err);
+    store.dispatch(popupAction.showPopup(err.toString()));
   }
 
   connect() {
@@ -43,6 +45,27 @@ class TinodeAPIClass {
       if (err) {
         this.handleError(err);
       }
+    });
+  }
+
+  // User is sending a message, either plain text or a drafty object, possibly
+  // with attachments.
+  handleSendMessage(topicId, userId, msg) {
+    let topic = this.tinode.getTopic(topicId);
+
+    //TODO need to add local cache with second params to true
+    msg = topic.createMessage(msg, false);
+    // The uploader is used to show progress.
+    // msg._uploader = (progress)=> {
+    //   console.log('progress is', progress)
+    // };
+
+    if (!topic.isSubscribed()) {
+      return this.subscribe(topicId, userId);
+    }
+
+    return topic.publishDraft(msg).catch(err => {
+      this.handleError(err.message);
     });
   }
 
@@ -117,6 +140,17 @@ class TinodeAPIClass {
     if (topic && topic.isSubscribed()) {
       return topic.leave(true).catch(err => this.handleError(err));
     }
+  }
+
+  fetchMoreTopics(topicId) {
+    let topic = this.tinode.getTopic(topicId);
+    if (!topic.isSubscribed() || !topic.msgHasMoreMessages()) {
+      return Promise.resolve();
+    }
+    return topic.getMessagesPage(chatConfig.messagePerPage)
+      .catch((err) => {
+      this.handleError(err.message);
+    });
   }
 
   fetchTopics() {

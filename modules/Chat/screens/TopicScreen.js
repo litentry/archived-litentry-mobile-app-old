@@ -1,5 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, FlatList, Platform } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+  Platform,
+  Text,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -15,7 +23,7 @@ import { topicsAction } from '../actions/topicsAction';
 import ActionList from '../components/ActionList';
 
 class TopicScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({navigation}) => ({
     headerTitle: navigation.state.params.title,
     headerRight: (
       <TouchableOpacity
@@ -56,11 +64,12 @@ class TopicScreen extends React.Component {
     super(props);
     this.state = {
       showAction: false,
+      refreshing: false,
     };
   }
 
   componentDidMount() {
-    const { navigation, userId, subscribedChatId, connected } = this.props;
+    const {navigation, userId, subscribedChatId, connected} = this.props;
     const topicId = navigation.getParam('topicId', null);
     if (connected && subscribedChatId !== topicId) {
       if (subscribedChatId !== null) TinodeAPI.unsubscribe(subscribedChatId);
@@ -69,21 +78,21 @@ class TopicScreen extends React.Component {
   }
 
   renderUserAvatarSource = () => {
-    const { avatar } = this.props;
-    return _.isEmpty(avatar) ? Images.blankProfile : { uri: avatar };
+    const {avatar} = this.props;
+    return _.isEmpty(avatar) ? Images.blankProfile : {uri: avatar};
   };
 
   renderMessageNode(message, topic) {
-    const { userId, userInfo } = this.props;
+    const {userId, userInfo} = this.props;
     let messageOwnerName;
     let messageOwnerAvatar;
     if (message.from === userId) {
       messageOwnerAvatar = this.renderUserAvatarSource();
       messageOwnerName = userInfo.name;
     } else {
-      const messageOwner = _.find(topic.subs, { user: message.from });
+      const messageOwner = _.find(topic.subs, {user: message.from});
       if (messageOwner && messageOwner.public.photo) {
-        messageOwnerAvatar = { uri: makeImageUrl(messageOwner.public.photo) };
+        messageOwnerAvatar = {uri: makeImageUrl(messageOwner.public.photo)};
         messageOwnerName = messageOwner.public.fn;
       } else {
         //EXPO compile the the image as a number in image tree
@@ -100,8 +109,38 @@ class TopicScreen extends React.Component {
     );
   }
 
+  renderActionButton(topic) {
+    const {userId, updateUserInput} = this.props;
+    const topicId = topic.topic
+    return _.isEmpty(topic.userInput) ? (
+      <TouchableOpacity onPress={() => this.setState({showAction: !this.state.showAction})}>
+        <Ionicons
+          name="md-add-circle-outline"
+          size={AppStyle.fontMiddleBig}
+          color={'black'}
+          style={styles.actionButton}
+        />
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity
+        onPress={() => TinodeAPI.handleSendMessage(topicId, userId, topic.userInput)
+          .then(()=>updateUserInput(topicId, ''))}>
+        <View style={styles.sendButton}>
+          <Text style={styles.sendButtonText}>{t.SEND}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  onRefresh(topic) {
+    this.setState({refreshing: true});
+    TinodeAPI.fetchMoreTopics(topic.topic)
+      .finally(()=>this.setState({refreshing: false}));
+  }
+
   render() {
     const { topicsMap, navigation, updateUserInput } = this.props;
+    const { refreshing } = this.state
     const topicId = navigation.getParam('topicId', null);
     const topic = _.get(topicsMap, topicId);
     if (!topic) return null;
@@ -109,6 +148,8 @@ class TopicScreen extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
+          onRefresh={()=>this.onRefresh(topic)}
+          refreshing={refreshing}
           style={styles.container}
           data={messages}
           keyExtractor={message => message.seq.toString()}
@@ -123,14 +164,7 @@ class TopicScreen extends React.Component {
               value={topic.userInput}
               style={styles.input}
             />
-            <TouchableOpacity onPress={() => this.setState({ showAction: !this.state.showAction })}>
-              <Ionicons
-                name="md-add-circle-outline"
-                size={AppStyle.fontMiddleBig}
-                color={'black'}
-                style={styles.actionButton}
-              />
-            </TouchableOpacity>
+            {this.renderActionButton(topic)}
           </View>
           <ActionList show={this.state.showAction} />
         </View>
@@ -138,6 +172,10 @@ class TopicScreen extends React.Component {
     );
   }
 }
+
+const t = {
+  SEND: 'Send',
+};
 
 const mapStateToProps = state => ({
   topicsMap: state.topics.topicsMap,
@@ -210,5 +248,18 @@ const styles = StyleSheet.create({
   actionButton: {
     padding: 20,
     paddingLeft: 0,
+  },
+  sendButton: {
+    margin: 10,
+    borderRadius: 5,
+    backgroundColor: AppStyle.userCancelGreen,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sendButtonText: {
+    padding: 10,
+    color: 'white',
+    fontSize: AppStyle.fontSmall,
+    fontFamily: AppStyle.mainFont,
   },
 });
