@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, Image } from 'react-native';
+import _ from 'lodash';
 import AppStyle from '../../../commons/AppStyle';
 import { shortDateFormat } from '../lib/strformat';
 import { makeImageUrl } from '../lib/blob-helpers';
+import Images from '../../../commons/Images';
+import { renderImageSource } from '../../../utils/imageUtils';
 
 export default class ChatListNode extends React.Component {
   static propTypes = {
@@ -14,13 +17,17 @@ export default class ChatListNode extends React.Component {
 
   render() {
     const { chatNode } = this.props;
+    const { unread } = chatNode;
 
-    const imageUrl = makeImageUrl(chatNode.public.photo);
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{ uri: imageUrl }} />
-          <View style={styles.imageFloat} />
+          <Image style={styles.image} source={renderImageSource(chatNode.public.photo)} />
+          {unread > 0 && (
+            <View style={styles.imageFloat}>
+              <Text style={styles.unreadNumber}>{unread < 100 ? unread.toString() : '..'}</Text>
+            </View>
+          )}
         </View>
         <View style={styles.textContainer}>
           <View style={styles.firstLineContainer}>
@@ -66,10 +73,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0,
-    borderRadius: 5,
-    width: 10,
-    height: 10,
+    borderRadius: 10,
+    width: 20,
+    height: 20,
     backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  unreadNumber: {
+    fontSize: 10,
+    color: 'white',
+    fontFamily: AppStyle.mainFont,
   },
   textContainer: {
     flex: 1,

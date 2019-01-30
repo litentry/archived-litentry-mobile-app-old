@@ -274,6 +274,10 @@ class TinodeAPIClass {
         messages.push(m);
       }
     });
+    let status = topic.msgStatus(msg);
+    if (status >= Tinode.MESSAGE_STATUS_SENT) {
+      topic.noteRead(msg.seq);
+    }
     store.dispatch(topicsAction.updateTopicMessages(topicId, messages));
   }
 
