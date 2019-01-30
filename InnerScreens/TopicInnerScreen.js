@@ -159,6 +159,7 @@ class TopicInnerScreen extends React.Component {
 
   render() {
     const { navigation, allowEdit, isJoined, voteCached } = this.props;
+    //TODO remove defensive check
     if (_.isEmpty(voteCached)) return null;
 
     const topicTitle = voteCached.countryName;
@@ -191,7 +192,7 @@ class TopicInnerScreen extends React.Component {
           {isJoined && (
             <SingleLineDisplay
               title={t.TOPIC_META_TITLE}
-              value={voteCached.treasury}
+              value={_.get(voteCached, 'treasury', '0')}
               onClick={() => navigation.navigate(screensList.Transactions.label)}
             />
           )}

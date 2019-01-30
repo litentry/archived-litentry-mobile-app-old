@@ -35,7 +35,7 @@ export const voteReducer = (state = INIT_VALUE, action) => {
     case voteActionType.SET: {
       return {
         ...state,
-        cached: _.merge({}, state.origin, action.data),
+        cached: _.merge({}, state.cached, action.data),
       };
     }
     case voteActionType.RESET: {

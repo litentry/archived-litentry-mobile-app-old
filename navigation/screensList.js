@@ -38,4 +38,5 @@ export const screensList = {
   UploadUserProfile: { label: 'UploadUserProfile', title: 'Upload your profile' },
   UploadCountryProfile: { label: 'UploadCountryProfile', title: 'Upload country profile' },
   CreateTopic: { label: 'CreateTopic', title: 'Create a country' },
+  AppStore: {label: 'AppStore', title: 'App Store'},
 };

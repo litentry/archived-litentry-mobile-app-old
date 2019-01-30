@@ -46,28 +46,8 @@ class StartVoteScreen extends React.Component {
     edited: PropTypes.bool.isRequired,
   };
 
-  componentDidMount() {
-    const { topicsMap, initVote, subscribedChatId } = this.props;
-    const topic = _.get(topicsMap, subscribedChatId);
-    if (!topic) return null;
-    const metaData = _.merge(mock.data, {
-      countryName: _.get(topic, 'public.fn', ''),
-      description: _.get(topic, 'private.comment', ''),
-    });
-    initVote(metaData);
-  }
-
-  onPayment() {
-    Alert.alert(
-      'Payment',
-      `${mock.meta.voteCost} NES`,
-      [{ text: 'Pay now', onPress: () => console.log('OK Pressed') }],
-      { cancelable: false }
-    );
-  }
-
   render() {
-    const { topicsMap, navigation, subscribedChatId, edited } = this.props;
+    const { topicsMap, subscribedChatId } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 

@@ -96,4 +96,7 @@ export default {
 
   appStore: require('../assets/dappImages/appStore.png'),
   vote: require('../assets/dappImages/vote.png'),
+  lottery: require('../assets/dappImages/lottery.png'),
+  minecraft: require('../assets/dappImages/minecraft.png'),
+  neoworld: require('../assets/dappImages/neoworld.png'),
 };
