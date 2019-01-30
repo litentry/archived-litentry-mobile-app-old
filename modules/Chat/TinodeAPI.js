@@ -147,8 +147,7 @@ class TinodeAPIClass {
     if (!topic.isSubscribed() || !topic.msgHasMoreMessages()) {
       return Promise.resolve();
     }
-    return topic.getMessagesPage(chatConfig.messagePerPage)
-      .catch((err) => {
+    return topic.getMessagesPage(chatConfig.messagePerPage).catch(err => {
       this.handleError(err.message);
     });
   }

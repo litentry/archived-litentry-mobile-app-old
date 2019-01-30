@@ -23,7 +23,7 @@ import { topicsAction } from '../actions/topicsAction';
 import ActionList from '../components/ActionList';
 
 class TopicScreen extends React.Component {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({ navigation }) => ({
     headerTitle: navigation.state.params.title,
     headerRight: (
       <TouchableOpacity
@@ -69,7 +69,7 @@ class TopicScreen extends React.Component {
   }
 
   componentDidMount() {
-    const {navigation, userId, subscribedChatId, connected} = this.props;
+    const { navigation, userId, subscribedChatId, connected } = this.props;
     const topicId = navigation.getParam('topicId', null);
     if (connected && subscribedChatId !== topicId) {
       if (subscribedChatId !== null) TinodeAPI.unsubscribe(subscribedChatId);
@@ -78,21 +78,21 @@ class TopicScreen extends React.Component {
   }
 
   renderUserAvatarSource = () => {
-    const {avatar} = this.props;
-    return _.isEmpty(avatar) ? Images.blankProfile : {uri: avatar};
+    const { avatar } = this.props;
+    return _.isEmpty(avatar) ? Images.blankProfile : { uri: avatar };
   };
 
   renderMessageNode(message, topic) {
-    const {userId, userInfo} = this.props;
+    const { userId, userInfo } = this.props;
     let messageOwnerName;
     let messageOwnerAvatar;
     if (message.from === userId) {
       messageOwnerAvatar = this.renderUserAvatarSource();
       messageOwnerName = userInfo.name;
     } else {
-      const messageOwner = _.find(topic.subs, {user: message.from});
+      const messageOwner = _.find(topic.subs, { user: message.from });
       if (messageOwner && messageOwner.public.photo) {
-        messageOwnerAvatar = {uri: makeImageUrl(messageOwner.public.photo)};
+        messageOwnerAvatar = { uri: makeImageUrl(messageOwner.public.photo) };
         messageOwnerName = messageOwner.public.fn;
       } else {
         //EXPO compile the the image as a number in image tree
@@ -110,10 +110,10 @@ class TopicScreen extends React.Component {
   }
 
   renderActionButton(topic) {
-    const {userId, updateUserInput} = this.props;
-    const topicId = topic.topic
+    const { userId, updateUserInput } = this.props;
+    const topicId = topic.topic;
     return _.isEmpty(topic.userInput) ? (
-      <TouchableOpacity onPress={() => this.setState({showAction: !this.state.showAction})}>
+      <TouchableOpacity onPress={() => this.setState({ showAction: !this.state.showAction })}>
         <Ionicons
           name="md-add-circle-outline"
           size={AppStyle.fontMiddleBig}
@@ -123,8 +123,11 @@ class TopicScreen extends React.Component {
       </TouchableOpacity>
     ) : (
       <TouchableOpacity
-        onPress={() => TinodeAPI.handleSendMessage(topicId, userId, topic.userInput)
-          .then(()=>updateUserInput(topicId, ''))}>
+        onPress={() =>
+          TinodeAPI.handleSendMessage(topicId, userId, topic.userInput).then(() =>
+            updateUserInput(topicId, '')
+          )
+        }>
         <View style={styles.sendButton}>
           <Text style={styles.sendButtonText}>{t.SEND}</Text>
         </View>
@@ -133,14 +136,13 @@ class TopicScreen extends React.Component {
   }
 
   onRefresh(topic) {
-    this.setState({refreshing: true});
-    TinodeAPI.fetchMoreTopics(topic.topic)
-      .finally(()=>this.setState({refreshing: false}));
+    this.setState({ refreshing: true });
+    TinodeAPI.fetchMoreTopics(topic.topic).finally(() => this.setState({ refreshing: false }));
   }
 
   render() {
     const { topicsMap, navigation, updateUserInput } = this.props;
-    const { refreshing } = this.state
+    const { refreshing } = this.state;
     const topicId = navigation.getParam('topicId', null);
     const topic = _.get(topicsMap, topicId);
     if (!topic) return null;
@@ -148,7 +150,7 @@ class TopicScreen extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          onRefresh={()=>this.onRefresh(topic)}
+          onRefresh={() => this.onRefresh(topic)}
           refreshing={refreshing}
           style={styles.container}
           data={messages}
