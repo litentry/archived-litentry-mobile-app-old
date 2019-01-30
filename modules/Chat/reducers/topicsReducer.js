@@ -21,11 +21,12 @@ export const topicsReducer = (state = INITIAL_STATE, action) => {
     case topicsActionType.UPDATE_TOPIC_META: {
       const initTopicData = { userInput: '', messages: [] };
       const newTopicData = _.merge(
-        {},
+        {topic: action.topicName},
         _.get(state.topicsMap, action.topicName, initTopicData),
         action.topicData
       );
       const topicsMap = set(action.topicName, newTopicData, state.topicsMap);
+
       console.log('topics map is', topicsMap);
       return {
         ...state,

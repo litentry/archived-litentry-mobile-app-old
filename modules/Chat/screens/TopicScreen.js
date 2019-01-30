@@ -137,7 +137,7 @@ class TopicScreen extends React.Component {
 
   onRefresh(topic) {
     this.setState({ refreshing: true });
-    TinodeAPI.fetchMoreTopics(topic.topic).finally(() => this.setState({ refreshing: false }));
+    TinodeAPI.fetchMoreTopics(topic.topic || topic.name).finally(() => this.setState({ refreshing: false }));
   }
 
   render() {

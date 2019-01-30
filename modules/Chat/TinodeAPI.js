@@ -308,6 +308,7 @@ class TinodeAPIClass {
             '_tags',
             'online',
             'acs',
+            'name',
           ])
         )
       );
@@ -319,7 +320,7 @@ class TinodeAPIClass {
   handleSubsUpdated(topic, topicId, userId, memberIdList) {
     console.log('in handle Subs Update, subsUpdated are:', memberIdList);
     const subs = [];
-    const topicName = topic.topic;
+    const topicName = topic.topic || topic.name;
     topic.subscribers(sub => {
       if (topic.getType() === 'grp') {
         return subs.push(sub);
@@ -368,10 +369,8 @@ class TinodeAPIClass {
       .subscribe(getQuery.build(), newTopicParams)
       .then(ctrl => {
         console.log('create new topic ctrl is', ctrl);
-        this.subscribe(ctrl.topic, userId);
-        return new Promise((resolve, reject) => {
-          resolve(ctrl);
-        });
+        this.unsubscribe(topicName)
+        return Promise.resolve(ctrl)
       })
       .catch(err => {
         this.handleError(err.message);

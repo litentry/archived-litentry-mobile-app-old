@@ -18,6 +18,10 @@ export default class ChatListNode extends React.Component {
   render() {
     const { chatNode } = this.props;
     const { unread } = chatNode;
+    if(!chatNode.public){
+      console.log('topic with null publis is', chatNode)
+      return null;
+    }
 
     return (
       <View style={styles.container}>
@@ -40,13 +44,17 @@ export default class ChatListNode extends React.Component {
           </View>
           <View style={styles.secondLineContainer}>
             <Text style={styles.text} numberOfLines={1}>
-              {chatNode.private.comment}
+              {chatNode.private ? chatNode.private.comment: t.DESCRIPTION_PLACEHOLDER}
             </Text>
           </View>
         </View>
       </View>
     );
   }
+}
+
+const t = {
+    DESCRIPTION_PLACEHOLDER: 'No access'
 }
 
 const styles = StyleSheet.create({

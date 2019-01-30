@@ -5,7 +5,7 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import { withNavigation } from 'react-navigation';
+import {NavigationActions, StackActions, withNavigation} from 'react-navigation';
 import AppStyle from '../commons/AppStyle';
 import { screensList } from '../navigation/screensList';
 import SingleLineDisplay from '../components/SingleLineDisplay';
@@ -133,18 +133,25 @@ class TopicInnerScreen extends React.Component {
     return { error: null };
   }
 
+
   createNewTopic() {
     const { voteCached, userId, showPopup, navigation } = this.props;
     const paramError = _.get(this.validateTopicParams(), 'error', null);
     if (paramError) return showPopup(paramError);
     TinodeAPI.createAndSubscribeNewTopic(voteCached, userId).then(ctrl => {
-      showPopup('Please login again to see the topic');
-      console.log('in topicInnerScreen log out success', ctrl);
-      //TODO to be validate here and add upload profile function
-      navigation.navigate(screensList.Topic.label, {
-        topicId: ctrl.topic,
-        title: voteCached.countryName,
-      });
+      const resetAction = StackActions.reset({
+        index: 1,
+        actions: [
+          NavigationActions.navigate({ routeName: screensList.ChatList.label }),
+          NavigationActions.navigate({
+            routeName: screensList.Topic.label,
+            params:{
+              topicId: ctrl.topic,
+              title: voteCached.countryName,
+            }
+          })
+        ]})
+      navigation.dispatch(resetAction);
     });
   }
 
