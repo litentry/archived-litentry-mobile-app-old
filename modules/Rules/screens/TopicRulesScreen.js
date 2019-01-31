@@ -32,7 +32,7 @@ class TopicRulesScreen extends React.Component {
       navigation.navigate(screenLabel);
     } else {
       Alert.alert(
-        t.NO_EDIT,
+        'Need Vote',
         t.NO_EDIT,
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false }

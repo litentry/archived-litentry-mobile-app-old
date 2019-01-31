@@ -18,6 +18,8 @@ import { popupAction } from '../actions/popupAction';
 import { renderImageSource } from '../utils/imageUtils';
 import RulesList from './components/RulesList';
 import SingleLineSingleValueDisplay from "../components/SingleLineSingleValueDisplay";
+import {lockScreen} from "../modules/Unlock/lockScreenUtils";
+import {aboutInfo} from "../config";
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -35,6 +37,7 @@ class TopicInnerScreen extends React.Component {
     iconName: PropTypes.string.isRequired,
     allowEdit: PropTypes.bool.isRequired,
     isJoined: PropTypes.bool.isRequired,
+    walletAddress: PropTypes.string,
   };
 
   componentDidMount() {
@@ -48,11 +51,18 @@ class TopicInnerScreen extends React.Component {
   }
 
   onPayment() {
-    const { voteCached } = this.props;
+    const { voteCached, navigation, showPopup, walletAddress } = this.props;
     Alert.alert(
       'Payment',
       `${voteCached.voteCost} NES`,
-      [{ text: 'Pay now', onPress: () => console.log('OK Pressed') }],
+      [{ text: 'Pay now', onPress: () => {
+        if (_.isEmpty(walletAddress)) {
+          showPopup(t.NO_WALLET);
+        } else {
+          lockScreen(navigation).then(()=> {
+            showPopup(aboutInfo.todo)})
+        }
+      }}],
       { cancelable: false }
     );
   }
@@ -234,6 +244,7 @@ const mapStateToProps = state => ({
   voteCached: state.vote.cached,
   voteOrigin: state.vote.origin,
   userId: state.appState.userId,
+  walletAddress: state.appState.walletAddress
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
@@ -272,6 +283,8 @@ const t = {
   CREATE_DESCRIPTION_ERROR: 'Please fill a description for your country',
   CREATE_PHOTO_ERROR: 'Please upload a profile photo for the country',
   CREATE_UPLOAD_PROFILE: 'Update country profile',
+
+  NO_WALLET: 'please set wallet first',
 };
 
 const styles = StyleSheet.create({
