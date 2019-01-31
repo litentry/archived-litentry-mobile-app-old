@@ -45,7 +45,7 @@ class TopicInnerScreen extends React.Component {
     const { initVote, topic, voteOrigin } = this.props;
     const voteData = _.merge({}, voteOrigin, {
       countryName: _.get(topic, 'public.fn', voteOrigin.countryName),
-      description: _.get(topic, 'private.comment', voteOrigin.description),
+      description: _.get(topic, 'private.comment', 'No permission'),
       profile: _.get(topic, 'public.photo', voteOrigin.profile),
     });
     initVote(voteData);
@@ -67,6 +67,36 @@ class TopicInnerScreen extends React.Component {
                 showPopup(aboutInfo.todo);
               });
             }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  onJoin() {
+    const { voteCached, navigation, topic } = this.props;
+    Alert.alert(
+      'Payment',
+      `${voteCached.voteCost} NES`,
+      [
+        {
+          text: 'Pay now (test version no fee)',
+          onPress: () => {
+            const resetAction = StackActions.reset({
+              index: 1,
+              actions: [
+                NavigationActions.navigate({ routeName: screensList.ChatList.label }),
+                NavigationActions.navigate({
+                  routeName: screensList.Topic.label,
+                  params: {
+                    topicId: topic.topic||topic.name,
+                    title: voteCached.countryName,
+                  },
+                }),
+              ],
+            });
+            navigation.dispatch(resetAction);
           },
         },
       ],
@@ -138,7 +168,7 @@ class TopicInnerScreen extends React.Component {
     if (this.isBlockedUser)
       return (
         <GenesisButton
-          action={() => this.onPayment()}
+          action={() => this.onJoin()}
           text={t.BUTTON_JOIN}
           variant={variantList.CONFIRM}
         />

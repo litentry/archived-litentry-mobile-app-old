@@ -125,8 +125,6 @@ class TinodeAPIClass {
   }M
 
   tnMeMetaSub(meTopic, topicData) {
-    const date = topicData.touched || topicData.updated
-    console.log('topic data is', topicData)
     store.dispatch(chatAction.updateChatMap(topicData));
   }
 
