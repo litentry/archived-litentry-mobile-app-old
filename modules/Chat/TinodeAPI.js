@@ -122,7 +122,7 @@ class TinodeAPIClass {
       navigation.dispatch(resetAction);
       // this.handleLoginSuccessful();
     }
-  }
+  }M
 
   tnMeMetaSub(meTopic, topicData) {
     const date = topicData.touched || topicData.updated

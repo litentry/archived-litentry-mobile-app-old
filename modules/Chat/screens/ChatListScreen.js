@@ -71,11 +71,15 @@ class ChatListScreen extends React.Component {
 
   render() {
     const { chatMap, navigation } = this.props;
-    const sortedList = Object.values(chatMap).sort((a, b)=> {
+    const sortedList = _.values(chatMap).sort((a, b)=> {
+      //TODO add timestamp sorting
+      const conditionA = a.isSubscribed < b.isSubscribed
       const dateA = a.updated || new Date(0);
       const dateB = b.updated || new Date(0);
-      return dateA.getTime() > dateB.getTime();
+      const conditionB = dateA.getTime() < dateB.getTime();
+      return conditionA
     })
+
     return (
       <ScrollView
         style={styles.container}
@@ -85,14 +89,22 @@ class ChatListScreen extends React.Component {
         <FlatList
           style={styles.listContainer}
           data={sortedList}
-          extraData={chatMap}
+          extraData={sortedList}
           keyExtractor={item => item.topic}
           renderItem={({ item }) => (
             <TouchableOpacity
+              style={[styles.chatNode, {backgroundColor: item.isSubscribed ? 'white': AppStyle.chatBackGroundColor}]}
               onPress={() =>
+                item.isSubscribed ?
                 navigation.navigate(screensList.Topic.label, {
                   topicId: item.topic,
                   title: item.public.fn,
+                }) :
+                navigation.navigate(screensList.TopicInfo.label, {
+                  title: item.public.fn,
+                  topic: item,
+                  allowEdit: false,
+                  isJoined: false,
                 })
               }>
               <ChatListNode chatNode={item} />
@@ -139,4 +151,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  chatNode: {
+    padding :10,
+    borderBottomWidth: 1,
+    borderColor: AppStyle.chatBorder,
+  }
 });

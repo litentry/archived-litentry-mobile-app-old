@@ -31,6 +31,8 @@ class TopicScreen extends React.Component {
         onPress={() =>
           navigation.navigate(screensList.TopicInfo.label, {
             title: navigation.getParam('title', ''),
+            allowEdit: true,
+            isJoined: true
           })
         }
         color="black"

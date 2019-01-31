@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text } from 'react-native';
+import {StyleSheet, View, Text, Alert} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Entypo } from '@expo/vector-icons';
 import _ from 'lodash';
@@ -16,12 +16,13 @@ class RulesList extends React.Component {
     voteCached: PropTypes.object.isRequired,
     hasVoting: PropTypes.bool.isRequired,
     navigation: PropTypes.object.isRequired,
+    allowEdit: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {};
 
   renderSingleRule(editEnabled, rulesData, description, isVoting) {
-    const { navigation } = this.props;
+    const { navigation, allowEdit } = this.props;
     const hasSeqData = !editEnabled;
     const title = hasSeqData
       ? `${_.padStart(rulesData.seq.toString(), 6, '0')}(${description})`
@@ -32,14 +33,7 @@ class RulesList extends React.Component {
           title={title}
           fontSize={AppStyle.fontMiddleSmall}
           Icon={() => <Entypo name="users" size={AppStyle.fontMiddle} color={AppStyle.blueIcon} />}
-          onClick={() =>
-            isVoting
-              ? navigation.navigate(screensList.VoteInfo.label)
-              : navigation.navigate(screensList.TopicRules.label, {
-                  editEnabled,
-                  rulesData,
-                })
-          }
+          onClick={() => this.onClick(editEnabled, rulesData, isVoting)}
         />
       </View>
     );
@@ -56,6 +50,18 @@ class RulesList extends React.Component {
       );
     }
     return this.renderSingleRule(true, voteCached, 'Current');
+  }
+
+  onClick(editEnabled, rulesData, isVoting){
+    const {allowEdit, navigation} = this.props;
+    if(isVoting && !allowEdit) {
+      navigation.navigate(screensList.VoteInfo.label)
+    } else {
+      navigation.navigate(screensList.TopicRules.label, {
+        editEnabled: allowEdit && editEnabled,
+        rulesData,
+      })
+    }
   }
 
   render() {

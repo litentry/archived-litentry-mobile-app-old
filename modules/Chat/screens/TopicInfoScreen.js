@@ -22,16 +22,19 @@ class TopicInfoScreen extends React.Component {
   };
 
   render() {
-    const { topicsMap, subscribedChatId } = this.props;
-    const topic = _.get(topicsMap, subscribedChatId);
+    const { topicsMap, subscribedChatId, navigation } = this.props;
+    const topic = navigation.getParam('topic') || _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
+
+    const allowEdit = navigation.getParam('allowEdit', false)
+    const isJoined = navigation.getParam('isJoined', false)
 
     return (
       <TopicInnerScreen
         description={t.TOPIC_DESCRIPTION_TITLE}
         topic={topic}
-        isJoined
-        allowEdit
+        isJoined={isJoined}
+        allowEdit={allowEdit}
         iconName="addfile"
       />
     );

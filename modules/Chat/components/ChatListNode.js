@@ -44,7 +44,7 @@ export default class ChatListNode extends React.Component {
           </View>
           <View style={styles.secondLineContainer}>
             <Text style={styles.text} numberOfLines={1}>
-              {chatNode.private ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}
+              {chatNode.isSubscribed ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}
             </Text>
           </View>
         </View>
@@ -60,9 +60,9 @@ const t = {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    margin: 10,
     height: 70,
     display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row',
   },
   imageContainer: {
@@ -97,8 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    borderBottomWidth: 1,
-    borderColor: AppStyle.chatBorder,
     flexWrap: 'nowrap',
   },
   firstLineContainer: {

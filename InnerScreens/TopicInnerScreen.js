@@ -180,7 +180,7 @@ class TopicInnerScreen extends React.Component {
     if (isJoined) return <MemberListContainer topic={topic} navigation={navigation} />;
     if (this.isCreatingNewTopic)
       return <IntroContainer iconName={iconName} description={t.CREATE_COUNTRY_INTRO} />;
-    return <MemberListContainer topic={topic} navigation={navigation} />;
+    return null;
   }
 
   render() {
@@ -239,6 +239,7 @@ class TopicInnerScreen extends React.Component {
           voteCached={voteCached}
           hasVoting={false}
           isEdited={edited}
+          allowEdit={allowEdit}
         />
         <Text style={styles.rulesTitle}>{t.MINI_DAPPS}</Text>
         <DappsList />
