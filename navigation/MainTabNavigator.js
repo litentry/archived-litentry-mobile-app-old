@@ -44,6 +44,8 @@ import UploadUserProfileScreen from '../modules/User/screens/UploadUserProfileSc
 import LoginScreen from '../modules/User/screens/LoginScreen';
 import CreateTopicScreen from '../modules/CreateTopic/screens/CreateTopicScreen';
 import UploadCountryProfileScreen from '../modules/CreateTopic/screens/UploadCountryProfileScreen';
+import AppStoreScreen from "../modules/Apps/screens/AppStoreScreen";
+import AppProfileScreen from "../modules/Apps/screens/AppProfileScreen";
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -67,8 +69,9 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Start: StartScreen,
+    AppStore: AppStoreScreen,
+    AppProfile: AppProfileScreen,
     SetPassword: SetPasswordScreen,
-
     Login: LoginScreen,
     UploadUserProfile: UploadUserProfileScreen,
     UploadCountryProfile: UploadCountryProfileScreen,
@@ -98,6 +101,7 @@ const HomeStack = createStackNavigator(
     PasswordSetting: PasswordSettingScreen,
     Home: HomeScreen,
     CreateTopic: CreateTopicScreen,
+
     ...commonScreens,
   },
   {

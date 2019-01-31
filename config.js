@@ -12,14 +12,15 @@ export const aboutInfo = {
   designer: ['历', 'Alex'],
   developer: ['Han', '丁', '傻米'],
   contact: ['nycloud@gmail.com'],
+  todo: 'Coming soon'
 };
 
 export const wsInfo = {
   appName: 'TinodeWeb/0.15.11-rc2',
-  // serverAddress: 'dusai.de:6060',
-  serverAddress: 'api.tinode.co',
+  serverAddress: 'dusai.de:6060',
+  // serverAddress: 'api.tinode.co',
   apiKey: 'AQEAAAABAAD_rAp4DJh05a1HAwFT3A6K',
-  isHttps: true,
+  isHttps: false,
   // Network transport to use, either `ws`/`wss` for websocket or `lp` for long polling.
   transport: null,
   // one of 'web'/'ios'/'android'

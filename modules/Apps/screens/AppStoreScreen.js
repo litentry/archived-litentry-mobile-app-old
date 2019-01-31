@@ -25,6 +25,7 @@ class AppStoreScreen extends React.Component {
   };
 
   render() {
+    const {navigation} = this.props;
     return <ScrollView style={styles.container}>
       <View style={styles.introContainer}>
         <View style={styles.imageContainer}>
@@ -38,12 +39,14 @@ class AppStoreScreen extends React.Component {
         </Text>
       </View>
       <View style={styles.listContainer}>
-        {appList.map(item => (
+        {_.values(appList).map(item => (
           <AppShowcase imageSource={item.imageSource}
                        title={item.title}
                        description={item.description}
                        key={item.title}
-                       onPress={()=>navigation.navigate(screensList.App.label)}/>
+                       onPress={()=>navigation.navigate(screensList.AppProfile.label, {
+                         title: item.title
+                       })}/>
         ))}
       </View>
     </ScrollView>;

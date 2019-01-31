@@ -99,4 +99,6 @@ export default {
   lottery: require('../assets/dappImages/lottery.png'),
   minecraft: require('../assets/dappImages/minecraft.png'),
   neoworld: require('../assets/dappImages/neoworld.png'),
+  img1: require('../assets/dappImages/img1.jpg'),
+  img2: require('../assets/dappImages/img2.jpg'),
 };

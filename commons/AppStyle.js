@@ -85,6 +85,7 @@ export default {
   chatBackGroundColor: '#EBEBEB',
   chatActionBackgroundColor: '#F4F4F6',
   blueIcon: '#10AEFF',
+  blueButton: '#027BFF',
 
   chatBorder: '#DDD',
 };

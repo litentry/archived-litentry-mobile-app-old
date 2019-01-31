@@ -21,6 +21,7 @@ import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
 import { topicsAction } from '../actions/topicsAction';
 import ActionList from '../components/ActionList';
+import {renderImageSource} from "../../../utils/imageUtils";
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -91,8 +92,8 @@ class TopicScreen extends React.Component {
       messageOwnerName = userInfo.name;
     } else {
       const messageOwner = _.find(topic.subs, { user: message.from });
-      if (messageOwner && messageOwner.public.photo) {
-        messageOwnerAvatar = { uri: makeImageUrl(messageOwner.public.photo) };
+      if (messageOwner && messageOwner.public) {
+        messageOwnerAvatar = renderImageSource(messageOwner.public.photo);
         messageOwnerName = messageOwner.public.fn;
       } else {
         //EXPO compile the the image as a number in image tree
