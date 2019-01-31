@@ -17,8 +17,12 @@ class DappsList extends React.Component {
 
   renderDapp(item) {
     const { navigation } = this.props;
+    if(!item.enabled)
+      return null
+
     return (
       <SingleLineSingleValueDisplay
+        key={item.title}
         title={_.capitalize(item.title)}
         fontSize={AppStyle.fontMiddle}
         Icon={() => <Image source={item.imageSource} style={styles.image} />}
