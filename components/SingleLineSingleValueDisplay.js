@@ -10,23 +10,26 @@ export default class SingleLineSingleValueDisplay extends React.Component {
     title: PropTypes.string.isRequired,
     style: PropTypes.object,
     Icon: PropTypes.func,
+    fontSize: PropTypes.number,
   };
 
   static defaultProps = {
     onClick: null,
     object: {},
     Icon: null,
+    fontSize: AppStyle.fontMiddle,
   };
 
   renderTitle() {
-    const { Icon, title } = this.props;
+    const { Icon, title, fontSize } = this.props;
+    const fontSizeObject = {fontSize}
     if (!Icon) {
-      return <Text style={styles.title}>{title}</Text>;
+      return <Text style={[styles.title, fontSizeObject ]}>{title}</Text>;
     }
     return (
       <View style={styles.titleContainer}>
         <Icon style={styles.icon} />
-        <Text style={[styles.title, {paddingLeft: 10}]}>{title}</Text>
+        <Text style={[styles.title, {paddingLeft: 10}, fontSizeObject]}>{title}</Text>
       </View>
     );
   }
@@ -72,7 +75,6 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 2,
-    fontSize: AppStyle.fontMiddleSmall,
     color: 'black',
   },
   arrowContainer: {

@@ -17,6 +17,7 @@ import { MemberListContainer, IntroContainer } from './components';
 import { popupAction } from '../actions/popupAction';
 import { renderImageSource } from '../utils/imageUtils';
 import RulesList from './components/RulesList';
+import SingleLineSingleValueDisplay from "../components/SingleLineSingleValueDisplay";
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -41,6 +42,7 @@ class TopicInnerScreen extends React.Component {
     const voteData = _.merge({}, voteOrigin, {
       countryName: _.get(topic, 'public.fn', voteOrigin.countryName),
       description: _.get(topic, 'private.comment', voteOrigin.description),
+      profile: _.get(topic, 'public.photo', voteOrigin.profile),
     });
     initVote(voteData);
   }
@@ -203,9 +205,8 @@ class TopicInnerScreen extends React.Component {
               onClick={() => navigation.navigate(screensList.Transactions.label)}
             />
           )}
-          <SingleLineDisplay
+          <SingleLineSingleValueDisplay
             title={t.CREATE_UPLOAD_PROFILE}
-            value={''}
             Icon={() => (
               <View style={styles.imageContainer}>
                 <Image style={styles.image} source={renderImageSource(voteCached.profile)} />
@@ -270,7 +271,7 @@ const t = {
   CREATE_NAME_ERROR: 'Please fill a valid country name',
   CREATE_DESCRIPTION_ERROR: 'Please fill a description for your country',
   CREATE_PHOTO_ERROR: 'Please upload a profile photo for the country',
-  CREATE_UPLOAD_PROFILE: 'Upload a profile',
+  CREATE_UPLOAD_PROFILE: 'Update country profile',
 };
 
 const styles = StyleSheet.create({

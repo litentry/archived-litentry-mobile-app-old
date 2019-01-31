@@ -29,6 +29,7 @@ class RulesList extends React.Component {
       <View style={styles.rulesContainer} key={hasSeqData ? rulesData.seq.toString() : 'current'}>
         <SingleLineSingleValueDisplay
           title={title}
+          fontSize={AppStyle.fontMiddleSmall}
           Icon={() => <Entypo name="users" size={AppStyle.fontMiddle} color={AppStyle.blueIcon}/>}
           onClick={() =>
             isVoting ?

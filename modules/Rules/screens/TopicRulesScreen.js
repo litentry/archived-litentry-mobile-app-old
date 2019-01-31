@@ -10,6 +10,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
+import SingleLineSingleValueDisplay from "../../../components/SingleLineSingleValueDisplay";
 
 class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -55,9 +56,8 @@ class TopicRulesScreen extends React.Component {
           <Text style={styles.introText}>{t.RULES_INTRO}</Text>
         </View>
         <Text style={styles.rulesTitle}>{t.PEOPLE_RULES_TITLE}</Text>
-        <SingleLineDisplay
+        <SingleLineSingleValueDisplay
           title={voteInfo.rulesDescription}
-          value={''}
           onClick={() => {
             navigation.navigate(screensList.MemberRules.label, {
               editEnabled,
