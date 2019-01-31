@@ -8,7 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
-import {INIT_VALUE} from "../reducer/voteReducer";
+import { INIT_VALUE } from '../reducer/voteReducer';
 
 class AmendMemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -32,13 +32,12 @@ class AmendMemberRulesScreen extends React.Component {
       <View style={styles.container}>
         <AmendInput
           propertyPath={`${groupMetaRules.MEMBER_RULES}.${userId}`}
-          reader={(v)=>{
-            if(_.isEmpty(v))
-              v = INIT_VALUE.origin.memberRules.default
-            return v.join('/')
+          reader={v => {
+            if (_.isEmpty(v)) v = INIT_VALUE.origin.memberRules.default;
+            return v.join('/');
           }}
           writer={v => {
-            return  v.split('/').map(i=> isNaN(parseInt(i)) ? 0 : parseInt(i))
+            return v.split('/').map(i => (isNaN(parseInt(i)) ? 0 : parseInt(i)));
           }}
           unit={''}
           isNumber={false}

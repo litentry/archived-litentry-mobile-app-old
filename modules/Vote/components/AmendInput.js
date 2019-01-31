@@ -6,7 +6,7 @@ import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { voteAction } from '../voteAction';
-import {INIT_VALUE} from "../reducer/voteReducer";
+import { INIT_VALUE } from '../reducer/voteReducer';
 
 class AmendInput extends React.Component {
   static propTypes = {
@@ -45,9 +45,9 @@ class AmendInput extends React.Component {
       reader,
       writer,
     } = this.props;
-    const numberWriter = v => Number(Number.parseFloat(v).toFixed(1))
-    const numberReader = v => v.toString()
-    const defaultValue = _.get(INIT_VALUE.origin, propertyPath)
+    const numberWriter = v => Number(Number.parseFloat(v).toFixed(1));
+    const numberReader = v => v.toString();
+    const defaultValue = _.get(INIT_VALUE.origin, propertyPath);
     const value = _.get(voteCached, propertyPath, defaultValue);
 
     const InputContainer = () => (
@@ -59,7 +59,7 @@ class AmendInput extends React.Component {
               const formattedValue = isNumber ? numberWriter(v) : writer(v);
               setVote(_.set({}, propertyPath, formattedValue));
             }}
-            value={isNumber ? numberReader(value) : reader(value) }
+            value={isNumber ? numberReader(value) : reader(value)}
             placeholder={placeholder}
           />
           <Text style={styles.unitText}>{unit}</Text>

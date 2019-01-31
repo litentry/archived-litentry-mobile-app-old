@@ -10,7 +10,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
-import SingleLineSingleValueDisplay from "../../../components/SingleLineSingleValueDisplay";
+import SingleLineSingleValueDisplay from '../../../components/SingleLineSingleValueDisplay';
 
 class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,6 +23,7 @@ class TopicRulesScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    voteCached: PropTypes.object.isRequired,
   };
 
   conditionalOpen(screenLabel) {

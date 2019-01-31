@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, Text } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Entypo } from '@expo/vector-icons';
-import AppStyle from '../../commons/AppStyle';
 import _ from 'lodash';
+import AppStyle from '../../commons/AppStyle';
 import { screensList } from '../../navigation/screensList';
 import SingleLineSingleValueDisplay from '../../components/SingleLineSingleValueDisplay';
-import {mockHistoryRules} from './mockRulesData';
-
+import { mockHistoryRules } from './mockRulesData';
 
 class RulesList extends React.Component {
   static propTypes = {
@@ -22,19 +21,21 @@ class RulesList extends React.Component {
   static defaultProps = {};
 
   renderSingleRule(editEnabled, rulesData, description, isVoting) {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const hasSeqData = !editEnabled;
-    const title =  hasSeqData ? `${_.padStart(rulesData.seq.toString(), 6 ,'0')}(${description})` : description
+    const title = hasSeqData
+      ? `${_.padStart(rulesData.seq.toString(), 6, '0')}(${description})`
+      : description;
     return (
       <View style={styles.rulesContainer} key={hasSeqData ? rulesData.seq.toString() : 'current'}>
         <SingleLineSingleValueDisplay
           title={title}
           fontSize={AppStyle.fontMiddleSmall}
-          Icon={() => <Entypo name="users" size={AppStyle.fontMiddle} color={AppStyle.blueIcon}/>}
+          Icon={() => <Entypo name="users" size={AppStyle.fontMiddle} color={AppStyle.blueIcon} />}
           onClick={() =>
-            isVoting ?
-              navigation.navigate(screensList.VoteInfo.label) :
-              navigation.navigate(screensList.TopicRules.label, {
+            isVoting
+              ? navigation.navigate(screensList.VoteInfo.label)
+              : navigation.navigate(screensList.TopicRules.label, {
                   editEnabled,
                   rulesData,
                 })
