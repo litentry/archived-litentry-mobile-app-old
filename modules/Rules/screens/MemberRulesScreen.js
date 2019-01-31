@@ -48,7 +48,7 @@ class MemberRulesScreen extends React.Component {
         imageSource={imageSource}
         info={this.renderRulesValue(item.user)}
         name={item.public.fn}
-        onPress={() => this.conditionalOpen(item.topic)}
+        onPress={() => this.conditionalOpen(item.user)}
       />
     );
   };
@@ -75,12 +75,12 @@ class MemberRulesScreen extends React.Component {
     const editEnabled = navigation.getParam('editEnabled', false);
     const rules = editEnabled ? voteCached : navigation.getParam('rulesData');
     const defaultRules = _.get(rules, 'memberRules.default');
-    const memberRules = _.get(rules, `memberRules.default.${memberId}`, defaultRules);
+    const memberRules = _.get(rules, `memberRules.${memberId}`, defaultRules);
     return memberRules.join('/');
   }
 
   render() {
-    const { topicsMap, subscribedChatId } = this.props;
+    const { topicsMap, subscribedChatId, voteCached } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
     console.log('in profile members, topic is', topic);
@@ -100,6 +100,7 @@ class MemberRulesScreen extends React.Component {
         <FlatList
           style={styles.memberList}
           data={topic.subs}
+          extraData={voteCached}
           renderItem={this.renderItem}
           keyExtractor={item => item.user}
         />

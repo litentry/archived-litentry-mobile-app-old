@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { voteActionType } from '../voteAction';
 
-const INIT_VALUE = {
+export const INIT_VALUE = {
   origin: {
     // Information extracted from topic
     countryName: 'New Country',

@@ -6,6 +6,7 @@ import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { voteAction } from '../voteAction';
+import {INIT_VALUE} from "../reducer/voteReducer";
 
 class AmendInput extends React.Component {
   static propTypes = {
@@ -17,12 +18,18 @@ class AmendInput extends React.Component {
     voteCached: PropTypes.object.isRequired,
     setVote: PropTypes.func.isRequired,
     isNumber: PropTypes.bool.isRequired,
+    defaultValueString: PropTypes.string,
+    defaultValueNumber: PropTypes.number,
+    reader: PropTypes.func,
+    writer: PropTypes.func,
   };
 
   static defaultProps = {
     placeholder: '',
     intro: '',
     description: '',
+    reader: _.identity,
+    writer: _.identity,
   };
 
   render() {
@@ -35,8 +42,13 @@ class AmendInput extends React.Component {
       propertyPath,
       isNumber,
       voteCached,
+      reader,
+      writer,
     } = this.props;
-    const value = _.get(voteCached, propertyPath, isNumber ? 0 : '').toString();
+    const numberWriter = v => Number(Number.parseFloat(v).toFixed(1))
+    const numberReader = v => v.toString()
+    const defaultValue = _.get(INIT_VALUE.origin, propertyPath)
+    const value = _.get(voteCached, propertyPath, defaultValue);
 
     const InputContainer = () => (
       <View style={styles.inputContainer}>
@@ -44,10 +56,10 @@ class AmendInput extends React.Component {
           <TextInput
             style={styles.input}
             onChangeText={v => {
-              const formattedValue = isNumber ? Number(Number.parseFloat(v).toFixed(1)) : v;
+              const formattedValue = isNumber ? numberWriter(v) : writer(v);
               setVote(_.set({}, propertyPath, formattedValue));
             }}
-            value={value}
+            value={isNumber ? numberReader(value) : reader(value) }
             placeholder={placeholder}
           />
           <Text style={styles.unitText}>{unit}</Text>
