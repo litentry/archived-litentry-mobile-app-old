@@ -66,14 +66,14 @@ class VoteInfoScreen extends React.Component {
         </View>
         <View style={styles.supportList}>
           <MemberList list={props.list} limit={12} />
-          <LightButton
+          {props.list.length > 12 && <LightButton
             onPress={() =>
               navigation.navigate(screensList.Members.label, {
                 list: props.list,
               })
             }
             text={t.VIEW_MORE_MEMBERS}
-          />
+          />}
         </View>
       </View>
     );
