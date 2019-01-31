@@ -108,7 +108,7 @@ class TinodeAPIClass {
     me.onMetaDesc = this.tnMeMetaDesc.bind(this); //Callback which receives changes to topic description desc.
     me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
     me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
-    // me.onMetaSub = console.log //	Called for a single subscription record change.
+    me.onMetaSub = this.tnMeMetaSub.bind(this, me); //	Called for a single subscription record change.
     // me.onDeleteTopic = console.log // Called after the topic is deleted.
 
     if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
@@ -124,12 +124,14 @@ class TinodeAPIClass {
     }
   }
 
-  onData(data) {
-    console.log('data is', data);
+  tnMeMetaSub(meTopic, topicData) {
+    const date = topicData.touched || topicData.updated
+    console.log('topic data is', topicData)
+    store.dispatch(chatAction.updateChatMap(topicData));
   }
 
-  onMeta(metaData) {
-    console.log('meta is', metaData);
+  onData(data) {
+    console.log('data is', data);
   }
 
   leaveTopic(topicId) {
@@ -185,15 +187,15 @@ class TinodeAPIClass {
   }
 
   tnMeSubsUpdated(meTopics, data) {
-    console.log('subs updates!', meTopics, data);
-    let chatList = [];
-    meTopics.contacts(c => {
-      console.log('contact is', c);
-      chatList.push(c);
-    });
-    console.log('update chat list is', chatList);
-    store.dispatch(chatAction.updateChatList(chatList));
-    // this.resetContactList();
+    console.log('me subs updates!', data);
+    // let chatList = [];
+    // meTopics.contacts(c => {
+    //   if(c.topic==='grp_aauZ9a8yFU'){
+    //     console.log('contact is', c);
+    //   }
+    //
+    //   chatList.push(c);
+    // });
   }
 
   subscribe(topicId, userId) {
@@ -323,6 +325,7 @@ class TinodeAPIClass {
     const topicName = topic.topic || topic.name;
     topic.subscribers(sub => {
       if (topic.getType() === 'grp') {
+        console.log('subs user is', sub);
         return subs.push(sub);
       }
       if (sub.user !== userId) {
@@ -369,8 +372,8 @@ class TinodeAPIClass {
       .subscribe(getQuery.build(), newTopicParams)
       .then(ctrl => {
         console.log('create new topic ctrl is', ctrl);
-        this.unsubscribe(topicName)
-        return Promise.resolve(ctrl)
+        this.unsubscribe(topicName);
+        return Promise.resolve(ctrl);
       })
       .catch(err => {
         this.handleError(err.message);

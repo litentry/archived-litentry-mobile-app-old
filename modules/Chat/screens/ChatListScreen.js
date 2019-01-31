@@ -47,7 +47,7 @@ class ChatListScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    chatList: PropTypes.array.isRequired,
+    chatMap: PropTypes.object.isRequired,
     userId: PropTypes.string.isRequired,
   };
 
@@ -70,7 +70,12 @@ class ChatListScreen extends React.Component {
   };
 
   render() {
-    const { chatList, navigation } = this.props;
+    const { chatMap, navigation } = this.props;
+    const sortedList = Object.values(chatMap).sort((a, b)=> {
+      const dateA = a.updated || new Date(0);
+      const dateB = b.updated || new Date(0);
+      return dateA.getTime() > dateB.getTime();
+    })
     return (
       <ScrollView
         style={styles.container}
@@ -79,7 +84,8 @@ class ChatListScreen extends React.Component {
         }>
         <FlatList
           style={styles.listContainer}
-          data={chatList}
+          data={sortedList}
+          extraData={chatMap}
           keyExtractor={item => item.topic}
           renderItem={({ item }) => (
             <TouchableOpacity
@@ -100,7 +106,7 @@ class ChatListScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
-  chatList: state.chat.chatList,
+  chatMap: state.chat.chatMap,
   userId: state.appState.userId,
 });
 

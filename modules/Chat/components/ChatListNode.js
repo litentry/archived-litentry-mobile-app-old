@@ -39,7 +39,7 @@ export default class ChatListNode extends React.Component {
               {chatNode.public.fn}
             </Text>
             <Text style={styles.date} numberOfLines={1}>
-              {shortDateFormat(new Date(chatNode.updated))}
+              {shortDateFormat(new Date( chatNode.updated || 0 ))}
             </Text>
           </View>
           <View style={styles.secondLineContainer}>
