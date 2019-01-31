@@ -14,7 +14,7 @@ const appsList = {
     title: 'minecraft',
     enabled: false,
   },
-  neowrold: {
+  neoworld: {
     imageSource: Images.neoworld,
     description:
       'In NeoWorld, you can own a piece of virtual land permenantly signed on Etheruem. ',

@@ -17,8 +17,6 @@ class DappsList extends React.Component {
 
   renderDapp(item) {
     const { navigation } = this.props;
-    if(!item.enabled)
-      return null
 
     return (
       <SingleLineSingleValueDisplay
@@ -37,7 +35,7 @@ class DappsList extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>{_.values(appsList).map(item => this.renderDapp(item))}</View>
+      <View style={styles.container}>{_.values(appsList).filter(item=>item.enabled).map(item => this.renderDapp(item))}</View>
     );
   }
 }

@@ -33,7 +33,7 @@ class TopicRulesScreen extends React.Component {
       navigation.navigate(screenLabel);
     } else {
       Alert.alert(
-        'Need Vote',
+        'Cannot Edit',
         t.NO_EDIT,
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false }
@@ -108,7 +108,7 @@ const t = {
   SUPPORT_TITLE: 'Support',
   DURATION_TITLE: 'Duration',
   COST_TITLE: 'Cost',
-  NO_EDIT: 'Please check the voting or the proposing rules.',
+  NO_EDIT: 'Please edit the proposing or current rules.',
 };
 
 const styles = StyleSheet.create({

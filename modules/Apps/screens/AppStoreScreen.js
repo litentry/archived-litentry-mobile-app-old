@@ -40,10 +40,9 @@ class AppStoreScreen extends React.Component {
           </Text>
         </View>
         <View style={styles.listContainer}>
-          {_.values(appList).map(item => {
-            if(item.enabled)
-              return null;
-            return <AppShowcase
+          {_.values(appList)
+            .filter(item=> !item.enabled)
+            .map(item => <AppShowcase
               imageSource={item.imageSource}
               title={item.title}
               description={item.description}
@@ -54,7 +53,7 @@ class AppStoreScreen extends React.Component {
                 })
               }
             />
-          })}
+          )}
         </View>
       </ScrollView>
     );
