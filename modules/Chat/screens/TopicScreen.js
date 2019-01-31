@@ -21,7 +21,7 @@ import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
 import { topicsAction } from '../actions/topicsAction';
 import ActionList from '../components/ActionList';
-import {renderImageSource} from "../../../utils/imageUtils";
+import { renderImageSource } from '../../../utils/imageUtils';
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -138,7 +138,9 @@ class TopicScreen extends React.Component {
 
   onRefresh(topic) {
     this.setState({ refreshing: true });
-    TinodeAPI.fetchMoreTopics(topic.topic || topic.name).finally(() => this.setState({ refreshing: false }));
+    TinodeAPI.fetchMoreTopics(topic.topic || topic.name).finally(() =>
+      this.setState({ refreshing: false })
+    );
   }
 
   render() {

@@ -5,7 +5,7 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import {NavigationActions, StackActions, withNavigation} from 'react-navigation';
+import { NavigationActions, StackActions, withNavigation } from 'react-navigation';
 import AppStyle from '../commons/AppStyle';
 import { screensList } from '../navigation/screensList';
 import SingleLineDisplay from '../components/SingleLineDisplay';
@@ -16,6 +16,7 @@ import TinodeAPI from '../modules/Chat/TinodeAPI';
 import { MemberListContainer, IntroContainer } from './components';
 import { popupAction } from '../actions/popupAction';
 import { renderImageSource } from '../utils/imageUtils';
+import RulesList from './components/RulesList';
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -133,7 +134,6 @@ class TopicInnerScreen extends React.Component {
     return { error: null };
   }
 
-
   createNewTopic() {
     const { voteCached, userId, showPopup, navigation } = this.props;
     const paramError = _.get(this.validateTopicParams(), 'error', null);
@@ -145,27 +145,27 @@ class TopicInnerScreen extends React.Component {
           NavigationActions.navigate({ routeName: screensList.ChatList.label }),
           NavigationActions.navigate({
             routeName: screensList.Topic.label,
-            params:{
+            params: {
               topicId: ctrl.topic,
               title: voteCached.countryName,
-            }
-          })
-        ]})
+            },
+          }),
+        ],
+      });
       navigation.dispatch(resetAction);
     });
   }
 
   renderIntroOrMemberList() {
-    const { isJoined, description, iconName, edited, topic, navigation } = this.props;
-    if (edited) return <IntroContainer iconName={iconName} description={t.VOTE_INTRO} />;
+    const { isJoined, iconName, topic, navigation } = this.props;
     if (isJoined) return <MemberListContainer topic={topic} navigation={navigation} />;
     if (this.isCreatingNewTopic)
-      return <IntroContainer iconName={iconName} description={description} />;
+      return <IntroContainer iconName={iconName} description={t.CREATE_COUNTRY_INTRO} />;
     return <MemberListContainer topic={topic} navigation={navigation} />;
   }
 
   render() {
-    const { navigation, allowEdit, isJoined, voteCached } = this.props;
+    const { navigation, allowEdit, isJoined, voteCached, edited, voteOrigin } = this.props;
     //TODO remove defensive check
     if (_.isEmpty(voteCached)) return null;
 
@@ -175,7 +175,7 @@ class TopicInnerScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         {this.renderIntroOrMemberList()}
-        <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
+        <Text style={styles.rulesTitle}>{t.META_INFO_TITLE}</Text>
 
         <View style={styles.infoContainer}>
           <SingleLineDisplay
@@ -215,26 +215,13 @@ class TopicInnerScreen extends React.Component {
           />
         </View>
 
-        <View style={styles.rulesContainer}>
-          <SingleLineDisplay
-            title={t.TOPIC_RULES}
-            value={''}
-            Icon={props => (
-              <Entypo
-                name="users"
-                size={AppStyle.fontMiddle}
-                color={AppStyle.blueIcon}
-                style={props.style}
-              />
-            )}
-            onClick={() =>
-              navigation.navigate(screensList.TopicRules.label, {
-                topic: voteCached,
-                voteEnabled: true,
-              })
-            }
-          />
-        </View>
+        <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
+        <RulesList
+          voteOrigin={voteOrigin}
+          voteCached={voteCached}
+          hasVoting={false}
+          isEdited={edited}
+        />
         {this.renderButton()}
       </ScrollView>
     );
@@ -263,7 +250,8 @@ const t = {
   VOTE_INTRO:
     'To star a vote, simply provide new values. All changes must go through voting to take effect.' +
     ' These changes affect everyone in the country. Amend with caution! ',
-  VOTE_RULES_TITLE: 'Information',
+  META_INFO_TITLE: 'Information',
+  VOTE_RULES_TITLE: 'Rules',
   GROUP_TOPIC_TITLE: 'Country Name',
   TOPIC_DESCRIPTION_TITLE: 'Description',
   TOPIC_RULES: 'Rules',
@@ -276,6 +264,9 @@ const t = {
   BUTTON_JOIN: 'Join',
   BUTTON_CREATE: 'Confirm and create',
 
+  CREATE_COUNTRY_INTRO:
+    'To create a virtual country, start add your rules and description here, ' +
+    'all the information will be stored in the smart contract',
   CREATE_NAME_ERROR: 'Please fill a valid country name',
   CREATE_DESCRIPTION_ERROR: 'Please fill a description for your country',
   CREATE_PHOTO_ERROR: 'Please upload a profile photo for the country',
@@ -299,10 +290,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: 'white',
   },
-  rulesContainer: {
-    marginTop: 20,
-    backgroundColor: 'white',
-  },
+
   imageContainer: {
     height: 50,
     width: 50,

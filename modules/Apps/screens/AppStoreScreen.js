@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import {AntDesign} from "../../../InnerScreens/components";
-import Images from "../../../commons/Images";
+import { AntDesign } from '../../../InnerScreens/components';
+import Images from '../../../commons/Images';
 import appList from '../appList';
-import AppShowcase from "../components/AppShowcase";
+import AppShowcase from '../components/AppShowcase';
 
 class AppStoreScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -25,31 +25,37 @@ class AppStoreScreen extends React.Component {
   };
 
   render() {
-    const {navigation} = this.props;
-    return <ScrollView style={styles.container}>
-      <View style={styles.introContainer}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={Images.appStore}
-            style={styles.introIcon}
-          />
+    const { navigation } = this.props;
+    return (
+      <ScrollView style={styles.container}>
+        <View style={styles.introContainer}>
+          <View style={styles.imageContainer}>
+            <Image source={Images.appStore} style={styles.introIcon} />
+          </View>
+          <Text style={styles.introText}>
+            {t.INTRO}
+            <Text style={styles.introText} onPress={() => {}}>
+              {t.LINK}
+            </Text>
+          </Text>
         </View>
-        <Text style={styles.introText}>{t.INTRO}
-          <Text style={styles.introText} onPress={()=>{}}>{t.LINK}</Text>
-        </Text>
-      </View>
-      <View style={styles.listContainer}>
-        {_.values(appList).map(item => (
-          <AppShowcase imageSource={item.imageSource}
-                       title={item.title}
-                       description={item.description}
-                       key={item.title}
-                       onPress={()=>navigation.navigate(screensList.AppProfile.label, {
-                         title: item.title
-                       })}/>
-        ))}
-      </View>
-    </ScrollView>;
+        <View style={styles.listContainer}>
+          {_.values(appList).map(item => (
+            <AppShowcase
+              imageSource={item.imageSource}
+              title={item.title}
+              description={item.description}
+              key={item.title}
+              onPress={() =>
+                navigation.navigate(screensList.AppProfile.label, {
+                  title: item.title,
+                })
+              }
+            />
+          ))}
+        </View>
+      </ScrollView>
+    );
   }
 }
 
@@ -64,16 +70,17 @@ export default connect(
   mapDispatchToProps
 )(AppStoreScreen);
 
-const t ={
-  INTRO: 'Anyone can develop an app and have it list in GS app store freely. ' +
+const t = {
+  INTRO:
+    'Anyone can develop an app and have it list in GS app store freely. ' +
     'There is no quality control of any sort. Please use with extremely caution.' +
     ' Please submit your own apps please click',
   LINK: 'here',
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
   introContainer: {
@@ -85,19 +92,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    flex:1,
-    height:50,
+    flex: 1,
+    height: 50,
     width: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
   introIcon: {
-    height:50,
+    height: 50,
     width: 50,
     resizeMode: 'contain',
   },
   introText: {
-    flex:3,
+    flex: 3,
     padding: 10,
     color: AppStyle.lightGrey,
     fontFamily: AppStyle.mainFont,
@@ -106,5 +113,5 @@ const styles = StyleSheet.create({
   listContainer: {
     marginTop: 20,
     backgroundColor: 'white',
-  }
+  },
 });

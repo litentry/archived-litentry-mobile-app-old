@@ -14,14 +14,16 @@ export default class AppShowcase extends React.Component {
   static defaultProps = {};
 
   render() {
-    const {imageSource, title, description, onPress} = this.props
-    return <TouchableOpacity style={styles.container} onPress={onPress}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={imageSource}/>
-        <Text style={styles.titleText}>{title}</Text>
-      </View>
-      <Text style={styles.descriptionText}>{description}</Text>
-    </TouchableOpacity>;
+    const { imageSource, title, description, onPress } = this.props;
+    return (
+      <TouchableOpacity style={styles.container} onPress={onPress}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={imageSource} />
+          <Text style={styles.titleText}>{title}</Text>
+        </View>
+        <Text style={styles.descriptionText}>{description}</Text>
+      </TouchableOpacity>
+    );
   }
 }
 

@@ -12,7 +12,7 @@ export const aboutInfo = {
   designer: ['历', 'Alex'],
   developer: ['Han', '丁', '傻米'],
   contact: ['nycloud@gmail.com'],
-  todo: 'Coming soon'
+  todo: 'Coming soon',
 };
 
 export const wsInfo = {

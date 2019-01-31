@@ -1,4 +1,4 @@
-import Images from "../../commons/Images";
+import Images from '../../commons/Images';
 
 const appsList = {
   lottery: {
@@ -8,14 +8,16 @@ const appsList = {
   },
   minecraft: {
     imageSource: Images.minecraft,
-    description: 'In Minecraft, you can own a piece of virtual land permenantly signed on Etheruem. ',
+    description:
+      'In Minecraft, you can own a piece of virtual land permenantly signed on Etheruem. ',
     title: 'minecraft',
   },
   neowrold: {
     imageSource: Images.neoworld,
-    description: 'In NeoWorld, you can own a piece of virtual land permenantly signed on Etheruem. ',
+    description:
+      'In NeoWorld, you can own a piece of virtual land permenantly signed on Etheruem. ',
     title: 'neoworld',
   },
-}
+};
 
-export default appsList
+export default appsList;
