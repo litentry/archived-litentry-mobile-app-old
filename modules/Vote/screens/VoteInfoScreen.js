@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, ScrollView } from 'react-native';
+import {TouchableOpacity, StyleSheet, View, Text, ScrollView, Alert} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -11,6 +11,11 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import MultiLineButton from '../../../components/MultiLineButton';
 import MemberList from '../../../components/MemberList';
 import LightButton from '../../../components/LightButton';
+import GenesisButton, {VariantList} from "../../../components/GenesisButton";
+import {lockScreen} from "../../Unlock/lockScreenUtils";
+import {aboutInfo} from "../../../config";
+import {INIT_VALUE} from "../reducer/voteReducer";
+import {popupAction} from "../../../actions/popupAction";
 
 const locale = window.navigator.language;
 const mock = {
@@ -36,9 +41,35 @@ class VoteInfoScreen extends React.Component {
     userName: PropTypes.string,
     topicsMap: PropTypes.object.isRequired,
     subscribedChatId: PropTypes.string,
+
+    walletAddress: PropTypes.string,
+    showPopup: PropTypes.func.isRequired,
   };
 
   buildSupportTitle = (number, rate) => `${number} (${Number(rate * 100).toFixed(2)}%)`;
+
+  onPayment() {
+    const { navigation, showPopup, walletAddress } = this.props;
+    Alert.alert(
+      'Payment',
+      `${INIT_VALUE.origin.voteCost} NES`,
+      [
+        {
+          text: 'Pay now',
+          onPress: () => {
+            if (_.isEmpty(walletAddress)) {
+              showPopup(t.NO_WALLET);
+            } else {
+              lockScreen(navigation).then(() => {
+                showPopup(aboutInfo.todo);
+              });
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  }
 
   render() {
     const { topicsMap, navigation, subscribedChatId, userName } = this.props;
@@ -93,6 +124,8 @@ class VoteInfoScreen extends React.Component {
           supportRateText={this.buildSupportTitle(denyNumber, mockNoRate)}
           list={mockNoList}
         />
+        <GenesisButton action={()=>this.onPayment()} text={t.YES_BUTTON} variant={VariantList.CONFIRM}/>
+        <GenesisButton action={()=>this.onPayment()} text={t.NO_BUTTON} variant={VariantList.CANCEL}/>
       </ScrollView>
     );
   }
@@ -103,9 +136,12 @@ const mapStateToProps = state => ({
   userInfo: state.chat.userInfo,
   userName: state.chat.userInfo.name,
   subscribedChatId: state.chat.subscribedChatId,
+  walletAddress: state.appState.walletAddress,
 });
 
-const mapDispatchToProps = _.curry(bindActionCreators)({});
+const mapDispatchToProps = _.curry(bindActionCreators)({
+  showPopup: popupAction.showPopup,
+});
 
 const t = {
   VOTE_ID_TITLE: 'Vote # ',
@@ -114,6 +150,9 @@ const t = {
   YES: 'Yes',
   NO: 'No',
   VIEW_MORE_MEMBERS: 'View more voters',
+  YES_BUTTON: 'Vote support',
+  NO_BUTTON: 'Vote against',
+  NO_WALLET: 'please set wallet first',
 };
 
 export default connect(
