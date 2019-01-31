@@ -17,9 +17,10 @@ import { MemberListContainer, IntroContainer } from './components';
 import { popupAction } from '../actions/popupAction';
 import { renderImageSource } from '../utils/imageUtils';
 import RulesList from './components/RulesList';
-import SingleLineSingleValueDisplay from "../components/SingleLineSingleValueDisplay";
-import {lockScreen} from "../modules/Unlock/lockScreenUtils";
-import {aboutInfo} from "../config";
+import SingleLineSingleValueDisplay from '../components/SingleLineSingleValueDisplay';
+import { lockScreen } from '../modules/Unlock/lockScreenUtils';
+import { aboutInfo } from '../config';
+import DappsList from './components/DappList';
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -55,14 +56,20 @@ class TopicInnerScreen extends React.Component {
     Alert.alert(
       'Payment',
       `${voteCached.voteCost} NES`,
-      [{ text: 'Pay now', onPress: () => {
-        if (_.isEmpty(walletAddress)) {
-          showPopup(t.NO_WALLET);
-        } else {
-          lockScreen(navigation).then(()=> {
-            showPopup(aboutInfo.todo)})
-        }
-      }}],
+      [
+        {
+          text: 'Pay now',
+          onPress: () => {
+            if (_.isEmpty(walletAddress)) {
+              showPopup(t.NO_WALLET);
+            } else {
+              lockScreen(navigation).then(() => {
+                showPopup(aboutInfo.todo);
+              });
+            }
+          },
+        },
+      ],
       { cancelable: false }
     );
   }
@@ -233,6 +240,8 @@ class TopicInnerScreen extends React.Component {
           hasVoting={false}
           isEdited={edited}
         />
+        <Text style={styles.rulesTitle}>{t.MINI_DAPPS}</Text>
+        <DappsList />
         {this.renderButton()}
       </ScrollView>
     );
@@ -244,7 +253,7 @@ const mapStateToProps = state => ({
   voteCached: state.vote.cached,
   voteOrigin: state.vote.origin,
   userId: state.appState.userId,
-  walletAddress: state.appState.walletAddress
+  walletAddress: state.appState.walletAddress,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
@@ -264,6 +273,7 @@ const t = {
     ' These changes affect everyone in the country. Amend with caution! ',
   META_INFO_TITLE: 'Information',
   VOTE_RULES_TITLE: 'Rules',
+  MINI_DAPPS: 'Dapps',
   GROUP_TOPIC_TITLE: 'Country Name',
   TOPIC_DESCRIPTION_TITLE: 'Description',
   TOPIC_RULES: 'Rules',

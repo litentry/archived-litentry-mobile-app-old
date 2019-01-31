@@ -22,14 +22,14 @@ export default class SingleLineSingleValueDisplay extends React.Component {
 
   renderTitle() {
     const { Icon, title, fontSize } = this.props;
-    const fontSizeObject = {fontSize}
+    const fontSizeObject = { fontSize };
     if (!Icon) {
-      return <Text style={[styles.title, fontSizeObject ]}>{title}</Text>;
+      return <Text style={[styles.title, fontSizeObject]}>{title}</Text>;
     }
     return (
       <View style={styles.titleContainer}>
         <Icon style={styles.icon} />
-        <Text style={[styles.title, {paddingLeft: 10}, fontSizeObject]}>{title}</Text>
+        <Text style={[styles.title, { paddingLeft: 10 }, fontSizeObject]}>{title}</Text>
       </View>
     );
   }
