@@ -16,7 +16,7 @@ import { lockScreen } from '../../Unlock/lockScreenUtils';
 import { aboutInfo } from '../../../config';
 import { INIT_VALUE } from '../reducer/voteReducer';
 import { popupAction } from '../../../actions/popupAction';
-import {alertNormal} from "../../../utils/alertUtils";
+import { alertNormal } from '../../../utils/alertUtils';
 
 const locale = window.navigator.language;
 const mock = {

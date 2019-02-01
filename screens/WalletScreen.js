@@ -110,7 +110,9 @@ class WalletScreen extends React.Component {
                 .then(() => new Promise(getPrivateKeyAsync))
                 .then(privateKey => {
                   Clipboard.setString(privateKey);
-                  alertNormal(t.PRIVATE_KEY_COPIED, () => navigation.navigate(screensList.Wallet.label));
+                  alertNormal(t.PRIVATE_KEY_COPIED, () =>
+                    navigation.navigate(screensList.Wallet.label)
+                  );
                 })
             }
             style={styles.copyButton}

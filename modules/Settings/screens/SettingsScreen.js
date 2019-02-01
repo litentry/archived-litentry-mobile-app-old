@@ -39,6 +39,12 @@ class SettingsScreen extends React.Component {
           value={packageJson.version}
           onClick={() => navigation.navigate(screensList.About.label)}
         />
+        <SingleLineDisplay
+          title={t.LOG_OUT_TITLE}
+          style={styles.singleDisplay}
+          value={''}
+          onClick={() => TinodeAPI.logout()}
+        />
       </View>
     );
   }
@@ -68,4 +74,5 @@ const styles = StyleSheet.create({
 const t = {
   SECURITY_TITLE: 'Account Security',
   ABOUT_TITLE: 'About',
+  LOG_OUT_TITLE: 'Log out',
 };

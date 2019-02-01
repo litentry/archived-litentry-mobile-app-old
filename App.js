@@ -7,6 +7,7 @@ import AppNavigator from './navigation/AppNavigator';
 import { store } from './reducers/store';
 import PopupWrapper from './components/PopupWrapper';
 import Loader from './modules/Loader/components/Loader';
+import Connector from "./modules/Chat/components/Connector";
 
 export default class App extends React.Component {
   state = {
@@ -27,6 +28,7 @@ export default class App extends React.Component {
         <Provider store={store}>
           <View style={styles.container}>
             <Loader />
+            <Connector/>
             <AppNavigator>
               <View style={styles.container}>
                 {Platform.OS === 'ios' && <StatusBar barStyle="default" />}

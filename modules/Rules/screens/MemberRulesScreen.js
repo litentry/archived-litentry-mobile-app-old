@@ -12,7 +12,7 @@ import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import HeaderButton from '../../../components/HeaderButton';
-import {alertNormal} from "../../../utils/alertUtils";
+import { alertNormal } from '../../../utils/alertUtils';
 
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -63,7 +63,7 @@ class MemberRulesScreen extends React.Component {
         userId,
       });
     } else {
-      alertNormal('To make changes please start a vote from chat window')
+      alertNormal('To make changes please start a vote from chat window');
     }
   }
 

@@ -9,11 +9,16 @@ import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import * as chatUtils from '../../utils/chatUtils';
 import { popupAction } from '../../actions/popupAction';
+import {loaderAction} from "../../actions/loaderAction";
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
 class TinodeAPIClass {
   constructor() {
+    this.init();
+  }
+
+  init(){
     const platform = Platform.OS === 'ios' ? 'ios' : 'android';
     let tinode = new Tinode(
       wsInfo.appName,
@@ -377,6 +382,16 @@ class TinodeAPIClass {
       .catch(err => {
         this.handleError(err.message);
       });
+  }
+
+  logout(navigation) {
+    if (this.tinode) {
+      this.tinode.onDisconnect = undefined;
+      this.tinode.disconnect();
+    }
+    store.dispatch(loaderAction.clearAppData())
+    navigation.popToTop();
+    this.init();
   }
 }
 
