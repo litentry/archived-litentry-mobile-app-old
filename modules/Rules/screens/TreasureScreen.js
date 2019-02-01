@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -12,11 +12,11 @@ class TreasureScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
     headerRight: (
-      <Button
+      <TouchableOpacity
         onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
-        color="black"
-      />
+      >
+        <Text style={styles.headerButtonText}>{screensList.Transactions.title}</Text>
+      </TouchableOpacity>
     ),
     headerBackTitle: '',
     headerStyle: {
@@ -46,4 +46,10 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {},
+  headerButtonText: {
+    fontSize: AppStyle.fontMiddleSmall,
+    padding: 5,
+    fontFamily: AppStyle.mainFont,
+    color: 'black'
+  },
 });

@@ -3,8 +3,8 @@ import { userRegisterActionType } from '../actions/userRegiseterActions';
 
 const INITIAL_STATE = {
   photo: {},
-  username: 'alex',
-  email: 'alexcloud@gmail.com',
+  username: '',
+  email: '',
   password: '',
   emailCredential: '',
 };
@@ -12,8 +12,8 @@ const INITIAL_STATE = {
 export const userRegisterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case userRegisterActionType.UPDATE:
-      console.log('update is', _.assign({}, state, action.data));
-      return _.assign({}, state, action.data);
+      console.log('update is', _.merge({}, state, action.data));
+      return _.merge({}, state, action.data);
     case userRegisterActionType.RESET:
       return INITIAL_STATE;
     default:

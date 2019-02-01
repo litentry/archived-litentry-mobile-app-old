@@ -3,7 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
+  TouchableOpacity,
   RefreshControl,
   ScrollView,
   Clipboard,
@@ -29,11 +29,11 @@ class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
     headerRight: (
-      <Button
+      <TouchableOpacity
         onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
-        color="black"
-      />
+      >
+        <Text style={styles.headerButtonText}>{screensList.Transactions.title}</Text>
+      </TouchableOpacity>
     ),
     headerBackTitle: '',
     headerStyle: {
@@ -168,6 +168,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyle.backgroundColor,
+  },
+  headerButtonText: {
+    fontSize: AppStyle.fontMiddleSmall,
+    padding: 5,
+    fontFamily: AppStyle.mainFont,
+    color: 'black'
   },
   displayContainer: {
     flex: 3,

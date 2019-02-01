@@ -12,10 +12,6 @@ import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 
-const mock = {
-  rule: [-150, -150, -10, 1, 1],
-};
-
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.MemberRules.title} />,
@@ -36,6 +32,7 @@ class MemberRulesScreen extends React.Component {
     navigation: PropTypes.object,
     subscribedChatId: PropTypes.string,
     topicsMap: PropTypes.object.isRequired,
+    voteCached: PropTypes.object.isRequired,
   };
 
   renderItem = ({ item }) => {
@@ -45,20 +42,21 @@ class MemberRulesScreen extends React.Component {
     } else {
       imageSource = Images.blankProfile;
     }
+
     return (
       <SingleProfile
         imageSource={imageSource}
-        info={mock.rule.join('/')}
+        info={this.renderRulesValue(item.user)}
         name={item.public.fn}
-        onPress={() => this.conditionalOpen(item.topic)}
+        onPress={() => this.conditionalOpen(item.user)}
       />
     );
   };
 
   conditionalOpen(userId) {
     const { navigation } = this.props;
-    const voteEnabled = navigation.getParam('voteEnabled', false);
-    if (voteEnabled) {
+    const editEnabled = navigation.getParam('editEnabled', false);
+    if (editEnabled) {
       navigation.navigate(screensList.AmendMemberRules.label, {
         userId,
       });
@@ -72,8 +70,17 @@ class MemberRulesScreen extends React.Component {
     }
   }
 
+  renderRulesValue(memberId) {
+    const { voteCached, navigation } = this.props;
+    const editEnabled = navigation.getParam('editEnabled', false);
+    const rules = editEnabled ? voteCached : navigation.getParam('rulesData');
+    const defaultRules = _.get(rules, 'memberRules.default');
+    const memberRules = _.get(rules, `memberRules.${memberId}`, defaultRules);
+    return memberRules.join('/');
+  }
+
   render() {
-    const { topicsMap, subscribedChatId } = this.props;
+    const { topicsMap, subscribedChatId, voteCached } = this.props;
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
     console.log('in profile members, topic is', topic);
@@ -85,7 +92,7 @@ class MemberRulesScreen extends React.Component {
         </View>
         <SingleProfile
           imageSource={Images.blankProfile}
-          info={mock.rule.join('/')}
+          info={this.renderRulesValue()}
           name={t.FUTURE_CITIZEN}
           onPress={() => this.conditionalOpen('default')}
         />
@@ -93,6 +100,7 @@ class MemberRulesScreen extends React.Component {
         <FlatList
           style={styles.memberList}
           data={topic.subs}
+          extraData={voteCached}
           renderItem={this.renderItem}
           keyExtractor={item => item.user}
         />
@@ -104,6 +112,7 @@ class MemberRulesScreen extends React.Component {
 const mapStateToProps = state => ({
   subscribedChatId: state.chat.subscribedChatId,
   topicsMap: state.topics.topicsMap,
+  voteCached: state.vote.cached,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

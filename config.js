@@ -1,5 +1,5 @@
 export const environment = {
-  disableQRScan: true,
+  disableQRScan: false,
 };
 
 export const contractInfo = {
@@ -8,10 +8,11 @@ export const contractInfo = {
 
 export const aboutInfo = {
   appName: 'Genesis Space Client',
-  date: '2019-01-30',
+  date: '2019-01-31',
   designer: ['历', 'Alex'],
-  developer: ['Han', '丁', '傻米'],
-  contact: ['nycloud@gmail.com'],
+  developer: ['heawen110', '傻米', 'handez', 'lambdari', 'moehringen', 'cuiny', 'ranger-woo'],
+  contact: ['Thegenesisspace@gmail.com'],
+  todo: 'Coming soon',
 };
 
 export const wsInfo = {
@@ -41,6 +42,8 @@ export const imageConfig = {
   /** Maximum allowed linear dimension of an inline image in pixels. You may want
    * to adjust it to 1600 or 2400 for production.**/
   MAX_IMAGE_DIM: 768,
+
+  MAX_PHOTO_SIZE: 4194304,
 };
 
 export const groupMetaRules = {
@@ -50,10 +53,11 @@ export const groupMetaRules = {
   COUNTRY_NAME: 'countryName',
   DESCRIPTION: 'description',
   MEMBER_RULES: 'memberRules',
+  PROFILE: 'profile',
 };
 
 export const chatConfig = {
-  messagePerPage: 20,
+  messagePerPage: 5,
   online_now: {
     id: 'online_now',
     defaultMessage: 'online now',

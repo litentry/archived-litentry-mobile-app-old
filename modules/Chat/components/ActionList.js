@@ -20,13 +20,13 @@ class ActionList extends React.Component {
       {
         name: 'vote',
         imageSource: Images.vote,
-        action: () => navigation.navigate(screensList.StartVote.label, { enableVote: true }),
+        action: () => navigation.navigate(screensList.VoteInfo.label),
       },
       {
         name: 'AppStore',
         imageSource: Images.appStore,
         action: () => {
-          navigation.navigate(screensList.VoteInfo.label);
+          navigation.navigate(screensList.AppStore.label);
         },
       },
     ];

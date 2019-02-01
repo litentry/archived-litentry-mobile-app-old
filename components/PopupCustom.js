@@ -113,14 +113,14 @@ class PopupCustom extends Component {
       let styleTextDisable = {};
       if (index === 1 && type === 'input' && (valueInput === '' || errorMsg !== '')) {
         disable = true;
-        styleTextDisable = { color: AppStyle.secondaryTextColor };
+        styleTextDisable = { color: AppStyle.lightGrey };
       }
       if (index === 1) {
         disable = true;
-        styleTextDisable = { color: AppStyle.secondaryTextColor };
+        styleTextDisable = { color: AppStyle.lightGrey };
         if (valueInput === '') {
           disable = false;
-          styleTextDisable = { color: AppStyle.mainColor };
+          styleTextDisable = { color: AppStyle.lightGrey };
         }
       }
       const lineBetween = index > 0 ? <View style={styles.line} /> : <View />;
@@ -136,7 +136,7 @@ class PopupCustom extends Component {
           {lineBetween}
           <TouchableOpacity
             disabled={disable}
-            style={[styles.buttonView]}
+            style={styles.buttonView}
             onPress={() => {
               if (btn.onClick) {
                 btn.onClick(valueInput);
@@ -145,7 +145,7 @@ class PopupCustom extends Component {
               }
             }}>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <Text style={[styles.textButton, styleTextDisable]}>{btn.text}</Text>
+              <Text style={styles.textButton}>{btn.text}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -186,8 +186,6 @@ class PopupCustom extends Component {
         : {
             paddingVertical: 26,
           };
-    const titleColor =
-      type === 'input' ? { color: AppStyle.mainColor } : { color: AppStyle.mainTextColor };
     const contentMarginTop = type === 'input' ? { marginTop: 8 } : { marginTop: 20 };
     let fontAddress = {};
     if (isAddress) {
@@ -230,7 +228,7 @@ class PopupCustom extends Component {
                 {image && (
                   <Image style={{ alignSelf: 'center', marginBottom: 20 }} source={image} />
                 )}
-                <Text style={[styles.titlePopup, titleColor]}>{title}</Text>
+                <Text style={styles.titlePopup}>{title}</Text>
                 {!_.isEmpty(content) && renderContent}
                 {type === 'input' && (
                   <View>
@@ -285,7 +283,7 @@ const styles = StyleSheet.create({
   popupCustom: {
     width: 270,
     borderRadius: 14,
-    backgroundColor: '#0A0F24',
+    backgroundColor: 'white',
   },
   overlayPopup: {
     flex: 1,
@@ -294,13 +292,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.75)',
   },
   titlePopup: {
-    fontSize: 17,
-    fontFamily: 'OpenSans-SemiBold',
+    fontSize: AppStyle.fontMiddle,
+    fontFamily: AppStyle.mainFont,
+    color: AppStyle.lightGrey,
     textAlign: 'center',
   },
   buttonField: {
     borderTopWidth: 0.5,
-    borderColor: '#14192D',
+    borderColor: AppStyle.lightGrey,
     flexDirection: 'row',
     alignItems: 'center',
     height: 43,
@@ -311,9 +310,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textButton: {
-    fontSize: 18,
-    fontFamily: 'OpenSans-SemiBold',
-    color: AppStyle.mainColor,
+    fontSize: AppStyle.fontMiddleSmall,
+    fontFamily: AppStyle.mainFontBold,
+    color: AppStyle.lightGrey,
   },
   contentField: {
     alignItems: 'center',
@@ -322,25 +321,25 @@ const styles = StyleSheet.create({
   },
   line: {
     height: 43,
-    width: 0.5,
-    backgroundColor: '#14192D',
+    width: 1,
+    backgroundColor: AppStyle.lightGrey,
   },
   contentPopup: {
-    fontSize: 14,
-    fontFamily: Platform.OS === 'ios' ? 'OpenSans' : 'OpenSans-Regular',
-    color: AppStyle.mainTextColor,
+    fontSize: AppStyle.fontMiddleSmall,
+    fontFamily: AppStyle.mainFont,
+    color: AppStyle.lightGrey,
     textAlign: 'center',
   },
   textInput: {
     width: 236,
     marginTop: 20,
-    paddingLeft: 10,
-    paddingRight: 40,
+    // paddingLeft: 10,
+    // paddingRight: 40,
     paddingVertical: 10,
-    color: AppStyle.mainTextColor,
-    fontSize: 14,
-    fontFamily: 'OpenSans-SemiBold',
-    backgroundColor: '#121734',
+    color: AppStyle.lightGrey,
+    fontSize: AppStyle.fontMiddleSmall,
+    fontFamily: AppStyle.mainFont,
+    backgroundColor: 'white',
   },
   errorText: {
     fontSize: 14,

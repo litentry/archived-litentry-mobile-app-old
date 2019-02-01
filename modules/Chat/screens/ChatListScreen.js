@@ -47,7 +47,7 @@ class ChatListScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    chatList: PropTypes.array.isRequired,
+    chatMap: PropTypes.object.isRequired,
     userId: PropTypes.string.isRequired,
   };
 
@@ -70,8 +70,16 @@ class ChatListScreen extends React.Component {
   };
 
   render() {
-    const { chatList, navigation } = this.props;
-    console.log('chatList is', chatList);
+    const { chatMap, navigation } = this.props;
+    const sortedList = _.values(chatMap).sort((a, b) => {
+      //TODO add timestamp sorting
+      const conditionA = a.isSubscribed < b.isSubscribed;
+      const dateA = a.updated || new Date(0);
+      const dateB = b.updated || new Date(0);
+      const conditionB = dateA.getTime() < dateB.getTime();
+      return conditionA;
+    });
+
     return (
       <ScrollView
         style={styles.container}
@@ -80,15 +88,27 @@ class ChatListScreen extends React.Component {
         }>
         <FlatList
           style={styles.listContainer}
-          data={chatList}
+          data={sortedList}
+          extraData={sortedList}
           keyExtractor={item => item.topic}
           renderItem={({ item }) => (
             <TouchableOpacity
+              style={[
+                styles.chatNode,
+                { backgroundColor: item.isSubscribed ? 'white' : AppStyle.chatBackGroundColor },
+              ]}
               onPress={() =>
-                navigation.navigate(screensList.Topic.label, {
-                  topicId: item.topic,
-                  title: item.public.fn,
-                })
+                item.isSubscribed
+                  ? navigation.navigate(screensList.Topic.label, {
+                      topicId: item.topic,
+                      title: item.public.fn,
+                    })
+                  : navigation.navigate(screensList.TopicInfo.label, {
+                      title: item.public.fn,
+                      topic: item,
+                      allowEdit: false,
+                      isJoined: false,
+                    })
               }>
               <ChatListNode chatNode={item} />
             </TouchableOpacity>
@@ -101,7 +121,7 @@ class ChatListScreen extends React.Component {
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
-  chatList: state.chat.chatList,
+  chatMap: state.chat.chatMap,
   userId: state.appState.userId,
 });
 
@@ -133,5 +153,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  chatNode: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: AppStyle.chatBorder,
   },
 });

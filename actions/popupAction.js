@@ -3,20 +3,7 @@ export const popupActionType = {
   HIDE_POPUP: 'HIDE_POPUP',
 };
 
-const defaultButtons = [
-  {
-    text: 'OK',
-  },
-];
-
 export const popupAction = {
-  showPopup: (
-    title = 'Alert',
-    buttons = defaultButtons,
-    content = '',
-    popupType = 'normal',
-    isAddress = false,
-    image = null
-  ) => ({ type: popupActionType.SHOW_POPUP, title, buttons, content, popupType, isAddress, image }),
+  showPopup: content => ({ type: popupActionType.SHOW_POPUP, content }),
   hidePopup: () => ({ type: popupActionType.HIDE_POPUP }),
 };

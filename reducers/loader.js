@@ -9,13 +9,13 @@ export const dataEntry = {
   hasPassword: {
     label: 'HAS_PASSWORD',
     stateName: 'hasPassword',
-    initValue: 'false',
+    initValue: false,
     type: 'bool',
   },
   wrongPincodeCount: {
     label: 'WRONG_PINCODE_COUNT',
     stateName: 'wrongPincodeCount',
-    initValue: '0',
+    initValue: 0,
     type: 'int',
   },
   loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: '', type: 'string' },
@@ -100,7 +100,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       return { ...state, ...action.data };
     }
     case loaderActionType.CLEAR_APP_DATA: {
-      const newData = _.assign(
+      const newData = _.merge(
         {},
         _.omit(INIT_STATE, [
           /**

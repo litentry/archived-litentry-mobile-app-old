@@ -10,15 +10,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
-
-const mock = {
-  groupRuleName: 'democracy',
-  economicRule: 'Standard plan',
-  requiredApproved: 50,
-  requiredHour: 168,
-  groupWebsitePrefix: 'Https://www.bacaoke.com/',
-  voteCost: 1000,
-};
+import SingleLineSingleValueDisplay from '../../../components/SingleLineSingleValueDisplay';
 
 class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -31,17 +23,18 @@ class TopicRulesScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    voteCached: PropTypes.object.isRequired,
   };
 
   conditionalOpen(screenLabel) {
     const { navigation } = this.props;
-    const voteEnabled = navigation.getParam('voteEnabled', false);
-    if (voteEnabled) {
+    const editEnabled = navigation.getParam('editEnabled', false);
+    if (editEnabled) {
       navigation.navigate(screenLabel);
     } else {
       Alert.alert(
-        'Vote needed',
-        'To make changes please start a vote from chat window',
+        'Cannot Edit',
+        t.NO_EDIT,
         [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
         { cancelable: false }
       );
@@ -49,8 +42,9 @@ class TopicRulesScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props;
-    const voteEnabled = navigation.getParam('voteEnabled', false);
+    const { navigation, voteCached } = this.props;
+    const editEnabled = navigation.getParam('editEnabled', false);
+    const rules = editEnabled ? voteCached : navigation.getParam('rulesData');
     return (
       <View style={styles.container}>
         <View style={styles.introContainer}>
@@ -63,31 +57,31 @@ class TopicRulesScreen extends React.Component {
           <Text style={styles.introText}>{t.RULES_INTRO}</Text>
         </View>
         <Text style={styles.rulesTitle}>{t.PEOPLE_RULES_TITLE}</Text>
-        <SingleLineDisplay
+        <SingleLineSingleValueDisplay
           title={voteInfo.rulesDescription}
-          value={''}
           onClick={() => {
             navigation.navigate(screensList.MemberRules.label, {
-              voteEnabled,
+              editEnabled,
+              rulesData: rules,
             });
           }}
         />
         <Text style={styles.rulesTitle}>{t.VOTING_RULES_TITLE}</Text>
         <SingleLineDisplay
           title={t.SUPPORT_TITLE}
-          value={mock.requiredApproved.toFixed(1) + '%'}
+          value={rules.requiredApproved.toFixed(1) + '%'}
           onClick={() => this.conditionalOpen(screensList.AmendSupport.label)}
         />
         <SingleLineDisplay
           title={t.DURATION_TITLE}
-          value={`${mock.requiredHour} Hours`}
+          value={`${rules.requiredHour} Hours`}
           onClick={() => {
             this.conditionalOpen(screensList.AmendDuration.label);
           }}
         />
         <SingleLineDisplay
           title={t.COST_TITLE}
-          value={`- ${mock.voteCost} NES`}
+          value={`- ${rules.voteCost} NES`}
           onClick={() => this.conditionalOpen(screensList.AmendCost.label)}
         />
       </View>
@@ -96,7 +90,7 @@ class TopicRulesScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
+  voteCached: state.vote.cached,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -114,6 +108,7 @@ const t = {
   SUPPORT_TITLE: 'Support',
   DURATION_TITLE: 'Duration',
   COST_TITLE: 'Cost',
+  NO_EDIT: 'Please edit the proposing or current rules.',
 };
 
 const styles = StyleSheet.create({

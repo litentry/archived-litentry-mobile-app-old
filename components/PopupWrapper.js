@@ -2,16 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropType from 'prop-types';
 import PopupCustom from './PopupCustom';
+import PopupModal from './PopupModal';
 
 class PopupWrapper extends React.Component {
   static propTypes = {
-    showPopup: PropType.bool.isRequired,
+    shouldShowPopup: PropType.bool.isRequired,
   };
 
   render() {
-    const { showPopup } = this.props;
-    if (showPopup) {
-      return <PopupCustom />;
+    const { shouldShowPopup } = this.props;
+    if (shouldShowPopup) {
+      return <PopupModal />;
     } else {
       return null;
     }
@@ -19,7 +20,7 @@ class PopupWrapper extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  showPopup: state.popup.visible,
+  shouldShowPopup: state.popup.visible,
 });
 
 const mapDispatchToProps = dispatch => ({});

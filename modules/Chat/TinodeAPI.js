@@ -1,12 +1,14 @@
 import { Platform } from 'react-native';
 import Tinode from 'tinode-sdk';
 import { NavigationActions, StackActions } from 'react-navigation';
+import _ from 'lodash';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
 import { chatAction } from './actions/chatAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import * as chatUtils from '../../utils/chatUtils';
+import { popupAction } from '../../actions/popupAction';
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -35,13 +37,35 @@ class TinodeAPIClass {
 
   handleError(err) {
     console.log('error is', err);
+    store.dispatch(popupAction.showPopup(err.toString()));
   }
 
   connect() {
     this.tinode.connect().catch(err => {
       if (err) {
-        // this.handleError(err);
+        this.handleError(err);
       }
+    });
+  }
+
+  // User is sending a message, either plain text or a drafty object, possibly
+  // with attachments.
+  handleSendMessage(topicId, userId, msg) {
+    let topic = this.tinode.getTopic(topicId);
+
+    //TODO need to add local cache with second params to true
+    msg = topic.createMessage(msg, false);
+    // The uploader is used to show progress.
+    // msg._uploader = (progress)=> {
+    //   console.log('progress is', progress)
+    // };
+
+    if (!topic.isSubscribed()) {
+      return this.subscribe(topicId, userId);
+    }
+
+    return topic.publishDraft(msg).catch(err => {
+      this.handleError(err.message);
     });
   }
 
@@ -84,7 +108,7 @@ class TinodeAPIClass {
     me.onMetaDesc = this.tnMeMetaDesc.bind(this); //Callback which receives changes to topic description desc.
     me.onContactUpdate = this.tnMeContactUpdate; //Callback when presence change
     me.onSubsUpdated = this.tnMeSubsUpdated.bind(this, me); //Called after a batch of subscription changes have been received and cached.
-    // me.onMetaSub = console.log //	Called for a single subscription record change.
+    me.onMetaSub = this.tnMeMetaSub.bind(this, me); //	Called for a single subscription record change.
     // me.onDeleteTopic = console.log // Called after the topic is deleted.
 
     if (ctrl.code >= 300 && ctrl.text === 'validate credentials') {
@@ -99,31 +123,57 @@ class TinodeAPIClass {
       // this.handleLoginSuccessful();
     }
   }
+  M;
+
+  tnMeMetaSub(meTopic, topicData) {
+    store.dispatch(chatAction.updateChatMap(topicData));
+  }
 
   onData(data) {
     console.log('data is', data);
   }
 
-  onMeta(metaData) {
-    console.log('meta is', metaData);
+  leaveTopic(topicId) {
+    if (!topicId) {
+      return;
+    }
+    let topic = this.tinode.getTopic(topicId);
+    if (topic && topic.isSubscribed()) {
+      return topic.leave(true).catch(err => this.handleError(err));
+    }
+  }
+
+  fetchMoreTopics(topicId) {
+    let topic = this.tinode.getTopic(topicId);
+    if (!topic.isSubscribed() || !topic.msgHasMoreMessages()) {
+      return Promise.resolve();
+    }
+    return topic.getMessagesPage(chatConfig.messagePerPage).catch(err => {
+      this.handleError(err.message);
+    });
   }
 
   fetchTopics() {
     const me = this.tinode.getMeTopic();
-    console.log('topics are', me);
-
-    return me
-      .subscribe(
-        me
-          .startMetaQuery()
-          .withLaterSub()
-          .withDesc()
-          .build()
-      )
-      .catch(err => {
-        //remove auth token
+    const subscribePromise = me.subscribe(
+      me
+        .startMetaQuery()
+        .withLaterSub()
+        .withDesc()
+        .build()
+    );
+    if (me.isSubscribed()) {
+      return me
+        .leave(false)
+        .then(() => subscribePromise)
+        .catch(err => {
+          this.handleError(err.message, 'err');
+        });
+    } else {
+      return subscribePromise.catch(err => {
         this.handleError(err.message, 'err');
       });
+    }
   }
 
   tnMeMetaDesc(meTopics) {
@@ -136,14 +186,15 @@ class TinodeAPIClass {
   }
 
   tnMeSubsUpdated(meTopics, data) {
-    console.log('subs updates!', meTopics, data);
-    let chatList = [];
-    meTopics.contacts(c => {
-      console.log('contact is', c);
-      chatList.push(c);
-    });
-    store.dispatch(chatAction.updateChatList(chatList));
-    // this.resetContactList();
+    console.log('me subs updates!', data);
+    // let chatList = [];
+    // meTopics.contacts(c => {
+    //   if(c.topic==='grp_aauZ9a8yFU'){
+    //     console.log('contact is', c);
+    //   }
+    //
+    //   chatList.push(c);
+    // });
   }
 
   subscribe(topicId, userId) {
@@ -224,6 +275,10 @@ class TinodeAPIClass {
         messages.push(m);
       }
     });
+    let status = topic.msgStatus(msg);
+    if (status >= Tinode.MESSAGE_STATUS_SENT) {
+      topic.noteRead(msg.seq);
+    }
     store.dispatch(topicsAction.updateTopicMessages(topicId, messages));
   }
 
@@ -244,30 +299,32 @@ class TinodeAPIClass {
       store.dispatch(
         topicsAction.updateTopicMeta(
           topicId,
-          desc.public.fn,
-          desc.public.photo,
-          topic.private.comment
+          _.pick(topic, [
+            'private',
+            'public',
+            'topic',
+            'created',
+            'touched',
+            'updated',
+            '_tags',
+            'online',
+            'acs',
+            'name',
+          ])
         )
       );
     } else {
       store.dispatch(topicsAction.updateTopicMeta(topicId, '', '', ''));
-    }
-    console.log('in handleDescChange, desc are:', desc);
-    if (desc.acs) {
-      console.log('test acs is: ', desc.acs);
-      // this.setState({
-      //   readOnly: !desc.acs.isWriter(),
-      //   writeOnly: !desc.acs.isReader()
-      // });
     }
   }
   //TODO which in the future could be optimized with group user, only fetch the user id
   handleSubsUpdated(topic, topicId, userId, memberIdList) {
     console.log('in handle Subs Update, subsUpdated are:', memberIdList);
     const subs = [];
-    const topicName = topic.topic;
+    const topicName = topic.topic || topic.name;
     topic.subscribers(sub => {
       if (topic.getType() === 'grp') {
+        console.log('subs user is', sub);
         return subs.push(sub);
       }
       if (sub.user !== userId) {
@@ -279,7 +336,7 @@ class TinodeAPIClass {
 
   handleCreateNewAccount(navigation, email, password, username, photo) {
     console.log('create public is', chatUtils.generatePublicInfo(username, photo));
-    this.tinode
+    return this.tinode
       .createAccountBasic(email, password, {
         public: chatUtils.generatePublicInfo(username, photo),
         tags: undefined,
@@ -295,6 +352,30 @@ class TinodeAPIClass {
       })
       .catch(err => {
         this.handleError(err.message, 'err');
+      });
+  }
+
+  createAndSubscribeNewTopic(cachedVote, userId) {
+    const { countryName, profile, description } = cachedVote;
+    const publicInfo = chatUtils.generatePublicInfo(countryName, profile);
+    const topicName = this.tinode.newGroupTopicName();
+    let topic = this.tinode.getTopic(topicName);
+    const newTopicParams = { desc: { public: publicInfo, private: { comment: description } } };
+    let getQuery = topic
+      .startMetaQuery()
+      .withLaterDesc()
+      .withLaterSub()
+      .withLaterData(chatConfig.messagePerPage)
+      .withLaterDel();
+    return topic
+      .subscribe(getQuery.build(), newTopicParams)
+      .then(ctrl => {
+        console.log('create new topic ctrl is', ctrl);
+        this.unsubscribe(topicName);
+        return Promise.resolve(ctrl);
+      })
+      .catch(err => {
+        this.handleError(err.message);
       });
   }
 }

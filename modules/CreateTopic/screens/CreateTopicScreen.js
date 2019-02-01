@@ -7,18 +7,11 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import TopicInnerScreen from "../../../InnerScreens/TopicInnerScreen";
+import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 
 class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.CreateTopic.title} />,
-    headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
-        color="black"
-      />
-    ),
     headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
@@ -30,7 +23,15 @@ class CreateTopicScreen extends React.Component {
   };
 
   render() {
-    return <TopicInnerScreen/>
+    return (
+      <TopicInnerScreen
+        description={t.DESCRIPTION}
+        topic={{}}
+        allowEdit
+        isJoined={false}
+        iconName="addfile"
+      />
+    );
   }
 }
 
@@ -48,3 +49,7 @@ export default connect(
 const styles = StyleSheet.create({
   container: {},
 });
+
+const t = {
+  DESCRIPTION: 'Create a new country',
+};

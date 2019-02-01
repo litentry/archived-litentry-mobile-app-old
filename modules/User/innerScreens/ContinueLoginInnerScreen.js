@@ -9,6 +9,8 @@ import AppStyle from '../../../commons/AppStyle';
 import Images from '../../../commons/Images';
 import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
+import { renderImageSource } from '../../../utils/imageUtils';
+import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 
 class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
@@ -19,13 +21,8 @@ class ContinueLoginInnerScreen extends React.Component {
     oldUserId: PropTypes.string.isRequired,
   };
 
-  renderImageSource = () => {
-    const { profileImage } = this.props;
-    return _.isEmpty(profileImage) ? Images.blankProfile : { uri: profileImage };
-  };
-
   render() {
-    const { loginToken, navigation, profileName, oldUserId } = this.props;
+    const { loginToken, navigation, profileName, oldUserId, profileImage } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
@@ -34,7 +31,11 @@ class ContinueLoginInnerScreen extends React.Component {
           onPress={() => {
             TinodeAPI.login(null, null, oldUserId, loginToken, null, navigation);
           }}>
-          <Image style={styles.profile} resizeMode="contain" source={this.renderImageSource()} />
+          <Image
+            style={styles.profile}
+            resizeMode="contain"
+            source={_.isEmpty(profileImage) ? Images.blankProfile : { uri: profileImage }}
+          />
           <Text style={styles.textContainer}>
             <Text style={styles.textContinue}>{t.CONTINUE}</Text>
             <Text style={styles.textName}>

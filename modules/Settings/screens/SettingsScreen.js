@@ -37,7 +37,7 @@ class SettingsScreen extends React.Component {
           title={t.ABOUT_TITLE}
           style={styles.singleDisplay}
           value={packageJson.version}
-          onClick={() => navigation.navigate(screensList.AccountSetting.label)}
+          onClick={() => navigation.navigate(screensList.About.label)}
         />
       </View>
     );
