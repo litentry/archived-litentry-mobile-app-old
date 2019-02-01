@@ -16,7 +16,6 @@ import { Entypo, Ionicons } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
-import { makeImageUrl } from '../lib/blob-helpers';
 import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
 import { topicsAction } from '../actions/topicsAction';

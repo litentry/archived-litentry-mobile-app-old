@@ -7,11 +7,14 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
+import HeaderButton from './AmendSupportScreen';
 
 class AmendDescriptionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.AmendDescription.title,
-    headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="white" />,
+    headerRight: (
+      <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'white'} />
+    ),
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: AppStyle.voteHeaderBackgroundColor,

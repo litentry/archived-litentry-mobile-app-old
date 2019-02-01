@@ -9,11 +9,14 @@ import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import { INIT_VALUE } from '../reducer/voteReducer';
+import HeaderButton from './AmendSupportScreen';
 
 class AmendMemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.AmendMemberRules.title,
-    headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="white" />,
+    headerRight: (
+      <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'white'} />
+    ),
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: AppStyle.voteHeaderBackgroundColor,

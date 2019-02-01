@@ -11,15 +11,16 @@ import { voteInfo } from '../../../config';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
+import HeaderButton from './RulesDescriptionScreen';
 
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.MemberRules.title} />,
     headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.RulesInfo.label)}
+      <HeaderButton
         title={screensList.RulesInfo.title}
-        color="black"
+        onPress={() => navigation.navigate(screensList.RulesInfo.label)}
+        color={'black'}
       />
     ),
     headerBackTitle: '',

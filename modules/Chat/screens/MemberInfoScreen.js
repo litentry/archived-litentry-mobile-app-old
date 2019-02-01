@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
+import HeaderButton from '../../../utils/TemplateScreen';
 
 const mock = {
   rule: [-150, -150, -10, 1, 1],
@@ -17,10 +18,10 @@ class MemberInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.MemberInfo.title} />,
     headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.RulesDescription.label)}
+      <HeaderButton
         title={'Info'}
-        color="black"
+        onPress={() => navigation.navigate(screensList.RulesDescription.label)}
+        color={'black'}
       />
     ),
     headerBackTitle: '',
