@@ -3,23 +3,13 @@ import { Button, StyleSheet, View } from 'react-native';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
-import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
-import HeaderButton from './AmendSupportScreen';
+import {generateNavigationOptions} from "../components/navigationOptions";
 
 class AmendDurationScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: screensList.AmendDuration.title,
-    headerRight: (
-      <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'white'} />
-    ),
-    headerTintColor: 'white',
-    headerStyle: {
-      backgroundColor: AppStyle.voteHeaderBackgroundColor,
-    },
-  });
+  static navigationOptions = generateNavigationOptions(screensList.AmendDuration.title)
 
   render() {
     return (

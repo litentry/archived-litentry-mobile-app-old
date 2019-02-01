@@ -10,7 +10,7 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import MultiLineDisplay from '../../../components/MultiLineDisplay';
-import HeaderButton from './MemberRulesScreen';
+import HeaderButton from "../../../components/HeaderButton";
 
 class RulesInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

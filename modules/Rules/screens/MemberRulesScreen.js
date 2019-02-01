@@ -11,7 +11,7 @@ import { voteInfo } from '../../../config';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
-import HeaderButton from './RulesDescriptionScreen';
+import HeaderButton from "../../../components/HeaderButton";
 
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

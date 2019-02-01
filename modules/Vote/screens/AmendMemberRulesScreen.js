@@ -4,24 +4,14 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import { INIT_VALUE } from '../reducer/voteReducer';
-import HeaderButton from './AmendSupportScreen';
+import {generateNavigationOptions} from "../components/navigationOptions";
 
 class AmendMemberRulesScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: screensList.AmendMemberRules.title,
-    headerRight: (
-      <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'white'} />
-    ),
-    headerTintColor: 'white',
-    headerStyle: {
-      backgroundColor: AppStyle.voteHeaderBackgroundColor,
-    },
-  });
+  static navigationOptions = generateNavigationOptions(screensList.AmendMemberRules.title)
 
   static propTypes = {
     navigation: PropTypes.object,
