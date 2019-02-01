@@ -60,7 +60,7 @@ class TopicScreen extends React.Component {
     connected: PropTypes.bool.isRequired,
     userInfo: PropTypes.object.isRequired,
     updateUserInput: PropTypes.func.isRequired,
-    avatar: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
   };
 
   constructor(props) {
