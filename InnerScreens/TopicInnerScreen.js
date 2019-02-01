@@ -332,7 +332,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
-    marginBottom: 30,
   },
   rulesTitle: {
     paddingTop: 30,

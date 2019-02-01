@@ -31,9 +31,8 @@ class WalletScreen extends React.Component {
     headerRight: (
       <TouchableOpacity
         onPress={() => navigation.navigate(screensList.Transactions.label)}
-        style={styles.headerRight}
       >
-        <Text style={styles.headerButton}>{screensList.Transactions.title}</Text>
+        <Text style={styles.headerButtonText}>{screensList.Transactions.title}</Text>
       </TouchableOpacity>
     ),
     headerBackTitle: '',
@@ -170,10 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppStyle.backgroundColor,
   },
-  headerRight: {
-
-  },
-  headerButton: {
+  headerButtonText: {
     fontSize: AppStyle.fontMiddleSmall,
     padding: 5,
     fontFamily: AppStyle.mainFont,
