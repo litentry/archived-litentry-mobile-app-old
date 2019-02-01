@@ -1,5 +1,5 @@
 export const environment = {
-  disableQRScan: false,
+  disableQRScan: true,
 };
 
 export const contractInfo = {
@@ -57,7 +57,7 @@ export const groupMetaRules = {
 };
 
 export const chatConfig = {
-  messagePerPage: 5,
+  messagePerPage: 10,
   online_now: {
     id: 'online_now',
     defaultMessage: 'online now',
