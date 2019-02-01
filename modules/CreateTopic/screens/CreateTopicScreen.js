@@ -12,13 +12,6 @@ import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.CreateTopic.title} />,
-    headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
-        title={screensList.Transactions.title}
-        color="black"
-      />
-    ),
     headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,

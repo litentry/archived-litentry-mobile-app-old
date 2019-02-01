@@ -9,13 +9,13 @@ export const dataEntry = {
   hasPassword: {
     label: 'HAS_PASSWORD',
     stateName: 'hasPassword',
-    initValue: 'false',
+    initValue: false,
     type: 'bool',
   },
   wrongPincodeCount: {
     label: 'WRONG_PINCODE_COUNT',
     stateName: 'wrongPincodeCount',
-    initValue: '0',
+    initValue: 0,
     type: 'int',
   },
   loginToken: { label: 'LOGIN_TOKEN', stateName: 'loginToken', initValue: '', type: 'string' },

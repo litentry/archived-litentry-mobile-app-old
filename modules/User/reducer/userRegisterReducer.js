@@ -3,8 +3,8 @@ import { userRegisterActionType } from '../actions/userRegiseterActions';
 
 const INITIAL_STATE = {
   photo: {},
-  username: 'alex',
-  email: 'alexcloud@gmail.com',
+  username: '',
+  email: '',
   password: '',
   emailCredential: '',
 };

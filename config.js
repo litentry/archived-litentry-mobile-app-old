@@ -8,10 +8,10 @@ export const contractInfo = {
 
 export const aboutInfo = {
   appName: 'Genesis Space Client',
-  date: '2019-01-30',
+  date: '2019-01-31',
   designer: ['历', 'Alex'],
   developer: ['heawen110', '傻米', 'handez', 'lambdari', 'moehringen', 'cuiny', 'ranger-woo'],
-  contact: ['nycloud@gmail.com'],
+  contact: ['Thegenesisspace@gmail.com'],
   todo: 'Coming soon',
 };
 
