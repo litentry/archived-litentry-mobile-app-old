@@ -13,6 +13,7 @@ export const popupReducer = (state = INIT_STATE, action) => {
         ...state,
         visible: true,
         content: action.content,
+        onPress: action.onPress,
       };
     case popupActionType.HIDE_POPUP:
       return {

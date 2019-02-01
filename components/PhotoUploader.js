@@ -34,7 +34,7 @@ class PhotoUploader extends React.Component {
 
   validateAndUpdateImage = image => {
     const { showPopup, updatePhoto } = this.props;
-    console.log('image extension is is', image.uri)
+    console.log('image extension is is', image.uri);
     if (image.cancelled || !isValidExtension(image)) {
       return showPopup(t.PHOTO_TYPE_ERROR);
     }

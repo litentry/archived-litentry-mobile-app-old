@@ -22,13 +22,14 @@ class ActionList extends React.Component {
         imageSource: Images.vote,
         action: () => navigation.navigate(screensList.VoteInfo.label),
       },
-      {
-        name: 'AppStore',
-        imageSource: Images.appStore,
-        action: () => {
-          navigation.navigate(screensList.AppStore.label);
-        },
-      },
+      // TODO disable App Store now.
+      // {
+      //   name: 'AppStore',
+      //   imageSource: Images.appStore,
+      //   action: () => {
+      //     navigation.navigate(screensList.AppStore.label);
+      //   },
+      // },
     ];
 
     return dappList.map(item => (

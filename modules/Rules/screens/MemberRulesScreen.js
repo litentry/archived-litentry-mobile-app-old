@@ -11,7 +11,8 @@ import { voteInfo } from '../../../config';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
-import HeaderButton from "../../../components/HeaderButton";
+import HeaderButton from '../../../components/HeaderButton';
+import {alertNormal} from "../../../utils/alertUtils";
 
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -62,12 +63,7 @@ class MemberRulesScreen extends React.Component {
         userId,
       });
     } else {
-      Alert.alert(
-        'Vote needed',
-        'To make changes please start a vote from chat window',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false }
-      );
+      alertNormal('To make changes please start a vote from chat window')
     }
   }
 

@@ -8,10 +8,10 @@ import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import HeaderButton from './AmendSupportScreen';
-import {generateNavigationOptions} from "../components/navigationOptions";
+import { generateNavigationOptions } from '../components/navigationOptions';
 
 class AmendCostScreen extends React.Component {
-  static navigationOptions = generateNavigationOptions(screensList.AmendCost.title)
+  static navigationOptions = generateNavigationOptions(screensList.AmendCost.title);
 
   render() {
     return (

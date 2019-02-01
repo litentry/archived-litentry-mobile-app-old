@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-  ScrollView,
-  Clipboard,
-  Alert,
-} from 'react-native';
+import { Text, View, StyleSheet, RefreshControl, ScrollView, Clipboard } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
@@ -18,22 +9,23 @@ import QRCode from 'react-native-qrcode';
 import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
-import GenesisButton, { VariantList as variantList } from '../components/GenesisButton';
+import GenesisButton from '../components/GenesisButton';
 import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/innerScreens/NewWalletInnerScreen';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
 import { lockScreen } from '../modules/Unlock/lockScreenUtils';
 import { getPrivateKeyAsync } from '../utils/secureStoreUtils';
+import HeaderButton from '../components/HeaderButton';
+import { alertNormal } from '../utils/alertUtils';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
     headerRight: (
-      <TouchableOpacity
+      <HeaderButton
         onPress={() => navigation.navigate(screensList.Transactions.label)}
-      >
-        <Text style={styles.headerButtonText}>{screensList.Transactions.title}</Text>
-      </TouchableOpacity>
+        title={screensList.Transactions.title}
+      />
     ),
     headerBackTitle: '',
     headerStyle: {
@@ -118,12 +110,7 @@ class WalletScreen extends React.Component {
                 .then(() => new Promise(getPrivateKeyAsync))
                 .then(privateKey => {
                   Clipboard.setString(privateKey);
-                  Alert.alert(
-                    'Vote needed',
-                    t.PRIVATE_KEY_COPIED,
-                    [{ text: 'OK', onPress: () => navigation.navigate(screensList.Wallet.label) }],
-                    { cancelable: false }
-                  );
+                  alertNormal(t.PRIVATE_KEY_COPIED, () => navigation.navigate(screensList.Wallet.label));
                 })
             }
             style={styles.copyButton}
@@ -168,12 +155,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: AppStyle.backgroundColor,
-  },
-  headerButtonText: {
-    fontSize: AppStyle.fontMiddleSmall,
-    padding: 5,
-    fontFamily: AppStyle.mainFont,
-    color: 'black'
   },
   displayContainer: {
     flex: 3,

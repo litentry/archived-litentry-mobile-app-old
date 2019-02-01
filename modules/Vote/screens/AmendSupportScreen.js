@@ -6,10 +6,10 @@ import { bindActionCreators } from 'redux';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
-import {generateNavigationOptions} from "../components/navigationOptions";
+import { generateNavigationOptions } from '../components/navigationOptions';
 
 class AmendSupportScreen extends React.Component {
-  static navigationOptions = generateNavigationOptions(screensList.AmendSupport.title)
+  static navigationOptions = generateNavigationOptions(screensList.AmendSupport.title);
 
   render() {
     return (

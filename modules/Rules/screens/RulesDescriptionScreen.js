@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
-import HeaderButton from "../../../components/HeaderButton";
+import HeaderButton from '../../../components/HeaderButton';
 
 const mock = {
   groupRuleName: 'democracy',

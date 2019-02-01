@@ -271,8 +271,8 @@ class TopicInnerScreen extends React.Component {
           isEdited={edited}
           allowEdit={allowEdit}
         />
-        <Text style={styles.rulesTitle}>{t.MINI_DAPPS}</Text>
-        <DappsList />
+        {/* TODO disable Dapp Store Now <Text style={styles.rulesTitle}>{t.MINI_DAPPS}</Text>*/}
+        {/* TODO disable Dapp Store Now <DappsList />*/}
         {this.renderButton()}
       </ScrollView>
     );

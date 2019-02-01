@@ -1,8 +1,8 @@
-import AppStyle from "../../../commons/AppStyle";
-import HeaderButton from "../../../components/HeaderButton";
-import React from "react";
+import React from 'react';
+import AppStyle from '../../../commons/AppStyle';
+import HeaderButton from '../../../components/HeaderButton';
 
-export const generateNavigationOptions = (title) => ({ navigation }) => ({
+export const generateNavigationOptions = title => ({ navigation }) => ({
   headerTitle: title,
   headerRight: (
     <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'white'} />
@@ -11,4 +11,4 @@ export const generateNavigationOptions = (title) => ({ navigation }) => ({
   headerStyle: {
     backgroundColor: AppStyle.voteHeaderBackgroundColor,
   },
-})
+});

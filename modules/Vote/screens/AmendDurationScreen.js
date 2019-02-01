@@ -6,10 +6,10 @@ import _ from 'lodash';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
-import {generateNavigationOptions} from "../components/navigationOptions";
+import { generateNavigationOptions } from '../components/navigationOptions';
 
 class AmendDurationScreen extends React.Component {
-  static navigationOptions = generateNavigationOptions(screensList.AmendDuration.title)
+  static navigationOptions = generateNavigationOptions(screensList.AmendDuration.title);
 
   render() {
     return (
