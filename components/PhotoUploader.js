@@ -13,7 +13,7 @@ import { renderImageSource, validateImageSize } from '../utils/imageUtils';
 import { popupAction } from '../actions/popupAction';
 
 const isValidExtension = imageCallback => {
-  const extension = imageCallback.uri.split('.')[1];
+  const extension = imageCallback.uri.split('.').pop();
   return extension && MIME_EXTENSIONS.indexOf(extension) !== -1;
 };
 
@@ -34,9 +34,11 @@ class PhotoUploader extends React.Component {
 
   validateAndUpdateImage = image => {
     const { showPopup, updatePhoto } = this.props;
+    console.log('image extension is is', image.uri)
     if (image.cancelled || !isValidExtension(image)) {
       return showPopup(t.PHOTO_TYPE_ERROR);
     }
+
     if (!validateImageSize(image.base64.length)) {
       return showPopup(t.PHOTO_BIG_ERROR);
     }
