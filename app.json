@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "app",
-    "description": "A very interesting project.",
-    "slug": "app",
+    "name": "Genesis Mobile",
+    "description": "Genesis Space Mobile Client",
+    "slug": "genesisMobile",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/appIcon/icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -21,7 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.theGenesisSpace.GenesisMobile"
+    },
+    "android": {
+      "package": "com.theGenesisSpace.GenesisMobile"
     }
   }
 }
