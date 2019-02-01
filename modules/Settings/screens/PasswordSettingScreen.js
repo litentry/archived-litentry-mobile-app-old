@@ -11,7 +11,6 @@ import SingleLineDisplay from '../../../components/SingleLineDisplay';
 
 const mock = {
   mockEmptyValue: '',
-  mockId: 'davidFan',
 };
 
 class PasswordSettingScreen extends React.Component {
@@ -35,14 +34,16 @@ class PasswordSettingScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    userId: PropTypes.string.isRequired,
   };
 
   render() {
+    const { userId } = this.props;
     return (
       <View>
         <Text style={styles.intro}>{t.INTRO}</Text>
 
-        <SingleLineDisplay title={t.ID_TITLE} value={mock.mockId} style={styles.idContainer} />
+        <SingleLineDisplay title={t.ID_TITLE} value={userId} style={styles.idContainer} />
 
         <SingleLineInput
           isPassword
@@ -71,7 +72,7 @@ class PasswordSettingScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
+  userId: state.appState.userId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

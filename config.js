@@ -10,7 +10,7 @@ export const aboutInfo = {
   appName: 'Genesis Space Client',
   date: '2019-01-30',
   designer: ['历', 'Alex'],
-  developer: ['Han', '丁', '傻米'],
+  developer: ['heawen110', '傻米', 'handez', 'lambdari', 'moehringen', 'cuiny', 'ranger-woo'],
   contact: ['nycloud@gmail.com'],
   todo: 'Coming soon',
 };

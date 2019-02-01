@@ -26,8 +26,8 @@ class TopicInfoScreen extends React.Component {
     const topic = navigation.getParam('topic') || _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
 
-    const allowEdit = navigation.getParam('allowEdit', false)
-    const isJoined = navigation.getParam('isJoined', false)
+    const allowEdit = navigation.getParam('allowEdit', false);
+    const isJoined = navigation.getParam('isJoined', false);
 
     return (
       <TopicInnerScreen

@@ -41,19 +41,20 @@ class AppStoreScreen extends React.Component {
         </View>
         <View style={styles.listContainer}>
           {_.values(appList)
-            .filter(item=> !item.enabled)
-            .map(item => <AppShowcase
-              imageSource={item.imageSource}
-              title={item.title}
-              description={item.description}
-              key={item.title}
-              onPress={() =>
-                navigation.navigate(screensList.AppProfile.label, {
-                  title: item.title,
-                })
-              }
-            />
-          )}
+            .filter(item => !item.enabled)
+            .map(item => (
+              <AppShowcase
+                imageSource={item.imageSource}
+                title={item.title}
+                description={item.description}
+                key={item.title}
+                onPress={() =>
+                  navigation.navigate(screensList.AppProfile.label, {
+                    title: item.title,
+                  })
+                }
+              />
+            ))}
         </View>
       </ScrollView>
     );

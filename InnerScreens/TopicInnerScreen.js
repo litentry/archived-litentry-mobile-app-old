@@ -90,7 +90,7 @@ class TopicInnerScreen extends React.Component {
                 NavigationActions.navigate({
                   routeName: screensList.Topic.label,
                   params: {
-                    topicId: topic.topic||topic.name,
+                    topicId: topic.topic || topic.name,
                     title: voteCached.countryName,
                   },
                 }),

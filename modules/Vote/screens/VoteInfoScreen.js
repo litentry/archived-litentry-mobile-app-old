@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, View, Text, ScrollView, Alert} from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -11,11 +11,11 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import MultiLineButton from '../../../components/MultiLineButton';
 import MemberList from '../../../components/MemberList';
 import LightButton from '../../../components/LightButton';
-import GenesisButton, {VariantList} from "../../../components/GenesisButton";
-import {lockScreen} from "../../Unlock/lockScreenUtils";
-import {aboutInfo} from "../../../config";
-import {INIT_VALUE} from "../reducer/voteReducer";
-import {popupAction} from "../../../actions/popupAction";
+import GenesisButton, { VariantList } from '../../../components/GenesisButton';
+import { lockScreen } from '../../Unlock/lockScreenUtils';
+import { aboutInfo } from '../../../config';
+import { INIT_VALUE } from '../reducer/voteReducer';
+import { popupAction } from '../../../actions/popupAction';
 
 const locale = window.navigator.language;
 const mock = {
@@ -97,14 +97,16 @@ class VoteInfoScreen extends React.Component {
         </View>
         <View style={styles.supportList}>
           <MemberList list={props.list} limit={12} />
-          {props.list.length > 12 && <LightButton
-            onPress={() =>
-              navigation.navigate(screensList.Members.label, {
-                list: props.list,
-              })
-            }
-            text={t.VIEW_MORE_MEMBERS}
-          />}
+          {props.list.length > 12 && (
+            <LightButton
+              onPress={() =>
+                navigation.navigate(screensList.Members.label, {
+                  list: props.list,
+                })
+              }
+              text={t.VIEW_MORE_MEMBERS}
+            />
+          )}
         </View>
       </View>
     );
@@ -124,8 +126,16 @@ class VoteInfoScreen extends React.Component {
           supportRateText={this.buildSupportTitle(denyNumber, mockNoRate)}
           list={mockNoList}
         />
-        <GenesisButton action={()=>this.onPayment()} text={t.YES_BUTTON} variant={VariantList.CONFIRM}/>
-        <GenesisButton action={()=>this.onPayment()} text={t.NO_BUTTON} variant={VariantList.CANCEL}/>
+        <GenesisButton
+          action={() => this.onPayment()}
+          text={t.YES_BUTTON}
+          variant={VariantList.CONFIRM}
+        />
+        <GenesisButton
+          action={() => this.onPayment()}
+          text={t.NO_BUTTON}
+          variant={VariantList.CANCEL}
+        />
       </ScrollView>
     );
   }

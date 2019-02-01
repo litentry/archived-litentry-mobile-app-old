@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Text, Alert} from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { Entypo } from '@expo/vector-icons';
 import _ from 'lodash';
@@ -52,15 +52,15 @@ class RulesList extends React.Component {
     return this.renderSingleRule(true, voteCached, 'Current');
   }
 
-  onClick(editEnabled, rulesData, isVoting){
-    const {allowEdit, navigation} = this.props;
-    if(isVoting && !allowEdit) {
-      navigation.navigate(screensList.VoteInfo.label)
+  onClick(editEnabled, rulesData, isVoting) {
+    const { allowEdit, navigation } = this.props;
+    if (isVoting && !allowEdit) {
+      navigation.navigate(screensList.VoteInfo.label);
     } else {
       navigation.navigate(screensList.TopicRules.label, {
         editEnabled: allowEdit && editEnabled,
         rulesData,
-      })
+      });
     }
   }
 

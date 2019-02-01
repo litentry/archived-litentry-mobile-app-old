@@ -9,10 +9,6 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 
-const mock = {
-  mockId: 'davidFan01',
-};
-
 class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.AccountSetting.title} />,
@@ -24,17 +20,14 @@ class AccountSettingScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
+    userId: PropTypes.string.isRequired,
   };
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, userId } = this.props;
     return (
       <View style={styles.container}>
-        <SingleLineDisplay
-          title={t.ID_TITLE}
-          style={styles.singleLineDisplay}
-          value={mock.mockId}
-        />
+        <SingleLineDisplay title={t.ID_TITLE} style={styles.singleLineDisplay} value={userId} />
         <SingleLineDisplay
           title={t.PASSWORD_TITLE}
           style={styles.singleLineDisplay}
@@ -47,7 +40,7 @@ class AccountSettingScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  walletAddress: state.appState.walletAddress,
+  userId: state.appState.userId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

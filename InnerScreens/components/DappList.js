@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import _ from 'lodash';
 import { withNavigation } from 'react-navigation';
+import PropTypes from 'prop-types';
 import AppStyle from '../../commons/AppStyle';
 import { screensList } from '../../navigation/screensList';
 import appsList from '../../modules/Apps/appList';
 import SingleLineSingleValueDisplay from '../../components/SingleLineSingleValueDisplay';
-import PropTypes from 'prop-types';
 
 class DappsList extends React.Component {
   static propTypes = {
@@ -35,7 +35,11 @@ class DappsList extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>{_.values(appsList).filter(item=>item.enabled).map(item => this.renderDapp(item))}</View>
+      <View style={styles.container}>
+        {_.values(appsList)
+          .filter(item => item.enabled)
+          .map(item => this.renderDapp(item))}
+      </View>
     );
   }
 }

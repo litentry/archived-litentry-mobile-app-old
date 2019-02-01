@@ -55,14 +55,7 @@ const commonScreens = {
 };
 
 const HomeStackIcon = ({ focused }) => (
-  <TabBarIcon
-    focused={focused}
-    name={
-      Platform.OS === 'ios'
-        ? `ios-information-circle${focused ? '' : '-outline'}`
-        : 'md-information-circle'
-    }
-  />
+  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'} />
 );
 HomeStackIcon.propTypes = iconPropTypes;
 
@@ -91,17 +84,12 @@ const HomeStack = createStackNavigator(
     RulesDescription: RulesDescriptionScreen,
     MemberInfo: MemberInfoScreen,
     Members: MembersScreen,
-    Settings: SettingsScreen,
-    AccountSetting: AccountSettingScreen,
     TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
     VerifyCredential: VerifyCredentialScreen,
     ChatList: ChatListScreen,
-    About: AboutScreen,
-    PasswordSetting: PasswordSettingScreen,
     Home: HomeScreen,
     CreateTopic: CreateTopicScreen,
-
     ...commonScreens,
   },
   {
@@ -122,7 +110,7 @@ const HomeStack = createStackNavigator(
 );
 
 const WalletStackIcon = ({ focused }) => (
-  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'} />
 );
 WalletStackIcon.propTypes = iconPropTypes;
 
@@ -144,7 +132,29 @@ const WalletStack = createStackNavigator(
   }
 );
 
+const UserStackIcon = ({ focused }) => (
+  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-person' : 'md-person'} />
+);
+UserStackIcon.propTypes = iconPropTypes;
+
+const UserStack = createStackNavigator(
+  {
+    Settings: SettingsScreen,
+    About: AboutScreen,
+    PasswordSetting: PasswordSettingScreen,
+    AccountSetting: AccountSettingScreen,
+    ...commonScreens,
+  },
+  {
+    navigationOptions: {
+      tabBarLabel: 'Me',
+      tabBarIcon: UserStackIcon,
+    },
+  }
+);
+
 export default createBottomTabNavigator({
   HomeStack,
   WalletStack,
+  UserStack,
 });

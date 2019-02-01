@@ -29,14 +29,16 @@ IntroContainer.prototype = {
 export const MemberListContainer = props => (
   <View style={styles.memberContainer}>
     <MemberList list={props.topic.subs} limit={25} />
-    {props.topic.subs.length > 25 && <LightButton
-      onPress={() =>
-        props.navigation.navigate(screensList.Members.label, {
-          list: props.topic.subs,
-        })
-      }
-      text={t.VIEW_MORE_MEMBERS}
-    />}
+    {props.topic.subs.length > 25 && (
+      <LightButton
+        onPress={() =>
+          props.navigation.navigate(screensList.Members.label, {
+            list: props.topic.subs,
+          })
+        }
+        text={t.VIEW_MORE_MEMBERS}
+      />
+    )}
   </View>
 );
 

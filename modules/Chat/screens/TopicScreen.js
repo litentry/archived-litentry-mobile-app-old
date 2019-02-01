@@ -32,7 +32,7 @@ class TopicScreen extends React.Component {
           navigation.navigate(screensList.TopicInfo.label, {
             title: navigation.getParam('title', ''),
             allowEdit: true,
-            isJoined: true
+            isJoined: true,
           })
         }
         color="black"

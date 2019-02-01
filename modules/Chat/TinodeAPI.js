@@ -122,7 +122,8 @@ class TinodeAPIClass {
       navigation.dispatch(resetAction);
       // this.handleLoginSuccessful();
     }
-  }M
+  }
+  M;
 
   tnMeMetaSub(meTopic, topicData) {
     store.dispatch(chatAction.updateChatMap(topicData));
