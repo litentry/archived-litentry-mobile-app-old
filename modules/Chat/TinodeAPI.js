@@ -9,7 +9,7 @@ import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import * as chatUtils from '../../utils/chatUtils';
 import { popupAction } from '../../actions/popupAction';
-import {loaderAction} from "../../actions/loaderAction";
+import { loaderAction } from '../../actions/loaderAction';
 
 const newGroupTopicParams = { desc: { public: {}, private: { comment: {} } }, tags: {} };
 
@@ -18,7 +18,7 @@ class TinodeAPIClass {
     this.init();
   }
 
-  init(){
+  init() {
     const platform = Platform.OS === 'ios' ? 'ios' : 'android';
     let tinode = new Tinode(
       wsInfo.appName,
@@ -386,12 +386,25 @@ class TinodeAPIClass {
 
   logout(navigation) {
     if (this.tinode) {
-      this.tinode.onDisconnect = undefined;
+      this.tinode.onDisconnect = () => {
+        store.dispatch(loaderAction.clearAppData());
+        // const resetAction = StackActions.reset({
+        //   index: 0,
+        //   actions: [NavigationActions.navigate({ routeName: screensList.Login.label })],
+        // });
+
+        const navigateAction = NavigationActions.navigate({
+          routeName: 'Login',
+          params: {},
+          action: StackActions.popToTop(),
+        });
+
+        navigation.dispatch(navigateAction);
+        this.init();
+        this.connect();
+      };
       this.tinode.disconnect();
     }
-    store.dispatch(loaderAction.clearAppData())
-    navigation.popToTop();
-    this.init();
   }
 }
 

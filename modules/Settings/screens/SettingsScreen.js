@@ -9,6 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import packageJson from '../../../package';
+import TinodeAPI from '../../Chat/TinodeAPI';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -43,7 +44,7 @@ class SettingsScreen extends React.Component {
           title={t.LOG_OUT_TITLE}
           style={styles.singleDisplay}
           value={''}
-          onClick={() => TinodeAPI.logout()}
+          onClick={() => TinodeAPI.logout(navigation)}
         />
       </View>
     );

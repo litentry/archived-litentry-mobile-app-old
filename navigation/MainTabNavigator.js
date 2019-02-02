@@ -49,6 +49,15 @@ import AppProfileScreen from '../modules/Apps/screens/AppProfileScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
+const checkIsVisible = navigation => {
+  let tabBarVisible = true;
+  const currentRouter = _.last(navigation.state.routes).routeName;
+  if (navigation.state.index > 0 || currentRouter === screensList.Login.label) {
+    tabBarVisible = false;
+  }
+  return tabBarVisible;
+};
+
 const commonScreens = {
   Unlock: UnlockScreen,
   Transactions: TransactionsScreen,
@@ -88,24 +97,15 @@ const HomeStack = createStackNavigator(
     Topic: TopicScreen,
     VerifyCredential: VerifyCredentialScreen,
     ChatList: ChatListScreen,
-    Home: HomeScreen,
     CreateTopic: CreateTopicScreen,
     ...commonScreens,
   },
   {
-    navigationOptions: ({ navigation }) => {
-      let tabBarVisible = true;
-      const currentRouter = _.last(navigation.state.routes).routeName;
-      if (navigation.state.index > 0 || currentRouter === screensList.Start.label) {
-        tabBarVisible = false;
-      }
-
-      return {
-        tabBarLabel: screensList.Home.label,
-        tabBarIcon: HomeStackIcon,
-        tabBarVisible,
-      };
-    },
+    navigationOptions: ({ navigation }) => ({
+      tabBarLabel: screensList.Home.label,
+      tabBarIcon: HomeStackIcon,
+      tabBarVisible: checkIsVisible(navigation),
+    }),
   }
 );
 

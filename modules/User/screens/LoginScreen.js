@@ -11,6 +11,7 @@ import GenesisButton from '../../../components/GenesisButton';
 
 import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
+import ContinueLoginInnerScreen from './StartScreen';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,11 +20,15 @@ class LoginScreen extends React.Component {
     headerStyle: {
       backgroundColor: AppStyle.userHeaderBackgroundColor,
     },
+    headerLeft: null,
   });
 
   static propTypes = {
     navigation: PropTypes.object,
     oldUserId: PropTypes.string.isRequired,
+
+    isLoaded: PropTypes.bool.isRequired,
+    loginToken: PropTypes.string,
   };
 
   constructor(props) {
@@ -37,6 +42,14 @@ class LoginScreen extends React.Component {
   render() {
     const { username, password } = this.state;
     const { navigation, oldUserId } = this.props;
+
+    // TODO this part is the same as start screen
+    const { isLoaded, loginToken } = this.props;
+
+    if (isLoaded && !_.isEmpty(loginToken)) {
+      return <ContinueLoginInnerScreen />;
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
@@ -83,6 +96,9 @@ class LoginScreen extends React.Component {
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
   oldUserId: state.appState.userId,
+
+  loginToken: state.appState.loginToken,
+  isLoaded: state.appState.isLoaded,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
