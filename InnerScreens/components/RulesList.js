@@ -7,7 +7,6 @@ import _ from 'lodash';
 import AppStyle from '../../commons/AppStyle';
 import { screensList } from '../../navigation/screensList';
 import SingleLineSingleValueDisplay from '../../components/SingleLineSingleValueDisplay';
-import { mockHistoryRules } from './mockRulesData';
 
 class RulesList extends React.Component {
   static propTypes = {
@@ -70,9 +69,9 @@ class RulesList extends React.Component {
       <View style={styles.container}>
         {hasVoting && this.renderSingleRule(false, voteOrigin, 'Voting', true)}
         {this.renderCurrentAndProposing()}
-        {mockHistoryRules.map(item =>
-          this.renderSingleRule(false, item, `${item.startAt}-${item.endAt}`)
-        )}
+        {/*{mockHistoryRules.map(item =>*/}
+          {/*this.renderSingleRule(false, item, `${item.startAt}-${item.endAt}`)*/}
+        {/*)}*/}
       </View>
     );
   }
