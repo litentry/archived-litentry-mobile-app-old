@@ -1,6 +1,23 @@
 # GenesisMobile
 React native mobile application for genesis space
 
+### Quick Start
+
+(Recommend if you do not have node installed)
+
+* 安装NVM: https://github.com/creationix/nvm
+
+* 安装NODE WITH NVM: `nvm install latest`
+
+* 全局安装 expo-cli   `npm install -g expo-cli`
+
+* 然后进入 Project(Genesis Mobile) 文件夹安装 Dependency： `npm install`
+
+* 然后开始`expo start`
+
+* 在打开的网页窗口中打开 Emulator 运行。
+
+* 如果需要修改请新建 branch 然后生成 PR 推送到 master branch.
 
 ### Contribute
 
