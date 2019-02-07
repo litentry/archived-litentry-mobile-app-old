@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
+import HeaderButton from '../../../components/HeaderButton';
 
 const mock = {
   groupRuleName: 'democracy',
@@ -19,7 +20,9 @@ const mock = {
 class RulesDescriptionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.RulesDescription.title} />,
-    headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="black" />,
+    headerRight: (
+      <HeaderButton title={'Done'} onPress={() => navigation.goBack()} color={'black'} />
+    ),
     headerBackTitle: '',
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,

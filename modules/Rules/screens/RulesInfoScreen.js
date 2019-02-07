@@ -10,12 +10,15 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import MultiLineDisplay from '../../../components/MultiLineDisplay';
+import HeaderButton from '../../../components/HeaderButton';
 
 class RulesInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.RulesInfo.title} />,
     headerBackTitle: '',
-    headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="black" />,
+    headerRight: (
+      <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'black'} />
+    ),
     headerStyle: {
       backgroundColor: AppStyle.backgroundColor,
     },

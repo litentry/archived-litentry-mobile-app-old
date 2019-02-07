@@ -11,15 +11,17 @@ import { voteInfo } from '../../../config';
 import SingleProfile from '../components/SingleProfile';
 import Images from '../../../commons/Images';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
+import HeaderButton from '../../../components/HeaderButton';
+import { alertNormal } from '../../../utils/alertUtils';
 
 class MemberRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.MemberRules.title} />,
     headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.RulesInfo.label)}
+      <HeaderButton
         title={screensList.RulesInfo.title}
-        color="black"
+        onPress={() => navigation.navigate(screensList.RulesInfo.label)}
+        color={'black'}
       />
     ),
     headerBackTitle: '',
@@ -61,12 +63,7 @@ class MemberRulesScreen extends React.Component {
         userId,
       });
     } else {
-      Alert.alert(
-        'Vote needed',
-        'To make changes please start a vote from chat window',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false }
-      );
+      alertNormal('To make changes please start a vote from chat window');
     }
   }
 

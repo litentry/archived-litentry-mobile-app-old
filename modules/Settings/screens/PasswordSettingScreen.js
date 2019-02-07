@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import SingleLineInput from '../components/SingleLineInput';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
+import HeaderButton from '../../../components/HeaderButton';
 
 const mock = {
   mockEmptyValue: '',
@@ -16,15 +17,7 @@ const mock = {
 class PasswordSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: screensList.PasswordSetting.title,
-    headerRight: (
-      <Button
-        onPress={() => {
-          /** TODO **/
-        }}
-        title={t.DONE_BUTTON}
-        color="white"
-      />
-    ),
+    headerRight: <HeaderButton title={t.DONE} onPress={() => {}} color={'#fff'} />,
     headerBackTitle: '',
     headerTintColor: '#fff',
     headerStyle: {

@@ -17,7 +17,7 @@ export const INIT_VALUE = {
     entryCost: 100,
     exitCost: 50,
     voteCost: 1000,
-    seq: 3,
+    seq: 1,
     memberRules: {
       default: [150, 150, 10, 1, 1],
     },

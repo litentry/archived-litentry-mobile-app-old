@@ -34,12 +34,7 @@ class StartScreen extends React.Component {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Connector />
-        {this.renderInner()}
-      </View>
-    );
+    return <View style={styles.container}>{this.renderInner()}</View>;
   }
 }
 

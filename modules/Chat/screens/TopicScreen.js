@@ -16,7 +16,6 @@ import { Entypo, Ionicons } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
-import { makeImageUrl } from '../lib/blob-helpers';
 import MessageNode from '../components/MessageNode';
 import Images from '../../../commons/Images';
 import { topicsAction } from '../actions/topicsAction';
@@ -60,7 +59,7 @@ class TopicScreen extends React.Component {
     connected: PropTypes.bool.isRequired,
     userInfo: PropTypes.object.isRequired,
     updateUserInput: PropTypes.func.isRequired,
-    avatar: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
   };
 
   constructor(props) {

@@ -11,6 +11,7 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleLineSingleValueDisplay from '../../../components/SingleLineSingleValueDisplay';
+import { alertNormal } from '../../../utils/alertUtils';
 
 class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -32,12 +33,7 @@ class TopicRulesScreen extends React.Component {
     if (editEnabled) {
       navigation.navigate(screenLabel);
     } else {
-      Alert.alert(
-        'Cannot Edit',
-        t.NO_EDIT,
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false }
-      );
+      alertNormal('Cannot Edit');
     }
   }
 

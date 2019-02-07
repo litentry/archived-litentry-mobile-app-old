@@ -7,15 +7,16 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
+import HeaderButton from '../modules/Settings/screens/PasswordSettingScreen';
 
 class TemplateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
     headerRight: (
-      <Button
-        onPress={() => navigation.navigate(screensList.Transactions.label)}
+      <HeaderButton
         title={screensList.Transactions.title}
-        color="black"
+        onPress={() => navigation.navigate(screensList.Transactions.label)}
+        color={'black'}
       />
     ),
     headerBackTitle: '',

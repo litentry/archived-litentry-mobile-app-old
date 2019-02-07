@@ -3,20 +3,13 @@ import { Button, StyleSheet, View } from 'react-native';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
+import { generateNavigationOptions } from '../components/navigationOptions';
 
 class AmendDescriptionScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    headerTitle: screensList.AmendDescription.title,
-    headerRight: <Button onPress={() => navigation.goBack()} title="Done" color="white" />,
-    headerTintColor: 'white',
-    headerStyle: {
-      backgroundColor: AppStyle.voteHeaderBackgroundColor,
-    },
-  });
+  static navigationOptions = generateNavigationOptions(screensList.AmendDescription.title);
 
   render() {
     return (

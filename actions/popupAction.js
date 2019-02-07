@@ -4,6 +4,6 @@ export const popupActionType = {
 };
 
 export const popupAction = {
-  showPopup: content => ({ type: popupActionType.SHOW_POPUP, content }),
+  showPopup: (content, onPress) => ({ type: popupActionType.SHOW_POPUP, content, onPress }),
   hidePopup: () => ({ type: popupActionType.HIDE_POPUP }),
 };

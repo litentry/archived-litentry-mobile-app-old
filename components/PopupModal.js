@@ -11,12 +11,15 @@ class PopupModal extends React.Component {
     content: PropTypes.string,
     visible: PropTypes.bool,
     hidePopup: PropTypes.func.isRequired,
+    onPress: PropTypes.func,
   };
 
-  static defaultProps = {};
+  static defaultProps = {
+    onPress: () => {},
+  };
 
   render() {
-    const { visible, content, hidePopup } = this.props;
+    const { visible, content, hidePopup, onPress } = this.props;
     return (
       <View style={styles.marginTop}>
         <Modal animationType="slide" transparent visible onRequestClose={hidePopup}>
@@ -25,7 +28,12 @@ class PopupModal extends React.Component {
               <View style={styles.contentContainer}>
                 <Text style={styles.contentText}>{content}</Text>
               </View>
-              <TouchableHighlight onPress={hidePopup} style={styles.buttonContainer}>
+              <TouchableHighlight
+                onPress={() => {
+                  hidePopup();
+                  onPress();
+                }}
+                style={styles.buttonContainer}>
                 <Text style={styles.buttonText}>{t.BUTTON_OK}</Text>
               </TouchableHighlight>
             </View>
@@ -85,6 +93,7 @@ const t = {
 const mapStateToProps = state => ({
   visible: state.popup.visible,
   content: state.popup.content,
+  onPress: state.popup.onPress,
 });
 
 const mapDispatchToProps = dispatch => ({
