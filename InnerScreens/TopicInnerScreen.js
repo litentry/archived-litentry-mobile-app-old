@@ -347,13 +347,13 @@ const styles = StyleSheet.create({
   },
 
   imageContainer: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     marginRight: 10,
   },
   image: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
     resizeMode: 'contain',
   },
 });

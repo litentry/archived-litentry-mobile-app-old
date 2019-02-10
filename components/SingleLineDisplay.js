@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 20,
+    padding: 15,
   },
   titleContainer: {
     flex: 2,
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 2,
-    fontSize: AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddleSmall,
     color: 'black',
   },
   value: {
     textAlign: 'right',
     flex: 3,
-    fontSize: AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddleSmall,
     color: AppStyle.lightGrey,
   },
   valueContainer: {

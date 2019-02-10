@@ -17,7 +17,7 @@ export default class SingleLineSingleValueDisplay extends React.Component {
     onClick: null,
     object: {},
     Icon: null,
-    fontSize: AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddleSmall,
   };
 
   renderTitle() {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 20,
+    padding: 15,
   },
   titleContainer: {
     flex: 2,

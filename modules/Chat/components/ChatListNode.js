@@ -59,22 +59,20 @@ const t = {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    height: 70,
+    height: 60,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
   },
   imageContainer: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     marginRight: 10,
     position: 'relative',
-    // backgroundColor: 'grey',
   },
   image: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     resizeMode: 'contain',
   },
   imageFloat: {
