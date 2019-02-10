@@ -42,11 +42,11 @@ export default class ChatListNode extends React.Component {
               {shortDateFormat(new Date(chatNode.updated || 0))}
             </Text>
           </View>
-          <View style={styles.secondLineContainer}>
-            <Text style={styles.text} numberOfLines={1}>
-              {chatNode.isSubscribed ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}
-            </Text>
-          </View>
+          {/*<View style={styles.secondLineContainer}>*/}
+            {/*<Text style={styles.text} numberOfLines={1}>*/}
+              {/*{chatNode.isSubscribed && chatNode.private && chatNode.private.comment ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}*/}
+            {/*</Text>*/}
+          {/*</View>*/}
         </View>
       </View>
     );
@@ -54,7 +54,7 @@ export default class ChatListNode extends React.Component {
 }
 
 const t = {
-  DESCRIPTION_PLACEHOLDER: 'No access',
+  DESCRIPTION_PLACEHOLDER: '',
 };
 
 const styles = StyleSheet.create({
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   title: {
     flexShrink: 1,
