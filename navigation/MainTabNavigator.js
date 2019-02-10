@@ -46,6 +46,7 @@ import CreateTopicScreen from '../modules/CreateTopic/screens/CreateTopicScreen'
 import UploadCountryProfileScreen from '../modules/CreateTopic/screens/UploadCountryProfileScreen';
 import AppStoreScreen from '../modules/Apps/screens/AppStoreScreen';
 import AppProfileScreen from '../modules/Apps/screens/AppProfileScreen';
+import AppStyle from "../commons/AppStyle";
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -101,7 +102,14 @@ const HomeStack = createStackNavigator(
     ...commonScreens,
   },
   {
-    defaultNavigationOptions: {},
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
     navigationOptions: ({ navigation }) => ({
       tabBarLabel: screensList.Home.label,
       tabBarIcon: HomeStackIcon,

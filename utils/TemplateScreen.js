@@ -4,25 +4,20 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import NavigationHeader from '../../../components/NavigationHeader';
 import HeaderButton from '../modules/Settings/screens/PasswordSettingScreen';
 
 class TemplateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: screensList.Wallet.title,
     headerRight: (
       <HeaderButton
         title={screensList.Transactions.title}
         onPress={() => navigation.navigate(screensList.Transactions.label)}
-        color={'black'}
+        color={'white'}
       />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

@@ -13,9 +13,6 @@ class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.AccountSetting.title} />,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

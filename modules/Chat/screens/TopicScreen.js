@@ -34,21 +34,17 @@ class TopicScreen extends React.Component {
             isJoined: true,
           })
         }
-        color="black"
+        color="white"
         style={styles.dotContainer}>
         <Entypo
           name="dots-three-horizontal"
           size={AppStyle.fontMiddle}
           style={styles.dot}
-          color={AppStyle.lightGrey}
+          color='white'
         />
       </TouchableOpacity>
     ),
     headerBackTitle: ' ',
-    headerTintColor: AppStyle.userCancelGreen,
-    headerStyle: {
-      backgroundColor: 'white',
-    },
   });
 
   static propTypes = {

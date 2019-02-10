@@ -33,9 +33,6 @@ class StartVoteScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.StartVote.title,
     headerBackTitle: ' ',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

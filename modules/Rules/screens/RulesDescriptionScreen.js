@@ -21,12 +21,9 @@ class RulesDescriptionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.RulesDescription.title} />,
     headerRight: (
-      <HeaderButton title={'Done'} onPress={() => navigation.goBack()} color={'black'} />
+      <HeaderButton title={'Done'} onPress={() => navigation.goBack()} color={'white'} />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

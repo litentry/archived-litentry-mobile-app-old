@@ -32,9 +32,6 @@ class VoteInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.VoteInfo.title} />,
     headerBackTitle: ' ',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

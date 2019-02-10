@@ -13,9 +13,6 @@ class CreateTopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.CreateTopic.title} />,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

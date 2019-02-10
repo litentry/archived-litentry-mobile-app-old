@@ -14,9 +14,6 @@ class UploadUserProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.UploadUserProfile.title,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

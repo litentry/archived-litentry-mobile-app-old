@@ -10,9 +10,6 @@ class TopicInfoScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: navigation.getParam('title', null),
     headerBackTitle: ' ',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

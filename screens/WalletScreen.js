@@ -20,7 +20,7 @@ import { alertNormal } from '../utils/alertUtils';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: screensList.Wallet.title,
     headerRight: (
       <HeaderButton
         onPress={() => navigation.navigate(screensList.Transactions.label)}
@@ -28,9 +28,6 @@ class WalletScreen extends React.Component {
       />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   constructor(props) {

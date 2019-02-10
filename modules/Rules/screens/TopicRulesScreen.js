@@ -17,9 +17,6 @@ class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.TopicRules.title} />,
     headerBackTitle: ' ',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

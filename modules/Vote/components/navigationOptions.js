@@ -8,7 +8,4 @@ export const generateNavigationOptions = title => ({ navigation }) => ({
     <HeaderButton title={'Done'} onPress={() => () => navigation.goBack()} color={'white'} />
   ),
   headerTintColor: 'white',
-  headerStyle: {
-    backgroundColor: AppStyle.voteHeaderBackgroundColor,
-  },
 });
