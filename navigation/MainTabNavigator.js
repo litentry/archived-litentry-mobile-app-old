@@ -101,9 +101,7 @@ const HomeStack = createStackNavigator(
     ...commonScreens,
   },
   {
-    defaultNavigationOptions: {
-    
-    },
+    defaultNavigationOptions: {},
     navigationOptions: ({ navigation }) => ({
       tabBarLabel: screensList.Home.label,
       tabBarIcon: HomeStackIcon,

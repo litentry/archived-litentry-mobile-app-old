@@ -11,8 +11,8 @@ import GenesisButton from '../../../components/GenesisButton';
 import { passwordRegex } from '../../../utils/regexUtils';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import { screensList } from '../../../navigation/screensList';
-import Container from "../../../components/Container";
-import TinodeAPI from "../../Chat/TinodeAPI";
+import Container from '../../../components/Container';
+import TinodeAPI from '../../Chat/TinodeAPI';
 
 class SetPasswordScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -40,7 +40,7 @@ class SetPasswordScreen extends React.Component {
     username: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   };
-  
+
   createAccountRequest = () => {
     const { navigation, username, password, email } = this.props;
     TinodeAPI.handleCreateNewAccount(navigation, email, password, username, null);
@@ -50,10 +50,7 @@ class SetPasswordScreen extends React.Component {
     const { password, updateUserRegisterInfo } = this.props;
     const { isSet, repeatPassword } = this.state;
     const validator = () => (isSet ? repeatPassword === password : passwordRegex.test(password));
-    const onPress = () =>
-      isSet
-        ? this.createAccountRequest()
-        : this.setState({ isSet: true });
+    const onPress = () => (isSet ? this.createAccountRequest() : this.setState({ isSet: true }));
 
     return (
       <Container hasPadding style={styles.container}>

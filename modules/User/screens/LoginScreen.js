@@ -12,7 +12,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
 import ContinueLoginInnerScreen from './StartScreen';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

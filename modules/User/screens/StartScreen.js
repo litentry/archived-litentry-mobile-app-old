@@ -8,7 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import WelcomeInnerScreen from '../innerScreens/WelcomeInnerScreen';
 import ContinueLoginInnerScreen from '../innerScreens/ContinueLoginInnerScreen';
 import Connector from '../../Chat/components/Connector';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class StartScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,7 +35,11 @@ class StartScreen extends React.Component {
   }
 
   render() {
-    return <Container hasPadding style={styles.container}>{this.renderInner()}</Container>;
+    return (
+      <Container hasPadding style={styles.container}>
+        {this.renderInner()}
+      </Container>
+    );
   }
 }
 

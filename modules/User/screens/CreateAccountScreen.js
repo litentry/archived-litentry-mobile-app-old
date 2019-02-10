@@ -10,7 +10,7 @@ import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import { usernameRegex, emailRegex } from '../../../utils/regexUtils';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -36,7 +36,7 @@ class CreateAccountScreen extends React.Component {
     const isNextValid = () => usernameValidator(username) && emailValidator(email);
 
     return (
-      <Container hasPadding >
+      <Container hasPadding>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{t.CREATE_ACCOUNT_TITLE}</Text>
         </View>

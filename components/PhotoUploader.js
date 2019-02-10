@@ -11,7 +11,7 @@ import Images from '../commons/Images';
 import { MIME_EXTENSIONS } from '../modules/Chat/lib/blob-helpers';
 import { renderImageSource, validateImageSize } from '../utils/imageUtils';
 import { popupAction } from '../actions/popupAction';
-import Container from "./Container";
+import Container from './Container';
 
 const isValidExtension = imageCallback => {
   const extension = imageCallback.uri.split('.').pop();

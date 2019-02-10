@@ -11,8 +11,8 @@ import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
 import { renderImageSource } from '../../../utils/imageUtils';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
-import {store} from "../../../reducers/store";
-import {loaderAction} from "../../../actions/loaderAction";
+import { store } from '../../../reducers/store';
+import { loaderAction } from '../../../actions/loaderAction';
 
 class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
@@ -50,7 +50,7 @@ class ContinueLoginInnerScreen extends React.Component {
           style={styles.newLoginContainer}
           onPress={() => {
             store.dispatch(loaderAction.clearAppData());
-            navigation.navigate(screensList.Login.label)
+            navigation.navigate(screensList.Login.label);
           }}>
           <Text style={styles.newLoginText}>{t.NEW_LOGIN}</Text>
         </TouchableOpacity>
