@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView, StyleSheet, View } from 'react-native';
@@ -8,6 +7,7 @@ export default class Container extends React.Component {
   static propTypes = {
     style: PropTypes.object,
     hasPadding: PropTypes.bool,
+    children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   };
 
   static defaultProps = {
