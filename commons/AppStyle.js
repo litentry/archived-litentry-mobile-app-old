@@ -70,9 +70,9 @@ export default {
   fontSubtitle: 50,
   fontSmall: 12,
   fontMiddleSmall: 16,
-  fontMiddle: 20,
-  fontMiddleBig: 27,
-  fontBig: 35,
+  fontMiddle: 18,
+  fontMiddleBig: 22,
+  fontBig: 26,
 
   userHeaderBackgroundColor: 'white',
   voteHeaderBackgroundColor: 'black',
