@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import { usernameRegex, emailRegex } from '../../../utils/regexUtils';
+import Container from "../../../components/Container";
 
 class CreateAccountScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -36,7 +36,7 @@ class CreateAccountScreen extends React.Component {
     const isNextValid = () => usernameValidator(username) && emailValidator(email);
 
     return (
-      <View style={styles.container}>
+      <Container hasPadding >
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{t.CREATE_ACCOUNT_TITLE}</Text>
         </View>
@@ -68,7 +68,7 @@ class CreateAccountScreen extends React.Component {
             text={t.BUTTON_TEXT}
           />
         </View>
-      </View>
+      </Container>
     );
   }
 }
@@ -88,11 +88,6 @@ export default connect(
 )(CreateAccountScreen);
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Header.HEIGHT + 50,
-    backgroundColor: 'white',
-  },
   titleContainer: {
     flex: 3,
     justifyContent: 'center',
@@ -101,6 +96,7 @@ const styles = StyleSheet.create({
   title: {
     padding: 30,
     fontSize: AppStyle.fontMiddleBig,
+    fontFamily: AppStyle.mainFont,
     color: AppStyle.lightGrey,
   },
   inputContainer: {
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
   hint: {
     flex: 2,
     padding: 30,
-    fontSize: AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddleSmall,
     color: AppStyle.lightGrey,
     fontFamily: AppStyle.coverFont,
   },

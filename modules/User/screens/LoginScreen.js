@@ -52,7 +52,7 @@ class LoginScreen extends React.Component {
     }
 
     return (
-      <Container style={styles.container}>
+      <Container hasPadding style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{t.LOGIN_TITLE}</Text>
         </View>

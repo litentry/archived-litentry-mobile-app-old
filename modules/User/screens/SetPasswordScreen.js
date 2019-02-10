@@ -11,6 +11,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import { passwordRegex } from '../../../utils/regexUtils';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import { screensList } from '../../../navigation/screensList';
+import Container from "../../../components/Container";
 
 class SetPasswordScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -46,7 +47,7 @@ class SetPasswordScreen extends React.Component {
         : this.setState({ isSet: true });
 
     return (
-      <View style={styles.container}>
+      <Container hasPadding style={styles.container}>
         <Text style={styles.title}>{isSet ? t.REPEAT_TITLE : t.TITLE}</Text>
         <Text style={styles.subtitle}>{t.SUBTITLE}</Text>
         <View style={styles.inputContainer}>
@@ -71,7 +72,7 @@ class SetPasswordScreen extends React.Component {
         <View style={styles.button}>
           <GenesisButton disabled={!validator()} action={onPress} text={t.BUTTON_TEXT} />
         </View>
-      </View>
+      </Container>
     );
   }
 }
@@ -91,17 +92,15 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: Header.HEIGHT + 50,
-    backgroundColor: AppStyle.userBackgroundColor,
     alignItems: 'stretch',
   },
   title: {
     flex: 1,
-    paddingHorizontal: 50,
-    fontSize: AppStyle.fontMiddle,
+    padding: 30,
+    fontSize: AppStyle.fontMiddleBig,
     color: AppStyle.lightGrey,
-    fontFamily: AppStyle.coverFont,
+    fontFamily: AppStyle.mainFont,
+    alignSelf: 'center',
   },
   subtitle: {
     flex: 1,

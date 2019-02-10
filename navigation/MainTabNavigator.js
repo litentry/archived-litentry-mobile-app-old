@@ -70,14 +70,19 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    UploadUserProfile: UploadUserProfileScreen,
+    SetPassword: SetPasswordScreen,
+    CreateAccount: CreateAccountScreen,
+  
+  
     Login: LoginScreen,
     Start: StartScreen,
     AppStore: AppStoreScreen,
     AppProfile: AppProfileScreen,
-    SetPassword: SetPasswordScreen,
-    UploadUserProfile: UploadUserProfileScreen,
+   
+
     UploadCountryProfile: UploadCountryProfileScreen,
-    CreateAccount: CreateAccountScreen,
+    
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,
