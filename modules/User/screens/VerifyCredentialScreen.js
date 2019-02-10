@@ -10,7 +10,7 @@ import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import TinodeAPI from '../../Chat/TinodeAPI';
-import Container from "./LoginScreen";
+import Container from "../../../components/Container";
 
 class VerifyCredentialScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

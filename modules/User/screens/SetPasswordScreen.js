@@ -12,6 +12,7 @@ import { passwordRegex } from '../../../utils/regexUtils';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import { screensList } from '../../../navigation/screensList';
 import Container from "../../../components/Container";
+import TinodeAPI from "../../Chat/TinodeAPI";
 
 class SetPasswordScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -35,15 +36,23 @@ class SetPasswordScreen extends React.Component {
     navigation: PropTypes.object,
     password: PropTypes.string.isRequired,
     updateUserRegisterInfo: PropTypes.func.isRequired,
+    photo: PropTypes.object,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  };
+  
+  createAccountRequest = () => {
+    const { navigation, username, password, email } = this.props;
+    TinodeAPI.handleCreateNewAccount(navigation, email, password, username, null);
   };
 
   render() {
-    const { password, updateUserRegisterInfo, navigation } = this.props;
+    const { password, updateUserRegisterInfo } = this.props;
     const { isSet, repeatPassword } = this.state;
     const validator = () => (isSet ? repeatPassword === password : passwordRegex.test(password));
     const onPress = () =>
       isSet
-        ? navigation.navigate(screensList.UploadUserProfile.label)
+        ? this.createAccountRequest()
         : this.setState({ isSet: true });
 
     return (
@@ -78,7 +87,10 @@ class SetPasswordScreen extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  photo: state.userRegister.photo,
+  username: state.userRegister.username,
   password: state.userRegister.password,
+  email: state.userRegister.email,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({

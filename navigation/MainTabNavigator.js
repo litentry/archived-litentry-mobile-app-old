@@ -70,19 +70,14 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    Login: LoginScreen,
+    // Start: StartScreen,
     UploadUserProfile: UploadUserProfileScreen,
     SetPassword: SetPasswordScreen,
     CreateAccount: CreateAccountScreen,
-  
-  
-    Login: LoginScreen,
-    Start: StartScreen,
     AppStore: AppStoreScreen,
     AppProfile: AppProfileScreen,
-   
-
     UploadCountryProfile: UploadCountryProfileScreen,
-    
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,
@@ -106,6 +101,9 @@ const HomeStack = createStackNavigator(
     ...commonScreens,
   },
   {
+    defaultNavigationOptions: {
+    
+    },
     navigationOptions: ({ navigation }) => ({
       tabBarLabel: screensList.Home.label,
       tabBarIcon: HomeStackIcon,
