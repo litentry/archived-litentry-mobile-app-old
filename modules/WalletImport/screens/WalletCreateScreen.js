@@ -13,6 +13,7 @@ import { dataEntry } from '../../../reducers/loader';
 import { saveMnemonicAsync, savePrivateKeyAsync } from '../../../utils/secureStoreUtils';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
 import { loaderAction } from '../../../actions/loaderAction';
+import Container from "../../../components/Container";
 
 class WalletCreateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -85,9 +86,9 @@ class WalletCreateScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <Text style={styles.text}>Creating new wallet...</Text>
-      </View>
+      </Container>
     );
   }
 }
@@ -105,7 +106,6 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
     alignItems: 'center',
     justifyContent: 'center',

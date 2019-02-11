@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -16,7 +16,6 @@ import { lockScreen } from '../../Unlock/lockScreenUtils';
 import { aboutInfo } from '../../../config';
 import { INIT_VALUE } from '../reducer/voteReducer';
 import { popupAction } from '../../../actions/popupAction';
-import { alertNormal } from '../../../utils/alertUtils';
 
 const locale = window.navigator.language;
 const mock = {

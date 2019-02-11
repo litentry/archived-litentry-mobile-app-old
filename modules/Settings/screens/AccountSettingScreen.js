@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
+import Container from "../../../components/Container";
 
 class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -23,7 +24,7 @@ class AccountSettingScreen extends React.Component {
   render() {
     const { navigation, userId } = this.props;
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <SingleLineDisplay title={t.ID_TITLE} style={styles.singleLineDisplay} value={userId} />
         <SingleLineDisplay
           title={t.PASSWORD_TITLE}
@@ -31,7 +32,7 @@ class AccountSettingScreen extends React.Component {
           value={t.PASSWORD_VALUE}
           onClick={() => navigation.navigate(screensList.PasswordSetting.label)}
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -49,7 +50,6 @@ export default connect(
 
 const styles = {
   container: {
-    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
   singleLineDisplay: {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
@@ -7,13 +6,14 @@ import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import { generateNavigationOptions } from '../components/navigationOptions';
+import Container from "../../../components/Container";
 
 class AmendDescriptionScreen extends React.Component {
   static navigationOptions = generateNavigationOptions(screensList.AmendDescription.title);
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container>
         <AmendInput
           propertyPath={groupMetaRules.DESCRIPTION}
           unit={t.UNIT_TEXT}
@@ -21,7 +21,7 @@ class AmendDescriptionScreen extends React.Component {
           description={t.DESCRIPTION_TEXT}
           isNumber={false}
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -40,9 +40,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AmendDescriptionScreen);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

@@ -10,7 +10,6 @@ import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
-import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/innerScreens/NewWalletInnerScreen';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
 import { lockScreen } from '../modules/Unlock/lockScreenUtils';

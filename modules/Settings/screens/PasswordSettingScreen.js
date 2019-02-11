@@ -9,6 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import SingleLineInput from '../components/SingleLineInput';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import HeaderButton from '../../../components/HeaderButton';
+import Container from "../../../components/Container";
 
 const mock = {
   mockEmptyValue: '',
@@ -17,7 +18,7 @@ const mock = {
 class PasswordSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: screensList.PasswordSetting.title,
-    headerRight: <HeaderButton title={t.DONE} onPress={() => {}} color={'#fff'} />,
+    headerRight: <HeaderButton title={t.DONE_BUTTON} onPress={() => {}} color={'#fff'} />,
     headerBackTitle: '',
   });
 
@@ -29,7 +30,7 @@ class PasswordSettingScreen extends React.Component {
   render() {
     const { userId } = this.props;
     return (
-      <View>
+      <Container>
         <Text style={styles.intro}>{t.INTRO}</Text>
 
         <SingleLineDisplay title={t.ID_TITLE} value={userId} style={styles.idContainer} />
@@ -55,7 +56,7 @@ class PasswordSettingScreen extends React.Component {
           placeholder={t.CONFIRM_PASSWORD_PLACEHOLDER}
           value={mock.mockEmptyValue}
         />
-      </View>
+      </Container>
     );
   }
 }

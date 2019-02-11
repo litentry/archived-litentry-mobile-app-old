@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -9,6 +8,7 @@ import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import { INIT_VALUE } from '../reducer/voteReducer';
 import { generateNavigationOptions } from '../components/navigationOptions';
+import Container from "../../../components/Container";
 
 class AmendMemberRulesScreen extends React.Component {
   static navigationOptions = generateNavigationOptions(screensList.AmendMemberRules.title);
@@ -22,7 +22,7 @@ class AmendMemberRulesScreen extends React.Component {
     const userId = navigation.getParam('userId', 'default');
 
     return (
-      <View style={styles.container}>
+      <Container>
         <AmendInput
           propertyPath={`${groupMetaRules.MEMBER_RULES}.${userId}`}
           reader={v => {
@@ -37,7 +37,7 @@ class AmendMemberRulesScreen extends React.Component {
           intro={t.INTRO_TEXT}
           description={t.DESCRIPTION_TEXT}
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -58,9 +58,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AmendMemberRulesScreen);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

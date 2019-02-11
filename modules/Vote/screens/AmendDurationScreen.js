@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
 import connect from 'react-redux/es/connect/connect';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
@@ -7,13 +6,14 @@ import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import { generateNavigationOptions } from '../components/navigationOptions';
+import Container from "../../../components/Container";
 
 class AmendDurationScreen extends React.Component {
   static navigationOptions = generateNavigationOptions(screensList.AmendDuration.title);
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container>
         <AmendInput
           propertyPath={groupMetaRules.REQUIRED_HOUR}
           unit={t.UNIT_TEXT}
@@ -21,7 +21,7 @@ class AmendDurationScreen extends React.Component {
           description={t.DESCRIPTION_TEXT}
           isNumber
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -41,9 +41,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AmendDurationScreen);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

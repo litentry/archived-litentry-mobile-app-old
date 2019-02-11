@@ -1,21 +1,19 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
-import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
-import HeaderButton from './AmendSupportScreen';
 import { generateNavigationOptions } from '../components/navigationOptions';
+import Container from "../../../components/Container";
 
 class AmendCostScreen extends React.Component {
   static navigationOptions = generateNavigationOptions(screensList.AmendCost.title);
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container>
         <AmendInput
           propertyPath={groupMetaRules.VOTE_COST}
           unit={t.UNIT_TEXT}
@@ -23,7 +21,7 @@ class AmendCostScreen extends React.Component {
           description={t.DESCRIPTION_TEXT}
           isNumber
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -43,9 +41,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AmendCostScreen);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

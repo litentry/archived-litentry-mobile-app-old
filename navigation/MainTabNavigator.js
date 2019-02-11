@@ -134,6 +134,14 @@ const WalletStack = createStackNavigator(
     ...commonScreens,
   },
   {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
     navigationOptions: {
       tabBarLabel: screensList.Wallet.title,
       tabBarIcon: WalletStackIcon,
@@ -155,6 +163,14 @@ const UserStack = createStackNavigator(
     ...commonScreens,
   },
   {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
     navigationOptions: {
       tabBarLabel: 'Me',
       tabBarIcon: UserStackIcon,
