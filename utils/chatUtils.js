@@ -65,7 +65,7 @@ export const saveUserData = meTopics => {
   if (meTopics && meTopics.public) {
     const privateData = meTopics.private || {};
     const userInfo = _.reduce(meTopics.public, reformatData, privateData);
-    store.dispatch(chatAction.setUserInfo(userInfo));
+    store.dispatch(chatAction.setUserInfo(userInfo, meTopics.public));
     store.dispatch(
       loaderAction.saveAppData({
         [dataEntry.profileImage.stateName]: userInfo.avatar

@@ -10,6 +10,7 @@ export const VariantList = {
   CONFIRM: 'confirm',
   CANCEL: 'cancel',
   PRIMARY: 'primary',
+  CREATE: 'create',
 };
 
 const getBackgroundColor = (variant, disabled) => {
@@ -21,6 +22,8 @@ const getBackgroundColor = (variant, disabled) => {
       return AppStyle.variantCancel;
     case VariantList.PRIMARY:
       return AppStyle.variantPrimary;
+    case VariantList.CREATE:
+      return AppStyle.variantCreate;
     default:
       return AppStyle.variantConfirm;
   }

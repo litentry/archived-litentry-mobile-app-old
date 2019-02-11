@@ -16,7 +16,7 @@ export const chatAction = {
   updateChatMap: data => ({ type: chatActionType.UPDATE_CHAT_MAP, data }),
   login: (username, password) => ({ type: chatActionType.LOGIN, username, password }),
   setId: userId => ({ type: chatActionType.SET_ID, userId }),
-  setUserInfo: userInfo => ({ type: chatActionType.SET_USER_INFO, userInfo }),
+  setUserInfo: (userInfo, rawPublicData) => ({ type: chatActionType.SET_USER_INFO, userInfo, rawPublicData}),
   subscribeChat: chatId => ({ type: chatActionType.SUBSCRIBE_CHAT, chatId }),
   unsubscribeChat: chatId => ({ type: chatActionType.UNSUBSCRIBE_CHAT, chatId }),
 };

@@ -21,6 +21,7 @@ import SingleLineSingleValueDisplay from '../components/SingleLineSingleValueDis
 import { lockScreen } from '../modules/Unlock/lockScreenUtils';
 import { aboutInfo } from '../config';
 import DappsList from './components/DappList';
+import {generatePublicInfo} from "../utils/chatUtils";
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -32,6 +33,7 @@ class TopicInnerScreen extends React.Component {
     voteOrigin: PropTypes.object.isRequired,
     userId: PropTypes.string.isRequired,
     showPopup: PropTypes.func.isRequired,
+    rawPublicData: PropTypes.object.isRequired,
 
     topic: PropTypes.object.isRequired,
     description: PropTypes.string.isRequired,
@@ -139,7 +141,7 @@ class TopicInnerScreen extends React.Component {
         <GenesisButton
           action={() => this.createNewTopic()}
           text={t.BUTTON_CREATE}
-          variant={variantList.CONFIRM}
+          variant={variantList.CREATE}
         />
       );
     if (edited)
@@ -206,10 +208,14 @@ class TopicInnerScreen extends React.Component {
   }
 
   renderIntroOrMemberList() {
-    const { isJoined, iconName, topic, navigation } = this.props;
-    if (isJoined) return <MemberListContainer topic={topic} navigation={navigation} />;
+    const { isJoined, topic, navigation, rawPublicData, userId } = this.props;
+    if (isJoined) return <MemberListContainer subs={topic.subs} navigation={navigation} />;
     if (this.isCreatingNewTopic)
-      return <IntroContainer iconName={iconName} description={t.CREATE_COUNTRY_INTRO} />;
+      // return <IntroContainer iconName={iconName} description={t.CREATE_COUNTRY_INTRO} />;
+      return <MemberListContainer subs={[{
+        user: userId,
+        public: rawPublicData,
+      }]} navigation={navigation}/>;
     return null;
   }
 
@@ -284,6 +290,7 @@ const mapStateToProps = state => ({
   voteCached: state.vote.cached,
   voteOrigin: state.vote.origin,
   userId: state.appState.userId,
+  rawPublicData: state.chat.rawPublicData,
   walletAddress: state.appState.walletAddress,
 });
 

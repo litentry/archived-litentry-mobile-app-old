@@ -64,6 +64,7 @@ export default {
   lightGrey: '#929292',
   variantCancel: '#DF4F52',
   superLightGrey: '#D9D9D9',
+  variantCreate: '#10AEFF',
   headerBlack: '#2D2C33',
 
   fontTitle: 80,
@@ -87,6 +88,7 @@ export default {
   blueIcon: '#10AEFF',
   blueButton: '#027BFF',
   headerBackGroundColor: '#2D2C33',
+
 
   chatBorder: '#DDD',
 };
