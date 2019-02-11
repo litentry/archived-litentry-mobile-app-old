@@ -10,7 +10,7 @@ class MemberProfile extends React.Component {
     navigation: PropTypes.object.isRequired,
     imageSource: PropTypes.oneOfType([PropTypes.number, PropTypes.object]).isRequired,
     title: PropTypes.string.isRequired,
-    raw: PropTypes.object.isRequired,
+    raw: PropTypes.object,
   };
 
   static defaultProps = {};
@@ -20,9 +20,11 @@ class MemberProfile extends React.Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() =>
-          navigation.navigate(screensList.MemberInfo.label, { raw, imageSource, title })
-        }>
+        onPress={() => {
+          if (raw) {
+            navigation.navigate(screensList.MemberInfo.label, { raw, imageSource, title });
+          }
+        }}>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={imageSource} />
         </View>

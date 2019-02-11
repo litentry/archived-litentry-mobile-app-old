@@ -64,15 +64,16 @@ export default {
   lightGrey: '#929292',
   variantCancel: '#DF4F52',
   superLightGrey: '#D9D9D9',
+  variantCreate: '#10AEFF',
   headerBlack: '#2D2C33',
 
   fontTitle: 80,
   fontSubtitle: 50,
   fontSmall: 12,
   fontMiddleSmall: 16,
-  fontMiddle: 20,
-  fontMiddleBig: 27,
-  fontBig: 35,
+  fontMiddle: 18,
+  fontMiddleBig: 22,
+  fontBig: 26,
 
   userHeaderBackgroundColor: 'white',
   voteHeaderBackgroundColor: 'black',
@@ -86,6 +87,7 @@ export default {
   chatActionBackgroundColor: '#F4F4F6',
   blueIcon: '#10AEFF',
   blueButton: '#027BFF',
+  headerBackGroundColor: '#2D2C33',
 
   chatBorder: '#DDD',
 };

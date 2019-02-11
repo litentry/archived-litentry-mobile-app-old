@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import _ from 'lodash';
 import AppStyle from '../../../commons/AppStyle';
-import { shortDateFormat } from '../lib/strformat';
+import { isValidDate, shortDateFormat } from '../lib/strformat';
 import { makeImageUrl } from '../lib/blob-helpers';
 import Images from '../../../commons/Images';
 import { renderImageSource } from '../../../utils/imageUtils';
@@ -39,14 +39,16 @@ export default class ChatListNode extends React.Component {
               {chatNode.public.fn}
             </Text>
             <Text style={styles.date} numberOfLines={1}>
-              {shortDateFormat(new Date(chatNode.updated || 0))}
+              {isValidDate(chatNode.updated)
+                ? shortDateFormat(new Date(chatNode.updated))
+                : t.DATE_PLACEHOLDER}
             </Text>
           </View>
-          <View style={styles.secondLineContainer}>
-            <Text style={styles.text} numberOfLines={1}>
-              {chatNode.isSubscribed ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}
-            </Text>
-          </View>
+          {/*<View style={styles.secondLineContainer}>*/}
+          {/*<Text style={styles.text} numberOfLines={1}>*/}
+          {/*{chatNode.isSubscribed && chatNode.private && chatNode.private.comment ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}*/}
+          {/*</Text>*/}
+          {/*</View>*/}
         </View>
       </View>
     );
@@ -54,27 +56,26 @@ export default class ChatListNode extends React.Component {
 }
 
 const t = {
-  DESCRIPTION_PLACEHOLDER: 'No access',
+  DESCRIPTION_PLACEHOLDER: '',
+  DATE_PLACEHOLDER: '',
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    height: 70,
+    height: 60,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
   },
   imageContainer: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     marginRight: 10,
     position: 'relative',
-    // backgroundColor: 'grey',
   },
   image: {
-    height: 60,
-    width: 60,
+    height: 50,
+    width: 50,
     resizeMode: 'contain',
   },
   imageFloat: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   title: {
     flexShrink: 1,

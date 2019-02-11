@@ -10,14 +10,12 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import { aboutInfo } from '../../../config';
 import packageJson from '../../../package';
 import MultiLineDisplay from '../../../components/MultiLineDisplay';
+import Container from '../../../components/Container';
 
 class AboutScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.About.title} />,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
@@ -26,14 +24,14 @@ class AboutScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <Text style={styles.text}>{aboutInfo.appName}</Text>
         <Text style={styles.text}>{packageJson.version}</Text>
         <Text style={styles.text}>{aboutInfo.date}</Text>
         <MultiLineDisplay title={t.DESIGNER_TITLE} list={aboutInfo.designer} />
         <MultiLineDisplay title={t.DEVELOPER_TITLE} list={aboutInfo.developer} />
         <MultiLineDisplay title={t.CONTACT_TITLE} list={aboutInfo.contact} />
-      </View>
+      </Container>
     );
   }
 }

@@ -10,6 +10,7 @@ const INITIAL_STATE = {
     name: '',
     avatar: '',
   },
+  rawPublicData: {},
   subscribedChatId: null,
 };
 
@@ -46,6 +47,7 @@ export const chatReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userInfo: action.userInfo,
+        rawPublicData: action.rawPublicData,
       };
     case chatActionType.SUBSCRIBE_CHAT:
       return {

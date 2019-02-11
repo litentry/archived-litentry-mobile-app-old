@@ -15,9 +15,6 @@ class AppStoreScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.AppStore.title,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

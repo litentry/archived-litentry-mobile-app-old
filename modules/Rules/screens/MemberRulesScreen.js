@@ -21,13 +21,10 @@ class MemberRulesScreen extends React.Component {
       <HeaderButton
         title={screensList.RulesInfo.title}
         onPress={() => navigation.navigate(screensList.RulesInfo.label)}
-        color={'black'}
+        color={'white'}
       />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

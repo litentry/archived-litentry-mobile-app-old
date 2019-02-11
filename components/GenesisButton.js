@@ -10,6 +10,7 @@ export const VariantList = {
   CONFIRM: 'confirm',
   CANCEL: 'cancel',
   PRIMARY: 'primary',
+  CREATE: 'create',
 };
 
 const getBackgroundColor = (variant, disabled) => {
@@ -21,6 +22,8 @@ const getBackgroundColor = (variant, disabled) => {
       return AppStyle.variantCancel;
     case VariantList.PRIMARY:
       return AppStyle.variantPrimary;
+    case VariantList.CREATE:
+      return AppStyle.variantCreate;
     default:
       return AppStyle.variantConfirm;
   }
@@ -62,15 +65,15 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 5,
     flexDirection: 'row',
-    height: isSmallScreen ? 30 : 50,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: width * 0.05,
+    marginVertical: width * 0.025,
     marginHorizontal: width * 0.05,
-    paddingHorizontal: isSmallScreen ? 15 : 25,
+    paddingHorizontal: 25,
   },
   buttonText: {
-    fontSize: isSmallScreen ? 10 : AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddle,
     // fontFamily: 'OpenSans-Regular',
     color: 'white',
   },

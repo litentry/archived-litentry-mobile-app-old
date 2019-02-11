@@ -10,14 +10,12 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import packageJson from '../../../package';
 import TinodeAPI from '../../Chat/TinodeAPI';
+import Container from '../../../components/Container';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Settings.title} />,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
@@ -27,7 +25,7 @@ class SettingsScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <SingleLineDisplay
           title={t.SECURITY_TITLE}
           value={''}
@@ -46,7 +44,7 @@ class SettingsScreen extends React.Component {
           value={''}
           onClick={() => TinodeAPI.logout(navigation)}
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
 });
 
 const t = {
-  SECURITY_TITLE: 'Account Security',
+  SECURITY_TITLE: 'Account Settings',
   ABOUT_TITLE: 'About',
   LOG_OUT_TITLE: 'Log out',
 };

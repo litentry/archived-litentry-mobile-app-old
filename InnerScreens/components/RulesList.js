@@ -70,7 +70,7 @@ class RulesList extends React.Component {
         {hasVoting && this.renderSingleRule(false, voteOrigin, 'Voting', true)}
         {this.renderCurrentAndProposing()}
         {/*{mockHistoryRules.map(item =>*/}
-          {/*this.renderSingleRule(false, item, `${item.startAt}-${item.endAt}`)*/}
+        {/*this.renderSingleRule(false, item, `${item.startAt}-${item.endAt}`)*/}
         {/*)}*/}
       </View>
     );

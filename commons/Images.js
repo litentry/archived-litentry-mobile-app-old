@@ -91,6 +91,7 @@ export default {
   imgAnalytics: require('../assets/images/img_analytics.png'),
 
   blankProfile: require('../assets/images/blankProfile.png'),
+  futureMember: require('../assets/images/future_member.png'),
   //mockImages
   mockProfile: require('../assets/mockImages/profile.png'),
 

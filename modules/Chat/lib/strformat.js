@@ -25,6 +25,10 @@ export function shortDateFormat(then) {
   });
 }
 
+export function isValidDate(d) {
+  return d instanceof Date && !isNaN(d);
+}
+
 // Convert a number of bytes to human-readable format.
 export function bytesToHumanSize(bytes) {
   if (!bytes || bytes === 0) {

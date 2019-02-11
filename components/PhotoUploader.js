@@ -11,6 +11,7 @@ import Images from '../commons/Images';
 import { MIME_EXTENSIONS } from '../modules/Chat/lib/blob-helpers';
 import { renderImageSource, validateImageSize } from '../utils/imageUtils';
 import { popupAction } from '../actions/popupAction';
+import Container from './Container';
 
 const isValidExtension = imageCallback => {
   const extension = imageCallback.uri.split('.').pop();
@@ -79,7 +80,7 @@ class PhotoUploader extends React.Component {
   render() {
     const { photo, onConfirm, title } = this.props;
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.profileContainer}>
           <Image style={styles.profile} resizeMode="contain" source={renderImageSource(photo)} />
@@ -94,7 +95,7 @@ class PhotoUploader extends React.Component {
         <Text style={styles.textContainer}>
           <Text style={styles.noticeText}>{t.NOTICE}</Text>
         </Text>
-      </View>
+      </Container>
     );
   }
 }
@@ -112,7 +113,6 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: AppStyle.userBackgroundColor,
     alignItems: 'stretch',
   },
@@ -135,8 +135,6 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     padding: 20,
-    position: 'absolute',
-    bottom: 20,
   },
   noticeText: {
     fontSize: AppStyle.fontSmall,

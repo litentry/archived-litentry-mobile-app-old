@@ -11,6 +11,8 @@ import GenesisButton from '../../../components/GenesisButton';
 import { passwordRegex } from '../../../utils/regexUtils';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import { screensList } from '../../../navigation/screensList';
+import Container from '../../../components/Container';
+import TinodeAPI from '../../Chat/TinodeAPI';
 
 class SetPasswordScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -34,19 +36,24 @@ class SetPasswordScreen extends React.Component {
     navigation: PropTypes.object,
     password: PropTypes.string.isRequired,
     updateUserRegisterInfo: PropTypes.func.isRequired,
+    photo: PropTypes.object,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  };
+
+  createAccountRequest = () => {
+    const { navigation, username, password, email } = this.props;
+    TinodeAPI.handleCreateNewAccount(navigation, email, password, username, null);
   };
 
   render() {
-    const { password, updateUserRegisterInfo, navigation } = this.props;
+    const { password, updateUserRegisterInfo } = this.props;
     const { isSet, repeatPassword } = this.state;
     const validator = () => (isSet ? repeatPassword === password : passwordRegex.test(password));
-    const onPress = () =>
-      isSet
-        ? navigation.navigate(screensList.UploadUserProfile.label)
-        : this.setState({ isSet: true });
+    const onPress = () => (isSet ? this.createAccountRequest() : this.setState({ isSet: true }));
 
     return (
-      <View style={styles.container}>
+      <Container hasPadding style={styles.container}>
         <Text style={styles.title}>{isSet ? t.REPEAT_TITLE : t.TITLE}</Text>
         <Text style={styles.subtitle}>{t.SUBTITLE}</Text>
         <View style={styles.inputContainer}>
@@ -71,13 +78,16 @@ class SetPasswordScreen extends React.Component {
         <View style={styles.button}>
           <GenesisButton disabled={!validator()} action={onPress} text={t.BUTTON_TEXT} />
         </View>
-      </View>
+      </Container>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  photo: state.userRegister.photo,
+  username: state.userRegister.username,
   password: state.userRegister.password,
+  email: state.userRegister.email,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
@@ -91,17 +101,15 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: Header.HEIGHT + 50,
-    backgroundColor: AppStyle.userBackgroundColor,
     alignItems: 'stretch',
   },
   title: {
     flex: 1,
-    paddingHorizontal: 50,
-    fontSize: AppStyle.fontMiddle,
+    padding: 30,
+    fontSize: AppStyle.fontMiddleBig,
     color: AppStyle.lightGrey,
-    fontFamily: AppStyle.coverFont,
+    fontFamily: AppStyle.mainFont,
+    alignSelf: 'center',
   },
   subtitle: {
     flex: 1,

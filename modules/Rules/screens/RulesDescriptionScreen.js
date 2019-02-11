@@ -8,6 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import HeaderButton from '../../../components/HeaderButton';
+import Container from '../../../components/Container';
 
 const mock = {
   groupRuleName: 'democracy',
@@ -21,12 +22,9 @@ class RulesDescriptionScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.RulesDescription.title} />,
     headerRight: (
-      <HeaderButton title={'Done'} onPress={() => navigation.goBack()} color={'black'} />
+      <HeaderButton title={'Done'} onPress={() => navigation.goBack()} color={'white'} />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
@@ -55,7 +53,7 @@ class RulesDescriptionScreen extends React.Component {
     const topic = _.get(topicsMap, subscribedChatId);
     if (!topic) return null;
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <View style={styles.descriptionTitleContainer}>
           <Text style={styles.descriptionTitle}>{t.DESCRIPTION_TITLE}</Text>
         </View>
@@ -63,7 +61,7 @@ class RulesDescriptionScreen extends React.Component {
         <Text style={styles.footText} numberOfLines={2}>
           {t.FOOT}
         </Text>
-      </View>
+      </Container>
     );
   }
 }

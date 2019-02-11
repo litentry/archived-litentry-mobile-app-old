@@ -11,7 +11,7 @@ export default class HeaderButton extends React.Component {
   };
 
   static defaultProps = {
-    color: 'black',
+    color: 'white',
   };
 
   render() {

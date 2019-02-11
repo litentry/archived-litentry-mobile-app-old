@@ -5,6 +5,7 @@ import SmallCard from '../../../components/SmallCard';
 import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
+import Container from '../../../components/Container';
 
 export default class WalletImportScreen extends Component {
   static propTypes = {
@@ -19,7 +20,7 @@ export default class WalletImportScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <SmallCard
           style={styles.card}
           title={t.titlePrivateKey}
@@ -35,7 +36,7 @@ export default class WalletImportScreen extends Component {
           imageCard={Images.iconMnemonic}
           onPress={() => navigate(screensList.ImportViaMnemonic.label)}
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -54,7 +55,6 @@ const t = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
     justifyContent: 'center',
     alignItems: 'center',

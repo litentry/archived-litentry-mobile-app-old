@@ -9,6 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
 import HeaderButton from '../../../components/HeaderButton';
+import Container from '../../../components/Container';
 
 const mock = {
   rule: [-150, -150, -10, 1, 1],
@@ -21,13 +22,10 @@ class MemberInfoScreen extends React.Component {
       <HeaderButton
         title={'Info'}
         onPress={() => navigation.navigate(screensList.RulesDescription.label)}
-        color={'black'}
+        color={'white'}
       />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
@@ -41,7 +39,7 @@ class MemberInfoScreen extends React.Component {
     const raw = navigation.getParam('raw', {});
     console.log('data is', raw);
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <View style={styles.profileContainer}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={imageSource} />
@@ -55,7 +53,7 @@ class MemberInfoScreen extends React.Component {
           <Text style={styles.ruleTitleText}>{voteInfo.rulesDescription}</Text>
           <Text style={styles.ruleValueText}>{mock.rule.join('/').toString()}</Text>
         </View>
-      </View>
+      </Container>
     );
   }
 }
@@ -74,7 +72,6 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     backgroundColor: AppStyle.chatBackGroundColor,
-    flex: 1,
   },
   profileContainer: {
     flexDirection: 'row',

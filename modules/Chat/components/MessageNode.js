@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
   },
   text: {
-    fontSize: AppStyle.fontMiddleSmall,
+    fontSize: AppStyle.fontSmall,
     fontFamily: AppStyle.mainFont,
     color: 'black',
     paddingVertical: 5,

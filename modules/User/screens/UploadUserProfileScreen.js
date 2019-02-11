@@ -12,11 +12,8 @@ import PhotoUploader from '../../../components/PhotoUploader';
 
 class UploadUserProfileScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.UploadUserProfile.title} />,
+    headerTitle: screensList.UploadUserProfile.title,
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {

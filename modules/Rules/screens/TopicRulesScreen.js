@@ -12,14 +12,12 @@ import { voteInfo } from '../../../config';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleLineSingleValueDisplay from '../../../components/SingleLineSingleValueDisplay';
 import { alertNormal } from '../../../utils/alertUtils';
+import Container from '../../../components/Container';
 
 class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.TopicRules.title} />,
     headerBackTitle: ' ',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
@@ -42,7 +40,7 @@ class TopicRulesScreen extends React.Component {
     const editEnabled = navigation.getParam('editEnabled', false);
     const rules = editEnabled ? voteCached : navigation.getParam('rulesData');
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <View style={styles.introContainer}>
           <Entypo
             name="users"
@@ -80,7 +78,7 @@ class TopicRulesScreen extends React.Component {
           value={`- ${rules.voteCost} NES`}
           onClick={() => this.conditionalOpen(screensList.AmendCost.label)}
         />
-      </View>
+      </Container>
     );
   }
 }
@@ -109,7 +107,6 @@ const t = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: AppStyle.chatBackGroundColor,
   },
   introContainer: {

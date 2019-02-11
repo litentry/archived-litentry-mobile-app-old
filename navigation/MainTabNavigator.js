@@ -46,6 +46,7 @@ import CreateTopicScreen from '../modules/CreateTopic/screens/CreateTopicScreen'
 import UploadCountryProfileScreen from '../modules/CreateTopic/screens/UploadCountryProfileScreen';
 import AppStoreScreen from '../modules/Apps/screens/AppStoreScreen';
 import AppProfileScreen from '../modules/Apps/screens/AppProfileScreen';
+import AppStyle from '../commons/AppStyle';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -71,13 +72,12 @@ HomeStackIcon.propTypes = iconPropTypes;
 const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
-    Start: StartScreen,
+    // Start: StartScreen,
+    SetPassword: SetPasswordScreen,
+    CreateAccount: CreateAccountScreen,
     AppStore: AppStoreScreen,
     AppProfile: AppProfileScreen,
-    SetPassword: SetPasswordScreen,
-    UploadUserProfile: UploadUserProfileScreen,
     UploadCountryProfile: UploadCountryProfileScreen,
-    CreateAccount: CreateAccountScreen,
     VoteInfo: VoteInfoScreen,
     AmendCost: AmendCostScreen,
     AmendSupport: AmendSupportScreen,
@@ -101,6 +101,14 @@ const HomeStack = createStackNavigator(
     ...commonScreens,
   },
   {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
     navigationOptions: ({ navigation }) => ({
       tabBarLabel: screensList.Home.label,
       tabBarIcon: HomeStackIcon,
@@ -125,6 +133,14 @@ const WalletStack = createStackNavigator(
     ...commonScreens,
   },
   {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
     navigationOptions: {
       tabBarLabel: screensList.Wallet.title,
       tabBarIcon: WalletStackIcon,
@@ -143,9 +159,18 @@ const UserStack = createStackNavigator(
     About: AboutScreen,
     PasswordSetting: PasswordSettingScreen,
     AccountSetting: AccountSettingScreen,
+    UploadUserProfile: UploadUserProfileScreen,
     ...commonScreens,
   },
   {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
     navigationOptions: {
       tabBarLabel: 'Me',
       tabBarIcon: UserStackIcon,

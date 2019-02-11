@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -12,6 +12,7 @@ import GenesisButton from '../../../components/GenesisButton';
 import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
 import ContinueLoginInnerScreen from './StartScreen';
+import Container from '../../../components/Container';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -51,7 +52,7 @@ class LoginScreen extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Container hasPadding style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{t.LOGIN_TITLE}</Text>
         </View>
@@ -88,7 +89,7 @@ class LoginScreen extends React.Component {
             text={t.REGISTER}
           />
         </View>
-      </View>
+      </Container>
     );
   }
 }
@@ -110,10 +111,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: Header.HEIGHT + 50,
-    backgroundColor: 'white',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   titleContainer: {
     flex: 2,

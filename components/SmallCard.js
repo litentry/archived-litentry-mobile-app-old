@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'OpenSans-Bold',
-    fontSize: 24,
+    fontSize: AppStyle.fontMiddleBig,
     color: 'black',
   },
   subtitle: {

@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
+import Container from '../../../components/Container';
 
 class TreasureScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -17,9 +18,6 @@ class TreasureScreen extends React.Component {
       </TouchableOpacity>
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
@@ -27,7 +25,7 @@ class TreasureScreen extends React.Component {
   };
 
   render() {
-    return <View style={styles.container} />;
+    return <Container style={styles.container} />;
   }
 }
 
@@ -48,6 +46,6 @@ const styles = StyleSheet.create({
     fontSize: AppStyle.fontMiddleSmall,
     padding: 5,
     fontFamily: AppStyle.mainFont,
-    color: 'black',
+    color: 'white',
   },
 });

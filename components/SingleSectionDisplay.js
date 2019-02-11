@@ -53,15 +53,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 20,
+    padding: 15,
   },
   title: {
     alignSelf: 'flex-start',
-    fontSize: AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddleSmall,
     color: 'black',
   },
   valueContainer: {
-    paddingVertical: 20,
+    paddingTop: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   valueText: {
     flexGrow: 1,
     textAlign: 'left',
-    fontSize: AppStyle.fontMiddle,
+    fontSize: AppStyle.fontMiddleSmall,
     color: AppStyle.lightGrey,
   },
   valueIcon: {

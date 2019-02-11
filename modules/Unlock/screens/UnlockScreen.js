@@ -16,6 +16,7 @@ import connect from 'react-redux/es/connect/connect';
 import DisableView from '../components/DisableView';
 import AppStyle from '../../../commons/AppStyle';
 import Keyboard from '../components/Keyboard';
+import Container from '../../../components/Container';
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 569;
@@ -125,10 +126,10 @@ class UnlockScreen extends Component {
     const { shouldDisableApp } = this;
     const container = shouldDisableApp ? {} : { justifyContent: 'center' };
     return (
-      <View style={[styles.container, container]}>
+      <Container style={_.merge(styles.container, container)}>
         <StatusBar hidden />
         {this.renderContent()}
-      </View>
+      </Container>
     );
   }
 }

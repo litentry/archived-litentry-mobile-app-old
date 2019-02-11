@@ -10,6 +10,7 @@ import InputWithValidation from '../components/InputWithValidation';
 import GenesisButton from '../../../components/GenesisButton';
 import { userRegisterAction } from '../actions/userRegiseterActions';
 import TinodeAPI from '../../Chat/TinodeAPI';
+import Container from '../../../components/Container';
 
 class VerifyCredentialScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -43,7 +44,7 @@ class VerifyCredentialScreen extends React.Component {
     const validator = () => true;
 
     return (
-      <View style={styles.container}>
+      <Container hasPadding style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
         <Text style={styles.subtitle}>{t.SUBTITLE}</Text>
         <View style={styles.inputContainer}>
@@ -67,7 +68,7 @@ class VerifyCredentialScreen extends React.Component {
           />
         </View>
         <Text style={styles.resend}>{t.RESEND}</Text>
-      </View>
+      </Container>
     );
   }
 }

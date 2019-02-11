@@ -10,7 +10,6 @@ import { walletAction } from '../actions/walletAction';
 import { screensList } from '../navigation/screensList';
 import AppStyle from '../commons/AppStyle';
 import GenesisButton from '../components/GenesisButton';
-import NavigationHeader from '../components/NavigationHeader';
 import NewWalletInnerScreen from '../modules/WalletImport/innerScreens/NewWalletInnerScreen';
 import { getEtherBalance, getNumber, getTokenBalance } from '../utils/ethereumUtils';
 import { lockScreen } from '../modules/Unlock/lockScreenUtils';
@@ -20,7 +19,7 @@ import { alertNormal } from '../utils/alertUtils';
 
 class WalletScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: <NavigationHeader title={screensList.Wallet.title} />,
+    headerTitle: screensList.Wallet.title,
     headerRight: (
       <HeaderButton
         onPress={() => navigation.navigate(screensList.Transactions.label)}
@@ -28,9 +27,6 @@ class WalletScreen extends React.Component {
       />
     ),
     headerBackTitle: '',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   constructor(props) {

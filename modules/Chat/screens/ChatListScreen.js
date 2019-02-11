@@ -22,8 +22,6 @@ import { loaderAction } from '../../../actions/loaderAction';
 class ChatListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.ChatList.title,
-    headerTransparent: false,
-    headerTintColor: AppStyle.userCancelGreen,
     headerBackTitle: ' ',
     headerRight: (
       <TouchableOpacity
@@ -35,14 +33,10 @@ class ChatListScreen extends React.Component {
           style={styles.createTopicIcon}
           size={AppStyle.fontMiddle}
           name="plus"
-          color={AppStyle.userCancelGreen}
+          color="white"
         />
       </TouchableOpacity>
     ),
-    headerTruncatedBackTitle: '',
-    headerStyle: {
-      backgroundColor: 'white',
-    },
   });
 
   static propTypes = {

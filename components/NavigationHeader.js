@@ -31,11 +31,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-
     fontFamily: AppStyle.mainFont,
   },
   backButton: {},
   centerTitle: {
+    color: 'white',
     alignSelf: 'center',
     fontSize: AppStyle.fontMiddle,
   },

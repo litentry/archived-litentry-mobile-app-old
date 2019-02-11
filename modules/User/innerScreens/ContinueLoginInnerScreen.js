@@ -11,6 +11,9 @@ import TinodeAPI from '../../Chat/TinodeAPI';
 import { screensList } from '../../../navigation/screensList';
 import { renderImageSource } from '../../../utils/imageUtils';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
+import { store } from '../../../reducers/store';
+import { loaderAction } from '../../../actions/loaderAction';
+import Container from '../../../components/Container';
 
 class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
@@ -24,7 +27,7 @@ class ContinueLoginInnerScreen extends React.Component {
   render() {
     const { loginToken, navigation, profileName, oldUserId, profileImage } = this.props;
     return (
-      <View style={styles.container}>
+      <Container style={styles.container}>
         <Text style={styles.title}>{t.TITLE}</Text>
         <TouchableOpacity
           style={styles.profileContainer}
@@ -46,10 +49,13 @@ class ContinueLoginInnerScreen extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.newLoginContainer}
-          onPress={() => navigation.navigate(screensList.Login.label)}>
+          onPress={() => {
+            store.dispatch(loaderAction.clearAppData());
+            navigation.navigate(screensList.Login.label);
+          }}>
           <Text style={styles.newLoginText}>{t.NEW_LOGIN}</Text>
         </TouchableOpacity>
-      </View>
+      </Container>
     );
   }
 }
@@ -71,8 +77,6 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Header.HEIGHT + 50,
-    backgroundColor: AppStyle.userBackgroundColor,
   },
   title: {
     paddingHorizontal: 50,

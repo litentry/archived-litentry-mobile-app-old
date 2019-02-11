@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -7,11 +7,7 @@ import { bindActionCreators } from 'redux';
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import SingleLineDisplay from '../../../components/SingleLineDisplay';
-import SingleSectionDisplay from '../../../components/SingleSectionDisplay';
-import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import { voteAction } from '../voteAction';
-import GenesisButton from '../../../components/GenesisButton';
 import TopicInnerScreen from '../../../InnerScreens/TopicInnerScreen';
 
 const mock = {
@@ -33,9 +29,6 @@ class StartVoteScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.StartVote.title,
     headerBackTitle: ' ',
-    headerStyle: {
-      backgroundColor: AppStyle.backgroundColor,
-    },
   });
 
   static propTypes = {
