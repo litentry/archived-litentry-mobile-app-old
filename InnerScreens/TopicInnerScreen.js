@@ -265,7 +265,6 @@ class TopicInnerScreen extends React.Component {
               onClick={() => navigation.navigate(screensList.Transactions.label)}
             />
           )}
-
         </View>
 
         <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
@@ -329,7 +328,6 @@ const t = {
   CREATE_NAME_ERROR: 'Please fill a valid country name',
   CREATE_DESCRIPTION_ERROR: 'Please fill a description for your country',
   CREATE_PHOTO_ERROR: 'Please upload a profile photo for the country',
-
 
   NO_WALLET: 'please set wallet first',
 };

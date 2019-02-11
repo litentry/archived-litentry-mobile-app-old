@@ -7,8 +7,8 @@ export const contractInfo = {
 };
 
 export const aboutInfo = {
-  appName: 'Genesis Space Client',
-  date: '2019-01-31',
+  appName: 'Genesis Space Mobile',
+  date: '2019-02-10',
   designer: ['历', 'Alex'],
   developer: ['heawen110', '傻米', 'handez', 'lambdari', 'moehringen', 'cuiny', 'ranger-woo'],
   contact: ['Thegenesisspace@gmail.com'],

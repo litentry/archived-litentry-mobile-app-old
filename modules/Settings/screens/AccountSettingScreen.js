@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -9,8 +9,8 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import Container from '../../../components/Container';
-import Images from "../../../commons/Images";
-import SingleLineSingleValueDisplay from "../../../components/SingleLineSingleValueDisplay";
+import Images from '../../../commons/Images';
+import SingleLineSingleValueDisplay from '../../../components/SingleLineSingleValueDisplay';
 
 class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -39,7 +39,10 @@ class AccountSettingScreen extends React.Component {
           title={t.UPLOAD_PROFILE}
           Icon={() => (
             <View style={styles.imageContainer}>
-              <Image style={styles.image} source={ _.isEmpty(avatar) ? Images.blankProfile : { uri: avatar }} />
+              <Image
+                style={styles.image}
+                source={_.isEmpty(avatar) ? Images.blankProfile : { uri: avatar }}
+              />
             </View>
           )}
           onClick={() => navigation.navigate(screensList.UploadUserProfile.label)}
