@@ -13,7 +13,7 @@ import { dataEntry } from '../../../reducers/loader';
 import { saveMnemonicAsync, savePrivateKeyAsync } from '../../../utils/secureStoreUtils';
 import { lockScreen } from '../../Unlock/lockScreenUtils';
 import { loaderAction } from '../../../actions/loaderAction';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class WalletCreateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

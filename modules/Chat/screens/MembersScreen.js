@@ -13,7 +13,6 @@ class MembersScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: <NavigationHeader title={screensList.Members.title} />,
     headerBackTitle: '',
-
   });
 
   static propTypes = {

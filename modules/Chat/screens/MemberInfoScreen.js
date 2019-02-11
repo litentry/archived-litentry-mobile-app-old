@@ -9,7 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import { voteInfo } from '../../../config';
 import HeaderButton from '../../../components/HeaderButton';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 const mock = {
   rule: [-150, -150, -10, 1, 1],

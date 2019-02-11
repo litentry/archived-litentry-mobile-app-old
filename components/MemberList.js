@@ -43,28 +43,32 @@ export default class MemberList extends React.Component {
       );
     });
   }
-  
+
   renderFutureMember() {
-    return <MemberProfile
-      title={t.FUTURE_MEMBER_NAME}
-      imageSource={Images.futureMember}
-      key={t.FUTURE_MEMBER_NAME}
-      raw={null}
-    />
+    return (
+      <MemberProfile
+        title={t.FUTURE_MEMBER_NAME}
+        imageSource={Images.futureMember}
+        key={t.FUTURE_MEMBER_NAME}
+        raw={null}
+      />
+    );
   }
 
   render() {
     const { list } = this.props;
-    return <View style={styles.container}>
-      {this.renderMemberList(list)}
-      {this.renderFutureMember()}
-    </View>;
+    return (
+      <View style={styles.container}>
+        {this.renderMemberList(list)}
+        {this.renderFutureMember()}
+      </View>
+    );
   }
 }
 
 const t = {
-  FUTURE_MEMBER_NAME: 'Future Member'
-}
+  FUTURE_MEMBER_NAME: 'Future Member',
+};
 
 const styles = StyleSheet.create({
   container: {

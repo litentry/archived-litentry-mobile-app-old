@@ -33,7 +33,7 @@ class ChatListScreen extends React.Component {
           style={styles.createTopicIcon}
           size={AppStyle.fontMiddle}
           name="plus"
-          color='white'
+          color="white"
         />
       </TouchableOpacity>
     ),

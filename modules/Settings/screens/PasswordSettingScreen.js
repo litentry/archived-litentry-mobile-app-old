@@ -9,7 +9,7 @@ import { screensList } from '../../../navigation/screensList';
 import SingleLineInput from '../components/SingleLineInput';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import HeaderButton from '../../../components/HeaderButton';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 const mock = {
   mockEmptyValue: '',

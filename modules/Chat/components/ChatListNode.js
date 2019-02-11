@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import _ from 'lodash';
 import AppStyle from '../../../commons/AppStyle';
-import {isValidDate, shortDateFormat} from '../lib/strformat';
+import { isValidDate, shortDateFormat } from '../lib/strformat';
 import { makeImageUrl } from '../lib/blob-helpers';
 import Images from '../../../commons/Images';
 import { renderImageSource } from '../../../utils/imageUtils';
@@ -39,13 +39,15 @@ export default class ChatListNode extends React.Component {
               {chatNode.public.fn}
             </Text>
             <Text style={styles.date} numberOfLines={1}>
-              {isValidDate(chatNode.updated) ? shortDateFormat(new Date(chatNode.updated)) : t.DATE_PLACEHOLDER}
+              {isValidDate(chatNode.updated)
+                ? shortDateFormat(new Date(chatNode.updated))
+                : t.DATE_PLACEHOLDER}
             </Text>
           </View>
           {/*<View style={styles.secondLineContainer}>*/}
-            {/*<Text style={styles.text} numberOfLines={1}>*/}
-              {/*{chatNode.isSubscribed && chatNode.private && chatNode.private.comment ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}*/}
-            {/*</Text>*/}
+          {/*<Text style={styles.text} numberOfLines={1}>*/}
+          {/*{chatNode.isSubscribed && chatNode.private && chatNode.private.comment ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}*/}
+          {/*</Text>*/}
           {/*</View>*/}
         </View>
       </View>

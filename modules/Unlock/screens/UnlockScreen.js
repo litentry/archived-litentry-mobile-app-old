@@ -16,7 +16,7 @@ import connect from 'react-redux/es/connect/connect';
 import DisableView from '../components/DisableView';
 import AppStyle from '../../../commons/AppStyle';
 import Keyboard from '../components/Keyboard';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 const { height } = Dimensions.get('window');
 const isSmallScreen = height < 569;

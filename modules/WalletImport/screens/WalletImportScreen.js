@@ -5,7 +5,7 @@ import SmallCard from '../../../components/SmallCard';
 import Images from '../../../commons/Images';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 export default class WalletImportScreen extends Component {
   static propTypes = {

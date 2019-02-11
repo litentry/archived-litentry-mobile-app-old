@@ -21,7 +21,7 @@ import SingleLineSingleValueDisplay from '../components/SingleLineSingleValueDis
 import { lockScreen } from '../modules/Unlock/lockScreenUtils';
 import { aboutInfo } from '../config';
 import DappsList from './components/DappList';
-import {generatePublicInfo} from "../utils/chatUtils";
+import { generatePublicInfo } from '../utils/chatUtils';
 
 class TopicInnerScreen extends React.Component {
   static propTypes = {
@@ -212,10 +212,17 @@ class TopicInnerScreen extends React.Component {
     if (isJoined) return <MemberListContainer subs={topic.subs} navigation={navigation} />;
     if (this.isCreatingNewTopic)
       // return <IntroContainer iconName={iconName} description={t.CREATE_COUNTRY_INTRO} />;
-      return <MemberListContainer subs={[{
-        user: userId,
-        public: rawPublicData,
-      }]} navigation={navigation}/>;
+      return (
+        <MemberListContainer
+          subs={[
+            {
+              user: userId,
+              public: rawPublicData,
+            },
+          ]}
+          navigation={navigation}
+        />
+      );
     return null;
   }
 

@@ -10,7 +10,7 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import { aboutInfo } from '../../../config';
 import packageJson from '../../../package';
 import MultiLineDisplay from '../../../components/MultiLineDisplay';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class AboutScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

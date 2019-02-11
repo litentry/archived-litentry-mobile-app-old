@@ -46,7 +46,7 @@ import CreateTopicScreen from '../modules/CreateTopic/screens/CreateTopicScreen'
 import UploadCountryProfileScreen from '../modules/CreateTopic/screens/UploadCountryProfileScreen';
 import AppStoreScreen from '../modules/Apps/screens/AppStoreScreen';
 import AppProfileScreen from '../modules/Apps/screens/AppProfileScreen';
-import AppStyle from "../commons/AppStyle";
+import AppStyle from '../commons/AppStyle';
 
 const iconPropTypes = { focused: PropTypes.bool };
 

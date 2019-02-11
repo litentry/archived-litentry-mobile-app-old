@@ -20,10 +20,11 @@ class MemberProfile extends React.Component {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={() => { if(raw){
-          navigation.navigate(screensList.MemberInfo.label, {raw, imageSource, title})
-          }}
-        }>
+        onPress={() => {
+          if (raw) {
+            navigation.navigate(screensList.MemberInfo.label, { raw, imageSource, title });
+          }
+        }}>
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={imageSource} />
         </View>

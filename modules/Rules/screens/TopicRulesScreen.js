@@ -12,7 +12,7 @@ import { voteInfo } from '../../../config';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import SingleLineSingleValueDisplay from '../../../components/SingleLineSingleValueDisplay';
 import { alertNormal } from '../../../utils/alertUtils';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class TopicRulesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

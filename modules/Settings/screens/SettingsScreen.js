@@ -10,7 +10,7 @@ import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import packageJson from '../../../package';
 import TinodeAPI from '../../Chat/TinodeAPI';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

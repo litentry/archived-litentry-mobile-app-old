@@ -8,7 +8,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({

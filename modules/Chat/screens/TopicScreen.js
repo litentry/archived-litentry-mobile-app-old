@@ -40,7 +40,7 @@ class TopicScreen extends React.Component {
           name="dots-three-horizontal"
           size={AppStyle.fontMiddle}
           style={styles.dot}
-          color='white'
+          color="white"
         />
       </TouchableOpacity>
     ),

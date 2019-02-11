@@ -8,7 +8,7 @@ import AmendInput from '../components/AmendInput';
 import { groupMetaRules } from '../../../config';
 import { INIT_VALUE } from '../reducer/voteReducer';
 import { generateNavigationOptions } from '../components/navigationOptions';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class AmendMemberRulesScreen extends React.Component {
   static navigationOptions = generateNavigationOptions(screensList.AmendMemberRules.title);

@@ -13,7 +13,7 @@ import { renderImageSource } from '../../../utils/imageUtils';
 import { makeImageUrl } from '../../Chat/lib/blob-helpers';
 import { store } from '../../../reducers/store';
 import { loaderAction } from '../../../actions/loaderAction';
-import Container from "../../../components/Container";
+import Container from '../../../components/Container';
 
 class ContinueLoginInnerScreen extends React.Component {
   static propTypes = {
