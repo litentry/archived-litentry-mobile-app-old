@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
@@ -9,6 +9,8 @@ import { screensList } from '../../../navigation/screensList';
 import NavigationHeader from '../../../components/NavigationHeader';
 import SingleLineDisplay from '../../../components/SingleLineDisplay';
 import Container from '../../../components/Container';
+import Images from "../../../commons/Images";
+import SingleLineSingleValueDisplay from "../../../components/SingleLineSingleValueDisplay";
 
 class AccountSettingScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,10 +21,11 @@ class AccountSettingScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     userId: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
   };
 
   render() {
-    const { navigation, userId } = this.props;
+    const { navigation, userId, avatar } = this.props;
     return (
       <Container style={styles.container}>
         <SingleLineDisplay title={t.ID_TITLE} style={styles.singleLineDisplay} value={userId} />
@@ -32,6 +35,15 @@ class AccountSettingScreen extends React.Component {
           value={t.PASSWORD_VALUE}
           onClick={() => navigation.navigate(screensList.PasswordSetting.label)}
         />
+        <SingleLineSingleValueDisplay
+          title={t.UPLOAD_PROFILE}
+          Icon={() => (
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={ _.isEmpty(avatar) ? Images.blankProfile : { uri: avatar }} />
+            </View>
+          )}
+          onClick={() => navigation.navigate(screensList.UploadUserProfile.label)}
+        />
       </Container>
     );
   }
@@ -39,6 +51,7 @@ class AccountSettingScreen extends React.Component {
 
 const mapStateToProps = state => ({
   userId: state.appState.userId,
+  avatar: state.chat.userInfo.avatar,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});
@@ -55,10 +68,21 @@ const styles = {
   singleLineDisplay: {
     marginTop: 20,
   },
+  imageContainer: {
+    height: 40,
+    width: 40,
+    marginRight: 10,
+  },
+  image: {
+    height: 40,
+    width: 40,
+    resizeMode: 'contain',
+  },
 };
 
 const t = {
   ID_TITLE: 'Genesis ID',
   PASSWORD_TITLE: 'Password',
   PASSWORD_VALUE: 'Set',
+  UPLOAD_PROFILE: 'Update profile',
 };

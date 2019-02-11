@@ -265,15 +265,7 @@ class TopicInnerScreen extends React.Component {
               onClick={() => navigation.navigate(screensList.Transactions.label)}
             />
           )}
-          <SingleLineSingleValueDisplay
-            title={t.CREATE_UPLOAD_PROFILE}
-            Icon={() => (
-              <View style={styles.imageContainer}>
-                <Image style={styles.image} source={renderImageSource(voteCached.profile)} />
-              </View>
-            )}
-            onClick={() => navigation.navigate(screensList.UploadCountryProfile.label)}
-          />
+
         </View>
 
         <Text style={styles.rulesTitle}>{t.VOTE_RULES_TITLE}</Text>
@@ -337,7 +329,7 @@ const t = {
   CREATE_NAME_ERROR: 'Please fill a valid country name',
   CREATE_DESCRIPTION_ERROR: 'Please fill a description for your country',
   CREATE_PHOTO_ERROR: 'Please upload a profile photo for the country',
-  CREATE_UPLOAD_PROFILE: 'Update country profile',
+
 
   NO_WALLET: 'please set wallet first',
 };
@@ -358,16 +350,5 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginTop: 20,
     backgroundColor: 'white',
-  },
-
-  imageContainer: {
-    height: 40,
-    width: 40,
-    marginRight: 10,
-  },
-  image: {
-    height: 40,
-    width: 40,
-    resizeMode: 'contain',
   },
 });

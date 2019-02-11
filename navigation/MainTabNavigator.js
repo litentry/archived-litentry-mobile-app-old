@@ -73,7 +73,6 @@ const HomeStack = createStackNavigator(
   {
     Login: LoginScreen,
     // Start: StartScreen,
-    UploadUserProfile: UploadUserProfileScreen,
     SetPassword: SetPasswordScreen,
     CreateAccount: CreateAccountScreen,
     AppStore: AppStoreScreen,
@@ -160,6 +159,7 @@ const UserStack = createStackNavigator(
     About: AboutScreen,
     PasswordSetting: PasswordSettingScreen,
     AccountSetting: AccountSettingScreen,
+    UploadUserProfile: UploadUserProfileScreen,
     ...commonScreens,
   },
   {

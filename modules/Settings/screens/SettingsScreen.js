@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 });
 
 const t = {
-  SECURITY_TITLE: 'Account Security',
+  SECURITY_TITLE: 'Account Settings',
   ABOUT_TITLE: 'About',
   LOG_OUT_TITLE: 'Log out',
 };
