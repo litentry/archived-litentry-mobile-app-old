@@ -2,7 +2,6 @@
 export function shortDateFormat(then) {
   var locale = window.navigator.userLanguage || window.navigator.language;
   var now = new Date();
-  debugger;
   if (then.getFullYear() === now.getFullYear()) {
     if (then.getMonth() === now.getMonth() && then.getDate() === now.getDate()) {
       return then.toLocaleTimeString(locale, { hour12: false, hour: '2-digit', minute: '2-digit' });
@@ -24,6 +23,10 @@ export function shortDateFormat(then) {
     hour: '2-digit',
     minute: '2-digit',
   });
+}
+
+export function isValidDate(d) {
+  return d instanceof Date && !isNaN(d);
 }
 
 // Convert a number of bytes to human-readable format.
