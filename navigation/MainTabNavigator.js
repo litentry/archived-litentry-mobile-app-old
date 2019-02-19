@@ -5,7 +5,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
-import HomeScreen from '../screens/HomeScreen';
 import WalletImportScreen from '../modules/WalletImport/screens/WalletImportScreen';
 import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
@@ -15,8 +14,7 @@ import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingSc
 import AccountSettingScreen from '../modules/Settings/screens/AccountSettingScreen';
 import SettingsScreen from '../modules/Settings/screens/SettingsScreen';
 import AboutScreen from '../modules/Settings/screens/AboutScreen';
-import ChatListScreen from '../modules/Chat/screens/ChatListScreen';
-import StartScreen from '../modules/User/screens/StartScreen';
+import LockListScreen from '../modules/Chat/screens/LockListScreen';
 import CreateAccountScreen from '../modules/User/screens/CreateAccountScreen';
 import VerifyCredentialScreen from '../modules/User/screens/VerifyCredentialScreen';
 import SetPasswordScreen from '../modules/User/screens/SetPasswordScreen';
@@ -96,7 +94,7 @@ const HomeStack = createStackNavigator(
     TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
     VerifyCredential: VerifyCredentialScreen,
-    ChatList: ChatListScreen,
+    LockList: LockListScreen,
     CreateTopic: CreateTopicScreen,
     ...commonScreens,
   },
