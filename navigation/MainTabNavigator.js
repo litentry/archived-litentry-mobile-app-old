@@ -117,37 +117,6 @@ const HomeStack = createStackNavigator(
   }
 );
 
-const WalletStackIcon = ({ focused }) => (
-  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'} />
-);
-WalletStackIcon.propTypes = iconPropTypes;
-
-const WalletStack = createStackNavigator(
-  {
-    Wallet: WalletScreen,
-    WalletImport: WalletImportScreen,
-    WalletCreate: WalletCreateScreen,
-    ImportViaPrivate: ImportViaPrivateScreen,
-    ImportViaMnemonic: ImportViaMnemonicScreen,
-    ScanQRCode: ScanQRCodeScreen,
-    ...commonScreens,
-  },
-  {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: AppStyle.headerBackGroundColor,
-      },
-      headerTransparent: false,
-      headerTintColor: 'white',
-      headerTruncatedBackTitle: '',
-    },
-    navigationOptions: {
-      tabBarLabel: screensList.Wallet.title,
-      tabBarIcon: WalletStackIcon,
-    },
-  }
-);
-
 const UserStackIcon = ({ focused }) => (
   <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-person' : 'md-person'} />
 );
@@ -160,6 +129,12 @@ const UserStack = createStackNavigator(
     PasswordSetting: PasswordSettingScreen,
     AccountSetting: AccountSettingScreen,
     UploadUserProfile: UploadUserProfileScreen,
+    Wallet: WalletScreen,
+    WalletImport: WalletImportScreen,
+    WalletCreate: WalletCreateScreen,
+    ImportViaPrivate: ImportViaPrivateScreen,
+    ImportViaMnemonic: ImportViaMnemonicScreen,
+    ScanQRCode: ScanQRCodeScreen,
     ...commonScreens,
   },
   {
@@ -180,6 +155,5 @@ const UserStack = createStackNavigator(
 
 export default createBottomTabNavigator({
   HomeStack,
-  WalletStack,
   UserStack,
 });
