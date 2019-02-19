@@ -106,7 +106,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: AppStyle.chatBackGroundColor,
+    backgroundColor: AppStyle.mainBackgroundColor,
     alignItems: 'center',
     justifyContent: 'center',
   },

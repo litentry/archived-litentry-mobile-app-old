@@ -83,7 +83,7 @@ export default {
   userCorrect: '#4A90E2',
   userIncorrect: '#DF4F52',
   inputPlaceholder: '#A1A1A1',
-  chatBackGroundColor: '#EBEBEB',
+  mainBackgroundColor: '#EBEBEB',
   chatActionBackgroundColor: '#F4F4F6',
   blueIcon: '#10AEFF',
   blueButton: '#027BFF',

@@ -52,7 +52,7 @@ export default withNavigation(NewWalletInnerScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyle.chatBackGroundColor,
+    backgroundColor: AppStyle.mainBackgroundColor,
     justifyContent: 'center',
     alignItems: 'center',
   },

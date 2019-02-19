@@ -83,7 +83,7 @@ class LockListScreen extends React.Component {
             <TouchableOpacity
               style={[
                 styles.lockNode,
-                { backgroundColor: item.isValid ? 'white' : AppStyle.chatBackGroundColor },
+                { backgroundColor: item.isValid ? 'white' : AppStyle.mainBackgroundColor },
               ]}
               onPress={() =>
                 navigation.navigate(screensList.Lock.label, {
