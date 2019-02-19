@@ -7,12 +7,14 @@ import {
   FlatList,
   Platform,
   Text,
+  Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { Entypo, Ionicons } from '@expo/vector-icons';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
@@ -63,6 +65,7 @@ class TopicScreen extends React.Component {
     this.state = {
       showAction: false,
       refreshing: false,
+      keyboardHeight: 0,
     };
   }
 
@@ -73,6 +76,18 @@ class TopicScreen extends React.Component {
       if (subscribedChatId !== null) TinodeAPI.unsubscribe(subscribedChatId);
       TinodeAPI.subscribe(topicId, userId);
     }
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', e => {
+      this.setState({ keyboardHeight: e.endCoordinates.height });
+      this.flatList.scrollToEnd({ animated: true });
+    });
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', e =>
+      this.setState({ keyboardHeight: 0 })
+    );
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   }
 
   renderUserAvatarSource = () => {
@@ -147,17 +162,27 @@ class TopicScreen extends React.Component {
     const topic = _.get(topicsMap, topicId);
     if (!topic) return null;
     const { messages } = topic;
+    //Todo this height need to be recalculated for precise number with different text length
+    const HEIGHT = 66;
     return (
       <View style={styles.container}>
-        <FlatList
+        <KeyboardAwareFlatList
           onRefresh={() => this.onRefresh(topic)}
           refreshing={refreshing}
-          style={styles.container}
+          // initialScrollIndex={messages.length - 5}
+          // getItemLayout={(data, index) => (
+          //   {length: HEIGHT, offset: HEIGHT * index, index}
+          // )}
+          onScrollToIndexFailed={console.log}
+          ref={ref => (this.flatList = ref)}
+          onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
+          onLayout={() => this.flatList.scrollToEnd({ animated: true })}
+          style={styles.scrollContainer}
           data={messages}
           keyExtractor={message => message.seq.toString()}
           renderItem={({ item }) => this.renderMessageNode(item, topic)}
         />
-        <View style={styles.actionBar}>
+        <View style={[styles.actionBar, { bottom: this.state.keyboardHeight }]}>
           <View style={styles.chatContainer}>
             <TextInput
               onChangeText={userInput => {
@@ -203,6 +228,9 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyle.chatBackGroundColor,
     position: 'relative',
   },
+  scrollContainer: {
+    flexGrow: 1,
+  },
   dotContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -215,8 +243,6 @@ const styles = StyleSheet.create({
     borderTopColor: AppStyle.chatActionBackgroundColor,
     flexDirection: 'column',
     alignItems: 'stretch',
-    position: 'absolute',
-    bottom: 0,
     width: '100%',
     backgroundColor: AppStyle.chatActionBackgroundColor,
 
