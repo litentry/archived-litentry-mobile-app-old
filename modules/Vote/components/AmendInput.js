@@ -32,6 +32,12 @@ class AmendInput extends React.Component {
     writer: _.identity,
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    Object.entries(this.props).forEach(
+      ([key, val]) => prevProps[key] !== val && console.log(`Prop '${key}' changed`)
+    );
+  }
+
   render() {
     const {
       unit,
@@ -50,27 +56,23 @@ class AmendInput extends React.Component {
     const defaultValue = _.get(INIT_VALUE.origin, propertyPath);
     const value = _.get(voteCached, propertyPath, defaultValue);
 
-    const InputContainer = () => (
-      <View style={styles.inputContainer}>
-        <View style={styles.mainInput}>
-          <TextInput
-            style={styles.input}
-            onChangeText={v => {
-              const formattedValue = isNumber ? numberWriter(v) : writer(v);
-              setVote(_.set({}, propertyPath, formattedValue));
-            }}
-            value={isNumber ? numberReader(value) : reader(value)}
-            placeholder={placeholder}
-          />
-          <Text style={styles.unitText}>{unit}</Text>
-        </View>
-      </View>
-    );
-
     return (
       <View style={styles.container}>
         <Text style={styles.intro}>{intro}</Text>
-        <InputContainer />
+        <View style={styles.inputContainer}>
+          <View style={styles.mainInput}>
+            <TextInput
+              style={styles.input}
+              onChangeText={v => {
+                const formattedValue = isNumber ? numberWriter(v) : writer(v);
+                setVote(_.set({}, propertyPath, formattedValue));
+              }}
+              value={isNumber ? numberReader(value) : reader(value)}
+              placeholder={placeholder}
+            />
+            <Text style={styles.unitText}>{unit}</Text>
+          </View>
+        </View>
         <Text style={styles.description}>{description}</Text>
       </View>
     );
