@@ -8,47 +8,35 @@ import { makeImageUrl } from '../lib/blob-helpers';
 import Images from '../../../commons/Images';
 import { renderImageSource } from '../../../utils/imageUtils';
 
-export default class ChatListNode extends React.Component {
+export default class LockListNode extends React.Component {
   static propTypes = {
-    chatNode: PropTypes.object.isRequired,
+    lockNode: PropTypes.object.isRequired,
   };
 
   static defaultProps = {};
 
   render() {
-    const { chatNode } = this.props;
-    const { unread } = chatNode;
-    if (!chatNode.public) {
-      console.log('topic with null publis is', chatNode);
-      return null;
-    }
+    const { lockNode } = this.props;
 
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image style={styles.image} source={renderImageSource(chatNode.public.photo)} />
-          {unread > 0 && (
-            <View style={styles.imageFloat}>
-              <Text style={styles.unreadNumber}>{unread < 100 ? unread.toString() : '..'}</Text>
-            </View>
-          )}
+          <Image style={styles.image} source={renderImageSource(lockNode.public.photo)} />
         </View>
         <View style={styles.textContainer}>
           <View style={styles.firstLineContainer}>
             <Text style={styles.title} numberOfLines={1}>
-              {chatNode.public.fn}
+              {lockNode.id}
             </Text>
             <Text style={styles.date} numberOfLines={1}>
-              {isValidDate(chatNode.updated)
-                ? shortDateFormat(new Date(chatNode.updated))
+              {isValidDate(lockNode.updated)
+                ? shortDateFormat(new Date(lockNode.created))
                 : t.DATE_PLACEHOLDER}
             </Text>
           </View>
           <View style={styles.secondLineContainer}>
             <Text style={styles.text} numberOfLines={1}>
-              {chatNode.isSubscribed && chatNode.lastmsg
-                ? chatNode.lastmsg
-                : t.DESCRIPTION_PLACEHOLDER}
+              {lockNode.description}
             </Text>
           </View>
         </View>
@@ -79,22 +67,6 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     resizeMode: 'contain',
-  },
-  imageFloat: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    borderRadius: 10,
-    width: 20,
-    height: 20,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  unreadNumber: {
-    fontSize: 10,
-    color: 'white',
-    fontFamily: AppStyle.mainFont,
   },
   textContainer: {
     flex: 1,

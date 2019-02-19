@@ -15,8 +15,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import TinodeAPI from '../TinodeAPI';
-import LockListNode from '../components/ChatListNode';
+import LockListNode from '../components/LockListNode';
 import { loaderAction } from '../../../actions/loaderAction';
 
 class LockListScreen extends React.Component {
@@ -91,7 +90,7 @@ class LockListScreen extends React.Component {
                   title: item.description,
                 })
               }>
-              <LockListNode chatNode={item} />
+              <LockListNode lockNode={item} />
             </TouchableOpacity>
           )}
         />
