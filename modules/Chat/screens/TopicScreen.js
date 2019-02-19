@@ -7,13 +7,14 @@ import {
   FlatList,
   Platform,
   Text,
-  Keyboard
+  Keyboard,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { Entypo, Ionicons } from '@expo/vector-icons';
+import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import TinodeAPI from '../TinodeAPI';
@@ -22,7 +23,6 @@ import Images from '../../../commons/Images';
 import { topicsAction } from '../actions/topicsAction';
 import ActionList from '../components/ActionList';
 import { renderImageSource } from '../../../utils/imageUtils';
-import {KeyboardAwareFlatList, KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 
 class TopicScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -76,19 +76,15 @@ class TopicScreen extends React.Component {
       if (subscribedChatId !== null) TinodeAPI.unsubscribe(subscribedChatId);
       TinodeAPI.subscribe(topicId, userId);
     }
-    this.keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      e => {
-        this.setState({keyboardHeight: e.endCoordinates.height})
-        this.flatList.scrollToEnd({animated: true})
-      }
-    );
-    this.keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      e => this.setState({keyboardHeight: 0})
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', e => {
+      this.setState({ keyboardHeight: e.endCoordinates.height });
+      this.flatList.scrollToEnd({ animated: true });
+    });
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', e =>
+      this.setState({ keyboardHeight: 0 })
     );
   }
-  
+
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
@@ -178,15 +174,15 @@ class TopicScreen extends React.Component {
           //   {length: HEIGHT, offset: HEIGHT * index, index}
           // )}
           onScrollToIndexFailed={console.log}
-          ref={ref => this.flatList = ref}
-          onContentSizeChange={() => this.flatList.scrollToEnd({animated: true})}
-          onLayout={() => this.flatList.scrollToEnd({animated: true})}
+          ref={ref => (this.flatList = ref)}
+          onContentSizeChange={() => this.flatList.scrollToEnd({ animated: true })}
+          onLayout={() => this.flatList.scrollToEnd({ animated: true })}
           style={styles.scrollContainer}
           data={messages}
           keyExtractor={message => message.seq.toString()}
           renderItem={({ item }) => this.renderMessageNode(item, topic)}
         />
-        <View style={[styles.actionBar, {bottom: this.state.keyboardHeight}]}>
+        <View style={[styles.actionBar, { bottom: this.state.keyboardHeight }]}>
           <View style={styles.chatContainer}>
             <TextInput
               onChangeText={userInput => {
