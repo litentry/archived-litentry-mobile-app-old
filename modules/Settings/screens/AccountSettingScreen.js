@@ -30,10 +30,10 @@ class AccountSettingScreen extends React.Component {
       <Container style={styles.container}>
         <SingleLineDisplay title={t.ID_TITLE} style={styles.singleLineDisplay} value={userId} />
         {/*<SingleLineDisplay*/}
-          {/*title={t.PASSWORD_TITLE}*/}
-          {/*style={styles.singleLineDisplay}*/}
-          {/*value={t.PASSWORD_VALUE}*/}
-          {/*onClick={() => navigation.navigate(screensList.PasswordSetting.label)}*/}
+        {/*title={t.PASSWORD_TITLE}*/}
+        {/*style={styles.singleLineDisplay}*/}
+        {/*value={t.PASSWORD_VALUE}*/}
+        {/*onClick={() => navigation.navigate(screensList.PasswordSetting.label)}*/}
         {/*/>*/}
         <SingleLineSingleValueDisplay
           title={t.UPLOAD_PROFILE}
