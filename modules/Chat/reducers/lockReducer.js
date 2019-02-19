@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   locksMap: {},
 };
 
-export const chatReducer = (state = INITIAL_STATE, action) => {
+export const lockReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case chatActionType.UPDATE_LOCKS_MAP: {
       const topicId = action.data.id;

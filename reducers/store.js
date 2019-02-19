@@ -5,7 +5,7 @@ import { screenReducer } from './screen';
 import { popupReducer } from './popup';
 import { loaderReducer } from './loader';
 import { unlockReducer } from '../modules/Unlock/reducer/unlockReducer';
-import { chatReducer } from '../modules/Chat/reducers/chatReducer';
+import { lockReducer } from '../modules/Chat/reducers/lockReducer';
 import { topicsReducer } from '../modules/Chat/reducers/topicsReducer';
 import { voteReducer } from '../modules/Vote/reducer/voteReducer';
 import { userRegisterReducer } from '../modules/User/reducer/userRegisterReducer';
@@ -37,7 +37,7 @@ const reducers = combineReducers({
   popup: popupReducer,
   appState: loaderReducer,
   unlock: unlockReducer,
-  chat: chatReducer,
+  lock: lockReducer,
   topics: topicsReducer,
   vote: voteReducer,
   userRegister: userRegisterReducer,

@@ -41,7 +41,6 @@ class LockListScreen extends React.Component {
   static propTypes = {
     navigation: PropTypes.object,
     locksMap: PropTypes.object.isRequired,
-    userId: PropTypes.string.isRequired,
   };
 
   constructor(props) {
