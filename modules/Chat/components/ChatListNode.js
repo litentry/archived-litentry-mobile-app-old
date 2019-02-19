@@ -44,11 +44,11 @@ export default class ChatListNode extends React.Component {
                 : t.DATE_PLACEHOLDER}
             </Text>
           </View>
-          {/*<View style={styles.secondLineContainer}>*/}
-          {/*<Text style={styles.text} numberOfLines={1}>*/}
-          {/*{chatNode.isSubscribed && chatNode.private && chatNode.private.comment ? chatNode.private.comment : t.DESCRIPTION_PLACEHOLDER}*/}
-          {/*</Text>*/}
-          {/*</View>*/}
+          <View style={styles.secondLineContainer}>
+          <Text style={styles.text} numberOfLines={1}>
+          {chatNode.isSubscribed && chatNode.lastmsg ? chatNode.lastmsg: t.DESCRIPTION_PLACEHOLDER}
+          </Text>
+          </View>
         </View>
       </View>
     );
