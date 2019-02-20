@@ -71,7 +71,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: AppStyle.chatBackGroundColor,
+    backgroundColor: AppStyle.mainBackgroundColor,
   },
   profileContainer: {
     flexDirection: 'row',

@@ -335,7 +335,7 @@ const t = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: AppStyle.chatBackGroundColor,
+    backgroundColor: AppStyle.mainBackgroundColor,
   },
   rulesTitle: {
     paddingTop: 30,

@@ -5,7 +5,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import PropTypes from 'prop-types';
 import TabBarIcon from '../components/TabBarIcon';
 import { screensList } from './screensList';
-import HomeScreen from '../screens/HomeScreen';
 import WalletImportScreen from '../modules/WalletImport/screens/WalletImportScreen';
 import ImportViaPrivateScreen from '../modules/WalletImport/screens/ImportViaPrivateScreen';
 import ScanQRCodeScreen from '../modules/WalletImport/screens/ScanQRCodeScreen';
@@ -15,8 +14,7 @@ import PasswordSettingScreen from '../modules/Settings/screens/PasswordSettingSc
 import AccountSettingScreen from '../modules/Settings/screens/AccountSettingScreen';
 import SettingsScreen from '../modules/Settings/screens/SettingsScreen';
 import AboutScreen from '../modules/Settings/screens/AboutScreen';
-import ChatListScreen from '../modules/Chat/screens/ChatListScreen';
-import StartScreen from '../modules/User/screens/StartScreen';
+import LockListScreen from '../modules/Chat/screens/LockListScreen';
 import CreateAccountScreen from '../modules/User/screens/CreateAccountScreen';
 import VerifyCredentialScreen from '../modules/User/screens/VerifyCredentialScreen';
 import SetPasswordScreen from '../modules/User/screens/SetPasswordScreen';
@@ -47,6 +45,7 @@ import UploadCountryProfileScreen from '../modules/CreateTopic/screens/UploadCou
 import AppStoreScreen from '../modules/Apps/screens/AppStoreScreen';
 import AppProfileScreen from '../modules/Apps/screens/AppProfileScreen';
 import AppStyle from '../commons/AppStyle';
+import CreateLockScreen from '../modules/Locks/screens/CreateLockScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -71,6 +70,7 @@ HomeStackIcon.propTypes = iconPropTypes;
 
 const HomeStack = createStackNavigator(
   {
+    LockList: LockListScreen,
     Login: LoginScreen,
     // Start: StartScreen,
     SetPassword: SetPasswordScreen,
@@ -96,8 +96,10 @@ const HomeStack = createStackNavigator(
     TopicInfo: TopicInfoScreen,
     Topic: TopicScreen,
     VerifyCredential: VerifyCredentialScreen,
-    ChatList: ChatListScreen,
+
     CreateTopic: CreateTopicScreen,
+    
+    CreateLock: CreateLockScreen,
     ...commonScreens,
   },
   {
@@ -117,6 +119,37 @@ const HomeStack = createStackNavigator(
   }
 );
 
+const WalletStackIcon = ({ focused }) => (
+  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-wallet' : 'md-wallet'} />
+);
+WalletStackIcon.propTypes = iconPropTypes;
+
+const WalletStack = createStackNavigator(
+  {
+    Wallet: WalletScreen,
+    WalletImport: WalletImportScreen,
+    WalletCreate: WalletCreateScreen,
+    ImportViaPrivate: ImportViaPrivateScreen,
+    ImportViaMnemonic: ImportViaMnemonicScreen,
+    ScanQRCode: ScanQRCodeScreen,
+    ...commonScreens,
+  },
+  {
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: AppStyle.headerBackGroundColor,
+      },
+      headerTransparent: false,
+      headerTintColor: 'white',
+      headerTruncatedBackTitle: '',
+    },
+    navigationOptions: {
+      tabBarLabel: screensList.Wallet.title,
+      tabBarIcon: WalletStackIcon,
+    },
+  }
+);
+
 const UserStackIcon = ({ focused }) => (
   <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-person' : 'md-person'} />
 );
@@ -129,12 +162,6 @@ const UserStack = createStackNavigator(
     PasswordSetting: PasswordSettingScreen,
     AccountSetting: AccountSettingScreen,
     UploadUserProfile: UploadUserProfileScreen,
-    Wallet: WalletScreen,
-    WalletImport: WalletImportScreen,
-    WalletCreate: WalletCreateScreen,
-    ImportViaPrivate: ImportViaPrivateScreen,
-    ImportViaMnemonic: ImportViaMnemonicScreen,
-    ScanQRCode: ScanQRCodeScreen,
     ...commonScreens,
   },
   {
@@ -155,5 +182,6 @@ const UserStack = createStackNavigator(
 
 export default createBottomTabNavigator({
   HomeStack,
+  WalletStack,
   UserStack,
 });

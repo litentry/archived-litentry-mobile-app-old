@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux';
 import AppStyle from '../../../commons/AppStyle';
 import WelcomeInnerScreen from '../innerScreens/WelcomeInnerScreen';
 import ContinueLoginInnerScreen from '../innerScreens/ContinueLoginInnerScreen';
-import Connector from '../../Chat/components/Connector';
 import Container from '../../../components/Container';
 
 class StartScreen extends React.Component {

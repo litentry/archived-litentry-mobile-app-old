@@ -66,7 +66,7 @@ export default connect(
 
 const styles = {
   container: {
-    backgroundColor: AppStyle.chatBackGroundColor,
+    backgroundColor: AppStyle.mainBackgroundColor,
   },
   singleLineDisplay: {
     marginTop: 20,

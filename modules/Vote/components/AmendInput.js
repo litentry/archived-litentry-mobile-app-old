@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
-    backgroundColor: AppStyle.chatBackGroundColor,
+    backgroundColor: AppStyle.mainBackgroundColor,
     alignItems: 'stretch',
   },
   intro: {

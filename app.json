@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Genesis Mobile",
-    "description": "Genesis Space Mobile Client",
-    "slug": "genesisMobile",
+    "name": "Litentry Mobile",
+    "description": "Litentry Client App",
+    "slug": "Litentry",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],
-    "version": "0.4.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/appIcon/icon.png",
     "splash": {

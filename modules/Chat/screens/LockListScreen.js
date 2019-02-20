@@ -15,13 +15,13 @@ import { AntDesign } from '@expo/vector-icons';
 import { Header } from 'react-navigation';
 import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
-import TinodeAPI from '../TinodeAPI';
-import ChatListNode from '../components/ChatListNode';
+import LockListNode from '../components/LockListNode';
 import { loaderAction } from '../../../actions/loaderAction';
+import ActionButton from "../../../components/ActionButton";
 
-class ChatListScreen extends React.Component {
+class LockListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: screensList.ChatList.title,
+    headerTitle: screensList.LockList.title,
     headerBackTitle: ' ',
     headerRight: (
       <TouchableOpacity
@@ -41,8 +41,7 @@ class ChatListScreen extends React.Component {
 
   static propTypes = {
     navigation: PropTypes.object,
-    chatMap: PropTypes.object.isRequired,
-    userId: PropTypes.string.isRequired,
+    locksMap: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -53,25 +52,19 @@ class ChatListScreen extends React.Component {
   }
 
   componentDidMount() {
-    TinodeAPI.fetchTopics();
   }
 
   onRefresh = () => {
-    this.setState({ refreshing: true });
-    TinodeAPI.fetchTopics().then(() => {
-      this.setState({ refreshing: false });
-    });
+  
   };
 
   render() {
-    const { chatMap, navigation } = this.props;
-    const sortedList = _.values(chatMap).sort((a, b) => {
+    const { locksMap, navigation } = this.props;
+    const sortedList = _.values(locksMap).sort((a, b) => {
       //TODO add timestamp sorting
-      const conditionA = a.isSubscribed < b.isSubscribed;
-      const dateA = a.updated || new Date(0);
-      const dateB = b.updated || new Date(0);
-      const conditionB = dateA.getTime() < dateB.getTime();
-      return conditionA;
+      const dateA = a.created || new Date(0);
+      const dateB = b.created || new Date(0);
+      return dateA.getTime() < dateB.getTime();
     });
 
     return (
@@ -84,39 +77,37 @@ class ChatListScreen extends React.Component {
           style={styles.listContainer}
           data={sortedList}
           extraData={sortedList}
-          keyExtractor={item => item.topic}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[
-                styles.chatNode,
-                { backgroundColor: item.isSubscribed ? 'white' : AppStyle.chatBackGroundColor },
+                styles.lockNode,
+                { backgroundColor: item.isValid ? 'white' : AppStyle.mainBackgroundColor },
               ]}
               onPress={() =>
-                item.isSubscribed
-                  ? navigation.navigate(screensList.Topic.label, {
-                      topicId: item.topic,
-                      title: item.public.fn,
-                    })
-                  : navigation.navigate(screensList.TopicInfo.label, {
-                      title: item.public.fn,
-                      topic: item,
-                      allowEdit: false,
-                      isJoined: false,
-                    })
+                navigation.navigate(screensList.Lock.label, {
+                  lockId: item.id,
+                  title: item.description,
+                })
               }>
-              <ChatListNode chatNode={item} />
+              <LockListNode lockNode={item} />
             </TouchableOpacity>
           )}
         />
+        <ActionButton buttonColor={AppStyle.backgroundRed} title={t.ADD_BUTTON} onPress={()=>navigation.navigate(screensList.CreateLock.label)}/>
       </ScrollView>
     );
   }
 }
 
+const t = {
+  ADD_BUTTON: 'Add'
+}
+
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
-  chatMap: state.chat.chatMap,
-  userId: state.appState.userId,
+  locksMap: state.lock.locksMap,
+  // userId: state.appState.userId,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({
@@ -126,7 +117,7 @@ const mapDispatchToProps = _.curry(bindActionCreators)({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChatListScreen);
+)(LockListScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -148,7 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  chatNode: {
+  lockNode: {
     padding: 10,
     borderBottomWidth: 1,
     borderColor: AppStyle.chatBorder,
