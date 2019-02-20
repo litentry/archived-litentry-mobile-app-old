@@ -4,7 +4,7 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import _ from 'lodash';
 import { chatConfig, wsInfo } from '../../config';
 import { store } from '../../reducers/store';
-import { chatAction } from './actions/chatAction';
+import { lockAction } from './actions/lockAction';
 import { screensList } from '../../navigation/screensList';
 import { topicsAction } from './actions/topicsAction';
 import * as chatUtils from '../../utils/chatUtils';
@@ -32,7 +32,7 @@ class TinodeAPIClass {
     tinode.onConnect = () => {
       const params = tinode.getServerInfo();
       console.log('connected！server info: ', params);
-      store.dispatch(chatAction.connected());
+      store.dispatch(lockAction.connected());
     };
     tinode.onDisconnect = data => {
       console.log('disconnected', data);
@@ -131,7 +131,7 @@ class TinodeAPIClass {
   M;
 
   tnMeMetaSub(meTopic, topicData) {
-    store.dispatch(chatAction.updateChatMap(topicData));
+    store.dispatch(lockAction.updateLockMap(topicData));
   }
 
   onData(data) {
@@ -216,7 +216,7 @@ class TinodeAPIClass {
     //TODO why? add title and avatar?
     this.handleDescChange(topic, topicId, 'first desc');
     this.handleSubsUpdated(topic, topicId, userId, 'first update Subs');
-    store.dispatch(chatAction.subscribeChat(topicId));
+    store.dispatch(lockAction.subscribeChat(topicId));
 
     if (!topic.isSubscribed()) {
       // Don't request the tags. They are useless unless the user
@@ -269,7 +269,7 @@ class TinodeAPIClass {
           oldTopic.onPres = undefined;
         });
     }
-    store.dispatch(chatAction.subscribeChat(null));
+    store.dispatch(lockAction.subscribeChat(null));
   }
 
   handleNewMessage(topic, topicId, msg) {

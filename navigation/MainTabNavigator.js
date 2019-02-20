@@ -45,6 +45,7 @@ import UploadCountryProfileScreen from '../modules/CreateTopic/screens/UploadCou
 import AppStoreScreen from '../modules/Apps/screens/AppStoreScreen';
 import AppProfileScreen from '../modules/Apps/screens/AppProfileScreen';
 import AppStyle from '../commons/AppStyle';
+import CreateLockScreen from '../modules/Locks/screens/CreateLockScreen';
 
 const iconPropTypes = { focused: PropTypes.bool };
 
@@ -97,6 +98,8 @@ const HomeStack = createStackNavigator(
     VerifyCredential: VerifyCredentialScreen,
 
     CreateTopic: CreateTopicScreen,
+    
+    CreateLock: CreateLockScreen,
     ...commonScreens,
   },
   {

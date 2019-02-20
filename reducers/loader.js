@@ -32,12 +32,16 @@ export const dataEntry = {
     initValue: '',
     type: 'string',
   },
+  locks: {
+    label: 'LOCKS', stateName: 'locks', initValue: '{}', type: 'object',
+  },
   profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: '', type: 'string' },
   userId: { label: 'USER_ID', stateName: 'userId', initValue: '', type: 'string' },
 };
 
 const INIT_STATE = set(isLoadedLabel, false, _.mapValues(dataEntry, v => v.initValue));
-const getLabel = stateName => _.find(dataEntry, { stateName }).label;
+const getLabel = stateName => _.get(dataEntry, stateName).label;
+const getType = stateName => _.get(dataEntry, stateName).type;
 
 // React Native 0.58 Async Storage only accept string value.
 const parseType = (value, type) => {
@@ -50,8 +54,18 @@ const parseType = (value, type) => {
   if (type === 'float') {
     return parseFloat(value);
   }
+  if(type === 'array' || type === 'object') {
+    return JSON.parse(value);
+  }
   return value;
 };
+
+const stringify = (value, type) => {
+  if (type === 'array' || type === 'object') {
+    return JSON.stringify(value)
+  }
+  return value.toString();
+}
 
 const saveMultipleData = dataObject => {
   const dataSet = _.reduce(
@@ -86,7 +100,6 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       );
       return set(isLoadedLabel, true, loadedResults);
     }
-
     //TODO change into async function with try and catch
     case loaderActionType.SAVE_APP_DATA: {
       if (Object.keys(action.data).length > 1) {
@@ -94,8 +107,9 @@ export const loaderReducer = (state = INIT_STATE, action) => {
       } else {
         const stateName = Object.keys(action.data)[0];
         const key = getLabel(stateName);
+        const type = getType(stateName);
         const value = Object.values(action.data)[0];
-        AsyncStorage.setItem(key, value.toString());
+        AsyncStorage.setItem(key, stringify(value, type))
       }
       return { ...state, ...action.data };
     }

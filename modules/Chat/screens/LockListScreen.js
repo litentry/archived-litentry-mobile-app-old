@@ -17,6 +17,7 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import LockListNode from '../components/LockListNode';
 import { loaderAction } from '../../../actions/loaderAction';
+import ActionButton from "../../../components/ActionButton";
 
 class LockListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -93,9 +94,14 @@ class LockListScreen extends React.Component {
             </TouchableOpacity>
           )}
         />
+        <ActionButton buttonColor={AppStyle.backgroundRed} title={t.ADD_BUTTON} onPress={()=>navigation.navigate(screensList.CreateLock.label)}/>
       </ScrollView>
     );
   }
+}
+
+const t = {
+  ADD_BUTTON: 'Add'
 }
 
 const mapStateToProps = state => ({

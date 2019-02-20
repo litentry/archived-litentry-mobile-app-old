@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import set from 'lodash/fp/set';
-import { chatActionType } from '../actions/chatAction';
+import { lockActionType } from '../actions/lockAction';
 
 const INITIAL_STATE = {
   locksMap: {},
@@ -8,14 +8,14 @@ const INITIAL_STATE = {
 
 export const lockReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case chatActionType.UPDATE_LOCKS_MAP: {
+    case lockActionType.UPDATE_LOCKS_MAP: {
       const topicId = action.data.id;
       return {
         ...state,
         locksMap: set(topicId, action.data, state.locksMap),
       };
     }
-    case chatActionType.UNSUBSCRIBE_CHAT:
+    case lockActionType.UNSUBSCRIBE_CHAT:
       return {
         ...state,
         locksMap: set(

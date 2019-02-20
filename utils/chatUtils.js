@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import { store } from '../reducers/store';
-import { chatAction } from '../modules/Chat/actions/chatAction';
+import { lockAction } from '../modules/Chat/actions/lockAction';
 import { loaderAction } from '../actions/loaderAction';
 import { dataEntry } from '../reducers/loader';
 import { screensList } from '../navigation/screensList';
 import { makeImageUrl } from '../modules/Chat/lib/blob-helpers';
 
 export const saveLoginData = (currentId, oldUserId, token) => {
-  store.dispatch(chatAction.setId(currentId));
+  store.dispatch(lockAction.setId(currentId));
   if (currentId !== oldUserId) {
     store.dispatch(
       loaderAction.clearAppData({
@@ -65,7 +65,7 @@ export const saveUserData = meTopics => {
   if (meTopics && meTopics.public) {
     const privateData = meTopics.private || {};
     const userInfo = _.reduce(meTopics.public, reformatData, privateData);
-    store.dispatch(chatAction.setUserInfo(userInfo, meTopics.public));
+    store.dispatch(lockAction.setUserInfo(userInfo, meTopics.public));
     store.dispatch(
       loaderAction.saveAppData({
         [dataEntry.profileImage.stateName]: userInfo.avatar
