@@ -88,6 +88,9 @@ export default {
   blueIcon: '#10AEFF',
   blueButton: '#027BFF',
   headerBackGroundColor: '#2D2C33',
-
+  
+  actionButtonBottom: 100,
+  actionButtonRight: 50,
+  
   chatBorder: '#DDD',
 };

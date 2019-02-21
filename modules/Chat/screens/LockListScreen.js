@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
-  Button,
+  View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
@@ -18,6 +18,7 @@ import { screensList } from '../../../navigation/screensList';
 import LockListNode from '../components/LockListNode';
 import { loaderAction } from '../../../actions/loaderAction';
 import ActionButton from "../../../components/ActionButton";
+import Container from "../../../components/Container";
 
 class LockListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -68,7 +69,7 @@ class LockListScreen extends React.Component {
     });
 
     return (
-      <ScrollView
+      <Container
         style={styles.container}
         refreshControl={
           <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
@@ -94,8 +95,10 @@ class LockListScreen extends React.Component {
             </TouchableOpacity>
           )}
         />
-        <ActionButton buttonColor={AppStyle.backgroundRed} title={t.ADD_BUTTON} onPress={()=>navigation.navigate(screensList.CreateLock.label)}/>
-      </ScrollView>
+        <View style={styles.actionButton}>
+          <ActionButton buttonColor={AppStyle.backgroundRed} title={t.ADD_BUTTON} onPress={()=>navigation.navigate(screensList.CreateLock.label)}/>
+        </View>
+      </Container>
     );
   }
 }
@@ -143,5 +146,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderColor: AppStyle.chatBorder,
+  },
+  actionButton: {
+    position: 'absolute',
+    right: AppStyle.actionButtonRight,
+    bottom: AppStyle.actionButtonBottom,
   },
 });
