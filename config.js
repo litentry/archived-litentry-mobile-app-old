@@ -1,5 +1,5 @@
 export const environment = {
-  disableQRScan: false,
+  disableQRScan: true,
 };
 
 export const contractInfo = {
