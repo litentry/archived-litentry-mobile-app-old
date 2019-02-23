@@ -24,20 +24,6 @@ class LockListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.LockList.title,
     headerBackTitle: ' ',
-    headerRight: (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate(screensList.CreateTopic.label);
-        }}
-        style={styles.createTopicIconContainer}>
-        <AntDesign
-          style={styles.createTopicIcon}
-          size={AppStyle.fontMiddle}
-          name="plus"
-          color="white"
-        />
-      </TouchableOpacity>
-    ),
   });
 
   static propTypes = {

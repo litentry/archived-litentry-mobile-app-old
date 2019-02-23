@@ -12,7 +12,6 @@ export const screensList = {
   AccountSetting: { label: 'AccountSetting', title: 'Account Settings' },
   Settings: { label: 'Settings', title: 'Settings' },
   About: { label: 'About', title: 'About' },
-  LockList: { label: 'LockList', title: 'Litentry' },
   Start: { label: 'Start', title: 'Start' },
   CreateAccount: { label: 'CreateAccount', title: 'Create Account' },
   VerifyCredential: { label: 'VerifyCredential', title: 'Verify Phone' },
@@ -40,5 +39,8 @@ export const screensList = {
   CreateTopic: { label: 'CreateTopic', title: 'Create a country' },
   AppStore: { label: 'AppStore', title: 'App Store' },
   AppProfile: { label: 'AppProfile', title: 'App Profile' },
+
+  LockList: { label: 'LockList', title: 'Litentry' },
   CreateLock: { label: 'CreateLock', title: 'Create Lock' },
+  DefinitionList: { label: 'DefinitionList', title: 'Definitions' },
 };

@@ -5,13 +5,16 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { screensList } from '../../../navigation/screensList';
-import Container from '../../../components/Container';
 import HeaderButton from '../../../components/HeaderButton';
-import SingleLineInput from '../../Settings/components/SingleLineInput';
+import TextWithQRInput from '../../WalletImport/components/TextWithQRInput';
+import { saveLockMnemonicAsync, saveLockPrivateKeyAsync } from '../../../utils/secureStoreUtils';
+import { getAddressFromPrivateKey } from '../../../utils/ethereumUtils';
+import { dataEntry } from '../../../reducers/loader';
+import Checker from '../../../utils/Checker';
 
 class CreateLockScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: screensList.Wallet.title,
+    headerTitle: screensList.CreateLock.title,
     headerRight: (
       <HeaderButton
         title={'DONE'}
@@ -22,31 +25,45 @@ class CreateLockScreen extends React.Component {
     headerBackTitle: '',
   });
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      description: '',
-      privateKey: '',
-    };
-  }
-
   static propTypes = {
     navigation: PropTypes.object,
+    locks: PropTypes.object.isRequired,
+    saveAppData: PropTypes.func.isRequired,
   };
 
-  render() {
-    const { privateKey, description } = this.state;
-    return (
-      <Container style={styles.container}>
-        <Text>{t.PRIVATE_KEY}</Text>
+  generateKey = (privateKey, description) =>
+    new Promise((resolve, reject) => {
+      const { saveAppData, locks } = this.props;
+      //TODO now I should get the public key and then save it into loader;s place and save private key into secure store.
+      // and then split the default screen into two different screens.
+      const wallet = getAddressFromPrivateKey(privateKey);
+      if (!wallet) {
+        return reject();
+      }
+      const newLocksMap = _.assign({}, locks, {
+        [wallet.address]: {
+          publicKey: wallet.signingKey.publicKey,
+          description,
+        },
+      });
+      saveAppData({
+        [dataEntry.locks.stateName]: newLocksMap,
+      });
+      return resolve(wallet);
+    });
 
-        <Text>{t.DESCRIPTION}</Text>
-        <SingleLineInput
-          title={t.DESCRIPTION}
-          onChangeText={description => this.setState({ description })}
-          value={description}
-        />
-      </Container>
+  validate = privateKey => privateKey === '' || !_.isEmpty(Checker.checkPrivateKey(privateKey));
+
+  render() {
+    return (
+      <TextWithQRInput
+        generateKey={this.generateKey.bind(this)}
+        validate={this.validate}
+        errorText={t.INVALID_PRIVATE_KEY}
+        saveMnemonic={saveLockMnemonicAsync}
+        savePrivateKey={saveLockPrivateKeyAsync}
+        nextScreenLabel={screensList.DefinitionList.label}
+      />
     );
   }
 }
@@ -54,10 +71,12 @@ class CreateLockScreen extends React.Component {
 const t = {
   PRIVATE_KEY: 'Private key',
   DESCRIPTION: 'Description',
+  INVALID_PRIVATE_KEY: 'Invalid Private Key.',
 };
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
+  locks: state.appState.locks,
 });
 
 const mapDispatchToProps = _.curry(bindActionCreators)({});

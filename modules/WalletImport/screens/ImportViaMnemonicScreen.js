@@ -8,6 +8,8 @@ import { loaderAction } from '../../../actions/loaderAction';
 import { getAddressFromMnemonic } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
 import TextWithQRInput from '../components/TextWithQRInput';
+import { saveMnemonicAsync, savePrivateKeyAsync } from '../../../utils/secureStoreUtils';
+import { screensList } from '../../../navigation/screensList';
 
 class ImportViaMnemonicScreen extends Component {
   static propTypes = {
@@ -42,6 +44,9 @@ class ImportViaMnemonicScreen extends Component {
         generateKey={this.generateKey.bind(this)}
         validate={this.validate}
         errorText={t.INVALID_MNEMONIC_PHRASE}
+        saveMnemonic={saveMnemonicAsync}
+        savePrivateKey={savePrivateKeyAsync}
+        nextScreenLabel={screensList.Wallet.label}
       />
     );
   }

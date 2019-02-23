@@ -1,5 +1,4 @@
 export default {
-  mainColor: '#E4BF43',
   grayColor: '#C5C1C1',
   greenColor: '#2ED573',
   colorBlack: '#0F140D',
@@ -74,6 +73,8 @@ export default {
   fontMiddle: 18,
   fontMiddleBig: 22,
   fontBig: 26,
+
+  mainColor: '#50B29D',
 
   userHeaderBackgroundColor: 'white',
   voteHeaderBackgroundColor: 'black',
