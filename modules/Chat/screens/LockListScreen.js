@@ -17,8 +17,8 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import LockListNode from '../components/LockListNode';
 import { loaderAction } from '../../../actions/loaderAction';
-import ActionButton from "../../../components/ActionButton";
-import Container from "../../../components/Container";
+import ActionButton from '../../../components/ActionButton';
+import Container from '../../../components/Container';
 
 class LockListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -52,12 +52,9 @@ class LockListScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
-  onRefresh = () => {
-  
-  };
+  onRefresh = () => {};
 
   render() {
     const { locksMap, navigation } = this.props;
@@ -96,7 +93,11 @@ class LockListScreen extends React.Component {
           )}
         />
         <View style={styles.actionButton}>
-          <ActionButton buttonColor={AppStyle.backgroundRed} title={t.ADD_BUTTON} onPress={()=>navigation.navigate(screensList.CreateLock.label)}/>
+          <ActionButton
+            buttonColor={AppStyle.backgroundRed}
+            title={t.ADD_BUTTON}
+            onPress={() => navigation.navigate(screensList.CreateLock.label)}
+          />
         </View>
       </Container>
     );
@@ -104,8 +105,8 @@ class LockListScreen extends React.Component {
 }
 
 const t = {
-  ADD_BUTTON: 'Add'
-}
+  ADD_BUTTON: 'Add',
+};
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,

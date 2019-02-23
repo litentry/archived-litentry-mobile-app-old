@@ -5,9 +5,9 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { screensList } from '../../../navigation/screensList';
-import Container from "../../../components/Container";
-import HeaderButton from "../../../components/HeaderButton";
-import SingleLineInput from "../../Settings/components/SingleLineInput";
+import Container from '../../../components/Container';
+import HeaderButton from '../../../components/HeaderButton';
+import SingleLineInput from '../../Settings/components/SingleLineInput';
 
 class CreateLockScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -21,34 +21,40 @@ class CreateLockScreen extends React.Component {
     ),
     headerBackTitle: '',
   });
-  
-  constructor(props){
+
+  constructor(props) {
     super(props);
     this.state = {
       description: '',
       privateKey: '',
-    }
+    };
   }
-  
+
   static propTypes = {
     navigation: PropTypes.object,
   };
-  
+
   render() {
-    const {privateKey, description} = this.state;
-    return <Container style={styles.container}>
-      <Text>{t.PRIVATE_KEY}</Text>
-      
-      <Text>{t.DESCRIPTION}</Text>
-      <SingleLineInput title={t.DESCRIPTION} onChangeText={description=>this.setState({description})} value={description}/>
-    </Container>;
+    const { privateKey, description } = this.state;
+    return (
+      <Container style={styles.container}>
+        <Text>{t.PRIVATE_KEY}</Text>
+
+        <Text>{t.DESCRIPTION}</Text>
+        <SingleLineInput
+          title={t.DESCRIPTION}
+          onChangeText={description => this.setState({ description })}
+          value={description}
+        />
+      </Container>
+    );
   }
 }
 
 const t = {
   PRIVATE_KEY: 'Private key',
   DESCRIPTION: 'Description',
-}
+};
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,

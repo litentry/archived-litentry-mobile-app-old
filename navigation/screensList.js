@@ -40,5 +40,5 @@ export const screensList = {
   CreateTopic: { label: 'CreateTopic', title: 'Create a country' },
   AppStore: { label: 'AppStore', title: 'App Store' },
   AppProfile: { label: 'AppProfile', title: 'App Profile' },
-  CreateLock: {label: 'CreateLock', title: 'Create Lock'},
+  CreateLock: { label: 'CreateLock', title: 'Create Lock' },
 };

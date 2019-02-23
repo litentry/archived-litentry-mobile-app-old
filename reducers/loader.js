@@ -33,7 +33,10 @@ export const dataEntry = {
     type: 'string',
   },
   locks: {
-    label: 'LOCKS', stateName: 'locks', initValue: '{}', type: 'object',
+    label: 'LOCKS',
+    stateName: 'locks',
+    initValue: '{}',
+    type: 'object',
   },
   profileName: { label: 'PROFILE_NAME', stateName: 'profileName', initValue: '', type: 'string' },
   userId: { label: 'USER_ID', stateName: 'userId', initValue: '', type: 'string' },
@@ -54,7 +57,7 @@ const parseType = (value, type) => {
   if (type === 'float') {
     return parseFloat(value);
   }
-  if(type === 'array' || type === 'object') {
+  if (type === 'array' || type === 'object') {
     return JSON.parse(value);
   }
   return value;
@@ -62,10 +65,10 @@ const parseType = (value, type) => {
 
 const stringify = (value, type) => {
   if (type === 'array' || type === 'object') {
-    return JSON.stringify(value)
+    return JSON.stringify(value);
   }
   return value.toString();
-}
+};
 
 const saveMultipleData = dataObject => {
   const dataSet = _.reduce(
@@ -109,7 +112,7 @@ export const loaderReducer = (state = INIT_STATE, action) => {
         const key = getLabel(stateName);
         const type = getType(stateName);
         const value = Object.values(action.data)[0];
-        AsyncStorage.setItem(key, stringify(value, type))
+        AsyncStorage.setItem(key, stringify(value, type));
       }
       return { ...state, ...action.data };
     }
