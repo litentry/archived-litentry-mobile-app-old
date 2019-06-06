@@ -22,17 +22,16 @@ import GenesisButton from '../../../components/GenesisButton';
 import Spinner from '../../../components/Spinner';
 import KeyboardView from '../../../components/KeyboardView';
 import TouchOutSideDismissKeyboard from '../../../components/TouchOutSideDismissKeyboard';
-import SingleLineInput from '../../Settings/components/SingleLineInput';
+import { saveMnemonicAsync, savePrivateKeyAsync } from '../../../utils/secureStoreUtils';
 
 const { width } = Dimensions.get('window');
 
 const initState = {
   loading: false,
   input: '',
-  description: '',
 };
 
-class TextWithQRInput extends React.Component {
+class LockWithQRInput extends React.Component {
   static propTypes = {
     generateKey: PropTypes.func.isRequired,
     validate: PropTypes.func.isRequired,
@@ -73,20 +72,19 @@ class TextWithQRInput extends React.Component {
 
   onConfirm = () => {
     const { navigation, generateKey, saveMnemonic, savePrivateKey, nextScreenLabel } = this.props;
-    const { input, description } = this.state;
+    const { input } = this.state;
 
-    generateKey(input, description)
+    generateKey(input)
       .then(
         wallet =>
           new Promise((resolve, reject) => {
             savePrivateKey(
               wallet.privateKey,
+              wallet.address,
               () => {
                 resolve(wallet);
               },
-              reject,
-              wallet.address,
-              description
+              reject
             );
           })
       )
@@ -95,12 +93,11 @@ class TextWithQRInput extends React.Component {
           new Promise((resolve, reject) => {
             saveMnemonic(
               wallet.mnemonic,
+              wallet.address,
               () => {
                 resolve(wallet);
               },
-              reject,
-              wallet.address,
-              description
+              reject
             );
           })
       )
@@ -124,7 +121,7 @@ class TextWithQRInput extends React.Component {
 
   render() {
     const { validate, errorText } = this.props;
-    const { loading, input, description } = this.state;
+    const { loading, input } = this.state;
     const ClearButton = () => (
       <View style={styles.clearButton}>
         <TouchableOpacity onPress={this.clearText}>
@@ -162,12 +159,6 @@ class TextWithQRInput extends React.Component {
               </View>
               {!validate(input) && <Text style={styles.errorText}>{errorText}</Text>}
               <LightButton onPress={this.gotoScan} text={t.SCAN_QR_CODE} />
-              <SingleLineInput
-                title={t.DESCRIPTION}
-                placeholder={t.DESCRIPTION_PLACEHOLDER}
-                onChangeText={description => this.setState({ description })}
-                value={description}
-              />
             </KeyboardView>
             <GenesisButton
               containerStyle={styles.button}
@@ -183,14 +174,12 @@ class TextWithQRInput extends React.Component {
   }
 }
 
-export default withNavigation(TextWithQRInput);
+export default withNavigation(LockWithQRInput);
 
 const t = {
   PASTE: 'Paste',
   SCAN_QR_CODE: 'Scan QR Code',
   DONE: 'Done',
-  DESCRIPTION: 'Description',
-  DESCRIPTION_PLACEHOLDER: 'Enter the description',
 };
 
 const styles = StyleSheet.create({

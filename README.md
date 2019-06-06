@@ -1,53 +1,51 @@
-# GenesisMobile
-React native mobile application for genesis space
+# Litentry Mobile App
+React native mobile application for Litentry, introduction about litentry check [here](https://www.litentry.com/post/litentry-introduction)
 
 ### Quick Start
 
 (Recommend if you do not have node installed)
 
-* 安装NVM: https://github.com/creationix/nvm
+* Install NVM: https://github.com/creationix/nvm
 
-* 安装NODE WITH NVM: `nvm install latest`
+* Install NODE WITH NVM: `nvm install latest`
 
-* 全局安装 expo-cli   `npm install -g expo-cli`
+* Install globally expo-cli   `npm install -g expo-cli`
 
-* 然后进入 Project(Genesis Mobile) 文件夹安装 Dependency： `npm install`
+* Enter Project(Genesis Mobile) folder and install Dependency： `npm install`
 
-* 然后开始`expo start`
+* start with`expo start`
 
-* 在打开的网页窗口中打开 Emulator 运行。
+* run Emulator in the opened window
 
-* 如果需要修改请新建 branch 然后生成 PR 推送到 master branch.
+* Please create new branch and make PR to master branch.
 
 ### Contribute
 
-基本如何新建component，可以看这个[录制的视频](https://zoom.us/recording/share/vePRFto2ubrnEzihfatogSU_b3HR3VBZCMfoza8K8P6wIumekTziMw?startTime=1545263766000)。
+There is a chinese [tutorial](https://zoom.us/recording/share/vePRFto2ubrnEzihfatogSU_b3HR3VBZCMfoza8K8P6wIumekTziMw?startTime=1545263766000) on how to create component.
 
-##### 框架
+##### Framework
 
-主要的框架用的是expo封装的 react native:
+The main structure is using expo with react native:
 https://expo.io/
 
-react native 封装了很多component，每一个都可以查官网，比如Alert:
+react native integrate many component，each of them could be check on documentation website, for example, Alert:
 https://facebook.github.io/react-native/docs/alert
 
-其中expo也封装了一些，比如这个 Document Picker:
+Also expo has some special component, like this Document Picker:
 https://docs.expo.io/versions/latest/sdk/document-picker/
 
-##### 其他的重要vendors
+##### Other vendors
 
-React Navigation （导航跳转）: https://reactnavigation.org/
+React Navigation: https://reactnavigation.org/
 
-Redux （全局数据）: https://redux.js.org/
+Redux: https://redux.js.org/
 
-lodash（主要是JS一个辅助的库）: https://lodash.com/docs/4.17.11
+lodash: https://lodash.com/docs/4.17.11
 
-##### IOS和安卓的不同
+##### Difference of Android and iOS
 
-IOS和安卓有些地方有点不同，这里有写。如何在react native里写不同的CODE:
+How to write platform specific code on react native:
 https://facebook.github.io/react-native/docs/platform-specific-code
-
-
 
 
 

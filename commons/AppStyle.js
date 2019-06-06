@@ -1,5 +1,4 @@
 export default {
-  mainColor: '#E4BF43',
   grayColor: '#C5C1C1',
   greenColor: '#2ED573',
   colorBlack: '#0F140D',
@@ -75,6 +74,8 @@ export default {
   fontMiddleBig: 22,
   fontBig: 26,
 
+  mainColor: '#50B29D',
+
   userHeaderBackgroundColor: 'white',
   voteHeaderBackgroundColor: 'black',
   userBackgroundColor: 'white',
@@ -88,6 +89,9 @@ export default {
   blueIcon: '#10AEFF',
   blueButton: '#027BFF',
   headerBackGroundColor: '#2D2C33',
+
+  actionButtonBottom: 100,
+  actionButtonRight: 50,
 
   chatBorder: '#DDD',
 };

@@ -9,6 +9,8 @@ import { loaderAction } from '../../../actions/loaderAction';
 import { getAddressFromMnemonic, getAddressFromPrivateKey } from '../../../utils/ethereumUtils';
 import { dataEntry } from '../../../reducers/loader';
 import TextWithQRInput from '../components/TextWithQRInput';
+import { saveMnemonicAsync, savePrivateKeyAsync } from '../../../utils/secureStoreUtils';
+import { screensList } from '../../../navigation/screensList';
 
 class ImportViaPrivateScreen extends Component {
   static propTypes = {
@@ -42,6 +44,9 @@ class ImportViaPrivateScreen extends Component {
         generateKey={this.generateKey}
         validate={this.validate}
         errorText={t.INVALID_PRIVATE_KEY}
+        saveMnemonic={saveMnemonicAsync}
+        savePrivateKey={savePrivateKeyAsync}
+        nextScreenLabel={screensList.Wallet.label}
       />
     );
   }

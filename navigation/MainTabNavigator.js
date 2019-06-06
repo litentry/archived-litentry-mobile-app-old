@@ -98,7 +98,7 @@ const HomeStack = createStackNavigator(
     VerifyCredential: VerifyCredentialScreen,
 
     CreateTopic: CreateTopicScreen,
-    
+
     CreateLock: CreateLockScreen,
     ...commonScreens,
   },

@@ -27,7 +27,7 @@ export default class SingleLineInput extends React.Component {
           secureTextEntry={isPassword}
           style={styles.input}
           onChangeText={onChangeText}
-          underlineColorAndroid='black'
+          underlineColorAndroid="black"
           value={value}
           placeholder={placeholder}
         />

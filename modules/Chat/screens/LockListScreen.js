@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
-  Button,
+  View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
@@ -17,26 +17,13 @@ import AppStyle from '../../../commons/AppStyle';
 import { screensList } from '../../../navigation/screensList';
 import LockListNode from '../components/LockListNode';
 import { loaderAction } from '../../../actions/loaderAction';
-import ActionButton from "../../../components/ActionButton";
+import ActionButton from '../../../components/ActionButton';
+import Container from '../../../components/Container';
 
 class LockListScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: screensList.LockList.title,
     headerBackTitle: ' ',
-    headerRight: (
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate(screensList.CreateTopic.label);
-        }}
-        style={styles.createTopicIconContainer}>
-        <AntDesign
-          style={styles.createTopicIcon}
-          size={AppStyle.fontMiddle}
-          name="plus"
-          color="white"
-        />
-      </TouchableOpacity>
-    ),
   });
 
   static propTypes = {
@@ -51,12 +38,9 @@ class LockListScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
-  onRefresh = () => {
-  
-  };
+  onRefresh = () => {};
 
   render() {
     const { locksMap, navigation } = this.props;
@@ -68,7 +52,7 @@ class LockListScreen extends React.Component {
     });
 
     return (
-      <ScrollView
+      <Container
         style={styles.container}
         refreshControl={
           <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh} />
@@ -94,15 +78,21 @@ class LockListScreen extends React.Component {
             </TouchableOpacity>
           )}
         />
-        <ActionButton buttonColor={AppStyle.backgroundRed} title={t.ADD_BUTTON} onPress={()=>navigation.navigate(screensList.CreateLock.label)}/>
-      </ScrollView>
+        <View style={styles.actionButton}>
+          <ActionButton
+            buttonColor={AppStyle.backgroundRed}
+            title={t.ADD_BUTTON}
+            onPress={() => navigation.navigate(screensList.CreateLock.label)}
+          />
+        </View>
+      </Container>
     );
   }
 }
 
 const t = {
-  ADD_BUTTON: 'Add'
-}
+  ADD_BUTTON: 'Add',
+};
 
 const mapStateToProps = state => ({
   walletAddress: state.appState.walletAddress,
@@ -143,5 +133,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     borderColor: AppStyle.chatBorder,
+  },
+  actionButton: {
+    position: 'absolute',
+    right: AppStyle.actionButtonRight,
+    bottom: AppStyle.actionButtonBottom,
   },
 });

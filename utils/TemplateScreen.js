@@ -5,7 +5,7 @@ import connect from 'react-redux/es/connect/connect';
 import _ from 'lodash';
 import { bindActionCreators } from 'redux';
 import { screensList } from '../../../navigation/screensList';
-import HeaderButton from "../components/HeaderButton";
+import HeaderButton from '../components/HeaderButton';
 
 class TemplateScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
